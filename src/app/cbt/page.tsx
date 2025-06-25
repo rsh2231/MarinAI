@@ -8,11 +8,10 @@ export default function CBTPage() {
   const [answers, setAnswers] = useState<(number | null)[]>([]);
   const [submitted, setSubmitted] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState(30 * 60); // 30분
+  const [timeLeft, setTimeLeft] = useState(30 * 60);
   const [timerEnded, setTimerEnded] = useState(false);
-  const [started, setStarted] = useState(false); // ✅ 시험 시작 여부
+  const [started, setStarted] = useState(false);
 
-  // ✅ 문제 초기화 (시작 시)
   useEffect(() => {
     if (!started) return;
     const shuffled = [...mockProblems].sort(() => 0.5 - Math.random());
@@ -21,14 +20,12 @@ export default function CBTPage() {
     setAnswers(Array(20).fill(null));
   }, [started]);
 
-  // ✅ 시간 포맷
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60).toString().padStart(2, "0");
     const s = (seconds % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
 
-  // ✅ 타이머 작동
   useEffect(() => {
     if (!started || submitted) return;
 
@@ -70,18 +67,18 @@ export default function CBTPage() {
     }, 0);
   };
 
-  // ✅ 시험 시작 전 UI
+  // ✅ 시험 시작 전 화면
   if (!started) {
     return (
-      <div className="max-w-2xl mx-auto p-8 text-center">
-        <h1 className="text-2xl font-bold mb-4">📝 CBT 모의시험</h1>
-        <p className="mb-6 text-gray-700">
-          총 20문제를 30분 안에 풀어보세요. <br />
-          시험을 시작하면 타이머가 작동되며 되돌릴 수 없습니다.
+      <div className="max-w-screen-sm mx-auto mt-16 p-6 bg-white shadow-md rounded-2xl text-center">
+        <h1 className="text-3xl font-bold text-blue-800 mb-4">📝 CBT 모의시험</h1>
+        <p className="text-gray-600 mb-6">
+          총 <strong>20문제</strong>를 <strong>30분</strong> 안에 풀어보세요.<br />
+          시험을 시작하면 타이머가 작동됩니다.
         </p>
         <button
           onClick={() => setStarted(true)}
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold text-lg"
         >
           ▶️ 시험 시작
         </button>
@@ -89,16 +86,16 @@ export default function CBTPage() {
     );
   }
 
-  // ✅ 시험 진행 중 UI
+  // ✅ 시험 진행 화면
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      {/* 타이머 헤더 */}
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">📝 CBT 모의시험</h1>
+    <div className="max-w-screen-md mx-auto p-4">
+      {/* 상단 바 */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-blue-900">📋 CBT 모의시험</h1>
         {!submitted && (
           <span
-            className={`text-xl font-mono ${
-              timeLeft <= 60 ? "text-red-600" : "text-gray-700"
+            className={`px-4 py-2 rounded-xl font-mono text-white text-lg ${
+              timeLeft <= 60 ? "bg-red-600" : "bg-blue-600"
             }`}
           >
             ⏱ {formatTime(timeLeft)}
@@ -106,23 +103,25 @@ export default function CBTPage() {
         )}
       </div>
 
-      {/* 수동 제출 버튼 */}
+      {/* 제출 버튼 */}
       {!submitted && (
-        <button
-          className="mb-4 bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={handleSubmit}
-        >
-          제출하기
-        </button>
+        <div className="mb-6 text-right">
+          <button
+            onClick={handleSubmit}
+            className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-semibold"
+          >
+            제출하기
+          </button>
+        </div>
       )}
 
-      {/* 문제 리스트 */}
+      {/* 문제 목록 */}
       {problems.map((prob, index) => (
-        <div key={prob.id} className="mb-6">
-          <p className="font-semibold mb-2">
+        <div key={prob.id} className="mb-6 p-4 bg-white rounded-xl shadow-sm border">
+          <p className="font-semibold text-gray-800 mb-2">
             {index + 1}. {prob.question}
           </p>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-2">
             {prob.choices.map((choice, i) => {
               const selected = answers[index] === i;
               const isCorrect = prob.answerIndex === i;
@@ -133,14 +132,14 @@ export default function CBTPage() {
                   key={i}
                   disabled={submitted}
                   onClick={() => handleChoice(index, i)}
-                  className={`text-left px-3 py-2 rounded border ${
-                    selected ? "bg-blue-100" : "bg-white"
+                  className={`text-left px-4 py-2 rounded-lg border transition-all ${
+                    selected ? "ring-2 ring-blue-300" : ""
                   } ${
                     submitted && isCorrect
-                      ? "bg-green-100 border-green-600"
+                      ? "bg-green-100 border-green-500"
                       : submitted && isWrong
-                      ? "bg-red-100 border-red-600"
-                      : "border-gray-300"
+                      ? "bg-red-100 border-red-500"
+                      : "bg-gray-50 hover:bg-gray-100 border-gray-300"
                   }`}
                 >
                   {String.fromCharCode(65 + i)}. {choice}
@@ -151,10 +150,13 @@ export default function CBTPage() {
         </div>
       ))}
 
-      {/* 점수 출력 */}
+      {/* 점수 결과 */}
       {submitted && (
-        <div className="mt-6 bg-yellow-100 p-4 rounded">
-          ✅ 총점: <strong>{getScore()} / 20</strong>
+        <div className="mt-8 p-6 bg-yellow-50 border border-yellow-300 rounded-xl text-center">
+          <h2 className="text-xl font-bold text-yellow-800 mb-2">✅ 시험 완료</h2>
+          <p className="text-lg">
+            총점: <strong>{getScore()} / 20</strong>
+          </p>
         </div>
       )}
     </div>

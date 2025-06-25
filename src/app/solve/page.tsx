@@ -34,25 +34,27 @@ export default function SolvePage() {
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">AI 문제풀이</h1>
+      <h1 className="text-2xl font-bold mb-6 text-blue-800">🔍 AI 문제풀이</h1>
 
-      <textarea
-        className="w-full border rounded p-2 mb-2 min-h-[160px]"
-        placeholder={`예시 입력:\n다음 중 충돌 회피와 가장 거리가 먼 것은?\n1. 선회\n2. 감속\n3. 항로 변경\n4. 기관 정지`}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
+      <div className="bg-white border border-blue-100 rounded-xl p-5 shadow-sm space-y-4">
+        <textarea
+          className="w-full border border-gray-300 rounded-md p-3 text-sm min-h-[160px] focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder={`예시 입력:\n다음 중 충돌 회피와 가장 거리가 먼 것은?\n① 선회\n② 감속\n③ 항로 변경\n④ 기관 정지`}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
 
-      <button
-        className="bg-green-600 text-white px-4 py-2 rounded disabled:opacity-50"
-        onClick={solveProblem}
-        disabled={loading}
-      >
-        {loading ? "풀이 중..." : "문제 풀이 요청"}
-      </button>
+        <button
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded transition disabled:opacity-50"
+          onClick={solveProblem}
+          disabled={loading}
+        >
+          {loading ? "풀이 중..." : "문제 풀이 요청"}
+        </button>
+      </div>
 
       {result && (
-        <div className="mt-4 space-y-2">
+        <div className="mt-6 space-y-3">
           <AnswerCard explanation={result} />
 
           <button
@@ -64,11 +66,11 @@ export default function SolvePage() {
                 createdAt: new Date().toISOString(),
               };
               saveWrongNote(note);
-              alert("오답노트에 저장되었습니다!");
+              alert("📌 오답노트에 저장되었습니다!");
             }}
-            className="mt-2 bg-yellow-500 text-white px-4 py-2 rounded cursor-pointer"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded font-medium transition"
           >
-            오답노트에 저장
+            📒 오답노트에 저장
           </button>
         </div>
       )}
