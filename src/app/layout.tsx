@@ -1,14 +1,25 @@
 import "../styles/globals.css";
-import { ReactNode } from "react";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import Header from "@/components/layout/Header";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "해기사 GPT Q&A",
+  description: "해기사 시험 대비 GPT 기반 질의응답/문제풀이 서비스",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="ko">
-      <body className="bg-gray-50 text-gray-800">
-        <header className="bg-blue-600 text-white p-4 font-bold text-lg">
-          MarinAI
-        </header>
-        <main className="max-w-4xl mx-auto p-4">{children}</main>
+      <body className={inter.className}>
+        <Header />
+        <main className="max-w-5xl mx-auto p-4">{children}</main>
       </body>
     </html>
   );
