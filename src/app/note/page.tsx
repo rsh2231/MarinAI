@@ -1,19 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getWrongNotes, deleteWrongNote } from "@/utils/localWrongNote";
+import { loadWrongNotes, deleteWrongNote } from "@/utils/localWrongNote";
 import { WrongNote } from "@/types/wrongNote";
 
 export default function NotePage() {
   const [notes, setNotes] = useState<WrongNote[]>([]);
 
   useEffect(() => {
-    setNotes(getWrongNotes());
+    setNotes(loadWrongNotes());
   }, []);
 
   const handleDelete = (id: string) => {
     deleteWrongNote(id);
-    setNotes(getWrongNotes());
+    setNotes(loadWrongNotes());
   };
 
   return (
