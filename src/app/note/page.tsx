@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { loadWrongNotes, deleteWrongNote } from "@/utils/localWrongNote";
 import { WrongNote } from "@/types/wrongNote";
+import { motion } from "framer-motion";
 
 export default function NotePage() {
   const [notes, setNotes] = useState<WrongNote[]>([]);
@@ -17,33 +18,41 @@ export default function NotePage() {
   };
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-blue-800">📒 오답노트</h1>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className="p-4 md:p-6 max-w-4xl mx-auto min-h-screen bg-[#1e293b] text-white"
+    >
+      <h1 className="text-2xl md:text-3xl font-bold mb-8 select-none">
+        오답노트
+      </h1>
 
       {notes.length === 0 && (
-        <p className="text-gray-600 text-center mt-8">저장된 오답이 없습니다.</p>
+        <p className="text-gray-400 text-center mt-12">저장된 오답이 없습니다.</p>
       )}
 
       <div className="space-y-6">
         {notes.map((note) => (
           <div
             key={note.id}
-            className="bg-white border border-blue-100 rounded-xl shadow-sm p-5 space-y-4"
+            className="bg-[#273449] border border-gray-700 rounded-xl shadow-md p-5 space-y-4 transition hover:shadow-lg"
           >
-            <p className="text-sm text-gray-500">
+            <p className="text-xs text-gray-400">
               저장일: {new Date(note.createdAt).toLocaleString()}
             </p>
 
             <div>
-              <h2 className="text-blue-700 font-semibold mb-1">❓ 문제</h2>
-              <div className="bg-gray-50 border rounded p-3 text-gray-800 whitespace-pre-wrap">
+              <h2 className="text-blue-400 font-semibold mb-1 text-sm">❓ 문제</h2>
+              <div className="bg-[#1e293b] border border-gray-700 rounded p-3 text-gray-200 whitespace-pre-wrap text-sm">
                 {note.question}
               </div>
             </div>
 
             <div>
-              <h2 className="text-green-700 font-semibold mb-1">✅ 해설</h2>
-              <div className="bg-blue-50 border rounded p-3 text-gray-800 whitespace-pre-wrap text-sm leading-relaxed">
+              <h2 className="text-green-400 font-semibold mb-1 text-sm">✅ 해설</h2>
+              <div className="bg-[#1e2a36] border border-gray-700 rounded p-3 text-gray-200 whitespace-pre-wrap text-sm leading-relaxed">
                 {note.explanation}
               </div>
             </div>
@@ -51,7 +60,7 @@ export default function NotePage() {
             <div className="flex justify-end">
               <button
                 onClick={() => handleDelete(note.id)}
-                className="text-sm text-red-600 hover:text-red-800 hover:underline"
+                className="text-sm text-red-400 hover:text-red-300 hover:underline transition"
               >
                 🗑 삭제
               </button>
@@ -59,6 +68,6 @@ export default function NotePage() {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -6,14 +6,15 @@ import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import { saveWrongNote, loadWrongNotes } from "@/utils/localWrongNote";
 import { Question, ProblemData } from "@/types/ProblemViwer";
-import Button from "../ui/Button";
+import Button from "../../components/ui/Button";
 
-type Props = {
+// Props 정의
+interface Props {
   year: string;
   license: string;
   level: string;
   round: string;
-};
+}
 
 export default function ProblemViewer({ year, license, level, round }: Props) {
   const [data, setData] = useState<ProblemData | null>(null);
@@ -100,18 +101,17 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
     }
   };
 
-  if (error) return <p className="text-red-500 text-center mt-4">{error}</p>;
+  if (error)
+    return <p className="text-red-400 text-center mt-4 text-sm">⚠️ {error}</p>;
   if (!data)
     return (
-      <p className="text-gray-500 text-center mt-4">
+      <p className="text-gray-400 text-center mt-4 text-sm">
         문제를 불러오는 중입니다...
       </p>
     );
 
   const subjects = data.subject.type.map((t) => t.string);
-  const selectedTypeBlock = data.subject.type.find(
-    (t) => t.string === selectedSubject
-  );
+  const selectedTypeBlock = data.subject.type.find((t) => t.string === selectedSubject);
   const selectedIndex = subjects.findIndex((s) => s === selectedSubject);
 
   const handlePrevSubject = () => {
@@ -129,18 +129,17 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 pb-20">
+    <div className="max-w-4xl mx-auto px-4 pb-20 text-white">
       {/* 탭 버튼 */}
-      <div className="flex border-b mb-6 overflow-x-auto scrollbar-hide">
+      <div className="flex border-b border-gray-700 mb-6 overflow-x-auto scrollbar-hide">
         {subjects.map((subj) => (
           <button
             key={subj}
             onClick={() => setSelectedSubject(subj)}
-            className={`py-2 px-4 whitespace-nowrap border-b-2 font-medium transition-all duration-150 ${
-              subj === selectedSubject
-                ? "border-blue-600 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-blue-500"
-            }`}
+            className={`not-[]:py-2 px-4 whitespace-nowrap border-b-2 font-medium transition-all duration-150 text-sm
+              ${subj === selectedSubject
+                ? "border-blue-500 text-blue-400"
+                : "border-transparent text-gray-400 hover:text-blue-300"}`}
           >
             {subj}
           </button>
@@ -150,7 +149,7 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
       {/* 문제 리스트 */}
       {selectedTypeBlock ? (
         <section>
-          <h2 className="text-xl sm:text-2xl font-bold text-blue-700 mb-6">
+          <h2 className="text-lg sm:text-xl font-semibold text-blue-300 mb-6">
             {selectedTypeBlock.string}
           </h2>
 
@@ -168,14 +167,10 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
             const correctOption = options.find((opt) => opt.label === correctAnswer);
             const correctText = correctOption ? correctOption.value : "";
 
-            const { textWithoutImage, imageCode } = extractImageCode(
-              q.questionsStr
-            );
+            const { textWithoutImage, imageCode } = extractImageCode(q.questionsStr);
             const finalImageCode = q.image ?? imageCode;
 
-            const hasImage =
-              typeof finalImageCode === "string" &&
-              finalImageCode.trim().length > 0;
+            const hasImage = typeof finalImageCode === "string" && finalImageCode.trim().length > 0;
             const imagePath = hasImage
               ? `/data/${license}/${code}/${code}-${finalImageCode}.png`
               : null;
@@ -183,19 +178,15 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
             return (
               <article
                 key={q.num}
-                className="bg-white border border-gray-200 rounded-xl shadow-sm mb-6 p-4 sm:p-6"
+                className="bg-[#1f2937] border border-gray-700 rounded-xl shadow-sm mb-6 p-5"
               >
-                {/* 문제 본문 */}
-                <div className="mb-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 text-gray-800 font-semibold text-base sm:text-lg">
-                    <span className="text-gray-500 flex-shrink-0">
-                      문제 {q.num}
-                    </span>
+                <div className="mb-4 text-gray-100">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 font-medium text-sm sm:text-base">
+                    <span className="text-gray-400 flex-shrink-0">문제 {q.num}</span>
                     <p className="whitespace-pre-wrap">{textWithoutImage}</p>
                   </div>
                 </div>
 
-                {/* 이미지 */}
                 {hasImage && imagePath && (
                   <div className="mb-4 flex justify-center">
                     <Image
@@ -203,32 +194,21 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
                       alt={`문제 ${q.num} 이미지`}
                       width={600}
                       height={400}
-                      className="rounded border"
+                      className="rounded border border-gray-600"
                     />
                   </div>
                 )}
 
-                {/* 선택지 */}
                 <ul className="space-y-2 mt-3">
                   {options.map((opt) => {
                     const isSelected = selected === opt.label;
                     const isCorrect = opt.label === correctAnswer;
-                    const isWrong =
-                      isSelected && !isCorrect && showAnswer[q.num];
+                    const isWrong = isSelected && !isCorrect && showAnswer[q.num];
 
-                    const baseClasses =
-                      "w-full text-left px-4 py-2 rounded-md border transition-all duration-200 ease-in-out shadow-sm cursor-pointer select-none";
-                    const selectedClasses = isSelected
-                      ? "border-blue-600 bg-blue-50"
-                      : "border-gray-300 hover:bg-gray-50";
-                    const correctClasses =
-                      showAnswer[q.num] && isCorrect
-                        ? "bg-green-100 border-green-500 text-green-800"
-                        : "";
-                    const wrongClasses =
-                      showAnswer[q.num] && isWrong
-                        ? "bg-red-100 border-red-500 text-red-800"
-                        : "";
+                    const baseClasses = "w-full text-left px-4 py-2 rounded-md border transition-all duration-200 ease-in-out cursor-pointer select-none text-sm";
+                    const selectedClasses = isSelected ? "border-blue-500 bg-blue-900/20" : "border-gray-600 hover:bg-gray-800";
+                    const correctClasses = showAnswer[q.num] && isCorrect ? "bg-green-900/30 border-green-500 text-green-300" : "";
+                    const wrongClasses = showAnswer[q.num] && isWrong ? "bg-red-900/30 border-red-500 text-red-300" : "";
 
                     const finalClasses = `${baseClasses} ${selectedClasses} ${correctClasses} ${wrongClasses}`;
 
@@ -238,28 +218,25 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
                         className={finalClasses}
                         onClick={() => handleSelect(q.num, opt.label, q)}
                       >
-                        <span className="mr-1">{opt.label}.</span>{" "}
-                        {opt.value}
+                        <span className="mr-1">{opt.label}.</span> {opt.value}
                       </li>
                     );
                   })}
                 </ul>
 
-                {/* 정답 보기 버튼 */}
                 <button
                   onClick={() => toggleAnswer(q.num, q)}
-                  className="mt-4 text-sm text-blue-600 hover:underline"
+                  className="mt-4 text-sm text-blue-400 hover:underline"
                 >
                   {showAnswer[q.num] ? "정답 숨기기" : "정답 보기"}
                 </button>
 
-                {/* 해설 영역 */}
                 {showAnswer[q.num] && (
-                  <div className="mt-3 text-sm text-gray-700 whitespace-pre-wrap">
-                    ✅ <strong>정답:</strong> {correctAnswer} {options.find(opt => opt.label === correctAnswer)?.value}
+                  <div className="mt-3 text-sm text-gray-300 whitespace-pre-wrap">
+                    ✅ <strong>정답 :</strong> {correctAnswer}. {correctText}
                     {q.explanation && (
-                      <p className="mt-2 text-gray-600">
-                        💡 <strong>해설:</strong> {q.explanation}
+                      <p className="mt-2 text-gray-400">
+                        💡 <strong>해설 :</strong> {q.explanation}
                       </p>
                     )}
                   </div>
@@ -268,17 +245,15 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
             );
           })}
 
-          {/* 이전 / 다음 과목 버튼 */}
           <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-10">
             <Button
-              color="green"
+              variant="neutral"
               onClick={handlePrevSubject}
               disabled={selectedIndex === 0}
             >
               ← 이전 과목
             </Button>
             <Button
-              color="blue"
               onClick={handleNextSubject}
               disabled={selectedIndex === subjects.length - 1}
             >
@@ -287,7 +262,7 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
           </div>
         </section>
       ) : (
-        <p className="text-gray-500">선택된 과목의 문제가 없습니다.</p>
+        <p className="text-gray-400">선택된 과목의 문제가 없습니다.</p>
       )}
     </div>
   );

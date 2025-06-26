@@ -1,8 +1,9 @@
 type HamburgerButtonProps = {
   onClick: () => void;
+  className?: string;
 };
 
-export default function HamburgerButton({ onClick }: HamburgerButtonProps) {
+export default function HamburgerButton({ onClick, className }: HamburgerButtonProps) {
   return (
     <button
       onClick={onClick}

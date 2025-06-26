@@ -9,17 +9,15 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "해기사 GPT Q&A",
-  description: "해기사 시험 대비 GPT 기반 질의응답/문제풀이 서비스",
+  description: "LLM 기반 해기사 시험 질의응답/문제풀이 서비스",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
-      <body className={`${inter.className} bg-sky-50`}>
+    <html lang="ko" className="dark">
+      <body
+        className={`${inter.className} bg-background text-foreground transition-colors duration-300`}
+      >
         <Layout>{children}</Layout>
         <ToastContainer
           position="top-center"

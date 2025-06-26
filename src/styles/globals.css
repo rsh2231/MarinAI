@@ -1,14 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f9fbfc; /* 밝고 부드러운 흰색 계열 */
-  --foreground: #111827; /* 진한 회색-검정 계열 */
-  --primary: #2563eb; /* 푸른계열 대표 색상 */
-  --font-sans: Arial, Helvetica, sans-serif;
+  --background: #1a1a1a;       /* 진한 다크 그레이 */
+  --foreground: #e0e0e0;       /* 밝은 회색 텍스트 */
+  --primary: #2563eb;          /* 푸른 포인트 컬러 */
+  --secondary: #374151;        /* 중간 톤 그레이 (보조색) */
+  --font-sans: 'Inter', Arial, Helvetica, sans-serif;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
