@@ -4,9 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
-  { name: "홈", href: "/" },
   { name: "GPT질문", href: "/chat" },
-  { name: "문제풀이", href: "/solve" },
+  { name: "기출문제풀이", href: "/solve" },
   { name: "오답노트", href: "/note" },
   { name: "CBT", href: "/cbt" },
 ];

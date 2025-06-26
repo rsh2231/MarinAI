@@ -1,0 +1,763 @@
+[2022/기관사 2급/2]
+[제1과목 : 기관1]
+1. 디젤기관에서 열효율을 향상시키기 위한 대책이 아닌 것은?
+㉮ 정압과급의 채택
+㉯ 밸브 개폐시기의 변경
+㉴ 후연소 기간 증대
+㉵ 유효행정의 증대
+2. 연료분사밸브의 카본 플라워를 방지하기 위한 방법으로 옳은 것은?
+㉮ 연료분사밸브를 냉각한다.
+㉯ 연료유를 가열한다.
+㉴ 노킹이 발생하지 않도록 한다.
+㉵ 압축압력을 높인다.
+3. 디젤기관에서 피스톤링의 플러터(flutter)현상을 방지하는 방법으로 가장 적절한 것은?
+㉮ 링의 폭을 더 크게 한다.
+㉯ 링의 장력을 더 세게 한다.
+㉴ 링의 홈을 더 깊게 한다.
+㉵ 링의 홈 상부간격을 더 좁게 한다.
+4. 트렁크형 피스톤 디젤기관에서 연접봉의 길이가 피스톤 측압에 미치는 영향으로 옳은 것은?
+㉮ 연접봉 길이가 피스톤 행정과 같을 때 측압이 가장 작아진다.
+㉯ 연접봉 길이가 길수록 측압은 작아진다.
+㉴ 연접봉 길이가 피스톤 행정의 2배일 때 측압이 가장 작고 더 길어지면 측압이 커진다.
+㉵ 피스톤의 측압은 기관의 좌우방향보다 선수 선미방향으로 더 크게 작용한다.
+5. 디젤기관에서 크랭크축의 직접적인 절손 원인이 되는 응력이 아닌 것은?
+㉮ 굽힘응력
+㉯ 비틀림응력
+㉴ 전단응력
+㉵ 잔류응력
+6. 디젤 주기관에서 저온부식의 방지 대책으로 옳지 않은 것은?
+㉮ 공기과잉률을 높인다.
+㉯ 무수황산의 생성을 억제한다.
+㉴ 유황분이 적은 연료를 사용한다.
+㉵ 냉각수의 온도를 높게 유지한다.
+7. 디젤기관에서 노크방지를 위한 방법이 아닌 것은?
+㉮ 압축비를 높인다.
+㉯ 착화지연을 짧게 한다.
+㉴ 흡기압력을 낮춘다.
+㉵ 소기온도를 높인다.
+8. 정압과급과 비교하여 동압과급의 특징이 아닌 것은?
+㉮ 터빈의 효율이 낮다.
+㉯ 과급기의 크기가 작다.
+㉴ 배기가스의 블로다운 에너지를 이용한다.
+㉵ 과급기의 진동이 심하다.
+9. 디젤 주기관에서 과급기의 서징에 대한 설명으로 옳은것은?
+㉮ 과급기의 송풍기 출구에서 공기 유량 및 압력이 맥동하는 현상이다.
+㉯ 과급기의 송풍기 입구에서 공기 유량 및 압력이 맥동하는 현상이다.
+㉴ 과급기의 베어링 마멸로 진동이 발생하는 현상이다.
+㉵ 배기가스의 과도팽창으로 폭발음이 발생하는 현상이다.
+10. 스필밸브식 연료분사펌프와 스필포트(보슈)식 연료분사펌프에 대한 설명으로 옳지 않은 것은?
+㉮ 스필포트식 펌프에는 안전밸브가 부착된다.
+㉯ 스필밸브식은 플런저에 경사홈이 없다.
+㉴ 스필포트식 펌프는 래크와 피니언으로 유량을 조절한다.
+㉵ 스필밸브식 펌프는 편심 레버로 유량을 조절한다.
+11. 보일러 수의 용존 산소를 제거할 목적으로 사용되는 것으로만 짝지어진 것은?
+㉮ 탄산나트륨과 인산나트륨
+㉯ 하이드라진과 인산나트륨
+㉴ 수산화나트륨과 아황산나트륨
+㉵ 하이드라진과 아황산나트륨
+12. 보일러의 연돌에 대한 설명으로 옳지 않은 것은?
+㉮ 연돌의 높이와 통풍력은 비례한다.
+㉯ 연돌의 단면적과 가스 유량은 비례한다.
+㉴ 연돌의 단면적과 연돌의 가스 속도는 반비례한다.
+㉵ 연돌의 가스속도와 연돌 내 가스 온도는 반비례한다.
+13. 보일러의 캐리오버 현상과 관계 없는 것은?
+㉮ 프라이밍(priming)
+㉯ 포밍(foaming)
+㉴ 증기 건도의 상승
+㉵ 불순물 농도의 증가
+14. 보일러 전열면의 과열방지를 위하여 보일러물의 순환을 양호하게 하는 방법으로 옳은 것은?
+㉮ 보일러 드럼의 직경을 크게 한다.
+㉯ 수평으로부터 수관 경사도를 작게 한다.
+㉴ 보일러 내의 증기압력과 온도를 높인다.
+㉵ 포화수와 기수혼합물의 비중차를 크게 한다.
+15. 기름 윤활식 선미관 밀봉장치에서 실링의 립부분(lip)에 가해지는 힘이 아닌 것은?
+㉮ 스프링에 의한 힘
+㉯ 고정링이 누르는 힘
+㉴ 고무의 탄성에 의한 힘
+㉵ 해수와 윤활유와의 압력차에 의한 힘
+16. 주기관이 120[rpm]으로 운전중일 때 토크가 75,000[kgf·m]로 계측되었다면 이때 기관의 출력은 약 몇[PS]인가?
+㉮ 1,256[PS]
+㉯ 2,512[PS]
+㉴ 12,560[PS]
+㉵ 25,120[PS]
+17. 스크루 프로펠러에서 전연 공동현상이 가장 먼저 발생하는 곳은?
+㉮ 날개 배면의 선단 부분
+㉯ 날개 배면의 중앙 부분
+㉴ 날개 압력면의 선단 부분
+㉵ 날개 압력면의 중앙 부분
+18. 선체와의 간섭을 줄이기 위해 프로펠러에 주어지는 형상은?
+㉮ 앞날 워시백(wash back)
+㉯ 스큐 백(skew back)
+㉴ 뒷날 워시백(wash back)
+㉵ 캠버(camber)
+19. 고력황동 추진기 날개가 붉은 빛을 띠는 탈아연 현상의 발생 원인은?
+㉮ 공동현상
+㉯ 부동태 피막 현상
+㉴ 이온화 현상
+㉵ 진동 현상
+20. 스크루 추진기의 피치비(pitch ratio)는? (단, D는 추진기의 직경이고 p는 피치이다.)
+㉮ p/(πD)
+㉯ p/D
+㉴ D/p
+㉵ p/(0.7D)
+21. 연료유의 불순물로서 라이너나 피스톤링의 마멸을 진행시키고 유황의 황산화 촉매로도 작용하며 유화철이나 비소를 포함하는 것은?
+㉮ 잔류탄소
+㉯ 회분
+㉴ 유황분
+㉵ 실리카-알루미나
+22. 내연기관용 윤활유를 분류하는 SAE 분류법의 기준은?
+㉮ 점도
+㉯ 비중
+㉴ 밀도
+㉵ 첨가제 성분
+23. 롤링베어링의 5위 호칭에서 외경기호를 나타내는 것은?\n@pic2123
+㉮ 2 1
+㉯ 3
+㉴ 4
+㉵ 5
+24. 윤활유의 점도지수에 대한 설명으로 옳지 않은 것은?
+㉮ 파라핀계 윤활유가 다른 것보다 점도지수가 크다.
+㉯ 온도변화에 대해 점도가 많이 변하면 점도지수가 작다.
+㉴ 기관의 베어링용 윤활유는 점도지수가 커야 한다.
+㉵ 나프텐계 윤활유를 100으로 한다.
+25. 윤활유의 열화 변질을 알아보는 간이시험에 잘 이용되지 않는 것은?
+㉮ 스폿 테스트에 의한 청정분산성과 오탁도 파악
+㉯ 비색 시험에 의한 산성,알칼리성 파악
+㉴ 낙구식 점도계에 의한 점도 측정
+㉵ 유화기에 의한 항유화성 측정
+[제2과목 : 기관2]
+1. 전양정 50[m],  송출량 0.6[m³/min]로 물을 이송하는 원심펌프의 효율은 약 몇 [%]인가? (단, 축동력은 5.5[kW]이다.)
+㉮ 75[%]
+㉯ 83[%]
+㉴ 89[%]
+㉵ 95[%]
+2. 헬레쇼 펌프의 작동에 대한 설명으로 옳은 것은?
+㉮ 유동링(floating ring)은 회전하고 미끄럼쇠(slipper)는 회전하지 않는다.
+㉯ 유동링(floating ring)은 회전하지 않고 미끄럼쇠(slipper)는 회전한다.
+㉴ 소켓링(socket ring)은 회전하지 않고 경사함(tilting box)은 회전한다.
+㉵ 소켓링(socket ring)은 회전하고 경사함(tilting box)은 회전하지 않는다.
+3. 불활성 가스장치(inert gas system)에 대한 설명으로 옳은 것은?
+㉮ 유조선에서 화물유 양하가 끝난 후 빈 공간에 공기를 불어 넣는 장치이다.
+㉯ 보일러 배기가스는 보통 산소 2~4[%], 이산화탄소 12~14[%], 이산화황 0.3[%] 질소80[%] 정도인데 가스 중의 질소와 유황성분을제거한 후 불활성 가스로 사용한다.
+㉴ 불활성 가스장치는 냉각기, 세척기(scrubber), 수적분리기(water-separator), 기밀상자(water seal),송풍기 및 제어시스템 등으로 구성되어 있다.
+㉵ 보일러의 배기가스를 냉각기에서 상온 부근까지 냉각시킨 후 세척기로 보내어 가스 중의 산소, 질소 및 유황성분을 제거한다.
+4. 기름여과장치에서 유면검출 및 배출을 위해 정전용량식 전극봉 한 개와 타이머 한 개 및 솔레노이드 밸브가 설치되는 경우 검출 감도의 조정 및 타이머 시간설정에 대한 설명으로 옳은 것은?
+㉮ 감도가 크면 배출이 시작되는 유면이 낮아지고 타이머 시간을 길게 하면 1회 배출량이 많아진다.
+㉯ 감도가 크면 배출이 시작되는 유면이 높아지고 타이머 시간을 길게 하면 1회 배출량이 많아진다.
+㉴ 감도가 크면 배출이 시작되는 유면이 낮아지고 타이머 시간을 길게 하면 1회 배출량이 적어진다.
+㉵ 감도가 크면 배출이 시작되는 유면이 높아지고 타이머 시간을 길게 하면 1회 배출량이 적어진다.
+5. 선박용 폐유 또는 슬러지 소각기용 펌프로 가장 많이 사용되는 펌프는?
+㉮ 내접형 기어펌프
+㉯ 이모펌프
+㉴ 베인펌프
+㉵ 왕복동 펌프
+6. '선박용 소각기 중 회전식 버너(rotary cup burner)의 회전수는 약 ( )으로 고속 회전하는 주축 내의 기름( )파이프로 폐유를 유입하여 원심력과 공기의 기류에 의해 폐유를 무화시켜 연소시키는 방식이다' 에서( )알맞은 것은?
+㉮ 100~1,000[rpm]
+㉯ 1,000~3,000[rpm]
+㉴ 3,000~6,000[rpm]
+㉵ 6,000~9,000[rpm]
+7. 냉동 능력의 단위에서 1냉동톤[RT]의 크기는?
+㉮ 860[kcal/h]
+㉯ 3,320[kcal/h]
+㉴ 860[kcal/day]
+㉵ 3,320[kcal/day]
+8. 냉매의 물리적 조건으로 옳은 것은?
+㉮ 임계온도는 높고 비체적은 작을 것
+㉯ 임계온도와 응축압력이 모두 높을 것
+㉴ 증발잠열은 크고 대기압하에서 증발온도는 높을 것
+㉵ 증발잠열이 작고 액체상태에서의 비열은 클 것
+9. 공기를 가열할 경우의 습도변화에 대한 설명으로 옳은 것은?
+㉮ 절대습도는 높아진다.
+㉯ 절대습도는 낮아진다.
+㉴ 상대습도는 높아진다.
+㉵ 상대습도는 낮아진다.
+10. 15[˚C]의 냉각된 공기와 35[˚C]의 외기를 중량비 7:3으로 혼합하여 실내에 공급할 경우 공급공기의 온도는 몇[˚C]인가?
+㉮ 19[˚C]
+㉯ 21[˚C]
+㉴ 23[˚C]
+㉵ 25[˚C]
+11. 습공기에 대한 설명으로 옳지 않은 것은?
+㉮ 포화공기에는 수증기가 포함되어 있다
+㉯ 습공기는 일종의 혼합기체로 취급할 수 있다.
+㉴ 습공기 중 공기의 분압에 대한 포화온도를 노점이라 한다.
+㉵ 습도란 공기 중에 포함되어 있는 수증기의 혼합비이며 절대습도와 상대습도가 있다.
+12. 비열이 1[kcal/kgf·℃]인 물860[kgf]를 1시간에 20[℃]에서 70[℃]까지 가열하는 데 필요한 전기히터의 용량은 약 몇인가?(단, 제반 열손실은 무시한다.)
+㉮ 25[kW]
+㉯ 50[kW]
+㉴ 100[kW]
+㉵ 430[kW]
+13. 어떤 기관의 시간당 연료소비율이 74.4[g/PS·h]이면 이 기관의 열효율은 약 몇[%]인가? (단, 기름의 저위 발열량은 10,000[kcal/kgf]이고 1[PS·h]는 632.3[kcal]이다.)
+㉮ 70[%]
+㉯ 75[%]
+㉴ 80[%]
+㉵ 85[%]
+14. 다음 중 에너지의 단위가 아닌 것은?
+㉮ J
+㉯ kcal
+㉴ N·m
+㉵ W
+15. 벽면의 표면 온도와 주위 온도가 각각 40[℃]와 20[℃]이고 열전달계수가 20[W/m²·K]인 경우 벽면에서 주위로 흘러가는 열량은 단위 면적당 몇[W]인가?
+㉮ 100[W]
+㉯ 200[W]
+㉴ 300[W]
+㉵ 400[W]
+16. 진동에 대한 설명으로 옳지 않은 것은?
+㉮ 물체가 움직이지 않으면 진동도 일어나지 않는다.
+㉯ 물체의 고유진동수와 강제진동수가 일치할 경우 심하게 진동할 수 있다.
+㉴ 자유진동에서 감쇠계수가 음의 값을 가지면 시간에 따라 진동은 점차 감소한다.
+㉵ 자유진동에서 감쇠계수가 '0'이면 무한히 진동한다.
+17. 탄성 한도 내에서 인장하중을 받는 봉에 발생하는 응력이 3배가 되면 단위체적 당 저장되는 탄성에너지는 몇 배가 되는가?
+㉮ (1/3)배
+㉯ 3배
+㉴ 6배
+㉵ 9배
+18. 다음 설명 중 옳지 않은 것은?
+㉮ 밀도는 단위 체적당 질량이다.
+㉯ 비중량은 단위 체적당 무게이다.
+㉴ 비중이란 대상물질의 밀도와 4[℃] 물의 밀도와의 비이다.
+㉵ 동점성계수란 점성계수를 비중량으로 나눈 값이다.
+19. 물이 수평 원관 내에서 압력 10[kgf/cm²], 속도,9.8[m/s]로 움직일 때 이 물이 갖는 전양정은 약 몇(total head)[m]인가?
+㉮ 53[m]
+㉯ 98[m]
+㉴ 100[m]
+㉵ 104.9[m]
+20. 길이 1[m], 단면적 100[cm]인 원형봉에 200[kN]의 인장 하중이 작용하고 있을 경우 이 봉에 축적된 탄성에너지는?(단, 재료의 탄성계수는 200[GPa]이다.)
+㉮ 10[N·m]
+㉯ 100[N·m]
+㉴ 1,000[N·m]
+㉵ 10,000[N·m]
+21. 한변의 길이가 10[cm]인 정사각형 단면을 가진 길이 1[m]의 외팔보의 자유단에 집중하중 10[kN]이 작용할 때 이 단순 지지보의 최대 굽힘응력은 몇[MPa]인가?
+㉮ 15[MPa]
+㉯ 30[MPa]
+㉴ 45[MPa]
+㉵ 60[MPa]
+22. 원형 단면의 단면계수Z와 극단면계수Zp와의 관계를 옳게 표시한 것은?
+㉮ Zp = (1/2)Z
+㉯ Zp = Z
+㉴ Zp = 2Z
+㉵ Zp = 4Z
+23. 재료의 S-N곡선에 대한 설명으로 옳은 것은?
+㉮ 가로축은 반복회수를 표시한다.
+㉯ 가로축은 안전율을 표시한다.
+㉴ 세로축은 반복회수를 표시한다.
+㉵ 세로축은 안전율을 표시한다.
+24. 평판 용골(flat plate keel)과 직접 결합되는 선저 내부구조의 부재는?
+㉮ 중심선 거더(center girder)
+㉯ 빔 브래킷(beam bracket)
+㉴ 특설 늑골(web frame)
+㉵ 기둥(pillar)
+25. 강선의 이중저 구조에서 특히 보강되어야 하는 구획이 아닌 곳은?
+㉮ 기관실 내부
+㉯ 선체 앞쪽 부분
+㉴ 밸러스트 탱크 부분
+㉵ 중량화물을 적재하는 선창의 하부
+[제3과목 : 기관3]
+1. 3상 평형회로에서 Y결선을 하면 선간전압과 상전압과의 위상차는 얼마인가?
+㉮ 10˚
+㉯ 30˚
+㉴ 60˚
+㉵ 120˚
+2. 3상 4선식 배전방식에서 3상 선로의 전류가 150[A], 150[A], 100[A](각 전류간의 상차은 120˚이다.)이면 중성선에 흐르는 전류는?
+㉮ @pic2302_a
+㉯ @pic2302_b
+㉴ @pic2302_c
+㉵ @pic2302_d
+3. 저항 4[Ω]과 자기인덕턴스 0.01[H]인 코일의 직렬회로에 50[Hz], 50[V]의 전압을 가했을 경우 회로에 흐르는 전류는 약 몇[A]인가?
+㉮ 5[A]
+㉯ 10[A]
+㉴ 25[A]
+㉵ 12.5[A]
+4. 다음과 같은 회로에서 a, b단자에 200[V]를 가하면 저항 3[Ω]에 흐르는 전류 l₂는 몇 [A]인가?\n@pic2304
+㉮ 10[A]
+㉯ 20[A]
+㉴ 30[A]
+㉵ 40[A]
+5. 운전중인 어느 3상 유도전동기의 슬립이 평소보다 커진 경우의 원인이 될 수 없는 것은?
+㉮ 공급전원의 주파수 감소
+㉯ 구동기계에서의 부하 증가
+㉴ 운전 중 전원이 단상으로 됨
+㉵ 3상 공급전원의 불평형 증가
+6. 교류발전기의 용량을 kVA로 표시하는 이유는 ?
+㉮ 같은 전류가 흘러도 역률에 따라 출력이 달라지기 때문에
+㉯ 전기자 반작용에 의하여 전류가 감소되기 때문에
+㉴ 직류발전기와 구분하기 위해서
+㉵ kVA는 kW와 같은 단위이기 때문에
+7. 권선형 유도전동기와 농형 유도전동기의 차이점에 대한 설명으로 옳은 것은?
+㉮ 권선형에는 2차 전류가 흐르지만 농형에는 2차전류가 흐르지 않는다.
+㉯ 권선형에는 회전자 권선이 슬립링에 연결되고 농형에는 내부에서 단락되어 있다.
+㉴ 권선형은 고정자 권선이 가늘고 권수가 많으나 농형의 고정자 권선은 권선이 굵고 권수가 적다.
+㉵ 권선형은 전동기가 주로 소형이고 농형은 대형이다.
+8. 반도체 기억소자 PROM에 대한 설명으로 옳지 않은 것은?
+㉮ 정보의 연속 쓰기는 불가능하고 단지 읽기만 가능하다.
+㉯ 기억내용을 수시로 바꾸어야 하는 곳에는 사용할 수 없다.
+㉴ 빛에 의해 기억된 내용을 지울 수 있다.
+㉵ 제조과정에서 하드웨어적인 프로그램의 기억에 사용된다.
+9. 다음과 같은 회로에서 T의 온도가 낮아지는 경우 출력 단자의 전압은 어떻게 되는가?(단, T는 NTC 서미스터이다.)\n@pic2309
+㉮ 일정 온도로 낮아지면 Tr이 차단되어 출력은 0[V]에서 9[V]로 높아진다.
+㉯ 온도가 낮아짐에 따라 서서히 높아진다.
+㉴ 온도가 낮아짐에 따라 서서히 낮아진다.
+㉵ 일정 온도로 낮아지면 Tr이 도통되어 출력은 9[V]에서 0[V]로 낮아진다.
+10. 다음과 같은 회로에서 X와 Y의 동작을 나타낸 논리식으로 옳은 것은?\n@pic2310
+㉮ X = A, Y = C
+㉯ X = A+B, Y = B+C
+㉴ X = A+B+C, Y = A+B+C
+㉵ X = B+C, Y = A+B
+11. 다음과 같은 동일한 제너다이오드를 사용한 클리핑회로에서 입력 Vi에 정현파가 인가되면 출력 Vo의 파형은? (단, 다이오드의 제너전압은 입력전압의 최댓값보다 작다.)\n@pic2311
+㉮ @pic2311_a
+㉯ @pic2311_b
+㉴ @pic2311_c
+㉵ @pic2311_d
+12. 다음과 같은 OP Amp회로의 입출력 특성으로 옳은것은?\n@pic2312
+㉮ @pic2312_a
+㉯ @pic2312_b
+㉴ @pic2312_c
+㉵ @pic2312_d
+13. 타이머와 유사한 작동을 나타내는 것은?
+㉮ 비안정 멀티바이브레이터
+㉯ 단안정 멀티바이브레이터
+㉴ 쌍안정 멀티바이브레이터
+㉵ 접점형 멀티바이브레이터
+14. 아날로그 - 디지털 변환기(ADC)의 방식이 아닌 것은?
+㉮ R-2R 사다리 방식(R-2R ladder type)
+㉯ 디지털 램프 방식(digital ramp type)
+㉴ 연속 근사 방식(successive approximation type)
+㉵ 이중 경사 적분 방식(dual-slope integrated type)
+15. 전압을 변위로 변환시킬 수 있는 요소는?
+㉮ 전자석
+㉯ 광전관
+㉴ 차동변압기
+㉵ 벨로스
+16. 측정 범위가 계기압력으로 0~10[bar]인 압력전송기(pressure transmitter)에서 현재의 압력이 대기압이라면 출력전류는 약 몇 [mA]인가?
+㉮ 1[mA]
+㉯ 2[mA]
+㉴ 4[mA]
+㉵ 7[mA]
+17. 힘→변형→전기저항과 같은 변환과정을 갖는 센서는?
+㉮ 스트레인게이지
+㉯ 차동변압기
+㉴ 파이로미터
+㉵ 압전소자
+18. 다음 그림과 같은 레벨 측정 시스템에서 알고 있는 높이 l 의 압력 P₁을 측정하는 주된 이유는?\n@pic2318
+㉮ 액체 밀도의 보상
+㉯ 액체 유전율의 보상
+㉴ 액체 온도의 보상
+㉵ 대기압의 보상
+19. 저항온도계(RTD)에 대한 설명으로 옳지 않은 것은?
+㉮ 저항온도계는 보통 3개의 전선으로 연결된다.
+㉯ 저항온도계의 감온선이 끊어지면 온도 지시값은 내려간다.
+㉴ 저항온도계는 저항의 변화를 전압신호로 바꾸기위한 신호변환회로에 연결된다.
+㉵ 저항온도계로는 백금 저항온도계가 많이 사용된다.
+20. 다음과 같은 유압논리 회로는?\n@pic2320
+㉮ AND회로
+㉯ OR회로
+㉴ NOR회로
+㉵ NAND회로
+21. @pic2321
+㉮ 1/s
+㉯ 1/(s+1)
+㉴ 1/(s+2)
+㉵ s+2
+22. 다음 그림과 같은 유압 밸브와 등가인 전기회로는?\n@pic2322
+㉮ @pic2322_a
+㉯ @pic2322_b
+㉴ @pic2322_c
+㉵ @pic2322_d
+23. 공기압식 Controller의 비례대 조절기구에 대한 설명으로 옳은 것은?
+㉮ 변위 평형식의 비례대 조절은 플래퍼 구동암과 비례 레버의 각도를 조정하여 얻는다.
+㉯ 역평형식의 비례대 조절은 노즐과 플래퍼의 거리를 조정함으로써 얻어진다.
+㉴ Controller의 감도가 좋아지면 비례대도 커진다.
+㉵ Controller의 감도는 미분 및 적분 동작의 크기에는 영향을 미치지 않는다.
+24. 다음 중 변위를 전압으로 변환하는 장치는?
+㉮ 노즐플래퍼
+㉯ 벨로스
+㉴ 차동변압기
+㉵ 측온저항
+25. 대형 디젤기관의 연료분사계통에서 연료의 점도를 제어하기 위해 일반적으로 사용되는 점도계는?
+㉮ 진동식 점도계
+㉯ 회전식 점도계
+㉴ 모세관 점도계
+㉵ 부자식 점도계
+[제4과목 : 직무일반]
+1. 수심 9[m]이고 파공 부분의 등가면적이 100[cm²]일때의 침수유량은 수심 16[m]이고 파공 부분 등가면적이 50[cm²]일 때의 침수유량보다 몇 배 더 큰가?
+㉮ 1.2배
+㉯ 1.5배
+㉴ 1.8배
+㉵ 2배
+2. 디젤 주기관에서 어느 한 실린더의 피스톤을 발출하여 감통운전할 경우의 조치사항으로 옳지 않은 것은?
+㉮ 진동이 심하지 않은 회전수 영역에서 운전하도록 한다.
+㉯ 다른 실린더에 과부하가 걸리지 않도록 한다.
+㉴ 해당 실린더의 실린더유 공급을 줄인다.
+㉵ 해당 실린더로의 연료유 공급을 차단한다.
+3. 순차기동 프로그램(sequential start program)이 설치되어 있는 선박에서 항해 중 정전이 되었다가 전원이 복구되는 경우 ACB투입 직후 순차적으로 자동 기동되는 기기가 아닌 것은?
+㉮ Steering gear
+㉯ Stern tube L.O. pump
+㉴ M/E L.O. pump
+㉵ F.W.G. ejector pump
+4. 연료유 청정기에서 클러치의 마찰패드가 심하게 마멸되었을 경우 나타나는 현상으로 가장 적절한 것은?
+㉮ 기동 시 전동기의 부하전류가 평소보다 더 증가하고 정상 회전수에 이르는 시간이 단축된다.
+㉯ 기동 시 전동기의 부하전류가 평소보다 더 감소하고 정상 회전수에 이르는 시간이 길어진다.
+㉴ 기동 시 청정기 분리통에서의 진동이 심해지고 정상 회전수에 이르는 시간이 단축된다.
+㉵ 기동 시 청정기 분리통에서의 진동이 심해지고 정상 회전수에 이르는 시간이 길어진다.
+5. 가스용접설비 중 재해방지장치인 안전기에 대한 설명으로 옳은 것은?
+㉮ 아세틸렌가스 압력이 산소 압력보다 매우 낮기때문에 토치의 고장 또는 취급 잘못으로 인하
+여 산소가 아세틸렌가스 쪽으로 역류하는 것을 방지하기 위한 장치이다.
+㉯ 아세틸렌가스에 함유되어 있는 불순물에 의한 폭발을 방지하기 위해 아세틸렌가스에 함유된 불순물을 제거하는 장치이다.
+㉴ 산소나 아세틸렌가스의 폭발을 방지하고 용접이 용이하도록 가스의 압력을 낮추어 주는 장치이다.
+㉵ 압력이 높은 산소용기에 설치하여 높은 압력에 의한 파열을 방지해 주는 장치이다.
+6. 보일러에서 생성되는 스케일이 아닌 것은?
+㉮ 탄산칼슘
+㉯ 규산염
+㉴ 인산나트륨
+㉵ 마그네슘 화합물
+7. 항해구역에 제한을 받지 않는 선박에서 비치해야 할 보일러 예비품의 종류와 그 수량으로 옳지 않은 것은?
+㉮ 패킹을 포함한 원통형 수면계 유리 : 6개
+㉯ 수관 및 과열기관 : 1 보일러관 총수의 5[%]
+㉴ 분유버너의 노즐(완비품) : 1보일러분
+㉵ 안전밸브의 스프링(과열기 안전밸브의 스프링도 포함)) : 각종 1개
+8. 선박의 정비에 대한 안전관리체제 수립 시 포함되어야할 사항으로 옳지 않은 것은?
+㉮ 정비계획에 따라 정비·유지되고 있는지의 여부를 확인하는 절차
+㉯ 선박의 안전과 관련한 중요 설비 및 기능을 식별할 수 있는 절차
+㉴ 비상상황에 대응하기 위한 훈련 및 연습 계획의 절차
+㉵ 설비 및 기술적 체계를 향상시키는 방법과 예비설비 및 기술적 체계에 대한 정기적인 시험에 관한 절차
+9. 선박기관기준상 '내연기관의 실린더 지름이 ( )를 넘는 내연기관의 실린더에는 실린더 내의 과압을 방지할 수 있도록 연속최대출력 시의 실린더 내 최대압력의 ( )이하의 압력에서 작동되도록 조정된 도출밸브를 설치해야 한다'에서 ( )에 각각 알맞은 것은?
+㉮ 200[mm], 110[%]
+㉯ 200[mm], 140[%]
+㉴ 230[mm], 110[%]
+㉵ 230[mm], 140[%]
+10. 선박기관기준상 제 1종 프로펠러축에 해당되지 않는것은?
+㉮ 일체의 슬리브를 갖는 프로펠러축
+㉯ 내식성 재료로 제작된 프로펠러축
+㉴ 선미관 내에 적절한 윤활유 장치를 갖는 프로펠러축
+㉵ 에폭시 코팅된 프로펠러축
+11. 기관실 기름여과장치의 자동배유장치에서 감도 및 타이머 조정이 콜레서에 미치는 영향으로 가장 적절한 것은?
+㉮ 유면 검출기의 감도가 둔하고 전자변 닫힘 타이머의 설정시간이 짧을수록 콜레서의 수명이 단축된다.
+㉯ 유면 검출기의 감도가 민감하고 전자변 닫힘 타이머의 설정시간이 짧을수록 콜레서의 수명이 단축된다.
+㉴ 유면 검출기의 감도가 민감하고 전자변 닫힘 타이머의 설정시간이 길수록 콜레서의 수명이 단축된다.
+㉵ 유면 검출기의 감도가 둔하고 전자변 닫힘 타이머의 설정시간이 길수록 콜레서의 수명이 단축된다.
+12. 해양환경관리법상 선박소유자는 연료유 공급서의 사본을 연료유를 공급 받은 후 몇 년간 선내에 보관해야 하는가?
+㉮ 1년
+㉯ 2년
+㉴ 3년
+㉵ 4년
+13. 총괄보안책임자의 경력에 대한 자격요건으로 옳지 않은 것은?
+㉮ 국제항해선박의 승선경력이 3년 이상인 자
+㉯ 보안업무에 종사한 경력이 3년 이상인 자
+㉴ 해양수산업 관련 단체에 근무한 경력이 3년 이상인 자
+㉵ 국제항해선박의 승선경력 보안업무에 종사한 경력 또는 해양수산업 관련 단체에 근무한 경력을 합산한 경력이 6년 이상인 자
+14. 비상사고 유형별로 전 선원의 배치 위치와 임무,휴대품 등을 기록한 서식은?
+㉮ UMA CHECK LIST
+㉯ MUSTER LIST
+㉴ FIRE DRILL LIST
+㉵ FIRE CONTROL PLAN
+15. 주간의 정상적인 날씨에서 가장 효과적인 조난 신호용구는?
+㉮ 일광신호거울
+㉯ 발연부신호
+㉴ 신호호각
+㉵ 신호홍염
+16. 선박보안경보장치의 성능요건과 설치장소에 대한 설명으로 옳지 않은 것은?
+㉮ 작동위치는 항해 선교와 그 밖의 1개 이상의 장소에 설치할 것
+㉯ 다른 선박으로 보안경보신호가 송신되지 않을 것
+㉴ 작동해제 또는 재설정 시까지 선박보안경보장치의 작동이 중단되지 않을 것
+㉵ 발신 선박의 위치가 식별되지 않을 것
+17. 선박보안계획서에 포함되어야 할 내용이 아닌 것은?
+㉮ 제한구역의 관리
+㉯ 내부보안심사 절차
+㉴ 보안계획서의 시행을 위한 교육·훈련
+㉵ 국제선박보안증서 발급 절차
+18. 선원법령상 국제안전관리규약에 명시되어 있지 않은 선박에서 선체손상 대처훈련의 실시 주기는?
+㉮ 1개월
+㉯ 3개월
+㉴ 6개월
+㉵ 9개월
+19. SOLAS 협약 및 개정규정상 화물선의 탈출설비에 대한 설명으로 옳지 않은 것은?
+㉮ 최하층 개방갑판 보다 상층의 탈출설비는 개방갑판으로 통하는 계단 문 또는 2가지의 조합으로 되어야 한다.
+㉯ 최하층 개방갑판 보다 하층의 주 탈출설비는 계단으로 하여야 하며 제 2의 탈출설비는 트렁크또는 계단으로 할 수 있다.
+㉴ 거주구역의 모든 층에서는 각각 폐위된 1개 또는 일단의 장소로부터 상호 멀리 떨어진 2개 이상의 탈출설비를 설치해야 한다.
+㉵ 탈출수단으로 사용되는 계단 및 복도의 실제 통과 폭이 700[mm]미만인 경우에는 계단 및 복도의 어느 한 쪽에 핸드레일을 설치해야 한다.
+20. MARPOL 협약 및 개정규정에 포함되지 않는 것은?
+㉮ SEEMP의 선내 비치
+㉯ SOPEP의 선내 비치
+㉴ 국제육상시설연결구의 설치
+㉵ 표준배출연결구의 설치
+21. SOLAS 협약 및 개정규정상 모든 선원이 받아야 될 교육 내용에 포함되지 않는 것은?
+㉮ 진수를 위해 사용되는 폴의 신환 방법
+㉯ 소화설비의 작동과 사용방법
+㉴ 체온저하의 문제와 이를 위한 구급 처치법 및 적절한 구급절차
+㉵ 황천 항해 시 선박의 구명설비를 사용하는 데 필요한 특별교육
+22. SOLAS 협약 및 개정규정상 '선교로부터 통상 기관이 제어되는 기관구역 또는 기관제어실 내의 장소에 명령을 전달할 수 있는적어도 ( )개의 독립된 통신수단을 구비해야 하고 이중 1개는 기관구역 및 선교 양쪽에서 명령 및 응답을 볼 수 있게 표시하는 ( )로 하여야 하며 기관을 제어할 수 있는 기타 모든 장소에는 적당한 통신수단을 설치해야 한다'에서에 각각 알맞은것은?
+㉮ 2, 직통전화
+㉯ 3, 직통전화
+㉴ 2, 엔진텔레그래프
+㉵ 3,엔진텔레그래프
+23. SOLAS 협약 및 개정규정상 선박에서의 소방원 장구 비치조건으로 옳은 것은?
+㉮ 일반선박에는 최소한 1조를 비치해야 한다.
+㉯ 일반선박에는 최소한 3조를 비치해야 한다.
+㉴ 탱커에는 최소한 2조를 비치해야 한다.
+㉵ 탱커에는 최소한 4조를 비치해야 한다.
+24. MARPOL 협약 및 개정규정상 '승인된 연속공급형의 소각기는 연소실 가스 출구 온도가 ( ) 미만일 경우 폐기물이 소각기에 공급 되어서는 안 되며 소각기가 일괄 장착형인 경우 시동 후 ( )이내에 연소실 온도가 ( )에 도달되어야 하며 ( )이상의 온도가 유지되어야 한다' 에서 ( )에 각각 알맞은 것은?
+㉮ 650[℃], 3분, 600[℃], 650[℃]
+㉯ 850[℃], 5분, 600[℃], 850[℃]
+㉴ 850[℃], 3분, 650[℃], 850[℃]
+㉵ 1200[℃], 5분, 650[℃], 1,200[℃]
+25. MLC 해사노동협약상 항해 중 건강진단서의 유효기간이 만료되었을 경우에 대한 설명으로 옳은 것은?
+㉮ 3개월을 초과하지 않는 조건으로 건강진단서를 취득할 수 있는 차기 항구까지 효력을 가진다.
+㉯ 항해중이라도 건강진단서의 유효기간이 만료된 경우에는 그 날로부터 효력이 중지된다.
+㉴ 항해 중 건강진단서의 유효기간이 만료된 경우에는 다음 건강진단 때까지 효력을 가진다.
+㉵ 항해 중 건강진단서의 유효기간이 만료된 경우에는 그 날 로부터 1개월의 범위 내에서 효력이 연장된다.
+[제5과목 : 영어]
+1. The lines used to secure the ship to a wharf, pier or another ship are called ( ).
+㉮ life lines
+㉯ mooring lines
+㉴ signal lines
+㉵ whipping lines
+2. ( ) is a deformation process in which the work is compressed between two dies, using either impact or gradual pressure to from the part. This is an important industrial process used to make a variety of high-strength components such as engine crankshafts and connecting rods and gears.
+㉮ Rolling
+㉯ Forging
+㉴ Drawing
+㉵ Extrusion
+3. In order to find out which lifeboat you are assigned to, you should look at the ( ). 
+㉮ certificate of inspection
+㉯ station bill
+㉴ shipboard oil pollution emergency plan
+㉵ fire control plan
+4. It is ( A ) to enter a fuel tank ( B ) the appropriate 'enclosed space entry permit' conditions have been complied with and the permit issued.
+㉮ A : strictly forbidden, B : when
+㉯ A : strictly forbidden, B : unless
+㉴ A : strongly recommended, B : unless
+㉵ A : strongly recommended, B : when
+5. ( ) means subdivision of material into its smallest parts, particularly applied to liquids reduced to a fine spray, e.g. diesel engine injections. 
+㉮ Penetration
+㉯ Atomization
+㉴ Dispersion
+㉵ Spraying
+6. The flame is monitored by a photo-cell. Abnormal loss of flame or ignition failure results in shut down of the combustion system and operation of an alarm. Sometimes trouble with combustion will have the same effect if the protective glass over the photo-cell becomes smoke ( ).
+㉮ blackened
+㉯ brightened
+㉴ cleaned
+㉵ polished
+7. The condensate is delivered to the appropriate tanks by the distilled water pump. Quality is continuously tested by the salinometer both at start up and during operation. If the device registers an excess of salinity it will ( ) the product and activate the alarm.
+㉮ dump
+㉯ retain
+㉴ take
+㉵ utilize
+8. Purifiers have a gravity disc ( ) between fuel and water.
+㉮ together with impellers to include liquids
+㉯ to locate impellers and separating discs
+㉴ that locates 2 impellers to deliver liquids
+㉵ that works to create a line of separation
+9. The sealing devices in stern tube are to be tested for leakage under ( ) after being installed in ships.
+㉮ pressure of 1 bar
+㉯ pressure of 0.5 bar
+㉴ working oil pressure
+㉵ pressure of 2 bar
+10. When the temperature requirements have been fulfilled, the change to heavy oil is performed by turning the change-over cock. The temperature rise is then continued at a rate of about 2[℃] per minute, until reaching the required viscosity. Change to diesel oil when the temperature of the heavy oil in the preheater has dropped to about 25[℃] above the temperature in the diesel oil Service tank, however, not below ( )[℃].
+㉮ 45
+㉯ 75
+㉴ 120
+㉵ 150
+11. In a flash type evaporator, heated water under pressure is converted to vapor by a sudden ( ). 
+㉮ increase in its temperature
+㉯ decrease in its velocity
+㉴ increase in its pressure
+㉵ decrease in its pressure
+12. In the turbine, the heat is first converted into ( A ) energy by the expansion of the steam, and this ( B ) energy is then transformed into ( C ) work on the rotor blades.
+㉮ A : kinetic, B : kinetic, C : mechanical
+㉯ A : kinetic, B : static, C : mechanical
+㉴ A : velocity, B : velocity, C : static
+㉵ A : pressure, B : velocity, C : static
+13. The temperature rise or heating of alternator depends upon cumulative effect of copper losses and core losses. As there is no role of power factor upon these losses, the rating of alternator is generally given as the unit of VA or kVA. In other words, as the losses of alternator are ( ), hence power factor does not come into picture when power rating of an alternator is calculated.
+㉮ dependent on electrical output
+㉯ independent of electrical power factor
+㉴ dependent on the armature reaction
+㉵ independent of armature current
+14. It should be noted that the nozzle tip and the needle valve are a lapped matched ( A ) that cannot be interchanged. If there is a problem with either one, the entire unit must be replaced. ( B ) is the finishing of working metal surfaces by using an exceedingly fine abrasive material. Any irregularities in two metal surfaces compliment each other and the tolerance or the distance between the surfaces may be less than 3[m].
+㉮ A : pair, B : Lapping
+㉯ A : pair, B : Grinding
+㉴ A : both, B : Lapping
+㉵ A : both, B : Grinding
+15. ( ) is the temperature at which oil cease to flow. This temperature has relevance when the engine is used in cold regions.
+㉮ Combustion point
+㉯ Fire point
+㉴ Flash point
+㉵ Pour point
+16. Slip is the difference between the speed of the rotating magnetic field of the stator winding and the speed of the rotor. As slip increases, the rotor speed ( A ). The voltage and frequency in the rotor increases with the slip. ( B ) motors have no slip because the speed of the rotor equals the speed of the revolving magnetic field in the stator. Slip varies with the load on the motor.
+㉮ A : increases, B : Induction
+㉯ A : increases, B : Synchronous
+㉴ A : decreases, B : Induction
+㉵ A : decreases, B : Synchronous
+17. In dealing with gases and vapours, it is usual to express the specific ( ) at constant pressure or at constant volume.
+㉮ volume
+㉯ heat
+㉴ gravity
+㉵ density
+18. Dear Mr. Kang: We have received your letter of November 12, 2021 with many thanks. Confirming the annexed record, the figures of the coupling alignment were not reasonable and correct. Maybe those were not checked under a pushing  up condition as temporary point for aligning the shaft. You had better attend a sea trial to check the condition of main engine, the vibration of shaft, and the parts of main engine bearing. After the sea trial, main bearings & journals, crank pins & their bearings, crank arm ( ) of main engine will be examined. We are very grateful to your kind cooperation.
+㉮ deduction
+㉯ detection
+㉴ detention
+㉵ deflection
+19. Which of the followings is not included in the calculation report of indicator card?
+㉮ Mean effective pressure
+㉯ Compression pressure
+㉴ Indicated horse power
+㉵ Delivery horse power
+20. ( ) means the level of responsibility associated with performing assigned tasks, duties or responsibilities on board a seagoing ship under the direction of an individual serving in the operational or management level.
+㉮ Support level
+㉯ Operational level
+㉴ Management level
+㉵ Performance level
+21. Emergency steering drill is required at least once every ( ) in accordance with the SOLAS convention.
+㉮ 1 month
+㉯ 2 months
+㉴ 3 months
+㉵ 6 months
+22. The International Maritime Organization is the United Nations agency ( ) international ship safety standards.
+㉮ with responsibility for setting and maintaining
+㉯ with responsibility to judge and encourage
+㉴ to implement and reasonably focus on
+㉵ to implement and gradually draw
+23. In accordance with the SOLAS Convention as amended, ( ) shall be provided to be operated from engine control room or at the maneuvering platform as appropriate, and shall be clearly ( ) in the engineers' accommodation.
+㉮ A : an engineers' alarm, B : visible
+㉯ A : an engineers' alarm, B : audible
+㉴ A : a general alarm, B : visible
+㉵ A : a general alarm, B : audible
+24. Under the SOLAS Convention as amended, boilers shall be provided with means to supervise and control the ( ) of the feedwater. Suitablearrangements shall be provided to preclude, as far as practicable, the entry of oil or other contaminants which may ( ) affect the boiler.
+㉮ quality, positively
+㉯ quality, adversely
+㉴ quantity, positively
+㉵ quantity, adversely
+25. According to the SOLAS Convention as amended, float-free launching is the method of launching a ( ) whereby the craft is automatically released from a sinking ship and is ready for use.
+㉮ rescue boat
+㉯ mobile supply vessel
+㉴ survival craft
+㉵ davit
+[답]
+기관1
+사
+가
+나
+나
+아
+가
+사
+나
+가
+가
+아
+아
+사
+아
+나
+사
+가
+나
+사
+나
+나
+가
+나
+아
+아
+기관2
+사
+나
+사
+나
+가
+사
+나
+가
+아
+나
+사
+나
+아
+아
+아
+사
+아
+아
+아
+가
+아
+사
+가
+가
+사
+기관3
+나
+아
+나
+나
+가
+가
+나
+사
+사
+가
+나
+아
+나
+가
+가
+사
+가
+가
+나
+나
+사
+가
+가
+사
+사
+직무일반
+나
+사
+아
+나
+가
+사
+가
+사
+아
+아
+가
+사
+아
+나
+나
+아
+아
+사
+아
+사
+가
+사
+아
+나
+가
+영어
+나
+나
+나
+나
+나
+가
+가
+아
+사
+나
+아
+가
+나
+가
+아
+아
+나
+아
+아
+가
+사
+가
+나
+나
+사

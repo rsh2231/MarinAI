@@ -1,0 +1,1159 @@
+{
+  "subject": {
+    "inning": 1,
+    "year": 2023,
+    "name": "기관사 2급",
+    "type": [
+      {
+        "string": "1.기관1",
+        "questions": [
+          {
+            "num": 1,
+            "answer": "아",
+            "ex1Str": "작동행정은 연료유가 연소되어 발생한 열에너지가 크랭크축을 회전시켜 기계적 에너지로 바뀌는 행정이다.",
+            "ex2Str": "공기를 압축하면 그 압력과 온도는 상승하며 열이 외부로 전달되는 시간이 없을 정도로 급속히 압축하는 것을 단열압축이라 한다.",
+            "ex3Str": "연료유의 연소에는 최소로 필요한 공기량이 정해져 있고 공기량과 연료유의 양에 의해 마력을 산출할 수 있다. ",
+            "ex4Str": "행정이란 피스톤이 상사점에서 하사점으로 또는 하사점에서 상사점으로 이동하는 거리를 말하며 크랭크축이 1회전하면 1행정, 2회전하면 2행정 작동이 된다.",
+            "questionsStr": "디젤기관의 작동에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 2,
+            "answer": "가",
+            "ex1Str": "지시마력, 기계손실",
+            "ex2Str": "지시마력, 지시열효율",
+            "ex3Str": "제동마력, 연료소비율",
+            "ex4Str": "제동마력, 지시열효율",
+            "questionsStr": "디젤 주기관의 기계효율을 구할 수 있는 요소로만 짝지어진 것은?"
+          },
+          {
+            "num": 3,
+            "answer": "사",
+            "ex1Str": "잔류가스를 제거할 목적으로 설정한다.",
+            "ex2Str": "연소실을 냉각시키는 효과가 있다.",
+            "ex3Str": "하사점을 중심으로 하여 대칭이 되도록 설정한다.",
+            "ex4Str": "과급기관에서는 무과급 기관에 비하여 크게 설정한다.",
+            "questionsStr": "4행정 사이클 디젤기관의 밸브 오버랩에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 4,
+            "answer": "아",
+            "ex1Str": "크랭크암의 길이",
+            "ex2Str": "연접봉과 크랭크암의 길이 비",
+            "ex3Str": "피스톤에 작용하는 가스 압력",
+            "ex4Str": "크랭크 저널의 길이",
+            "questionsStr": "2행정 사이클 디젤기관에서 크랭크의 회전력에 가장 영향을 적게 미치는 요소는?"
+          },
+          {
+            "num": 5,
+            "answer": "사",
+            "ex1Str": "기관의 선수 측 크랭크 스로(throw)",
+            "ex2Str": "기관의 중앙 크랭크 스로(throw)",
+            "ex3Str": "플라이휠에 가장 가까운 크랭크 스로(throw)",
+            "ex4Str": "기관의 중앙부 양 쪽의 크랭크 스로(throw)",
+            "questionsStr": "디젤기관에서 크랭크암의 개폐작용이 일어나기 가장 쉬운 곳은?"
+          },
+          {
+            "num": 6,
+            "answer": "가",
+            "ex1Str": "실린더의 내부 윤활작용이 나쁠 때",
+            "ex2Str": "배기계통 내부에 카본이 쌓였을 때",
+            "ex3Str": "배기온도가 높아질 때",
+            "ex4Str": "후연소가 오래 계속될 때",
+            "questionsStr": "디젤기관에서 배기가스의 배압이 높아지는 경우의 원인이 아닌 것은?"
+          },
+          {
+            "num": 7,
+            "answer": "가",
+            "ex1Str": "압축비를 낮춘다.",
+            "ex2Str": "냉각수 온도를 높인다.",
+            "ex3Str": "연소실 온도를 높인다.",
+            "ex4Str": "착화지연을 짧게 한다.",
+            "questionsStr": "디젤 노킹의 방지 방법으로 옳지 않은 것은?"
+          },
+          {
+            "num": 8,
+            "answer": "가",
+            "ex1Str": "파일럿밸브의 운동 방향",
+            "ex2Str": "작동유의 압력 크기",
+            "ex3Str": "축압기의 운동 방향",
+            "ex4Str": "원심추의 회전 방향",
+            "questionsStr": "유압식 조속기에서 출력피스톤의 운동은 어느 것에 의하여 직접 관제되는가?"
+          },
+          {
+            "num": 9,
+            "answer": "나",
+            "ex1Str": "과급기가 소형으로 된다.",
+            "ex2Str": "저부하 운전 범위가 넓다.",
+            "ex3Str": "배기관 장치의 구조가 간단하다.",
+            "ex4Str": "고과급일수록 유리하다.",
+            "questionsStr": "동압과급방식과 비교하여 정압과급방식의 장점이 아닌 것은?"
+          },
+          {
+            "num": 10,
+            "answer": "나",
+            "ex1Str": "흡ㆍ배기 계통이 오손되었을 때",
+            "ex2Str": "연료 분사압력이 높을 때",
+            "ex3Str": "선저가 심하게 오손되었을 때",
+            "ex4Str": "배가 급선회할 때",
+            "questionsStr": "디젤기관에서 과급기 서징의 발생 원인이 아닌 것은?"
+          },
+          {
+            "num": 11,
+            "answer": "사",
+            "ex1Str": "면적은 안전밸브의 스프링 길이에 비례한다.",
+            "ex2Str": "면적은 안전밸브의 스프링 길이에 반비례한다.",
+            "ex3Str": "면적은 스프링의 장력이 클수록 작아진다.",
+            "ex4Str": "면적은 스프링의 장력이 클수록 커진다.",
+            "questionsStr": "보일러의 증발량이 같을 때 보일러 안전밸브의 면적에 대한 설명으로 가장 적절한 것은?"
+          },
+          {
+            "num": 12,
+            "answer": "아",
+            "ex1Str": "주 증기 정지밸브를 급하게 개방한 경우",
+            "ex2Str": "보일러 물에 유분이 많은 경우",
+            "ex3Str": "증기실 용적이 부족한 경우",
+            "ex4Str": "부하가 갑작스럽게 감소한 경우",
+            "questionsStr": "보일러에서 기수공발 현상이 발생하는 원인이 아닌 것은?"
+          },
+          {
+            "num": 13,
+            "answer": "아",
+            "ex1Str": "증기내관은 프라이밍을 방지하기 위해 증기드럼의 상단에 설치되며 위쪽 방향으로 다수의 구멍이 뚫려 있어 증기부의 넓은 범위에서 증기를 수집하므로 증기의 유속을 줄일 수 있다.",
+            "ex2Str": "급수내관은 증기드럼의 급수 입구측에 열응력을 줄이기 위해 증기드럼의 하단에 설치되며 위쪽 방향으로 다수의 구멍이 뚫려 있으며 관의 끝단은 막혀 있다.",
+            "ex3Str": "증기분리기는 드럼의 증기부에 설치되며 기수혼합물이 유입되면서 생기는 선회운동에 의해 물과 증기의 비중차로 수분을 분리하는 장치이다.",
+            "ex4Str": "수저 방출관은 증기드럼의 상용 수위보다 약간 아래에 설치하여 수면의 불순물을 외부로 방출시키기 위한 장치이다.",
+            "questionsStr": "보일러의 내부 부속구에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 14,
+            "answer": "사",
+            "ex1Str": "저온부식을 방지하기 위해 가능한 한 공기과잉률을 작게 한다.",
+            "ex2Str": "연소가스의 온도를 항상 바나듐의 융점 이하로 유지시킨다.",
+            "ex3Str": "질소산화물을 줄이기 위해 연소온도를 높게 유지하고 고온연소영역에서 체류시간을 길게 한다.",
+            "ex4Str": "저온부식을 방지하기 위해 유황성분이 적은 연료를 사용하고 첨가제 등을 사용하여 황산가스의 노점을 낮춘다.",
+            "questionsStr": "선박용 보일러에서 연소에 의해 발생되는 장해를 방지하기 위한 대책으로 옳지 않은 것은?"
+          },
+          {
+            "num": 15,
+            "answer": "사",
+            "ex1Str": "실린더 내의 가스 폭발 압력",
+            "ex2Str": "기관의 왕복동 관성력",
+            "ex3Str": "플라이휠의 관성 모멘트",
+            "ex4Str": "프로펠러의 변동 토크",
+            "questionsStr": "추진축계의 비틀림 진동을 일으키는 기진력과 직접적인 관계가 없는 것은?"
+          },
+          {
+            "num": 16,
+            "answer": "가",
+            "ex1Str": "추진기축의 특정 부위에서 크로스마크 모양의 크랙이 발생한다.",
+            "ex2Str": "중간축의 가운데 부위에서 크로스마크 손상이 집중적으로 발생한다.",
+            "ex3Str": "중간축 전체 부위의 표면에 분산되어 크로스마크 모양의 크랙이 발생한다.",
+            "ex4Str": "스러스트 베어링 가까운 부위의 중간축에 크로 스마크 모양의 크랙이 발생한다.",
+            "questionsStr": "디젤 주기관의 추진 축계에 비틀림 응력이 반복적으로 과도하게 작용하면 발생되는 현상으로 옳은 것은?"
+          },
+          {
+            "num": 17,
+            "answer": "나",
+            "ex1Str": "비틀림진동",
+            "ex2Str": "종진동",
+            "ex3Str": "횡진동",
+            "ex4Str": "고유진동",
+            "questionsStr": "추진축계의 진동 중에서 선체에 가장 영향을 많이 미치는 것은?"
+          },
+          {
+            "num": 18,
+            "answer": "아",
+            "ex1Str": "표면 조도",
+            "ex2Str": "직경",
+            "ex3Str": "피치",
+            "ex4Str": "날개 두께",
+            "questionsStr": "다음 중 프로펠러 효율에 직접적으로 영향을 미치지 않는 것은?"
+          },
+          {
+            "num": 19,
+            "answer": "사",
+            "ex1Str": "선체 진동 감소",
+            "ex2Str": "추진 성능 향상",
+            "ex3Str": "선미관 베어링에 걸리는 하중 감소",
+            "ex4Str": "추진기 직경과 회전수의 결정이 용이",
+            "questionsStr": "선미의 구조물과 추진기와의 간격이 클 때 생기는 이점이 아닌 것은?"
+          },
+          {
+            "num": 20,
+            "answer": "사",
+            "ex1Str": "0.75R 부근",
+            "ex2Str": "0.8R 부근",
+            "ex3Str": "0.9R 부근",
+            "ex4Str": "날개 끝 부근",
+            "questionsStr": "추진기에서 공동현상이 가장 일어나기 쉬운 부분은?(단, R은 추진기의 반경이다.)"
+          },
+          {
+            "num": 21,
+            "answer": "나",
+            "ex1Str": "15[℃]에서 380[cSt]",
+            "ex2Str": "50[℃]에서 380[cSt]",
+            "ex3Str": "60[℃]에서 380[cSt]",
+            "ex4Str": "100[℃]에서 380[cSt]",
+            "questionsStr": "IFO 380이라는 국제 중유규격에서 380의 의미는?"
+          },
+          {
+            "num": 22,
+            "answer": "가",
+            "ex1Str": "청정기 비중판의 내경은 비중이 클수록 더 큰것을 사용한다.",
+            "ex2Str": "저온부식의 방지를 위해 알칼리가가 높은 실린더유를 사용한다.",
+            "ex3Str": "잔류탄소, 회분 등에 의한 오손과 마멸 방지를 위해 전처리를 통해 가능한 유해성분을 제거한다.",
+            "ex4Str": "청정기의 입구온도를 높게 유지하고 통유량을 감소시킨다.",
+            "questionsStr": "저질중유의 장해 및 대책으로 옳지 않은 것은?"
+          },
+          {
+            "num": 23,
+            "answer": "나",
+            "ex1Str": "TAN",
+            "ex2Str": "TBN",
+            "ex3Str": "침전값",
+            "ex4Str": "Flash point",
+            "questionsStr": "선박용 디젤 주기관에서 시스템 윤활유 교환의 척도로 주로 사용되는 것은?"
+          },
+          {
+            "num": 24,
+            "answer": "사",
+            "ex1Str": "점도",
+            "ex2Str": "비중",
+            "ex3Str": "사용용도",
+            "ex4Str": "첨가제 성분",
+            "questionsStr": "내연기관용 윤활유를 분류하는 API 분류법의 기준은 무엇인가?"
+          },
+          {
+            "num": 25,
+            "answer": "가",
+            "ex1Str": "유화기에 의한 항유화성 측정",
+            "ex2Str": "낙구식 점도계에 의한 점도 측정",
+            "ex3Str": "비색 시험에 의한 산성, 알칼리성 파악",
+            "ex4Str": "스폿 테스트에 의한 청정분산성과 오탁도 파악",
+            "questionsStr": "윤활유의 열화 변질을 알아보는 간이시험에 잘 이용되지 않는 것은?"
+          }
+        ]
+      },
+      {
+        "string": "2.기관2",
+        "questions": [
+          {
+            "num": 1,
+            "answer": "가",
+            "ex1Str": "대용량에 적합하다.",
+            "ex2Str": "고압용으로 적합하다.",
+            "ex3Str": "용적효율이 좋다.",
+            "ex4Str": "압력이 변화해도 송출량의 변화가 작다.",
+            "questionsStr": "원심식 공기압축기와 비교하여 왕복식 공기압축기의 장점으로 옳지 않은 것은?"
+          },
+          {
+            "num": 2,
+            "answer": "아",
+            "ex1Str": "연료분사 펌프",
+            "ex2Str": "재킷 냉각청수 펌프",
+            "ex3Str": "냉각해수 펌프",
+            "ex4Str": "윤활유 펌프",
+            "questionsStr": "이모펌프(IMO pump)는 어떤 펌프로 많이 사용되는가?"
+          },
+          {
+            "num": 3,
+            "answer": "사",
+            "ex1Str": "유조선에서 화물유 양하가 끝난 후 빈 공간에 공기를 불어 넣는 장치이다.",
+            "ex2Str": "보일러 배기가스는 산소 2∼4[%], 이산화탄소 12~14[%], 이산화황 0.3[%] 질소 80[%] 정도인데 가스 중의 질소와 유황성분을 제거한 후 불활성 가스로 사용한다.",
+            "ex3Str": "불활성 가스장치는 Scrubber, Demister, Blower, Deck seal unit 및 제어시스템 등으로 구성되어있다.",
+            "ex4Str": "보일러의 배기가스를 냉각기에서 상온 부근까지 냉각시킨 후 세척기로 보내어 가스 중의 산소, 질소 및 유황성분을 제거한다.",
+            "questionsStr": "불활성 가스장치(inert gas system)에 대한 설명으로 옳은 것은?"
+          },
+          {
+            "num": 4,
+            "answer": "아",
+            "ex1Str": "유수분리 방식은 평행판을 이용한 중력분리법과 특수필터에 의한 분리방법 및 원심 분리법의 세가지가 주로 사용되는데 선박에서는 원심분리법이 가장 많이 사용된다.",
+            "ex2Str": "해양환경관리법령상 선외로 배출되는 배출액중의 기름 성분은 15[ppm]미만이어야 한다.",
+            "ex3Str": "중력 분리법은 기름이 섞인 물을 다수의 평행판 사이를 고속으로 통과시키면서 물과 기름의 밀도차를 이용하여 물 중의 기름 입자를 분리시킨다.",
+            "ex4Str": "콜레서 분리법은 오손된 물을 콜레서를 통하여 흘려 보낼 때 물 중의 미세한 기름입자가 흡착되고 흡착된 기름 입자가 새로운 입자와 충돌결합하여 큰 입자로 성장시킨 후 제거한다.",
+            "questionsStr": "기름여과장치에 대한 설명으로 옳은 것은?"
+          },
+          {
+            "num": 5,
+            "answer": "아",
+            "ex1Str": "공기혼입탱크",
+            "ex2Str": "침전탱크",
+            "ex3Str": "살균탱크",
+            "ex4Str": "슬러지탱크",
+            "questionsStr": "미생물 처리방식 분뇨처리장치의 구성 요소가 아닌 것은?"
+          },
+          {
+            "num": 6,
+            "answer": "나",
+            "ex1Str": "감도조정과는 관련이 없으며 시간설정이 길수록 잦아진다.",
+            "ex2Str": "감도가 민감하고 시간설정이 짧을수록 잦아진다.",
+            "ex3Str": "감도가 둔하고 시간 설정이 길수록 잦아진다.",
+            "ex4Str": "감도가 민감하고 시간 설정이 길수록 잦아진다.",
+            "questionsStr": "기름여과장치에서 유면검출 및 배출을 위해 정전용량식 전극봉 한 개와 타이머 한 개 및 배출용 솔레노이드 밸브(SV)가 설치되는 경우 전극봉의 검출 감도 조정 및 타이머의 시간 설정과 관련하여 SV의 작동빈도를 옳게 나타낸 것은?"
+          },
+          {
+            "num": 7,
+            "answer": "아",
+            "ex1Str": "물을 살포하는 방법",
+            "ex2Str": "전열코일에 의한 방법",
+            "ex3Str": "냉동장치를 정지시키는 방법",
+            "ex4Str": "냉매 통과량을 감소시키는 방법",
+            "questionsStr": "냉동장치에서 증발관에 붙어있는 얼음을 제거하기 위한 제상방법이 아닌 것은?"
+          },
+          {
+            "num": 8,
+            "answer": "사",
+            "ex1Str": "압축일이 증가한다.",
+            "ex2Str": "성적계수가 감소한다.",
+            "ex3Str": "동일 냉동부하에 대한 운전시간이 짧아진다.",
+            "ex4Str": "압축기에서 토출되는 냉매가스의 온도가 높아진다.",
+            "questionsStr": "응축온도가 높을 경우 냉동장치의 성능에 미치는 영향에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 9,
+            "answer": "나",
+            "ex1Str": "1[kW]는 120[kgf·m/s]에 상당한다.",
+            "ex2Str": "1냉동톤은 0[℃]의 물 1[ton]을 24시간 동안에 0[℃]의 얼음으로 냉동시키는 능력이다.",
+            "ex3Str": "증발기에서 냉매액이 증발하고 있을 때 압력,온도, 엔탈피는 변하지 않고 일정하다.",
+            "ex4Str": "냉동장치에서 실제 압축기의 압축은 등엔탈피압축이다.",
+            "questionsStr": "냉동장치에 대한 설명으로 옳은 것은?"
+          },
+          {
+            "num": 10,
+            "answer": "아",
+            "ex1Str": "압축일의 열당량/흡수한 열량",
+            "ex2Str": "흡수한 열량/(흡수한 열량 - 압축일의 열당량)",
+            "ex3Str": "(방출열량 - 흡수한 열량)/압축일의 열당량",
+            "ex4Str": "흡수한 열량/압축일의 열당량",
+            "questionsStr": "냉동장치의 성적계수를 옳게 나타낸 것은?"
+          },
+          {
+            "num": 11,
+            "answer": "사",
+            "ex1Str": "냉매의 부족",
+            "ex2Str": "증발관의 오손",
+            "ex3Str": "냉매 중에 공기의 혼입",
+            "ex4Str": "팽창밸브의 열림 부족",
+            "questionsStr": "냉동장치에서 압축기의 흡입압력이 저하되는 경우의 원인이 아닌 것은?"
+          },
+          {
+            "num": 12,
+            "answer": "나",
+            "ex1Str": "[kg·m/s]",
+            "ex2Str": "[kg·m/s²]",
+            "ex3Str": "[kgf·m/s]",
+            "ex4Str": "[kgf·m/s²]",
+            "questionsStr": "SI단위계에서 힘의 단위 [N]을 기본단위로 옳게 나타낸것은?"
+          },
+          {
+            "num": 13,
+            "answer": "가",
+            "ex1Str": "117[kcal]",
+            "ex2Str": "217[kcal]",
+            "ex3Str": "327[kcal]",
+            "ex4Str": "427[kcal]",
+            "questionsStr": "500[kgf]의 물체가 100[m]의 높이에서 떨어질 때 이물체가 가지고 있는 위치에너지의 열당량은 약 몇 [kcal]인가?"
+          },
+          {
+            "num": 14,
+            "answer": "사",
+            "ex1Str": "2[bar]",
+            "ex2Str": "3[bar]",
+            "ex3Str": "4[bar]",
+            "ex4Str": "5[bar]",
+            "questionsStr": "압력 4[bar]의 질소 5[ℓ]와 압력 5[bar]의 산소 4[ℓ]를 부피 10[ℓ]의 진공용기에 넣었을 경우 혼합기체의 압력은 몇 [bar]인가? (단, 각각의 온도는 동일하다.)"
+          },
+          {
+            "num": 15,
+            "answer": "나",
+            "ex1Str": "40,000[kcal]",
+            "ex2Str": "54,000[kcal]",
+            "ex3Str": "72,000[kcal]",
+            "ex4Str": "80,000[kcal]",
+            "questionsStr": "20[℃]의 해수 1.5톤을 60[℃]까지 가열하는 데 필요열량은 몇 [kcal]인가? (단, 해수의 비열은 0.9[kcal/kg℃]이다.)"
+          },
+          {
+            "num": 16,
+            "answer": "나",
+            "ex1Str": "10[m]",
+            "ex2Str": "20[m]",
+            "ex3Str": "200[m]",
+            "ex4Str": "500[m]",
+            "questionsStr": "어떤 물체에 5[kgf]의 힘을 작용시켜 1,000[J]의 일을 주었다면 그 물체가 힘의 방향으로 이동한 거리는 약 몇 [m]인가?"
+          },
+          {
+            "num": 17,
+            "answer": "가",
+            "ex1Str": "60[rpm]",
+            "ex2Str": "180[rpm]",
+            "ex3Str": "360[rpm]",
+            "ex4Str": "2,160[rpm]",
+            "questionsStr": "6기통 2행정 사이클 저속 디젤기관의 1절 고유진동수가 360[cpm]일 때 6차 위험회전수는 몇 [rpm]인가?"
+          },
+          {
+            "num": 18,
+            "answer": "나",
+            "ex1Str": "압력",
+            "ex2Str": "비체적",
+            "ex3Str": "속도",
+            "ex4Str": "수두",
+            "questionsStr": "'(p/γ) + (v²/2g) + z = C'는 베르누이 방정식이다. 이 식에 포함되지 않는 값은?"
+          },
+          {
+            "num": 19,
+            "answer": "가",
+            "ex1Str": "10[m]",
+            "ex2Str": "14[m]",
+            "ex3Str": "28[m]",
+            "ex4Str": "32[m]",
+            "questionsStr": "매초당 14[m]의 속도로 관내를 흐르는 물의 속도수두는 약 몇 [m]인가?"
+          },
+          {
+            "num": 20,
+            "answer": "가",
+            "ex1Str": "Cu-Pb",
+            "ex2Str": "Cu-Sn",
+            "ex3Str": "Pb-Zn",
+            "ex4Str": "Pb-Sn",
+            "questionsStr": "켈밋(kelmet)베어링 메탈의 주성분은?"
+          },
+          {
+            "num": 21,
+            "answer": "사",
+            "ex1Str": "담금질(quenching)",
+            "ex2Str": "뜨임(tempering)",
+            "ex3Str": "풀림(annealing)",
+            "ex4Str": "불림(normalizing)",
+            "questionsStr": "금속재료의 조직을 균일하게 하고 가공 시의 내부응력을 제거하기 위해 A3~A1 변태점보다 30~50[℃] 높은 온도로 가열한 다음 노 내에서 천천히 냉각하여 연화시키는 열처리는?"
+          },
+          {
+            "num": 22,
+            "answer": "아",
+            "ex1Str": "탄소 함유량이 증가하면 탄성계수는 감소한다.",
+            "ex2Str": "탄소 함유량이 증가하면 항복점은 떨어진다.",
+            "ex3Str": "탄소 함유량이 증가해도 인장강도는 변하지 않는다.",
+            "ex4Str": "탄소 함유량의 증가에 따라 취성은 커진다.",
+            "questionsStr": "탄소강에 대한 설명으로 옳은 것은?"
+          },
+          {
+            "num": 23,
+            "answer": "나",
+            "ex1Str": "경도",
+            "ex2Str": "연신율",
+            "ex3Str": "항복점",
+            "ex4Str": "인장강도",
+            "questionsStr": "냉간가공을 하는 경우 금속의 기계적 성질 중에서 감소되는 것은?"
+          },
+          {
+            "num": 24,
+            "answer": "사",
+            "ex1Str": "화재 발생 시 방화벽의 역할을 한다.",
+            "ex2Str": "선체 파공 시 다른 격실로의 침수를 방지한다.",
+            "ex3Str": "선체의 횡강력은 보강되지만 종강력은 약해진다.",
+            "ex4Str": "선체 구조물에 작용하는 중량과 부력을 분산시킨다.",
+            "questionsStr": "수밀격벽에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 25,
+            "answer": "가",
+            "ex1Str": "배의 길이",
+            "ex2Str": "배의 폭",
+            "ex3Str": "배의 흘수",
+            "ex4Str": "배의 속도",
+            "questionsStr": "선체의 마찰저항을 나타내는 프루드의 실험식에서 마찰 계수에 가장 큰 영향을 미치는 것은?"
+          }
+        ]
+      },
+      {
+        "string": "3.기관3",
+        "questions": [
+          {
+            "num": 1,
+            "answer": "아",
+            "ex1Str": "Y결선이 △결선보다 출력이 √3배 크다.",
+            "ex2Str": "△결선이 Y결선보다 출력이 √3배 크다.",
+            "ex3Str": "Y결선이 △결선보다 출력이 3배 크다.",
+            "ex4Str": "△결선이 Y결선보다 출력이 3배 크다.",
+            "questionsStr": "3상 평형 교류 전기를 공급받는 3상 유도전동기의 권선에 대해 Y결선과 △결선의 경우를 비교 설명한 것으로 옳은 것은?"
+          },
+          {
+            "num": 2,
+            "answer": "나",
+            "ex1Str": "7.2[A]",
+            "ex2Str": "12.2[A]",
+            "ex3Str": "18.2[A]",
+            "ex4Str": "26.2[A]",
+            "questionsStr": "XC=30[Ω], XL=40[Ω], R=20[Ω]가 병렬로 연결된 회로에 교류 60[Hz], 240[V]를 가할 때 이 회로에 흐르는 전체 전류는 약 몇 [A]인가?"
+          },
+          {
+            "num": 3,
+            "answer": "사",
+            "ex1Str": "I²R",
+            "ex2Str": "EIcosθ",
+            "ex3Str": "EI",
+            "ex4Str": "E²R/(R²+X²)",
+            "questionsStr": "교류 전력에서 소비전력의 크기가 아닌 것은? (단, E는 공급전압, I는 부하전류, θ는 위상차, R은 저항, X는 리액턴스이다.)"
+          },
+          {
+            "num": 4,
+            "answer": "나",
+            "ex1Str": "1.6[Hz]",
+            "ex2Str": "1.8[Hz]",
+            "ex3Str": "2.0[Hz]",
+            "ex4Str": "2.2[Hz]",
+            "questionsStr": "6극, 60[Hz]의 유도 전동기가 1,164[rpm]으로 회전하고 있을 때 회전자 전류의 주파수는 몇 [Hz]인가?"
+          },
+          {
+            "num": 5,
+            "answer": "사",
+            "ex1Str": "2[A]",
+            "ex2Str": "3[A]",
+            "ex3Str": "4[A]",
+            "ex4Str": "5[A]",
+            "questionsStr": "다음 회로에서 3[Ω]의 저항에 흐르는 전류는 몇 [A]인가?\n@pic1305"
+          },
+          {
+            "num": 6,
+            "answer": "아",
+            "ex1Str": "1차 전압에 의한 제어법",
+            "ex2Str": "극수 변화에 의한 제어법",
+            "ex3Str": "전원 주파수 변환에 의한 제어법",
+            "ex4Str": "계자저항에 의한 제어법",
+            "questionsStr": "3상 유도전동기의 속도 제어법이 아닌 것은?"
+          },
+          {
+            "num": 7,
+            "answer": "사",
+            "ex1Str": "15[Ω]",
+            "ex2Str": "17[Ω]",
+            "ex3Str": "19[Ω]",
+            "ex4Str": "21[Ω]",
+            "questionsStr": "3상 권선형 유도전동기의 전부하 슬립이 5[%], 2차 1상당 저항이 1[Ω]일 때 기동 토크를 전부하 토크와같게 하려면 2차에 삽입해야 하는 외부 저항은 몇[Ω]인가?"
+          },
+          {
+            "num": 8,
+            "answer": "아",
+            "ex1Str": "@pic1308_a",
+            "ex2Str": "@pic1308_b",
+            "ex3Str": "@pic1308_c",
+            "ex4Str": "@pic1308_d",
+            "questionsStr": "다음과 같은 입력 파형(Vin)이 들어갈 때 회로의 출력파형(Vout)으로 옳은 것은?\n@pic1308"
+          },
+          {
+            "num": 9,
+            "answer": "사",
+            "ex1Str": "@pic1309_a",
+            "ex2Str": "@pic1309_b",
+            "ex3Str": "@pic1309_c",
+            "ex4Str": "@pic1309_d",
+            "questionsStr": "다음 회로에서 입력으로 정현파 전압이 인가될 때의 출력파형은?\n@pic1309"
+          },
+          {
+            "num": 10,
+            "answer": "가",
+            "ex1Str": "MCCB",
+            "ex2Str": "SCR",
+            "ex3Str": "TRIAC",
+            "ex4Str": "트랜지스터",
+            "questionsStr": "다음 중 무접점 스위치와 관계가 없는 것은?"
+          },
+          {
+            "num": 11,
+            "answer": "나",
+            "ex1Str": "1[V]",
+            "ex2Str": "-1[V]",
+            "ex3Str": "10[V]",
+            "ex4Str": "-10[V]",
+            "questionsStr": "다음 연산증폭기 회로에서 입력전압이 1[V]일 때 출력전압 Eo는 몇 [V]인가?\n@pic1311"
+          },
+          {
+            "num": 12,
+            "answer": "가",
+            "ex1Str": "광도전 효과",
+            "ex2Str": "광에너지 효과",
+            "ex3Str": "루미네센스(luminescence) 효과",
+            "ex4Str": "광기전력 효과",
+            "questionsStr": "황화카드뮴(CdS)과 같은 소자는 어떤 효과를 이용한 것인가?"
+          },
+          {
+            "num": 13,
+            "answer": "나",
+            "ex1Str": "입력 단자간의 저항값이 매우 크다.",
+            "ex2Str": "고주파일수록 증폭도의 감쇠가 적다.",
+            "ex3Str": "출력측의 저항값은 매우 작다.",
+            "ex4Str": "대체로 동작에는 양방향 전원을 필요로 한다.",
+            "questionsStr": "상용 OP Amp IC의 특성에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 14,
+            "answer": "아",
+            "ex1Str": "EEPROM",
+            "ex2Str": "MASK ROM",
+            "ex3Str": "플래시 메모리",
+            "ex4Str": "SRAM",
+            "questionsStr": "정전 시 데이터 손실을 방지하기 위해 배터리로 백업을 해주어야 하는 메모리는?"
+          },
+          {
+            "num": 15,
+            "answer": "가",
+            "ex1Str": "V = (Rv+Rm)Vv/Rv",
+            "ex2Str": "V = (Rv－Rm)Vv/Rv",
+            "ex3Str": "V = (Rv+Rm)Vv/Rm",
+            "ex4Str": "V = (Rv－Rm)Vv/Rm",
+            "questionsStr": "전압계의 저항이 Rv, 배율기의 저항이 Rm인 그림에서 전압계에 걸리는 전압을 Vv라 하면 측정전압 V는?\n@pic1315"
+          },
+          {
+            "num": 16,
+            "answer": "가",
+            "ex1Str": "차동 변압기",
+            "ex2Str": "스트레인 게이지",
+            "ex3Str": "엔코더",
+            "ex4Str": "배리스터",
+            "questionsStr": "다음 중 변위를 직접 전압으로 변환시키는 것은?"
+          },
+          {
+            "num": 17,
+            "answer": "사",
+            "ex1Str": "전류력계형 계기이다.",
+            "ex2Str": "교류와 직류 모두 측정이 가능하다.",
+            "ex3Str": "허용오차는 측정값의 ±0.5[V] 이내이다.",
+            "ex4Str": "계기의 눈금판이 수평이 되도록 하여 측정해야한다.",
+            "questionsStr": "다음과 같은 전기 계측기기에 대한 설명으로 옳지않은 것은?\n@pic1317"
+          },
+          {
+            "num": 18,
+            "answer": "가",
+            "ex1Str": "영점조정 시 저항 측정 범위가 작은 쪽으로 선택될수록 단락시킨 리드봉에 흐르는 전류는 작아진다.",
+            "ex2Str": "바늘이 오른쪽을 가리킬수록 측정 저항값은 더 작아진다.",
+            "ex3Str": "테스터의 저항눈금은 로그 눈금이다.",
+            "ex4Str": "저항 측정 시 흑색 리드봉에 (+), 적색 리드봉에 (-) 전압이 걸린다.",
+            "questionsStr": "아날로그 멀티테스터로 저항을 측정할 때의 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 19,
+            "answer": "아",
+            "ex1Str": "3.27[mm]",
+            "ex2Str": "3.50[mm]",
+            "ex3Str": "3.57[mm]",
+            "ex4Str": "3.77[mm]",
+            "questionsStr": "다음 그림은 마이크로미터의 스핀들 수나사 피치가 0.5[mm]이고 눈금통의 둘레를 50등분한 마이크로미터로 어떤 물체의 치수를 측정한 것이다. 측정값은 몇 [mm]인가?\n@pic1319"
+          },
+          {
+            "num": 20,
+            "answer": "나",
+            "ex1Str": "@pic1320_a",
+            "ex2Str": "@pic1320_b",
+            "ex3Str": "@pic1320_c",
+            "ex4Str": "@pic1320_d",
+            "questionsStr": "다음 그림과 같은 회로에서 Q의 출력 파형으로 옳은 것은? (단, Q의 초기값은 0으로 한다.)\n@pic1320"
+          },
+          {
+            "num": 21,
+            "answer": "나",
+            "ex1Str": "P 동작",
+            "ex2Str": "I 동작",
+            "ex3Str": "D 동작",
+            "ex4Str": "PD 동작",
+            "questionsStr": "Offset를 없애는 제어동작은?"
+          },
+          {
+            "num": 22,
+            "answer": "나",
+            "ex1Str": "s",
+            "ex2Str": "1/s",
+            "ex3Str": "s+1",
+            "ex4Str": "1/(s+1)",
+            "questionsStr": "다음의 두 블록선도가 등가인 경우 A요소의 전달함수는?\n@pic1322"
+          },
+          {
+            "num": 23,
+            "answer": "가",
+            "ex1Str": "AND 밸브",
+            "ex2Str": "OR 밸브",
+            "ex3Str": "NAND 밸브",
+            "ex4Str": "NOR 밸브",
+            "questionsStr": "다음과 같은 유압회로의 기호가 나타내는 밸브는? (단, A, B는 입력이고 Y는 출력이다.)\n@pic1323"
+          },
+          {
+            "num": 24,
+            "answer": "사",
+            "ex1Str": "@pic1324_a",
+            "ex2Str": "@pic1324_b",
+            "ex3Str": "@pic1324_c",
+            "ex4Str": "@pic1324_d",
+            "questionsStr": "다음 밸브기호 중 솔레노이드가 없이 동작하는 것은?"
+          },
+          {
+            "num": 25,
+            "answer": "나",
+            "ex1Str": "차동변압기",
+            "ex2Str": "열전대",
+            "ex3Str": "측온저항",
+            "ex4Str": "광전지",
+            "questionsStr": "온도를 직접 전압으로 변화시키는 요소는?"
+          }
+        ]
+      },
+      {
+        "string": "4.직무일반",
+        "questions": [
+          {
+            "num": 1,
+            "answer": "나",
+            "ex1Str": "1.2배",
+            "ex2Str": "1.5배",
+            "ex3Str": "1.8배",
+            "ex4Str": "2배",
+            "questionsStr": "수심 9[m]이고 파공 부분의 등가면적이 100[cm2]일때의 침수유량은 수심 16[m]이고 파공 부분 등가면적이 50[cm2]일 때의 침수유량보다 몇 배 더 큰가?"
+          },
+          {
+            "num": 2,
+            "answer": "아",
+            "ex1Str": "시동공기를 차단한다.",
+            "ex2Str": "연료유를 차단한다.",
+            "ex3Str": "실린더유를 차단한다.",
+            "ex4Str": "배기밸브의 스프링에어를 차단한다.",
+            "questionsStr": "2행정 사이클 디젤 주기관에서 피스톤에 심각한 손상이 발생하여 피스톤을 발출한 후 감통운전할 경우 해당 실린더에 대한 응급조치사항으로 옳지 않은 것은?"
+          },
+          {
+            "num": 3,
+            "answer": "아",
+            "ex1Str": "Steering gear",
+            "ex2Str": "Stern tube L.O. pump",
+            "ex3Str": "M/E L.O. pump",
+            "ex4Str": "F.W.G. ejector pump",
+            "questionsStr": "순차기동 프로그램(sequential start program)이 설치되어 있는 선박에서 항해 중 정전이 되었다가 전원이 복구되는 경우 ACB 투입 직후 순차적으로 자동 기동되는 기기가 아닌 것은?"
+          },
+          {
+            "num": 4,
+            "answer": "가",
+            "ex1Str": "계속검사",
+            "ex2Str": "연차검사",
+            "ex3Str": "임시검",
+            "ex4Str": "수시검사",
+            "questionsStr": "선주의 요청에 의해 한국선급이 승인하는 경우 정기검사 시 검사해야 할 기관장치에 대해 5년 내에 매년 나누어서 수행하는 선급검사는?"
+          },
+          {
+            "num": 5,
+            "answer": "아",
+            "ex1Str": "화염이 소실된 경우",
+            "ex2Str": "송풍이 정지된 경우",
+            "ex3Str": "자동점화에 실패한 경우",
+            "ex4Str": "보일러의 수위가 고수위인 경우",
+            "questionsStr": "선박기관기준상 보일러에서 자동적으로 연료의 공급을 차단하고 가시가청 경보를 발해야 하는 경우가 아닌 것은?"
+          },
+          {
+            "num": 6,
+            "answer": "나",
+            "ex1Str": "트립이 되는 해당 장치의 기동반에 설치되어있는 타이머로 작동시간을 설정한다. ",
+            "ex2Str": "발전기 패널의 ACB에 있는 조정 다이얼로 작동시간을 설정한다.",
+            "ex3Str": "440[V] Feeder panel 내의 Preference trip타이머로 작동시간을 설정한다.",
+            "ex4Str": "동기제어반에 있는 Preference trip 타이머로 작동시간을 설정한다.",
+            "questionsStr": "Preference trip의 시간설정에 대한 설명으로 옳은 것은?"
+          },
+          {
+            "num": 7,
+            "answer": "가",
+            "ex1Str": "접지선은 전동기의 절연저항이 낮아지는 것을 방지한다.",
+            "ex2Str": "접지선은 전동기와 베드 사이의 전위차를 감소시킨다.",
+            "ex3Str": "접지선은 인체의 감전방지를 위해 필요하다.",
+            "ex4Str": "접지선은 전동기의 절연저항 저하 시 누전전류가 흐르는 통로가 된다.",
+            "questionsStr": "주 해수펌프의 접지선 연결에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 8,
+            "answer": "사",
+            "ex1Str": "Sample을 채취한 위치 및 방법",
+            "ex2Str": "연료유 공급 개시 일자",
+            "ex3Str": "연료유의 인화점 및 점도",
+            "ex4Str": "밀봉 상태의 상세",
+            "questionsStr": "해양환경관리법령상 연료유 수급 중 채취하는 연료유 Sample의 Label에 기재되어야 할 내용이 아닌 것은?"
+          },
+          {
+            "num": 9,
+            "answer": "가",
+            "ex1Str": "본선 자체 수리에 대한 내용",
+            "ex2Str": "입거수리 일정 및 수리 내용",
+            "ex3Str": "입거 시 수검 개소 및 일자",
+            "ex4Str": "냉각수가 필요한 기기 및 연결 위치",
+            "questionsStr": "입거 후 수리작업 전에 조선소와 협의해야 할 사항이 아닌 것은?"
+          },
+          {
+            "num": 10,
+            "answer": "나",
+            "ex1Str": "보일러의 안전밸브를 개방하거나 조정을 다시 하고자 할 경우",
+            "ex2Str": "운항 상의 이유로 선박 정기검사가 6개월 이상 지연된 상태에서 다시 항해를 할 경우",
+            "ex3Str": "선체의 강도, 수밀성에 영향을 미치는 구조변경 공사가 행해진 경우",
+            "ex4Str": "기관을 교체하거나 기관주요부를 변경함으로써 기관의 성능에 영향을 미치는 개조를 한 경우",
+            "questionsStr": "한국선급의 검사 중 임시검사의 대상이 아닌 것은?"
+          },
+          {
+            "num": 11,
+            "answer": "아",
+            "ex1Str": "일체의 슬리브를 갖는 프로펠러축",
+            "ex2Str": "내식성 재료로 제작된 프로펠러축",
+            "ex3Str": "선미관 내에 적절한 윤활유 장치를 갖는 프로펠러축",
+            "ex4Str": "에폭시 코팅된 프로펠러축",
+            "questionsStr": "선박기관기준상 제1종 프로펠러축에 해당되지 않는 것은?"
+          },
+          {
+            "num": 12,
+            "answer": "가",
+            "ex1Str": "소각기의 연기통로는 배기효율을 높이기 위하여 내연기관의 배기관과 연결되어 있을 것",
+            "ex2Str": "고체폐기물을 투입하는 소각기의 투입구는 불길이 역류될 위험이 없는 구조의 것을 제외하고는 이중문이 설치되어 있을 것",
+            "ex3Str": "소각기가 제한된 온도를 넘거나 화염이 소실된 때에는 자동적으로 폐유 또는 폐기물과 연료의 공급이 정지될 것",
+            "ex4Str": "유성찌꺼기 혼합탱크의 배관은 유성찌꺼기를 소각하는 장치로 연결되고 선박 밖으로 연결되지 아니할 것",
+            "questionsStr": "해양환경관리법령상 기름오염방지설비의 기술기준에서 소각설비에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 13,
+            "answer": "아",
+            "ex1Str": "안전관리적합증서의 효력이 정지된 경우에는 해당 사업장에 속한 모든 선박의 선박안전관리 증서의 효력도 정지된다.",
+            "ex2Str": "선박안전관리증서는 5개월, 임시 선박안전관리 증서는 6개월의 범위에서 인정되는 경우 각각 한 차례만 유효기간을 연장할 수 있다.",
+            "ex3Str": "중간 인증심사 또는 수시 인증심사에 합격하지못하면 그 인증심사에 합격할 때까지 안전관리 적합증서 또는 선박안전관리증서의 효력이 정지된다.",
+            "ex4Str": "선박안전관리증서와 안전관리적합증서의 유효기간은 각각 5년이고 임시 안전관리적합증서의 유효기간은 6개월, 임시 선박안전관리증서의 유효기간은 1년이다.",
+            "questionsStr": "해사안전법상 선박 안전관리체제의 증서에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 14,
+            "answer": "아",
+            "ex1Str": "선박의 정비에 관한 사항",
+            "ex2Str": "선박충돌사고 등 발생 시 비상대책의 수립에 관한 사항",
+            "ex3Str": "선박의 안전관리체제 수립에 관한 사항",
+            "ex4Str": "내부심사자와 외부심사자의 업무내용에 관한 사항",
+            "questionsStr": "해사안전법령상 선박의 안전관리체제 수립 시 반드시 포함되어야 할 내용이 아닌 것은?"
+          },
+          {
+            "num": 15,
+            "answer": "나",
+            "ex1Str": "내부보안심사",
+            "ex2Str": "보안장비의 운용 및 관리",
+            "ex3Str": "선박보안계획서의 시행 및 보완",
+            "ex4Str": "선박보안계획서의 작성 및 승인 신청",
+            "questionsStr": "국제항해선박 및 항만시설의 보안에 관한 법률상 총괄 보안책임자의 업무 내용이 아닌 것은?"
+          },
+          {
+            "num": 16,
+            "answer": "아",
+            "ex1Str": "기국 및 기국등록일",
+            "ex2Str": "선박회사 식별번호",
+            "ex3Str": "SMC 발급기관명",
+            "ex4Str": "SOPEP 발급기관명",
+            "questionsStr": "선박이력기록부의 기재사항이 아닌 것은?"
+          },
+          {
+            "num": 17,
+            "answer": "아",
+            "ex1Str": "3년, 6개월",
+            "ex2Str": "3년, 1년",
+            "ex3Str": "5년, 6개월",
+            "ex4Str": "5년, 1년",
+            "questionsStr": "해양환경관리법령상 '해양오염방지관리인은 ( ) 마다 1회 이상 관련 교육훈련을 받게 하여야 한다. 다만 승선 중인 경우에는 ( )의 범위에서 교육훈련을 연기할 수 있다.'에서 ( )에 각각 알맞은 것은?"
+          },
+          {
+            "num": 18,
+            "answer": "사",
+            "ex1Str": "기적 또는 싸이렌에 의한 연속 5회의 단음과 계속 1회의 장음",
+            "ex2Str": "기적 또는 싸이렌에 의한 연속 5회의 단음과 계속 2회의 장음",
+            "ex3Str": "기적 또는 싸이렌에 의한 연속 7회의 단음과 계속 1회의 장음",
+            "ex4Str": "기적 또는 싸이렌에 의한 연속 7회의 단음과 계속 2회의 장음",
+            "questionsStr": "선원법령상 비상신호방법으로 옳은 것은?"
+          },
+          {
+            "num": 19,
+            "answer": "사",
+            "ex1Str": "주 추진기관에는 선교의 제어장치와는 별도로 비상정지장치를 선교에 설치해야 한다.",
+            "ex2Str": "선교로부터의 추진기관에 관한 명령은 주기관 제어실 또는 조종 장소의 적당한 곳에 표시되어야 한다.",
+            "ex3Str": "추진기관의 원격제어는 한번에 1개 장소에서만 가능하여야 하며 선교와 기관구역간의 제어권의 이전은 선교 또는 주기관 제어실에서만 가능해야 한다.",
+            "ex4Str": "선교 및 기관구역에는 시동공기의 압력저하를 나타내는 경보장치를 설치해야 하며 경보의 설정압력은 주기관의 시동조작을 할 수 있는 압력으로 해야 한다.",
+            "questionsStr": "SOLAS 협약 및 개정규정상 선교에서 추진기관을 원격 제어하는 선박의 기관제어장치에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 20,
+            "answer": "가",
+            "ex1Str": "분쇄기 또는 연마기를 통해 가루로 되거나 분쇄되어 25mm 이하의 구멍 뚫린 망을 통과할수 있는 음식쓰레기는 영해기선으로부터 12해리 이상 떨어진 해역에서 배출한다.",
+            "ex2Str": "일반적으로 이용 가능한 하역방법을 통하여 회수될 수 없고 유해하지 않은 화물잔류물은 영해기선에서 12해리 이상 떨어진 해역에서 배출한다.",
+            "ex3Str": "동물사체는 기구가 개발한 지침서를 고려하여 가능한 한 가까운 육지로부터 멀리 떨어진 곳에서 배출한다.",
+            "ex4Str": "소각이 가능한 플라스틱 제품의 소각재는 해양배출이 금지된다.",
+            "questionsStr": "MARPOL 협약 및 개정규정상 특별해역 외에서 항해 중 폐기물 배출기준에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 21,
+            "answer": "나",
+            "ex1Str": "보일러의 연돌 내",
+            "ex2Str": "발전기의 연돌 내",
+            "ex3Str": "추진기관의 소기실 내",
+            "ex4Str": "보일러의 공기 공급 케이싱 내",
+            "questionsStr": "SOLAS 협약 및 개정규정상 정기적으로 무인이 되는 기관구역에서 화재를 초기단계에 탐지하고 경보를 발하는 장치를 설치해야 하는 곳이 아닌 것은?"
+          },
+          {
+            "num": 22,
+            "answer": "사",
+            "ex1Str": "구명정 기관은 압축점화식 기관일 것",
+            "ex2Str": "연료유의 양은 6노트 이상 24시간 연속운전이 가능할 것",
+            "ex3Str": "구명정 기관의 시동 용이성을 위해 인화점이 43[℃] 이하인 연료를 사용할 것",
+            "ex4Str": "기관은 –15[℃]의 주위온도에서 시동절차 시 작 2분 이내에 시동될 것",
+            "questionsStr": "구명정 기관의 일반요건으로 옳지 않은 것은?"
+          },
+          {
+            "num": 23,
+            "answer": "아",
+            "ex1Str": "6개월, 2년",
+            "ex2Str": "6개월, 3년",
+            "ex3Str": "12개월, 2년",
+            "ex4Str": "12개월, 3년",
+            "questionsStr": "MARPOL 협약 및 개정규정상 '연료유 수급 시 연료유 공급서는 샘플과 함께 제공되어야 하고 이 샘플은 연료 공급자의 대리인과 연료유 공급 작업을 완료 시 책임사관이나 선장에 의해 밀봉이 되고 서명이 되어야 하며 해당 연료유가 다 소모가 될 때까지 본선에 보관되어야 한다. 그러나 어떤 경우든 공급 후 ( ) 이상 보관되어야 한다. 연료유 공급서는 적합한 시간에 검사를 위해 쉽게 이용 가능한 본선의 적절한 장소에 보관되어야하며 연료유가 본선에 공급된 시점부터 ( )간 선내에 보관되어야 한다.'에서 ( )에 각각 알맞은 것은?"
+          },
+          {
+            "num": 24,
+            "answer": "나",
+            "ex1Str": "IOPP 증서의 추록에는 표준배출연결구의 비치여부가 표기되어 있어야 한다.",
+            "ex2Str": "IOPP 증서의 추록에는 선내 소각기의 소각 능력이 표기되어 있어야 한다.",
+            "ex3Str": "IOPP 증서의 추록에는 선박기름오염비상계획서의 비치 여부가 표기되어 있어야 한다.",
+            "ex4Str": "IOPP 증서는 사용언어가 영어, 프랑스어 또는 스페인어가 아니면 이들 중 하나로 번역 병기되어야 한다.",
+            "questionsStr": "MARPOL 협약 및 개정규정상 IOPP 증서에 대한 설명으로 옳지 않은 것은?"
+          },
+          {
+            "num": 25,
+            "answer": "나",
+            "ex1Str": "고용계약서 원본, 선내불만처리절차 원본",
+            "ex2Str": "고용계약서 사본, 선내불만처리절차 사본",
+            "ex3Str": "고용계약서 원본, 선내불만처리절차 사본",
+            "ex4Str": "고용계약서 사본, 선내불만처리절차 원본",
+            "questionsStr": "MLC 해사노동협약상 선내불만처리 시 '선원의 ( )1부에 추가하여 모든 선원은 ( ) 1부를 제공 받아야한다.'에서 ( )에 각각 알맞은 것은?"
+          }
+        ]
+      },
+      {
+        "string": "5.영어",
+        "questions": [
+          {
+            "num": 1,
+            "answer": "사",
+            "ex1Str": "soldering",
+            "ex2Str": "welding",
+            "ex3Str": "brazing",
+            "ex4Str": "fusing",
+            "questionsStr": "'Process of jointing metals by use of a copper based filler metal, the melting range of which is below that of either of the parent metals.'This is called ( )."
+          },
+          {
+            "num": 2,
+            "answer": "가",
+            "ex1Str": "feed water",
+            "ex2Str": "potable water",
+            "ex3Str": "circulating water",
+            "ex4Str": "distilled water",
+            "questionsStr": "The water, pumped into a boiler to supply the water for producing steam is known as the ( )."
+          },
+          {
+            "num": 3,
+            "answer": "가",
+            "ex1Str": "causes",
+            "ex2Str": "improves",
+            "ex3Str": "rejects",
+            "ex4Str": "transfers",
+            "questionsStr": "The expansion valve is the regulator through which the refrigerant passes from the high pressure side of the system to the low pressure side. The pressure drop ( ) the evaporating temperature of the refrigerant to fall below that of the evaporator."
+          },
+          {
+            "num": 4,
+            "answer": "나",
+            "ex1Str": "Aluminum",
+            "ex2Str": "Water",
+            "ex3Str": "Steel",
+            "ex4Str": "Lead",
+            "questionsStr": "Which of the following materials has the highest specific heat?"
+          },
+          {
+            "num": 5,
+            "answer": "가",
+            "ex1Str": "black",
+            "ex2Str": "white",
+            "ex3Str": "yellow",
+            "ex4Str": "bright",
+            "questionsStr": "With stopped engine, blow-by can be located by inspecting the condition of the piston rings, through the scavenging air ports. Piston and cylinder liner become ( ) in the area of blow-by."
+          },
+          {
+            "num": 6,
+            "answer": "나",
+            "ex1Str": "clarification",
+            "ex2Str": "distillation",
+            "ex3Str": "evacuation",
+            "ex4Str": "purification",
+            "questionsStr": "Fuels and lubricating oils are obtained from crude primarily by heating the crude oil, so that vapors are boiled off and then condensed at different temperatures. The constituents or fractions are collected separately in a ( ) process."
+          },
+          {
+            "num": 7,
+            "answer": "나",
+            "ex1Str": "ground",
+            "ex2Str": "disconnected",
+            "ex3Str": "charged",
+            "ex4Str": "energized",
+            "questionsStr": "An ohmmeter should be used after a circuit has been electrically ( )."
+          },
+          {
+            "num": 8,
+            "answer": "사",
+            "ex1Str": "four",
+            "ex2Str": "six",
+            "ex3Str": "eight",
+            "ex4Str": "sixteen",
+            "questionsStr": "The number of power strokes per crank shaft revolution in two-stroke eight cylinders diesel engine are ( )."
+          },
+          {
+            "num": 9,
+            "answer": "가",
+            "ex1Str": "decreases",
+            "ex2Str": "increases",
+            "ex3Str": "raises",
+            "ex4Str": "is constant",
+            "questionsStr": "The ignition delay period in a given engine at a fixed engine speed ( ) with an increase of the compression ratio."
+          },
+          {
+            "num": 10,
+            "answer": "나",
+            "ex1Str": "heater",
+            "ex2Str": "boiler",
+            "ex3Str": "turbine",
+            "ex4Str": "condenser",
+            "questionsStr": "In engineering, a ( ) is a device for making steam from water. This operation requires a supply of heat at elevated temperature."
+          },
+          {
+            "num": 11,
+            "answer": "사",
+            "ex1Str": "volumetric efficiency",
+            "ex2Str": "mechanical efficiency",
+            "ex3Str": "thermal efficiency",
+            "ex4Str": "propulsive efficiency",
+            "questionsStr": "The ( ) of an engine is the ratio of the work done by the engine to the heat supplied to it."
+          },
+          {
+            "num": 12,
+            "answer": "아",
+            "ex1Str": "A : guide, B : air",
+            "ex2Str": "A : steam, B : pressure",
+            "ex3Str": "A : engine, B : turbine",
+            "ex4Str": "A : blades, B : steam",
+            "questionsStr": "Any steam turbine consists of a rotor carrying the ( A ), the casing in which the rotor revolves, and nozzles or stationary blades through which the ( B ) expanded or directed."
+          },
+          {
+            "num": 13,
+            "answer": "가",
+            "ex1Str": "diode",
+            "ex2Str": "p type semiconductor",
+            "ex3Str": "UJT",
+            "ex4Str": "n type semiconductor",
+            "questionsStr": "The ( ) can be shown to have rectification properties. If an external voltage is applied to a junction, the majority carriers on each side are forced further away from the junction, i.e., the barrier layer is thickened."
+          },
+          {
+            "num": 14,
+            "answer": "아",
+            "ex1Str": "Fault in governor",
+            "ex2Str": "Fuel pumps sticking",
+            "ex3Str": "Fuel oil pressure missing",
+            "ex4Str": "Valve to starting air distributor closed",
+            "questionsStr": "Engine turns on starting air but it stops after receiving order to run on fuel. which is not possible reason in belows?"
+          },
+          {
+            "num": 15,
+            "answer": "사",
+            "ex1Str": "A: downwards, B: inwards",
+            "ex2Str": "A: upwards, B: inwards",
+            "ex3Str": "A: downwards, B: outwards",
+            "ex4Str": "A: upwards, B: outwards",
+            "questionsStr": "The function of the piston ring is to give a gas-tight sealing of the clearance between the piston and cylinder liner. This seal is brought about by the gas pressure above and behind the piston ring, which forces it ( A ), against the bottom of the ring groove, and ( B ) against the cylinder wall."
+          },
+          {
+            "num": 16,
+            "answer": "아",
+            "ex1Str": "Letter head",
+            "ex2Str": "Signature",
+            "ex3Str": "Salutation",
+            "ex4Str": "Remarks",
+            "questionsStr": "Which one of the following is not one of six basic parts of the business letters?"
+          },
+          {
+            "num": 17,
+            "answer": "가",
+            "ex1Str": "March 5, 2021",
+            "ex2Str": "5-Mar-2021",
+            "ex3Str": "2021. 3. 5",
+            "ex4Str": "3/5/2021",
+            "questionsStr": "Which is the most suitable one for making an entry of date in the business letter?"
+          },
+          {
+            "num": 18,
+            "answer": "나",
+            "ex1Str": "Esq.",
+            "ex2Str": "Mr.",
+            "ex3Str": "Mrs.",
+            "ex4Str": "Madam",
+            "questionsStr": "Which one of the following is the most suitable courtesy for an individual man in the business"
+          },
+          {
+            "num": 19,
+            "answer": "사",
+            "ex1Str": "DOC",
+            "ex2Str": "PSC",
+            "ex3Str": "SMS",
+            "ex4Str": "PMS",
+            "questionsStr": "The company should identify equipment and technical systems the sudden operational failure of which may result in hazardous situations. The ( ) should provide for specific measures aimed at promoting the reliability of such equipment or systems. These measures should include the regular testing of stand-by arrangements and equipment or technical systems that are not in continuous use."
+          },
+          {
+            "num": 20,
+            "answer": "아",
+            "ex1Str": "two",
+            "ex2Str": "three",
+            "ex3Str": "four",
+            "ex4Str": "five",
+            "questionsStr": "An International Oil Pollution Prevention Certificate shall be issued for a period specified by the Administration, which shall not exceed ( ) years from the date of issue."
+          },
+          {
+            "num": 21,
+            "answer": "아",
+            "ex1Str": "A : one, B : main source",
+            "ex2Str": "A : two, B : main source",
+            "ex3Str": "A : one, B : emergency source",
+            "ex4Str": "A : two, B : emergency source",
+            "questionsStr": "In accordance with the SOLAS Convention as amended, there shall be not less than ( A ) source(s) of power supply for the electrical equipment used in the operation of the fixed fire detection and fire alarm system, one of which shall be a(an) ( B ) of power. The supply shall be provided by separate feeders reserved solely for that purpose. Such feeders shall run to an automatic change-over switch situated in or adjacent to the control panel for the fire detection system."
+          },
+          {
+            "num": 22,
+            "answer": "가",
+            "ex1Str": "A : hours of work\nB : manning levels",
+            "ex2Str": "A : hours of rest\nB : manning levels",
+            "ex3Str": "A : hours of work\nB : the prevention of fatigue",
+            "ex4Str": "A : hours of rest\nB : the prevention of fatigue",
+            "questionsStr": "Under the Maritime Labour Convention as amended, when determining, approving or revising manning levels, the competent authority shall take into account the need to avoid or minimize excessive ( A ) to ensure sufficient rest and to limit fatigue, as well as the principles in applicable international instruments, especially those of the International Maritime Organization, on ( B )."
+          },
+          {
+            "num": 23,
+            "answer": "아",
+            "ex1Str": "A: Certificate of endorsement, B: duties",
+            "ex2Str": "A: Certificate of competency, B: duties",
+            "ex3Str": "A: Certificate of endorsement, B: functions",
+            "ex4Str": "A: Certificate of competency, B: functions",
+            "questionsStr": "Under the STCW Convention, as amended, ( A ) means a certificate issued and endorsed for masters, officers and GMDSS radio operators in accordance with the provisions of chapters II, III, IV or VII of this annex and entitling the lawful holder thereof to serve in the capacity and perform the ( B ) involved at the level of responsibility specified therein."
+          },
+          {
+            "num": 24,
+            "answer": "사",
+            "ex1Str": "captain room",
+            "ex2Str": "crew mess room",
+            "ex3Str": "navigation bridge",
+            "ex4Str": "radio office",
+            "questionsStr": "In accordance with the SOLAS Convention as amended, the ship security alert system shall be capable of being activated from the ( ) and in at least one other location."
+          },
+          {
+            "num": 25,
+            "answer": "아",
+            "ex1Str": "85[%]",
+            "ex2Str": "90[%]",
+            "ex3Str": "95[%]",
+            "ex4Str": "98[%]",
+            "questionsStr": "In accordance with the MARPOL Convention as amended, oil fuel capacity means the volume of a tank in m3, at ( ) filling."
+          }
+        ]
+      }
+    ]
+  }
+}

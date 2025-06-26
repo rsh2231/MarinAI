@@ -1,0 +1,762 @@
+[2022/기관사사 3급/4]
+[제1과목 : 기관1]
+1. 디젤기관에서 연료유 분사 시 유립의 크기에 대한 설명으로 옳지 않은 것은?
+㉮ 노즐의 직경이 커질수록 유립은 크게 된다.
+㉯ 노즐의 배압이 높게 되면 유립은 크게 된다.
+㉴ 공기온도가 높아지면 유립은 작게 된다.
+㉵ 연료유의 점성이 작을수록 유립은 작게 된다.
+2. 왕복동 내연기관의 지시 열효율이 이론적 열효율보다 더 작은 이유는?
+㉮ 마찰손실 때문이다.
+㉯ 보기구동손실 때문이다.
+㉴ 기계손실 때문이다.
+㉵ 불완전연소 및 배기가스 등에 의한 열손실 때문이다.
+3. 크랭크암의 개폐작용을 발생시키는 원인이 아닌 것은?
+㉮ 메인 베어링의 불균일한 마멸
+㉯ 메인 베어링의 간극 과대
+㉴ 장시간 저부하 운전
+㉵ 크랭크축 중심의 어긋남
+4. 디젤 노킹을 방지하기 위한 방법으로 옳지 않은 것은?
+㉮ 연료분사압력을 높여 압력상승률을 높인다.
+㉯ 압축압력을 높여 착화지연을 짧게 한다.
+㉴ 연료분사밸브의 누설을 방지하고 분사압력을 적절히 조정한다.
+㉵ 압축압력이 저하되는 것을 방지한다.
+5. 디젤기관에서 연료분사장치의 분무특성에 대한 설명으로 옳지 않은 것은?
+㉮ 무화는 분사된 기름의 미립화를 뜻하며 유립의 크기가 작을수록 연소가 빨라진다.
+㉯ 관통은 분사된 기름이 연소실 구석까지 뚫고 나가는 상태를 말하며 관통력은 큰 것이 좋다.
+㉴ 분산은 연료유가 퍼지는 상태를 말하며 퍼지는 원추각도가 작을수록 분산은 좋아진다.
+㉵ 분포는 실린더 내의 연료유와 공기와의 혼합비가 균등하게 되는 것을 말한다.
+6. 4행정 사이클 6실린더 디젤기관에서 피스톤의 면적이 75[cm²], 행정이 1[m], 회전수가 1,000[rpm], 평균유효압력이 18[kgf/cm²]이면 지시마력은 몇 [PS]인가?
+㉮ 300[PS]
+㉯ 600[PS]
+㉴ 900[PS]
+㉵ 1,200[PS]
+7. 기관 운전 중 밸브를 회전시켜 밸브와 밸브시트와의 접촉면을 전 둘레에 걸쳐 일정하게 닿도록 하여 편마멸을 방지시키는 장치는?
+㉮ 밸브 로테이터
+㉯ 로커암
+㉴ 밸브 시트
+㉵ 밸브 가이드
+8. 다음과 같은 4행정 사이클 기관의 지압선도 중 P-θ선도에 대한 설명으로 옳은 것은?\n @pic4108
+㉮ 정상적인 연소형태를 나타내고 있다.
+㉯ 연료의 분사기간이 너무 길어서 최고 폭발압력이 낮게 나타나고 있다.
+㉴ 연료의 착화시기가 너무 빨라서 폭발압력이 급상승하고 있다.
+㉵ 연료의 착화시기가 너무 늦어서 연료가 한꺼번에 착화되고 있다.
+9. 디젤기관의 피스톤링에 대한 설명으로 옳지 않은 것은?
+㉮ 링의 절구부 면압을 복숭아형과 같이 크게 하여 링 플러터 현상을 방지한다.
+㉯ 링의 장력은 실린더 내벽에 미치는 단위면적당 압력을 말하며 링의 면압은 자유상태에 있는 절구틈을 실린더 지름까지 닫았을 경우의 하중을 말한다.
+㉴ 링의 소재는 주철을 많이 사용하며 주철 조직에 포함되어 있는 흑연이 윤활작용을 보조하여 링이 눌어붙는 것을 방지한다.
+㉵ 내마멸성, 열전도성, 내식성을 증가시키기 위해 크롬도금을 하는 경우도 있다.
+10. 디젤 주기관의 연접봉 볼트에 대한 설명으로 옳지 않은 것은?
+㉮ 볼트의 축부에 나사골의 단면적보다 작은 부분을 설치하여 나사부에 가해지는 응력을 상대적으로 감소시킨다.
+㉯ 볼트머리와 너트는 조립 시 되도록 접촉면과 직각도를 확보한 후 조립한다.
+㉴ 중·대형기관에서의 볼트는 외견상 이상이 없으면 계속 사용이 가능하다.
+㉵ 4행정 사이클 기관에서는 배기행정 말의 상사점에서 왕복질량부분이 위쪽으로 튀어오르는 관성력 때문에 인장력이 작용한다.
+11. 디젤기관에서 동압과급과 정압과급을 비교 설명한 것으로 옳지 않은 것은?
+㉮ 터빈의 효율은 동압방식이 좋다.
+㉯ 과급기의 크기는 정압방식이 더 작다.
+㉴ 과급률이 낮을수록 동압방식이 유리하다.
+㉵ 동압방식은 배기의 블로다운 에너지를 이용한다.
+12. 중유를 사용하는 보일러에서 공연비가 안정적일 때  내의 불꽃과 연기의 색으로 옳은 것은?
+㉮ 불꽃 : 오렌지색, 연기 : 무색
+㉯ 불꽃 : 회백색, 연기 : 흑색
+㉴ 불꽃 : 회백색, 연기 : 백색
+㉵ 불꽃 : 암적색, 연기 : 엷은 회색
+13. 보일러 내부 부속기기 중 증기드럼 내에서 증기와 물을 분리시키는 데 사용하는 것이 아닌 것은?
+㉮ 드라이 파이프
+㉯ 급수내관
+㉴ 증기분리기
+㉵ 배플 플레이트
+14. 보일러 연돌의 통풍력에 대한 설명으로 옳지 않은 것은?
+㉮ 연돌의 높이가 높을수록 커진다.
+㉯ 연돌과 보일러의 수평 연도가 길수록 커진다.
+㉴ 연돌 내의 배기가스 온도가 높을수록 커진다.
+㉵ 연돌 내 가스와 연돌 밖 공기와의 압력차가 클수록 커진다.
+15. 보일러가 노후하여 제한기압을 낮출 때 안전밸브의 단면적을 크게 하는 주된 이유는?
+㉮ 저압에서는 증기 발생이 많기 때문에
+㉯ 저압에서는 온도가 낮기 때문에
+㉴ 저압에서는 분출속도가 낮기 때문에
+㉵ 저압에서는 포화 온도가 낮기 때문에
+16. 선박의 동력을 크기 순으로 나열한 것으로 옳은 것은?(단, BHP는 제동마력, DHP는 전달마력, EHP는 유효마력, IHP는 지시마력이다.)
+㉮ IHP > BHP > EHP > DHP
+㉯ IHP > DHP > BHP > EHP
+㉴ IHP > DHP > EHP > BHP
+㉵ IHP > BHP > DHP > EHP
+17. 나선형 추진기의 축 슬리브 부분에 X형 크랙이 발생하는 주된 원인은?
+㉮ 선미관 해수의 침입
+㉯ 선미관 베어링의 마멸
+㉴ 공동현상으로 인한 침식
+㉵ 비틀림 진동에 의한 반복 응력
+18. 유 윤활식 선미관의 중력탱크에 대한 설명으로 옳지않은 것은?
+㉮ 중력탱크는 만재흘수선보다 높게 설치된다.
+㉯ 만재흘수와 경하흘수 사이의 차이가 큰 선박은 고위 중력탱크와 저위 중력탱크를 설치한다.
+㉴ 저유면 경보장치가 설치되어 있다.
+㉵ 선미관으로 해수가 유입되는 경우에는 중력탱크의 윤활유 레벨을 더 낮게 유지한다.
+19. 유 윤활식 선미관의 베어링 재료로 많이 사용되는 것은?
+㉮ 백색합금
+㉯ 리그넘바이티
+㉴ 켈밋
+㉵ 청동
+20. 스크루 프로펠러의 직접적인 진동 원인이 아닌 것은?
+㉮ 프로펠러 날개의 손상으로 균형이 불량할 때
+㉯ 각 블레이드가 받는 저항이 서로 다를 때
+㉴ 각 블레이드의 피치가 서로 다를 때
+㉵ 프로펠러의 재질이 불량할 때
+21. 다음 중 동점성계수를 나타내는 것은?
+㉮ 0.5[cm3/s]
+㉯ 12[cSt]
+㉴ 7.5[cP]
+㉵ 레드우드점도 1,500[sec]
+22. 윤활유가 열화되는 원인으로 옳지 않은 것은?
+㉮ 산소에 의한 산화
+㉯ 연소가스에 의한 탄화
+㉴ 수분에 의한 유화
+㉵ 신유에 의한 희석
+23. 대형 디젤기관에 사용되는 윤활유TBN의에 대한 설명으로 옳은 것은?
+㉮ TBN은 총알칼리가이며 모든 기관에 같은 값의 윤활유를 사용한다.
+㉯ TBN은 1g의 연료를 중화하는 데 필요한 산의 양에 상응하는 수산화칼륨(KOH)의 mg수를 말하며 KOH[mg/g]으로 표시한다.
+㉴ 유황성분이 적은 연료유를 사용할수록TBN값이 큰 윤활유를 사용한다.
+㉵ 피스톤링과 실린더 라이너의 길들이기 운전시에는 TBN이 가장 높은 윤활유를 사용하는 것이 바람직하다.
+24. 디젤기관에서 연소실 내로 분사된 연료유의 착화온도는 압축압력이 높아지면 어떻게 되는가?
+㉮ 일정온도까지 낮아지다가 유지된다.
+㉯ 일정온도까지 높아지다가 유지된다.
+㉴ 압축압력과 착화온도는 무관하다.
+㉵ 높아지기도 하고 낮아지기도 한다.
+25. 연료유의 연소과정 중 저융점 회분에 의한 고온부식을 일으키는 성분은?
+㉮ 아황산가스
+㉯ 무수 황산
+㉴ 바나듐 염
+㉵ 아스팔트 분
+[제2과목 : 기관2]
+1. 온-오프 제어에 의한 선내 청수펌프의 작동에 대한 설명으로 옳은 것은?
+㉮ PID 압력조절기에 의해 청수 압력을 제어한다.
+㉯ 압력탱크의 일정 수위 이상에서 펌프가 정지되고 일정 수위 이하에서 펌프가 기동된다.
+㉴ 압력탱크의 수위와 타이머의 시간 설정에 의해 펌프가 기동, 정지된다
+㉵ 압력탱크가 일정 압력 이하로 되면 펌프가 기동되고 일정 압력 이상이 되면 펌프가 정지된다.
+2. 양묘기의 구비조건이 아닌 것은?
+㉮ 정격하중을 정격속도로 감아올릴 수 있는 능력을 갖출 것
+㉯ 제동장치를 갖출 것
+㉴ 속도조절이 가능할 것
+㉵ 자동역전방지장치를 갖출 것
+3. 불활성 가스 장치에서 Scrubber의 역할은?
+㉮ 가스 중의 불순물을 제거하고 온도를 낮춘다.
+㉯ 가스 중의 불순물을 제거하고 온도를 높인다.
+㉴ 산소농도와 온도를 높인다.
+㉵ 산소농도와 질소농도를 높인다.
+4. 원심펌프에서 비교회전도(Ns)와 매분 회전수(N), 송출량(Q), 양정(H)과의 관계를 옳게 나타낸 것은?
+㉮ Ns = N(Q / H³/⁴)
+㉯ Ns = N(Q¹/² / H³/⁴)
+㉴ Ns = N(Q¹/² / H¹/²)
+㉵ Ns = N²(Q¹/² / H³/⁴)
+5. 조타장치의 구성요소 중 타를 지정한 위치에 고정시키는 장치는?
+㉮ 관제장치
+㉯ 추종장치
+㉴ 원동기
+㉵ 타장치
+6. 건구온도 30[℃]의 외부공기 40[%]와 건구온도 20[℃]의 실내공기 60[%]를 혼합하였을 경우 혼합공기의 건구온도는 약 몇 [℃]인가?
+㉮ 22[℃]
+㉯ 23[℃]
+㉴ 24[℃]
+㉵ 25[℃]
+7. 2[kW] 의 전열기가1시간당 발생하는 열량은 약 몇[kcal]인가?
+㉮ 1,078[kcal]
+㉯ 1,720[kcal]
+㉴ 3,600[kcal]
+㉵ 7,200[kcal]
+8. 증기 압축식 냉동장치의 과냉각에 대한 설명으로 옳은것은?
+㉮ 압축기에서 일어난다.
+㉯ 압축압력에 대한 포화온도 이상으로 되는 상태를 말한다.
+㉴ 성적계수가 증가한다.
+㉵ 냉동효과가 나빠진다.
+9. 냉동장치의 운전 중 냉매에 혼입된 공기는 주로 어디에 모이는가?
+㉮ 응축기 하부
+㉯ 응축기 상부
+㉴ 액분리기 하부
+㉵ 액분리기 상부
+10. 길이 30[m]인 강관의 온도가 0[℃]에서 100[℃]로 변할 경우 관의 열팽창량은 몇 [mm]인가? (단, 강관의 평균 열팽창계수는 1.2×10⁻⁵[mm/mm·℃]이다.)
+㉮ 12[mm]
+㉯ 18[mm]
+㉴ 24[mm]
+㉵ 36[mm]
+11. 가스용접(gas welding)에 대한 설명으로 옳지 않은 것은?
+㉮ 가스용접용 불꽃의 열로 모재를 압접하여 접합한다.
+㉯ 가연성 가스로는 아세틸렌(acetylene), 프로판(propane) 등을 많이 사용한다.
+㉴ 가스용접용 불꽃은 중성불꽃을 가장 많이 사용하며 이때 산소와 아세틸렌의 비율은 약 1:1이다.
+㉵ 모재를 가열하여 용융시켜서 접합한다.
+12. 가스용접에서 용제(flux)의 역할 중 가장 중요한 것은?
+㉮ 산화물의 생성 저지
+㉯ 탄화물의 생성
+㉴ 금속 성분의 보충
+㉵ 응고 속도의 저하
+13. 태핑(tapping) 작업에 대한 설명으로 옳은 것은?
+㉮ 탭은 연속적으로 계속 돌려서 작업을 하는 것이 가장 바람직하다.
+㉯ 탭이 부러지면 가열하여도 좋은 부분일 경우에는 아세틸렌가스로 탭을 가열하여 풀림을 한후 플라이어로 빼낸다.
+㉴ 탭을 구멍에 수직으로 세울 때는 탭이 정확히 만들어져 있으므로 특별히 신경을 쓸 필요는 없다.
+㉵ 태핑을 쉽게 하기 위해 가능하면 큰 핸들을 사용하여 큰 힘으로 작업한다.
+14. 어떤 고체벽을 통해 전달되는 전열량을 많게 하기 위한 방법으로 옳지 않은 것은?
+㉮ 열전도율이 큰 고체벽을 이용한다.
+㉯ 고체벽 양면의 온도차를 크게 한다.
+㉴ 고체벽 내의 온도구배를 크게 한다.
+㉵ 열전달계수가 낮은 재료를 이용한다.
+15.P-V선도에서 사이클 내부의 면적은 무엇을 나타내는가?
+㉮ 한 사이클 동안의 연료유의 발열량
+㉯ 한 사이클 동안의 연소가스의 체적 변화량
+㉴ 한 사이클 동안의 연소가스의 압력 변화량
+㉵ 한 사이클 동안에 행한 일량
+16. 기체의 상태방정식을 'PVⁿ=일정'으로 표현했을 때 n=1인 경우 기체의 상태변화는? (단, P는 압력, V는 비체적이다.)
+㉮ 정압변화
+㉯ 정적변화
+㉴ 등온변화
+㉵ 단열변화
+17. 무게 800[kgf]의 실린더 헤드가 기관실 바닥에 놓여있다. 바닥과 실린더 사이의 마찰계수가 0.2일 때 이 실린더 헤드를 바닥위에서 미끄러지게 하려면 최소한 몇 사람이 필요한가?(단, 한 사람은 평균 30[kgf]의 힘으로 밀거나 끌 수 있다.)
+㉮ 3명
+㉯ 6명
+㉴ 9명
+㉵ 27명
+18. 내경이 10[cm]인 관에서 20[cm]인 관으로 유체가 수평방향으로 흐르고 있을 때 내경 20[cm]인 관에서의 유속이 2.4[m/s]이면 내경이 10[cm]인 관에서의 유속은 몇 [m/s]인가?
+㉮ 4.5[m/s]
+㉯ 5.4[m/s]
+㉴ 6.9[m/s]
+㉵ 9.6[m/s]
+19. 압력계의 눈금이 3.6[kgf/cm2] 인 경우 수두로 환산한 값으로 옳은 것은?
+㉮ 0.36[mAq]
+㉯ 3.6[mAq]
+㉴ 36[mAq]
+㉵ 360[mAq]
+20. 금속 내부의 결함을 검사하는 가장 효과적인 방법은?
+㉮ 액체 침투 탐상법
+㉯ 초음파 탐상법
+㉴ 형광 침투 탐상법
+㉵ 인장 시험법
+21. 강철을 A₃~ A₁ 변태점 이상으로 가열하여 물이나 기름에 급냉시키는 열처리는?
+㉮ Annealing
+㉯ Normalizing
+㉴ Tempering
+㉵ Quenching
+22. 선체의 심한 횡동요를 줄이기 위해 설치되는 장치가 아닌 것은?
+㉮ Bow thruster
+㉯ Anti-rolling tank
+㉴ Fin stabilizer
+㉵ Bilge keel
+23. 선박 운항시 발생하는 파도의 영향으로 인해 선체 주변 압력 분포가 바뀜에 따라 형성되는 저항은?
+㉮ 조와저항
+㉯ 마찰저항
+㉴ 조파저항
+㉵ 공기저항
+24. V벨트 단면의 사다리꼴 각도는 얼마인가?
+㉮ 50±1.0°
+㉯ 40±1.0°
+㉴ 45±1.0°
+㉵ 35±1.0°
+25. 실물을 일정 비율로 확대하여 그리는 척도는?
+㉮ 축척
+㉯ 배척
+㉴ 실척
+㉵ 현척
+[제3과목 : 기관3]
+1. @pic4301
+㉮ 4[kΩ]
+㉯ 6[kΩ]
+㉴ 8[kΩ]
+㉵ 10[kΩ]
+2. e = 150 sin(188t) [V]인 전압 파형의 주파수는 약 몇 [Hz]인가?
+㉮ 30[Hz]
+㉯ 60[Hz]
+㉴ 150[Hz] 
+㉵ 377[Hz]
+3. 변압기에서 권선비와 같은 값을 갖는 것은?
+㉮ (1차측 전압) / (2차측 전압)
+㉯ (출력용량) / (입력용량)
+㉴ (1차측 전류) / (2차측 전류)
+㉵ (1차선권의 임피던스) / (2차선권의 임피던스)
+4. 100[Ω]의 저항이 4[W]의 전력을 소비하려면 몇 [V]의 전압이 주어져야 하는가?
+㉮ 10[V]
+㉯ 20[V]
+㉴ 30[V]
+㉵ 40[V]
+5. 자려식 발전기를 기동하면 외부 전원의 도움 없이 단자 전압이 발생되는 주된 이유는?
+㉮ 잔류자기 때문에
+㉯ 전기자 저항 때문에
+㉴ 임계저항 때문에
+㉵ 자기포화 때문에
+6. 빛이 안개, 연기 등을 잘 통과하여 갑판 등에서 많이 사용되는 전등은?
+㉮ 나트륨등
+㉯ 형광등
+㉴ 백열등
+㉵ 네온전등
+7. 다음 중 용량리액턴스 Xc와 주파수 f와의 관계를 옳게나타낸 것은?
+㉮ @pic4307_a
+㉯ @pic4307_b
+㉴ @pic4307_c
+㉵ @pic4307_d
+8. 선간전압이 440[V]이고 부하전류가 20[A]인 3상 교류회로의 소비전력은 약 몇 [kW]가 되는가?(단, 역률은 0.8이다)
+㉮ 6.2[kW]
+㉯ 8.8[kW]
+㉴ 12.2[kW]
+㉵ 16.2[kW]
+9. 다음과 같은 회로에서 토글 스위치 A가 닫힌 후 5초가 지난 시점에서의 램프 상태는? (단, GL은 Green lamp, RL은 Red lamp이고 타이머 T의 설정시간은 10초이다.)
+㉮ GL과 RL모두 꺼져 있다.
+㉯ GL만 켜져 있다.
+㉴ RL만 켜져 있다.
+㉵ GL과 RL모두 켜져 있다.
+10.IGBT에 대한 설명으로 옳지 않은 것은?
+㉮ 절연된 베이스 단자를 갖는 단극성 트랜지스터이다.
+㉯ 컬렉터, 이미터, 게이트의 단자를 갖고 있다.
+㉴ 전력제어용 소자로 많이 사용된다.
+㉵ SCR에 비해 동작 속도가 높으므로 스위칭 속도가 빠르다.
+11. 다음과 같은 회로에서 입력A와 출력Y의 논리 관계에 해당하는 것은?\n @pic4311
+㉮ AND 게이트
+㉯ NOT 게이트
+㉴ NAND 게이트
+㉵ NOR 게이트
+12. 입력 단자가 하나이고 여기에 펄스가 들어갈 때마다 출력이 매번 바뀌어 나오는 것은?
+㉮ RS Flip – Flop 회로
+㉯ JK Flip – Flop 회로
+㉴ T Flip – Flop 회로
+㉵ Schmitt trigger 회로
+13. FET에서 드레인 전류를 제어하는 것은?
+㉮ 소스 전류
+㉯ 소스와 드레인 간의 전압
+㉴ 게이트 전류
+㉵ 게이트 전압
+14. BCD 코드의 의미는 ?
+㉮ 2진화 10진 코드
+㉯ 그레이코드
+㉴ 착오검출 코드
+㉵ 8 bit 코드
+15. 전자소자에 대한 설명으로 옳지 않은 것은?
+㉮ 서미스터(thermistor)는 온도를 검출하는 데 사용되는 소자이다.
+㉯ 발광다이오드는 전자가 정공과 재결합 시 빛을 내는 소자이다.
+㉴ 광도전 셀(photoconductive cell)은 빛을 받으면 저항값이 증가하는 소자이다.
+㉵ 배리스터(varistor)는 서지 전압 등 급격한 외부전압으로부터 회로를 보호하기 위한 소자이다.
+16. A/D 컨버터에 대한 설명으로 옳은 것은?
+㉮ 디지털 신호를 아날로그 신호로 변환하는 회로이다.
+㉯ 아날로그 전류신호를 디지털 신호로 선택하는 회로이다.
+㉴ 아날로그 전압신호를 주파수로 변환하는 회로이다.
+㉵ 아날로그 신호를 디지털 신호로 변환하는 회로이다.
+17. 정전용량형 근접센서에서의 검출용 커패시턴스 크기에 대한 설명으로 옳지 않은 것은?
+㉮ 근접한 물체의 접근 정도에 따라 크기가 달라진다.
+㉯ 전극의 단면적 크기에 비례한다.
+㉴ 두 전극판 사이의 거리에 비례한다.
+㉵ 두 전극판 사이의 유전율에 비례한다.
+18. 교류의 큰 전류를 적당한 비율로 축소시켜 측정할 수 있도록 하는 것은?
+㉮ OCR
+㉯ PT
+㉴ CT
+㉵ CB
+19. 변위를 압력으로 변환시키는 요소는?
+㉮ 벨로스
+㉯ 다이어프램
+㉴ 노즐과 플래퍼
+㉵ 대시포트
+20. 다음 그림과 같이 오실로스코프 상에 나타난 정현파전압에서 주파수는 몇 [Hz]인가?
+㉮ 4[Hz]
+㉯ 8[Hz]
+㉴ 60[Hz]
+㉵ 500[Hz]
+21. PLC의 래더 다이어그램에서 사용되는 논리조건이 아닌 것은?
+㉮ DAC
+㉯ NOT
+㉴ OR
+㉵ AND
+22. 다음 블록 선도에서 C(s)/R(s)는?
+㉮ @pic4322_a
+㉯ @pic4322_b
+㉴ @pic4322_c
+㉵ @pic4322_d
+23. 보일러 자동제어장치에서 보일러의 점화 시 착화여부를 감지하는 것은?
+㉮ 온도스위치
+㉯ 압력스위치
+㉴ 플레임 아이
+㉵ 서모스탯
+24. @pic4324
+㉮ @pic4324_a
+㉯ @pic4324_b
+㉴ @pic4324_c
+㉵ @pic4324_d
+25. 다음 중 2위치 제어에 해당하는 것은?
+㉮ 발전기의 자동전압조정기
+㉯ 디젤기관의 조속기
+㉴ 보일러 연소제어에서 공기량의 연속 제어
+㉵ 시동용 공기압축기의 자동운전
+[제4과목 : 직무일반]
+1. 황천에 대한 준비사항으로 옳지 않은 것은?
+㉮ 정박중인 경우 언제라도 피항할 수 있도록 조치한다.
+㉯ 각 구획과 코퍼댐 등에 있는 빌지를 완전히 배출한다.
+㉴ 자동제어기기와 원격제어기기의 작동상태를 확인한다.
+㉵ 추진기관의 공회전을 피하기 위해 선미탱크를 배수한다.
+2. 동일한 구경인 경우 밸브의 높이가 가장 큰 것은?
+㉮ 게이트 밸브
+㉯ 글로브 밸브
+㉴ 체크 밸브
+㉵ 나비 밸브
+3. 한국선급의 계속검사를 받아야 하는 항목이 아닌 것은?
+㉮ 주기관의 피스톤
+㉯ 보일러
+㉴ 발전기 기관
+㉵ 주기관의 L.O. 펌프
+4. ISM Code상 증서에 대한 설명으로 옳지 않은 것은?
+㉮ SMC의 갱신심사 유효기간은 5년이다.
+㉯ 선박에는 DOC 사본을 비치하여야 한다.
+㉴ 선박에는 SMC 사본을 비치하여야 한다.
+㉵ DOC를 발급 받지 않고 SMC만을 발급 받아서는 운항 할 수 없다.
+5. 연료유 수급 시의 주의사항으로 옳지 않은 것은?
+㉮ 온도에 의한 체적 팽창을 고려하여 탱크 내에 여유를 두고 수급한다.
+㉯ 수급한 후 탱크 내의 거품이 완전히 가라앉은후에 수급량을 계측한다.
+㉴ 유출유에 의한 해양오염을 방지하기 위해 탱크의 공기 추출관(air vent pipe)을 폐쇄한 후 수급한다.
+㉵ 자동 측심장치나 비상 차단장치 등은 수급 전에 점검하여 이상이 있는지를 점검한다.
+6. 기관구역 기름기록부의 기재사항이 아닌 것은?
+㉮ 연료유 수급
+㉯ 선저 폐수의 처리
+㉴ 유성잔류물의 처리
+㉵ 슬롭탱크의 배출
+7. 기름여과장치에 대한 설명으로 옳지 않은 것은?
+㉮ 공기배출기는 장치 상부에 고인 공기를 배출하는 역할을 한다.
+㉯ 콜레서는 빌지중에 분산되어 있는 기름입자들을 흡착시켜 분리하는 역할을 한다.
+㉴ 유면검출기는 정전용량형 센서로서 물과 기름의 유전율 차이에 의해 경계면을 검지하는 역할을 한다.
+㉵ 전자밸브는 압력스위치의 신호를 받아 기름여과장치 상층에 고인 기름을 슬러지 탱크로 배출하는 역할을 한다.
+8. 연료유 수급 완료 후 담당기관사가 점검 및 확인해야 할 내용이 아닌 것은?
+㉮ 갑판의 스커퍼를 폐쇄한다.
+㉯ 탱크별 수급량을 확인한다.
+㉴ 기관일지에 연료유 수급내용을 기록한다.
+㉵ 기름기록부에 연료유 수급내용을 기록한다.
+9. 기름 유출 시 사용되는 방제 자재 또는 약제가 아닌 것은?
+㉮ 유성향상제
+㉯ 유흡착재
+㉴ 유겔화제
+㉵ 유처리제
+10. 직접 압박법으로 지혈을 할 때의 조치방법으로 옳지않은 것은?
+㉮ 출혈부위를 압박한다.
+㉯ 출혈부위 근처를 냉각시킨다.
+㉴ 출혈부위 근처의 관절을 편다.
+㉵ 출혈부위를 심장보다 높게 한다.
+11. 건강한 성인의 체내 활동수치로 옳지 않은 것은?
+㉮ 최고혈압 120 ~ 140 [mmHg]
+㉯ 최저혈압 30 ~ 50 [mmHg]
+㉴ 1분간의 맥박수 65 ~ 75회
+㉵ 1분간의 호흡수 12 ~ 18회
+12. 항해당직 중 발전기의 고장으로 정전이 된 경우에 가장 우선적인 응급조치는?
+㉮ 직류 전원을 준비하여 송전한다.
+㉯ 예비 발전기를 기동하여 송전한다.
+㉴ 즉시 발전기 담당 기관사에게 알린다.
+㉵ 기관장에게 고장 사항을 보고하고 지시를 기다린다.
+13. 운전중인 대형 저속 디젤 주기관의 어느 한 실린더에서 실린더 헤드의 냉각수 통로 파공 사고로 해당 실린더 피스톤을 그대로 둔 채 내부가 압축되지 않도록 감통 운전할 경우의 조치사항으로 옳지 않은 것은?
+㉮ 해당 실린더의 연료유를 차단한다.
+㉯ 해당 실린더의 냉각수를 차단한다.
+㉴ 해당 실린더의 실린더유를 차단한다.
+㉵ 해당 실린더의 시동공기계통을 차단한다.
+14. 운전 중 발전기가 과부하로 될 경우 선박운항에 필수적인 전동기만을 남기고 나머지 전동기들은 자동정지시켜 발전기 운전을 계속하도록 하는 장치는?
+㉮ Over current 트립장치
+㉯ Under voltage 트립장치 
+㉴ Preference 트립장치
+㉵ Reverse power 트립장치
+15. 우리나라의 화재 분류법상 전기화재는?
+㉮ A급
+㉯ B급
+㉴ C급
+㉵ D급
+16. 연료유 탱크의 에어벤트 파이프에 방호막(arrested filter)을 설치하는 주된 이유는?
+㉮ 사고에 의한 기름유출을 방지하기 위해
+㉯ 탱크로 해수가 들어가는 것을 방지하기 위해
+㉴ 벤트로부터 냄새가 나는 것을 방지하기 위해
+㉵ 탱크로 불꽃이 들어가는 것을 방지하기 위해
+17. 가스용접 작업 시 화재 예방을 위한 주의사항으로 옳지 않은 것은?
+㉮ 작업 구역의 통풍이 잘 되도록 한다.
+㉯ 작업장 부근의 가연성 물질을 제거한다.
+㉴ 가스용기는 항상 눕혀서 사용하도록 한다.
+㉵ 작업하는 격실의 반대편 격실에 감시원을 배치한다.
+18. 해양환경관리법상 '연료유의 견본은 시험용으로 충분한 양으로 최소 ( ) 이상이어야 하고 용기 안의 주입량은 ( )까지 채우고 밀봉하여야 한다.' 에서 ( ) 에 각각 알맞은 것은?
+㉮ 400[㎖], 85[%]±10[%]
+㉯ 400[㎖], 90[%]±5[%]
+㉴ 500[㎖], 85[%]±10[%]
+㉵ 500[㎖], 90[%]±5[%]
+19. 선박안전법에서 '정기검사를 받기 곤란한 장소에 있는 선박의 선박검사증서의 유효기간 연장은( ) 이내 연장이 가능하나 연장기간 내에 해당선박이 정기검사를 받을 장소에 도착하면 지체없이 정기검사를 받아야한다.' 에서 ( ) 에 알맞은 것은?
+㉮ 2개월
+㉯ 3개월
+㉴ 5개월
+㉵ 6개월
+20. 선원법상 선장이 해원에게 할 수 있는 징계에 해당되지 않는 것은?
+㉮ 하선
+㉯ 업무정지
+㉴ 상륙금지
+㉵ 훈계
+21. 조난신호 중 가장 먼 거리에서 볼 수 있는 것은?
+㉮ 낙하산 신호
+㉯ 신호 홍염
+㉴ 발연부 신호
+㉵ 신호용 거울
+22. 선박보안심사에 대한 설명으로 옳지 않은 것은?
+㉮ 최초 보안심사는 국제선박보안증서를 처음으로 교부받으려는 때에 행하는 심사이다.
+㉯ 정기 보안심사는 국제선박보안증서의 유효기간이 만료되기 전에 정해진 시기에 행하는 심사이다.
+㉴ 중간 보안심사는 최초보안심사와 갱신보안심사 사이 또는 갱신보안심사와 갱신보안심사 사이에 해양수산부령으로 정해진 시기에 행하는 심사이다.
+㉵ 특별 보안심사는 국제항해선박에서 보안사건이 발생하는 등의 사유가 있는 때에는 그 국제항 해선박에 대하여 선박보안계획서의 작성·시행 등에 관한 이행 여부를 확인하는 심사이다.
+23. SOLAS 협약 및 개정규정상 '화물선에서의 자동시동방식 비상발전기에는 최소한 ( ) 의 연속시동이 가능한 용량 의 에너지를 비축한 시동장치를 설치해야 하며 수동시동법의 유효성이 확인되지 아니하는 경우에는 ( ) 이내에 추가하여 ( )의 시동이 가능한 제 2의 에너지원을 비치해야 한다.' 에서 ( )에 각각 순서대로 알맞은 것은?
+㉮ 2회, 20분, 2회
+㉯ 2회, 30분, 2회
+㉴ 3회, 20분, 3회
+㉵ 3회, 30분, 3회
+24. MARPOL 협약 및 개정규정의 부속서 V 에서 규정하는 폐기물 관리계획서에 대한 설명으로 옳지 않은 것은?
+㉮ 폐기물 관리계획서는 최종 기재일로부터 최소 3년 동안 본선에 보존하여야 한다.
+㉯ 폐기물 관리계획서는 선원들이 통용하는 언어 로 기록되어야 하며 이 계획서를 수행할 수 있는 책임자를 임명하여야 한다.
+㉴ 폐기물 관리계획서는 선상 장비의 사용방법을 포함하여 쓰레기의 최소화, 수집, 저장, 처리 및 처분을 위한 문서화 된 절차를 제공하여야 한다.
+㉵ 총톤수 100톤 이상의 모든 선박 및 승선인원 15인 이상의 정원을 가진 모든 선박은 선원이 실행할 수 있는 폐기물 관리계획서를 비치하여야 한다.
+25. 해사노동협약상 선원의 휴식시간에 대한 설명으로 옳지 않은 것은?
+㉮ 휴식시간은 2회로 나눌 수 있다.
+㉯ 2회의 휴식시간 중 한번은6시간 이상이어야 한다.
+㉴ 12연속적인 휴식시간 사이의 간격은 시간을 초과하지 않아야 한다.
+㉵ 소화 및 구명정 훈련 등으로 인한 휴식시간의 방해가 최소화 되어야 한다.
+[제5과목 : 영어]
+1. '검사에 대비하여 선미관축을 발출할 것'을 영문으로 표기할 때 ( )에 알맞은 것은?\n 'Tail shaft ( ) for survey.'
+㉮ to be drew out
+㉯ to draw out
+㉴ to be drawn out
+㉵ to drew out
+2. Find out the incorrect one of the following abbreviations.
+㉮ Estimated Time of Detection : ETD
+㉯ pounds per square inches : psi
+㉴ Differential Pressure Transmitter : DPT
+㉵ Maximum Continuous Rating : MCR
+3. Foaming leads to ( ) which is the carry over of water with the steam leaving the boiler drum. Any water present in the steam entering a turbine will do considerable damage.
+㉮ priming
+㉯ sooting
+㉴ streaming
+㉵ blowing
+4. In a centrifugal pump liquid enters the center or eye of the ( A ) and flows radially out between the vanes, its velocity being increased by the impeller rotation. A diffuser or ( B ) is then used, to convert most of the kinetic energy in the liquid into pressure.
+㉮ A : shaft, B : impeller
+㉯ A : impeller, B : volute
+㉴ A : gear, B : volute
+㉵ A : vane, B : impeller
+5. On a three-phase, three-lamp ground detector, what would be the indication if one phase was grounded?
+㉮ One lamp dark and the others bright.
+㉯ One lamp bright and the others dark.
+㉴ All the lamps would be dark.
+㉵ All the lamps would be bright.
+6. With stopped engine, blow-by can be located by inspecting the condition of the piston rings, through the scavenge air ports. Piston and cylinder liner become ( ) in the area of blow-by.
+㉮ black
+㉯ white
+㉴ yellow
+㉵ bright
+7. Electric power is the rate of doing work by electricity. It is the ( A ) of voltage and current. The unit of power is watt or kilowatt. Kilo is a prefix which stands for ( B ).
+㉮ A : ratio, B : 103
+㉯ A : product, B : 106
+㉴ A : sum, B : 106
+㉵ A : product, B : 103
+8. In a turbine, the steam passes through a series or succession of wheels holding ( A ). It passes through them one after the other. Each successive row reduces the ( B ) energy of the steam. The energy of the steam is ( C ) reduced as it passes through the successive rows.
+㉮ A : stages, B : moving, C : slowly
+㉯ A : rotor, B : stored, C : gradually
+㉴ A : blades, B : kinetic, C : progressively
+㉵ A : disc, B : potential, C : greatly
+9. In a vapor compression refrigeration system, the refrigerant absorbs the ( ) heat of vaporization in the evaporator.
+㉮ sensible
+㉯ latent
+㉴ condensate
+㉵ specific
+10. The ( ) limiter defines a maximum amount of fuel to be injected based on the actual ( ), in order not to overfuel the engine.
+㉮ L.O. pressure
+㉯ cooling F.W. pressure
+㉴ torque
+㉵ scavenge air pressure
+11. One of the most fundamental laws of nature is the ( ) principle. It simply states that during an interaction energy can change from one to another but that the total amount of energy remains constant.
+㉮ conservation of energy
+㉯ Bernoulli's theorem
+㉴ Pascal's theorem
+㉵ Fleming's right hand rule
+12. The composition of the crude varies from place to place as a function, in part, of the matter forming it. The primary components are ( A ), ( B ) and ( C ).
+㉮ A : carbon, B : nitrogen, C : sulfur
+㉯ A : carbon, B : hydrogen, C : sulfur
+㉴ A : oxygen, B : nitrogen, C : argon
+㉵ A : oxygen, B : hydrogen, C : argon
+13. In accordance with the SOLAS Convention as amended, ( A ) shall be provided with at least one ( B ).
+㉮ A : ships of 400 tons gross tonnage and upwards\n B : international standard discharge connections
+㉯ A : ships of 500 tons gross tonnage and upwards\n B : international standard discharge connections
+㉴ A : ships of 400 tons gross tonnage and upwards\n B : international shore connections
+㉵ A : ships of 500 tons gross tonnage and upwards\n B : international shore connections
+14. In accordance with the SOLAS Convention as amended, ( ) is an appliance for the rapid transfer of persons from the embarkation deck of a ship to a floating survival craft.
+㉮ rope ladder
+㉯ survival craft davit
+㉴ stretcher bearers
+㉵ marine evacuation system
+15. In accordance with the SOLAS Convention as amended, ( ) means the person on board the ship, accountable to the master, designated by the Company as responsible for the security of the ship, including implementation and maintenance of the ship security plan and for liaison with the company security officer and port facility security officers.
+㉮ PSC officer
+㉯ ship security officer
+㉴ company security officer
+㉵ port facility security officer
+16. Fuel is injected into a cylinder of diesel engine after air in the cylinder is compressed, and the fuel is ignited by the heat of ( ).
+㉮ sublimation
+㉯ compression
+㉴ vaporization
+㉵ fusion
+17. Which of the followings is not used for complimentary close of letter?
+㉮ Yours truly
+㉯ Respectfully yours
+㉴ My dear Mr. Smith
+㉵ Sincerely yours
+18. In accordance with the SOLAS Convention as amended, every steam boiler shall be provided with not less than two ( ) valves of adequate capacity.
+㉮ safety
+㉯ stop
+㉴ air vent
+㉵ check
+19. According to the SOLAS Convention as amended, immersion suit is a protective suit which reduces the ( ) of a person wearing it in cold water.
+㉮ body humidity
+㉯ mental consciousness
+㉴ brilliance of skin
+㉵ body heatless
+20. In accordance with the SOLAS Convention as amended, ( ) are those spaces used for public spaces, corridors, lavatories, cabins, offices, hospitals, cinemas, game and hobby rooms, barber shop, pantries containing no cooking appliances and similar spaces.
+㉮ control spaces
+㉯ accommodation spaces
+㉴ public spaces
+㉵ service spaces
+21. What is the temperature at which combustion at the surface will be supported when a small flame causes ignition and the vapour driven off will burn with a continuous flame?
+㉮ Fire point
+㉯ Flash point
+㉴ Freezing point
+㉵ Boiling point
+22. Which one of the following is the most unsuitable expression that should be avoided in the business letter?
+㉮ As follows
+㉯ As stated below
+㉴ As shown below
+㉵ As under
+23. Where should be recorded bottom wastewater treatment works in the machinery space that occur during the voyage of the vessel?
+㉮ Bell book
+㉯ Oil record book
+㉴ Garbage record book
+㉵ Hazardous liquid substance register
+24. The hand flare shall continue to burn after having been immersed for a period of 10 sec. under 100[mm] of ( ) according to SOLAS Convention.
+㉮ water
+㉯ oil
+㉴ mercury
+㉵ alcohol
+25. Where risk from ( ) of machinery exists, means shall be provided to ensure that the safe speed is not exceeded in accordance with the SOLAS Convention as amended.
+㉮ overspeeding
+㉯ overpressure
+㉴ breakdown
+㉵ high temperature
+[답]
+기관1
+나
+아
+사
+가
+사
+사
+가
+아
+나
+사
+가
+가
+나
+나
+사
+아
+아
+아
+가
+아
+나
+아
+나
+가
+사
+기관2
+아
+아
+가
+나
+나
+사
+나
+사
+나
+아
+가
+가
+나
+아
+아
+사
+나
+아
+사
+나
+아
+가
+사
+나
+나
+기관3
+사
+가
+가
+나
+가
+가
+가
+사
+사
+가
+나
+사
+아
+가
+사
+아
+사
+사
+사
+아
+가
+나
+사
+가
+아
+직무일반
+아
+가
+나
+사
+사
+아
+아
+가
+가
+사
+나
+나
+사
+사
+사
+아
+사
+나
+나
+나
+가
+나
+아
+가
+사
+영어
+사
+가
+가
+나
+가
+가
+아
+사
+나
+아
+가
+나
+아
+아
+나
+나
+사
+가
+아
+나
+가
+아
+나
+가
+가

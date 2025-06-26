@@ -1,0 +1,1667 @@
+{
+ "subject":
+ {
+   "name": "항해사 3급",
+   "year": "2021",
+   "inning": "4",
+   "type": 
+   [      
+      {
+         "string": "1. 항해",
+         "questions": 
+         [            
+            {
+               "num": "1",
+               "questionsStr": "자기 컴퍼스의 각 자차 수정구는 서로 영향을 받게 되 므로 하나의 수정구를 조정하면 연쇄적으로 다른 수정 구를 재조정할 필요가 있다. 이 점을 고려하였을 때 조정하는 순서로 옳은 것은? (단, 1: 경선차 수정자석, 2: 연철구, 3: Flinders bar, 4: B 또는 C 자석)",
+               "ex1Str": "1→2→3→4",
+               "ex2Str": "1→3→2→4",
+               "ex3Str": "2→1→4→3",
+               "ex4Str": "3→2→1→4",
+               "answer": "아"
+            },            
+            {
+               "num": "2",
+               "questionsStr": "자기 컴퍼스의 자차측정 방법이 아닌 것은?",
+               "ex1Str": "교차방위법",
+               "ex2Str": "출몰방위각법",
+               "ex3Str": "원표 방위각법",
+               "ex4Str": "2개 물표의 중시선을 이용하는 방법",
+               "answer": "가"
+            },            
+            {
+               "num": "3",
+               "questionsStr": "다음 중 기계식 자이로컴퍼스에서 부정오차(Wandering error)를 일으키는 원인이 아닌 것은?",
+               "ex1Str": "NS 간의 수은 유통이 불량한 경우",
+               "ex2Str": "보정 추(Compensating weight)의 고정 상태가 불량한 경우",
+               "ex3Str": "로터 케이스의 수평축 주위로 일정한 토크가 주어진 경우",
+               "ex4Str": "방위 전동기, 발신기 등에 있는 톱니바퀴의 물 림이 원활하지 못한 경우",
+               "answer": "사"
+            },            
+            {
+               "num": "4",
+               "questionsStr": "Doppler log 지시오차의 원인이 아닌 것은?",
+               "ex1Str": "수온의 영향",
+               "ex2Str": "선체 동요의 영향",
+               "ex3Str": "기포의 영향",
+               "ex4Str": "송수파기의 감도 불량",
+               "answer": "아"
+            },            
+            {
+               "num": "5",
+               "questionsStr": "등대의 등질 중에서 빛을 비추는 시간이 꺼져 있는 시 간보다 짧은 것은?",
+               "ex1Str": "명암등",
+               "ex2Str": "섬광등",
+               "ex3Str": "부동등",
+               "ex4Str": "호광등",
+               "answer": "나"
+            },            
+            {
+               "num": "6",
+               "questionsStr": "입항 중인 선박에서 홍색 바탕에 녹색 횡대 한 줄이 칠해져 있는 부표를 보았다. 그 의미는? (단, IALA 해 상부표식 B방식 기준임)",
+               "ex1Str": "그 표지의 오른쪽에 우선항로가 있다.",
+               "ex2Str": "그 표지의 왼쪽에 우선항로가 있다.",
+               "ex3Str": "그 표지의 둘레가 모두 가항수역이다.",
+               "ex4Str": "그 표지의 동쪽에 가항수역이 있다.",
+               "answer": "나"
+            },            
+            {
+               "num": "7",
+               "questionsStr": "안개가 끼거나 눈 또는 비 등으로 시계가 나빠서 육지 나 등화를 발견하기 어려울 때 부근을 항해하는 선박 에게 항로표지의 위치를 알리거나, 경고할 목적으로 설치된 음파(음향)표지의 종류가 아닌 것은?",
+               "ex1Str": "무종",
+               "ex2Str": "다이어폰",
+               "ex3Str": "에어 사이렌",
+               "ex4Str": "코스 비콘",
+               "answer": "아"
+            },            
+            {
+               "num": "8",
+               "questionsStr": "암암(暗岩)이란?",
+               "ex1Str": "저조일 때 수면 위로 나타나는 바위",
+               "ex2Str": "저조일 때 그 꼭대기가 해수에 씻기는 바위",
+               "ex3Str": "저조일 때에도 수면 위에 나타나지 않는 바위",
+               "ex4Str": "조위가 평균수면과 같을 때 수면에 나타나는 바위",
+               "answer": "사"
+            },            
+            {
+               "num": "9",
+               "questionsStr": "컴퍼스 오차를 산출하는 데 사용하는 서지는?",
+               "ex1Str": "등대표",
+               "ex2Str": "퀵차트",
+               "ex3Str": "색성판",
+               "ex4Str": "태양방위각표",
+               "answer": "아"
+            },            
+            {
+               "num": "10",
+               "questionsStr": "쿠로시오에 대한 설명으로 옳지 않은 것은?",
+               "ex1Str": "난류이다.",
+               "ex2Str": "우리나라에 가장 영향이 큰 해류이다.",
+               "ex3Str": "북적도 해류의 서쪽 끝에서 북으로 방향 전환 하는 곳에서부터 시작한다.",
+               "ex4Str": "쿠로시오를 일으키는 원동력은 해양의 대규모 풍계이지만 해류의 구조는 경사류의 특징을 가 지고 있다.",
+               "answer": "아"
+            },            
+            {
+               "num": "11",
+               "questionsStr": "12월 20일 인천항의 오전 고조시는? (단, 당일 달의 자오선 통과시는 03시 55분, 인천항의 평균 고조간격은 4시간 28분임)",
+               "ex1Str": "00시 33분",
+               "ex2Str": "03시 55분",
+               "ex3Str": "04시 28분",
+               "ex4Str": "08시 23분",
+               "answer": "아"
+            },            
+            {
+               "num": "12",
+               "questionsStr": "어떤 선박이 진침로 090˚, 속력 12노트로 항해하다가 A등대를 상대방위 030˚로 관측하고 40분 후 상대방위 060˚로 관측하였다면, A등대와 이 선박의 예상되는 정 횡거리는?",
+               "ex1Str": "7해리",
+               "ex2Str": "8해리",
+               "ex3Str": "9해리",
+               "ex4Str": "10해리",
+               "answer": "가"
+            },            
+            {
+               "num": "13",
+               "questionsStr": "진침로 168°, 편차 6°30'W이고 선수에 대한 자차는 자차표에서 2°30′W를 얻었을 때 나침로는?",
+               "ex1Str": "159°",
+               "ex2Str": "172°",
+               "ex3Str": "174°.5",
+               "ex4Str": "177°",
+               "answer": "아"
+            },            
+            {
+               "num": "14",
+               "questionsStr": "단일 물표의 격시관측에 의한 선위의 오차에 대한 설 명으로 옳지 않은 것은?",
+               "ex1Str": "방위선의 교각이 선위의 오차에 미치는 영향은 교차방위법의 경우와 같다.",
+               "ex2Str": "외력의 영향이 침로와 평행으로 작용하면 속력 의 오차에 상당하는 편위가 생긴다.",
+               "ex3Str": "추정유향이 제1위치선에 평행일 때 제2위치선으 로 결정된 선위는 유향의 영향을 받지 않는다.",
+               "ex4Str": "방위를 측정한 시각에 오차가 있으면 전위선에 는 오차가 생기나 선위에는 오차로 나타나지 않는다.",
+               "answer": "아"
+            },            
+            {
+               "num": "15",
+               "questionsStr": "교차방위법에 있어서 두 위치선의 교각 θ와 위치선의 오차로 인한 선위 오차와의 관계는?",
+               "ex1Str": "선위 오차는 sinθ에 비례한다.",
+               "ex2Str": "선위 오차는 cosθ에 비례한다.",
+               "ex3Str": "선위 오차는 secθ에 비례한다.",
+               "ex4Str": "선위 오차는 cosecθ에 비례한다.",
+               "answer": "아"
+            },            
+            {
+               "num": "16",
+               "questionsStr": "( )에 순서대로 적합한 것은? '( )에 의한 피험선은 해도를 잘 조사하여 침로 부 근에 간출암, 세암, 암암 등 장해물의 유무와 본선의 흘수 등을 참작하여 적당한 ( )을/를 택하고, 이를 ( )로/으로 보아 그 이내에 들어가지 않도록 하는 방법이다.'",
+               "ex1Str": "깊이, 등심선, 앙각",
+               "ex2Str": "수심, 등심선, 위험계",
+               "ex3Str": "수심, 위험계, 한계선",
+               "ex4Str": "앙각, 등심선, 위험계",
+               "answer": "나"
+            },            
+            {
+               "num": "17",
+               "questionsStr": "방위각 Z가 S080˚E일 때 이것을 출몰방위각으로 나 타내면?",
+               "ex1Str": "E80˚N",
+               "ex2Str": "N80˚E",
+               "ex3Str": "W10˚N",
+               "ex4Str": "E10˚S",
+               "answer": "아"
+            },            
+            {
+               "num": "18",
+               "questionsStr": "상용일출몰시에 대한 설명으로 옳은 것은?",
+               "ex1Str": "태양의 중심이 수평권에 걸린 시각",
+               "ex2Str": "태양의 상변이 시수평에 접한 시각",
+               "ex3Str": "태양의 중심이 시수평에 걸린 시각",
+               "ex4Str": "태양의 하변이 수평권에 접한 시각",
+               "answer": "나"
+            },            
+            {
+               "num": "19",
+               "questionsStr": "지방시각이 0˚인 것은 어떠한 경우에 해당하는가?",
+               "ex1Str": "평자정",
+               "ex2Str": "극상 정중할 때",
+               "ex3Str": "시자정",
+               "ex4Str": "동서권을 통과할 때",
+               "answer": "나"
+            },            
+            {
+               "num": "20",
+               "questionsStr": "레이더를 이용하여 물표의 방위 측정 시 주의할 사항 이 아닌 것은?",
+               "ex1Str": "진방위 지시방식에서 측정하는 것이 편리하다.",
+               "ex2Str": "감도 조정으로 수평 빔의 확대 효과를 줄인다.",
+               "ex3Str": "육지에 있는 높은 산은 정상 부분의 방위를 측 정한다.",
+               "ex4Str": "물표는 작은 섬 등의 현저한 고립 물표가 좋으 며, 물표 중심의 방위를 측정한다.",
+               "answer": "사"
+            },            
+            {
+               "num": "21",
+               "questionsStr": "레이더 플로팅 시 속력 삼각형에 나타나는 요소가 아 닌 것은?",
+               "ex1Str": "자기 선박의 진운동",
+               "ex2Str": "자기 선박의 상대운동",
+               "ex3Str": "다른 선박의 진운동",
+               "ex4Str": "다른 선박의 상대운동",
+               "answer": "나"
+            },            
+            {
+               "num": "22",
+               "questionsStr": "레이더의 최소탐지거리에 영향을 미치는 요인이 아닌 것은?",
+               "ex1Str": "펄스 폭",
+               "ex2Str": "안테나 높이",
+               "ex3Str": "수직 빔 폭",
+               "ex4Str": "스캐너 회전수",
+               "answer": "아"
+            },            
+            {
+               "num": "23",
+               "questionsStr": "GPS에 대한 설명으로 옳지 않은 것은?",
+               "ex1Str": "모든 위성은 같은 주파수로 송신한다.",
+               "ex2Str": "위성 식별은 변조 신호에 의해 할 수 있다.",
+               "ex3Str": "위성을 이용한 삼각측량법 원리로 선위를 얻는다.",
+               "ex4Str": "위성은 모두 24개로 구성되며, 하나의 위성으로 선위를 얻는다.",
+               "answer": "아"
+            },            
+            {
+               "num": "24",
+               "questionsStr": "Loran-C에서 펄스 반복주파수가 25Hz이면 펄스 반복 주기는 몇 ㎲인가?",
+               "ex1Str": "10,000㎲",
+               "ex2Str": "15,000㎲",
+               "ex3Str": "40,000㎲",
+               "ex4Str": "45,000㎲",
+               "answer": "사"
+            },            
+            {
+               "num": "25",
+               "questionsStr": "주간 항해와 비교하여 야간 항해의 특성으로 옳지 않 은 것은?",
+               "ex1Str": "당직자가 졸기 쉽다.",
+               "ex2Str": "다른 선박의 행동을 판단하기 쉽다.",
+               "ex3Str": "목측에 의한 선위 측정이 어렵다.",
+               "ex4Str": "해양사고에 대하여 신속히 대처하기 어렵다.",
+               "answer": "나"
+            },            
+            {
+               "num": "26",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "27",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "28",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "29",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "30",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            }
+         ]
+      },      
+      {
+         "string": "2. 운용",
+         "questions": 
+         [            
+            {
+               "num": "1",
+               "questionsStr": "유조선에서 화물 탱크의 유량을 측정하기 위해서 갑판 상에 설치한 개구는?",
+               "ex1Str": "Air vent",
+               "ex2Str": "Oil hole",
+               "ex3Str": "Tank hole",
+               "ex4Str": "Ullage hole",
+               "answer": "아"
+            },            
+            {
+               "num": "2",
+               "questionsStr": "Stockless anchor의 장점이 아닌 것은?",
+               "ex1Str": "양묘 및 투묘가 간단하다.",
+               "ex2Str": "Stock으로 인한 선체 손상 염려가 없다.",
+               "ex3Str": "얕은 바다에서 선저를 손상시킬 가능성이 적다.",
+               "ex4Str": "같은 크기의 Stock anchor에 비하여 파주력이 강하다.",
+               "answer": "아"
+            },            
+            {
+               "num": "3",
+               "questionsStr": "착색 안료를 건성유에 용해시켜 여기에 건조제나 희석 제를 첨가한 것으로 선박용 도료(Paint)로 가장 널리 사용되는 것은?",
+               "ex1Str": "수성 Paint",
+               "ex2Str": "Enamel paint",
+               "ex3Str": "Varnish",
+               "ex4Str": "유성 Paint",
+               "answer": "아"
+            },            
+            {
+               "num": "4",
+               "questionsStr": "타판에 작용하는 압력으로서 타각이 커지면 증가하여 조타 중 선체 저항 증가의 한 원인이 되는 힘은?",
+               "ex1Str": "조타력(Steering force)",
+               "ex2Str": "마찰력(Frictional force)",
+               "ex3Str": "항력(Drag)",
+               "ex4Str": "양력(Lift)",
+               "answer": "사"
+            },            
+            {
+               "num": "5",
+               "questionsStr": "우선회 고정피치 단추진기선의 전진 시 Suction current 와 후진 시 Discharging current에 의한 회두 작용을 순서대로 옳게 나타낸 것은?",
+               "ex1Str": "좌회두, 우회두",
+               "ex2Str": "좌회두, 좌회두",
+               "ex3Str": "우회두, 좌회두",
+               "ex4Str": "우회두, 우회두",
+               "answer": "가"
+            },            
+            {
+               "num": "6",
+               "questionsStr": "2묘박에서 두 Anchor 사이의 각도(양현 묘쇄의 교각) 는 강풍하에서 얼마 정도가 좋은가?",
+               "ex1Str": "0°~10°",
+               "ex2Str": "15°~20°",
+               "ex3Str": "30°~40°",
+               "ex4Str": "50°~60°",
+               "answer": "아"
+            },            
+            {
+               "num": "7",
+               "questionsStr": "Tow line이 길고 무거울수록 예인이 유리한 이유는?",
+               "ex1Str": "예인 항해 중 다른 선박에 근접하였을 때 충돌 을 피하기 쉽다.",
+               "ex2Str": "예인선의 갑작스런 기관정지 시 피예인선과 충 돌을 막을 수 있다.",
+               "ex3Str": "Tow line이 길기 때문에 피예인선은 예인선과 별 도로 행동할 수 있다.",
+               "ex4Str": "적당한 Catenary curve를 이루어 파도로 인한 갑작스런 장력을 완화시킨다.",
+               "answer": "아"
+            },            
+            {
+               "num": "8",
+               "questionsStr": "유조선에서 항해 중 화물의 동요에 의한 복원력 손실을 작게 하기 위하여 설치하는 것은?",
+               "ex1Str": "이중저 탱크",
+               "ex2Str": "코퍼댐",
+               "ex3Str": "횡격벽",
+               "ex4Str": "종격벽",
+               "answer": "아"
+            },            
+            {
+               "num": "9",
+               "questionsStr": "배수량 10,000톤인 선박에서 선창 내에 있는 200톤의 화물을 상방으로 5미터 옮겨 적재하였다면 GM의 변화량은?",
+               "ex1Str": "0.098m 감소",
+               "ex2Str": "0.100m 감소",
+               "ex3Str": "0.098m 증가",
+               "ex4Str": "0.100m 증가",
+               "answer": "나"
+            },            
+            {
+               "num": "10",
+               "questionsStr": "배수량등곡선도에서 구할 수 없는 것은?",
+               "ex1Str": "수선면적",
+               "ex2Str": "매 cm 배수톤",
+               "ex3Str": "부심의 높이",
+               "ex4Str": "무게중심의 높이",
+               "answer": "아"
+            },            
+            {
+               "num": "11",
+               "questionsStr": "항해 중 시계가 제한될 경우 조치사항으로 옳지 않은 것은?",
+               "ex1Str": "항해등을 켠다.",
+               "ex2Str": "선장에게 보고한다.",
+               "ex3Str": "레이더를 작동한다.",
+               "ex4Str": "수동조타로 항해 중이면 자동조타로 바꾼다.",
+               "answer": "아"
+            },            
+            {
+               "num": "12",
+               "questionsStr": "항내에서 하역당직 중 당직사관이 후임 당직사관에게 반드시 인계하여야 할 사항이 아닌 것은?",
+               "ex1Str": "빌지와 밸러스트의 양",
+               "ex2Str": "본선 주변 선석에 접안해 있는 선박들의 하역 진행 상황",
+               "ex3Str": "선내에 선적되었거나 남아 있는 화물 또는 양 하 후 선내 잔여 화물에 관한 정보",
+               "ex4Str": "정박한 장소의 수심, 선박의 흘수, 고조와 저 조의 시각과 수위",
+               "answer": "나"
+            },            
+            {
+               "num": "13",
+               "questionsStr": "우리나라 주위에 있는 기단에 대한 설명으로 옳지 않 은 것은?",
+               "ex1Str": "양쯔강기단은 가을에 나타나며 온난다습하다.",
+               "ex2Str": "시베리아기단은 겨울철에 나타나며 한랭건조 하다.",
+               "ex3Str": "오호츠크해기단은 장마철에 우세하며 한랭다습 하다.",
+               "ex4Str": "북태평양기단은 해양성 열대기단으로 우리나라 부근의 여름철 날씨를 지배한다.",
+               "answer": "가"
+            },            
+            {
+               "num": "14",
+               "questionsStr": "섭씨 온도 10℃를 화씨 온도(˚F)로 나타낸 것은?",
+               "ex1Str": "32˚F",
+               "ex2Str": "42˚F",
+               "ex3Str": "50˚F",
+               "ex4Str": "60˚F",
+               "answer": "사"
+            },            
+            {
+               "num": "15",
+               "questionsStr": "지상해석도(Surface analysis)에서 24시간 내에 보퍼 트 풍력계급 10~11 사이에 달할 것이 예상되는 경우 의 표시는?",
+               "ex1Str": "[W]",
+               "ex2Str": "[GW]",
+               "ex3Str": "[SW]",
+               "ex4Str": "[TW]",
+               "answer": "사"
+            },            
+            {
+               "num": "16",
+               "questionsStr": "기관의 출력에 대한 설명으로 옳지 않은 것은?",
+               "ex1Str": "제동마력과 지시마력의 비를 기계효율이라 한다.",
+               "ex2Str": "크랭크축 단에서 계측된 마력을 제동마력이라 한다.",
+               "ex3Str": "1마력(PS)을 SI계의 킬로와트(kW)로 나타내면 736kW이다.",
+               "ex4Str": "실린더 내의 연소압력이 피스톤에 실제로 작용 하는 동력을 지시마력이라 한다.",
+               "answer": "사"
+            },            
+            {
+               "num": "17",
+               "questionsStr": "일정시간 동안에 소비하는 연료량은 속력의 몇 제곱에 비례하는가?",
+               "ex1Str": "1제곱",
+               "ex2Str": "2제곱",
+               "ex3Str": "3제곱",
+               "ex4Str": "4제곱",
+               "answer": "사"
+            },            
+            {
+               "num": "18",
+               "questionsStr": "선박 충돌 시 조치사항으로 옳지 않은 것은?",
+               "ex1Str": "충돌 후 선박이 다른 선박에 박혀 있을 때는 양 선박을 계류삭으로 고정시킨다.",
+               "ex2Str": "서로 선명, 선적항, 소유자, 출항지, 도착항 등 의 정보를 교환한다.",
+               "ex3Str": "피해가 경미하더라도 현장을 떠나지 않는다.",
+               "ex4Str": "인명구조에 필요한 조치를 다한다.",
+               "answer": "사"
+            },            
+            {
+               "num": "19",
+               "questionsStr": "익수자가 발생한 시간을 모를 때 항해한 항로로 되돌아 가는 조선법은?",
+               "ex1Str": "지연 선회법",
+               "ex2Str": "반원 2회 선회법",
+               "ex3Str": "싱글 선회법",
+               "ex4Str": "윌리암슨 선회법",
+               "answer": "아"
+            },            
+            {
+               "num": "20",
+               "questionsStr": "다음 손상 중 열상에 해당되는 것은?",
+               "ex1Str": "송곳이나 바늘과 같은 예리한 물체에 찔린 상처",
+               "ex2Str": "칼, 유리조각 등의 예리한 것에 의해 베인 상처",
+               "ex3Str": "기계나 둔한 물체에 끼어 불규칙하게 찢어진 상처",
+               "ex4Str": "피부가 긁히거나 넘어져 심한 마찰로 인하여 피부 조직에 결손이 생긴 상처",
+               "answer": "사"
+            },            
+            {
+               "num": "21",
+               "questionsStr": "응급환자 발생 시의 일반적인 주의사항으로 옳지 않은 것은?",
+               "ex1Str": "부상 시 환자를 보온하고 부상 부위가 오염되지 않게 한다.",
+               "ex2Str": "환자가 의식이 없을 때는 음료수를 주어 의식을 회복시킨다.",
+               "ex3Str": "환자에게 부상 정도를 알리지 말고 가벼운 대화로 안정시킨다.",
+               "ex4Str": "상처에 일단 드레싱을 하거나 붕대를 댄 것은 가급적이면 다시 제거하지 않는다.",
+               "answer": "나"
+            },            
+            {
+               "num": "22",
+               "questionsStr": "조난 선박의 수색방식 중 수색 목표물의 위치를 정확 하게 알고, 수색구역이 소규모일 때 가장 유효한 수색 방식은?",
+               "ex1Str": "부채꼴 수색방식",
+               "ex2Str": "평행선항적 수색방식",
+               "ex3Str": "나선형 수색방식",
+               "ex4Str": "확대 사각 수색방식",
+               "answer": "가"
+            },            
+            {
+               "num": "23",
+               "questionsStr": "( )에 순서대로 적합한 것은? '국제신호서에서 ( )자로 시작하는 3 문자 신호는 ( )의 통신문에 사용한다.'",
+               "ex1Str": "M, 의료부문",
+               "ex2Str": "U, 긴급부문",
+               "ex3Str": "G, 일반부문",
+               "ex4Str": "I, 쇄빙선과의 통신",
+               "answer": "가"
+            },            
+            {
+               "num": "24",
+               "questionsStr": "ISM code에 대한 내용으로 옳지 않은 것은?",
+               "ex1Str": "DOC의 유효기간은 5년이다.",
+               "ex2Str": "인정된 기관으로부터 안전관리시스템과 관리 실태에 대해 심사를 받아야 한다.",
+               "ex3Str": "선박회사는 안전관리시스템을 구축하고 그 시 스템에 따라 육상과 선박의 안전을 관리하여야 한다.",
+               "ex4Str": "선장은 DOC와 SMC의 원본을 본선에 보관하 여야 하고, 외국항에서 요구가 있으면 제시하 여야 한다.",
+               "answer": "아"
+            },            
+            {
+               "num": "25",
+               "questionsStr": "선내 인적자원관리의 활성화 방안이 아닌 것은?",
+               "ex1Str": "선원의 의식 개혁",
+               "ex2Str": "선내 집단의 활성화",
+               "ex3Str": "선원의 자기완성",
+               "ex4Str": "승무원의 건강관리",
+               "answer": "사"
+            },            
+            {
+               "num": "26",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "27",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "28",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "29",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "30",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            }
+         ]
+      },      
+      {
+         "string": "3. 법규",
+         "questions": 
+         [            
+            {
+               "num": "1",
+               "questionsStr": "선박의 입항 및 출항 등에 관한 법률상 항법 및 정박 에 관한 내용으로 옳지 않은 것은?",
+               "ex1Str": "관리청은 무역항의 수상구역등에서 선박 항행 최고속력을 지정할 수 있다.",
+               "ex2Str": "어선은 무역항의 수상구역등의 모든 수역에서 어로를 하여서는 아니 된다.",
+               "ex3Str": "선박은 해양사고를 피하고자 할 경우 항로 안 에 정박하거나 정류할 수 있다.",
+               "ex4Str": "무역항의 수상구역등에서 다른 선박을 끌고 항 행하는 경우에는 예인선은 한꺼번에 3척 이상 의 피예인선을 끌지 아니한다.",
+               "answer": "나"
+            },            
+            {
+               "num": "2",
+               "questionsStr": "선원법상 선박에 있는 사람에게 비상 시에 대비한 훈련 을 실시하여야 하는 선박이 아닌 것은?",
+               "ex1Str": "13인 이상의 여객을 운송할 수 있는 여객선",
+               "ex2Str": "평수구역을 항행구역으로 하는 총톤수 500톤 이상의 선박",
+               "ex3Str": "근해구역을 항행구역으로 하는 총톤수 500톤 이상의 선박",
+               "ex4Str": "연해구역을 항행구역으로 하는 총톤수 500톤 이상의 선박",
+               "answer": "나"
+            },            
+            {
+               "num": "3",
+               "questionsStr": "선박직원법상 6개월 범위에서 승무기준을 완화하여 승무를 허가할 수 있는 경우가 아닌 것은?",
+               "ex1Str": "국민경제 또는 국가안보에 중대한 영향을 미치 는 물자를 긴급히 수송하는 경우로서 관계기관 의 장의 요청이 있는 경우",
+               "ex2Str": "긴급히 도서민을 수송하는 경우",
+               "ex3Str": "국내항간을 운항하는 선박이 요청하는 경우",
+               "ex4Str": "해양수산부장관이 해기사의 수급상 부득이 하 다고 인정하는 경우",
+               "answer": "사"
+            },            
+            {
+               "num": "4",
+               "questionsStr": "( )에 순서대로 적합한 것은? '선박안전법은 선박의 ( ) 유지 및 ( )에 필요한 사항을 규정하고 있다.'",
+               "ex1Str": "안전성, 운항",
+               "ex2Str": "감항성, 안전운항",
+               "ex3Str": "안정성, 복원성",
+               "ex4Str": "복원성, 안전시설",
+               "answer": "나"
+            },            
+            {
+               "num": "5",
+               "questionsStr": "선박안전법상 해양수산관청의 허가를 받아 선박이 항 해구역을 벗어나 항해할 수 있는 경우에 해당하지 않 는 것은?",
+               "ex1Str": "계선의 계류지를 변경하기 위하여 항해할 경우",
+               "ex2Str": "선박을 수리하기 위하여 수리할 장소까지 항해 할 경우",
+               "ex3Str": "항해구역 밖에 있는 선박을 그 해당 항해구역 안으로 항해시키는 경우",
+               "ex4Str": "한국선박을 외국에 선박매각을 하기 위하여 단 한 번의 국제항해를 하는 경우",
+               "answer": "가"
+            },            
+            {
+               "num": "6",
+               "questionsStr": "해양사고의 조사 및 심판에 관한 법률상 합의체심판부 는 합의체를 구성하는 심판관 몇 명의 찬성으로 의결 하는가?",
+               "ex1Str": "과반수",
+               "ex2Str": "3분의 2",
+               "ex3Str": "3분의 1",
+               "ex4Str": "전원",
+               "answer": "가"
+            },            
+            {
+               "num": "7",
+               "questionsStr": "해양환경관리법상 선박 해양오염방지관리인에 대한 설 명으로 옳지 않은 것은?",
+               "ex1Str": "해양오염방지관리인은 선박의 소유자가 임명한다.",
+               "ex2Str": "해양오염방지관리인은 오염사고 발생 시 방제 작업을 지휘하고, 모든 책임을 져야 한다.",
+               "ex3Str": "해양오염방지관리인은 선박 해양오염방지관리인 과정을 이수한 사람이어야 한다.",
+               "ex4Str": "해양오염방지관리인은 5년마다 1회 이상 해양 오염 방지 및 방제에 관한 교육·훈련을 받아야 한다.",
+               "answer": "나"
+            },            
+            {
+               "num": "8",
+               "questionsStr": "해양환경관리법에 의하여 분뇨오염방지설비를 설치하 여야 하는 선박 크기의 기준은? (단, 선박검사증서 상 최대승선인원이 16인 미만인 부선은 제외함)",
+               "ex1Str": "총톤수 100톤 이상",
+               "ex2Str": "총톤수 200톤 이상",
+               "ex3Str": "총톤수 300톤 이상",
+               "ex4Str": "총톤수 400톤 이상",
+               "answer": "아"
+            },            
+            {
+               "num": "9",
+               "questionsStr": "상법상 선박 내부의 구조료 배분에 대한 설명으로 옳 은 것은?",
+               "ex1Str": "해원이 협의하여 배분한다.",
+               "ex2Str": "선박소유자가 임의 배분한다.",
+               "ex3Str": "해당 항해 종료 후에 분배안을 고시한다.",
+               "ex4Str": "선장이 해원의 분배안을 작성하여 고시한다.",
+               "answer": "아"
+            },            
+            {
+               "num": "10",
+               "questionsStr": "상법상 운송인이 운송물을 수령한 후 송하인의 청구에 의하여 1통 또는 수통 교부하는 것은?",
+               "ex1Str": "선하증권",
+               "ex2Str": "화물인도지시서",
+               "ex3Str": "신용장",
+               "ex4Str": "화물선취보증서",
+               "answer": "가"
+            },            
+            {
+               "num": "11",
+               "questionsStr": "다음 중 해사안전법상 유조선통항금지해역을 항행할 수 없는 선박의 기준으로 옳지 않은 것은?",
+               "ex1Str": "경유 1천500킬로리터 이상을 화물로 싣고 운 반하는 선박",
+               "ex2Str": "중유 1천500킬로리터 이상을 화물로 싣고 운 반하는 선박",
+               "ex3Str": "원유 1천500킬로리터 이상을 화물로 싣고 운 반하는 선박",
+               "ex4Str": "유해액체물질 1천500킬로리터 이상을 화물로 싣고 운반하는 선박",
+               "answer": "아"
+            },            
+            {
+               "num": "12",
+               "questionsStr": "해사안전법상 해양사고가 발생하였을 때 선장이 지방 해양수산청장에게 보고하여야 하는 경우가 아닌 것은?",
+               "ex1Str": "선박이 좌초된 경우",
+               "ex2Str": "행방불명자가 발생한 경우",
+               "ex3Str": "해양사고가 발생하여 선박의 안전운항에 지장 을 줄 우려가 있는 경우",
+               "ex4Str": "선박의 안전과 다른 선박의 항행안전에 위험이 없는 접촉이 발생한 경우",
+               "answer": "아"
+            },            
+            {
+               "num": "13",
+               "questionsStr": "국제해상충돌방지규칙의 적용(Application)에 대한 설 명으로 옳지 않은 것은?",
+               "ex1Str": "국제해상충돌방지규칙은 특수선박에도 반드시 적용하여야 한다.",
+               "ex2Str": "공해(High seas)와 공해에 접속된 수역으로서 해상항행선박(Seagoing vessel)이 항행을 계속 할 수 있는 수역에 적용된다.",
+               "ex3Str": "선박의 입항 및 출항 등에 관한 법률상 항법은 될 수 있는 대로 국제해상충돌방지규칙의 규정 을 따라야 한다.",
+               "ex4Str": "선박의 입항 및 출항 등에 관한 법률에서 국제 해상충돌방지규칙과 달리 항법을 규정하고 있 을 경우 선박의 입항 및 출항 등에 관한 법률 상 항법을 우선적으로 적용한다.",
+               "answer": "가"
+            },            
+            {
+               "num": "14",
+               "questionsStr": "국제해상충돌방지규칙상 안전한 속력 결정 시 고려하 여야 하는 사항이 아닌 것은?",
+               "ex1Str": "항행보조시설",
+               "ex2Str": "레이더의 특성과 성능",
+               "ex3Str": "해면상태·기상",
+               "ex4Str": "해상교통량의 밀도",
+               "answer": "가"
+            },            
+            {
+               "num": "15",
+               "questionsStr": "( )에 순서대로 적합한 것은? '국제해상충돌방지규칙상 좁은 수로 또는 항로를 따 라 항행하는 선박은 안전하고 실행 가능한 한, 자기 선박의 ( )측에 있는 수로 또는 항로의 ( )에 접 근하여 항행하여야 한다.'",
+               "ex1Str": "좌현, 외측한계",
+               "ex2Str": "선미, 내측한계",
+               "ex3Str": "우현, 외측한계",
+               "ex4Str": "선수, 내측한계",
+               "answer": "사"
+            },            
+            {
+               "num": "16",
+               "questionsStr": "( )에 순서대로 적합한 것은? '국제해상충돌방지규칙상 레이더를 장비하고 작동 가능하면 충돌의 위험에 대한 조기 경보를 얻기 위 한 ( )와 탐지된 물체에 대한 ( ) 또는 같은 효 과를 얻을 수 있는 탐지된 물표의 ( ) 등을 포함하 여 레이더 장비를 올바르게 사용하여야 한다.'",
+               "ex1Str": "단거리 주사, 레이더 플로팅, 체계적인 경계",
+               "ex2Str": "단거리 주사, 레이더 플로팅, 체계적인 경계",
+               "ex3Str": "장거리 주사, 계속적인 경계, 체계적인 관측",
+               "ex4Str": "장거리 주사, 레이더 플로팅, 체계적인 관측",
+               "answer": "아"
+            },            
+            {
+               "num": "17",
+               "questionsStr": "국제해상충돌방지규칙상 연안통항대(Inshore traffic zone)를 이용할 수 없는 선박은?",
+               "ex1Str": "흘수의 제약을 받는 선박",
+               "ex2Str": "인접한 항구에 출입항하는 선박",
+               "ex3Str": "급박한 위험을 피하기 위한 선박",
+               "ex4Str": "연안통항대에 있는 해양시설이나 도선사 승하선 장소에 출입하는 선박",
+               "answer": "가"
+            },            
+            {
+               "num": "18",
+               "questionsStr": "국제해상충돌방지규칙상 서로 시계 안에 있는 때의 항 법에서 항법적용의 기준이 의심스러운 경우에 판단하 는 규정이 포함되어 있지 않은 항법은?",
+               "ex1Str": "앞지르기(Overtaking) 항법",
+               "ex2Str": "범선(Sailing vessels) 항법",
+               "ex3Str": "횡단상태(Crossing situation) 항법",
+               "ex4Str": "마주치는 상태(Head-on situation) 항법",
+               "answer": "사"
+            },            
+            {
+               "num": "19",
+               "questionsStr": "국제해상충돌방지규칙상 서로 시계 안에서 2척의 동 력선이 상대의 진로를 횡단할 경우 충돌의 위험이 있 을 때 항법으로 옳지 않은 것은?",
+               "ex1Str": "횡단상태 항법은 후진 중인 선박들 간에도 적 용한다.",
+               "ex2Str": "어느 선박이든 의심이 있을 때에는 의문신호를 울릴 수 있다.",
+               "ex3Str": "피항선은 피항동작을 취할 때 반드시 조종신호 를 하여야 한다.",
+               "ex4Str": "유지선이라도 충돌회피 협력동작을 취할 때에 는 반드시 조종신호를 하여야 한다.",
+               "answer": "가"
+            },            
+            {
+               "num": "20",
+               "questionsStr": "국제해상충돌방지규칙상 제한된 시계에서 운항하는 선 박의 항법에 대한 설명으로 옳지 않은 것은?",
+               "ex1Str": "기관을 사용할 수 있는 준비상태로 두어야 한다.",
+               "ex2Str": "당시의 상태에 적합한 안전한 속력으로 항행하 여야 한다.",
+               "ex3Str": "작동 중인 레이더로 정횡 후방에 있는 선박을 탐지하고 변침만으로 회피동작을 취할 때에는 그 선박의 방향으로 가능한 한 변침하여서는 아니 된다.",
+               "ex4Str": "작동 중인 레이더로 자기 선박의 좌현 쪽에서 접근하는 다른 선박을 탐지하였을 때에는 자기 선박이 유지선이므로 침로와 속력을 유지하여 야 한다.",
+               "answer": "아"
+            },            
+            {
+               "num": "21",
+               "questionsStr": "국제해상충돌방지규칙상 어로에 종사하고 있는 선박에 대하여 규정된 2개의 전주등 중 아래쪽의 등화는 현 등으로부터 이들 2개의 수직등화간 거리의 몇 배 이 상되는 위치에 설치되어야 하는가?",
+               "ex1Str": "1.5배",
+               "ex2Str": "2배",
+               "ex3Str": "2.5배",
+               "ex4Str": "3배",
+               "answer": "나"
+            },            
+            {
+               "num": "22",
+               "questionsStr": "국제해상충돌방지규칙상 선박의 앞부분에 수직선 위에 표시된 마스트등 2개와 한쪽의 현등을 보았다. 이 선 박의 종류와 상태는?",
+               "ex1Str": "항행 중인 길이 50미터 이상의 동력선",
+               "ex2Str": "길이 50미터 이상의 동력선이 다른 선박을 선 미에 끌고 있는 경우",
+               "ex3Str": "길이 50미터 미만의 동력선이 선미에 다른 선 박을 끌고 있는 경우로써 예인선열의 길이가 200미터 이상일 때",
+               "ex4Str": "길이 50미터 미만의 동력선이 선미에 다른 선 박을 끌고 있는 경우로써 예인선열의 길이가 200미터 미만일 때",
+               "answer": "아"
+            },            
+            {
+               "num": "23",
+               "questionsStr": "국제해상충돌방지규칙상 예인선열의 길이가 200미터 를 넘을 때 예인선과 피예인선에 표시하여야 하는 형 상물은?",
+               "ex1Str": "둥근꼴 형상물",
+               "ex2Str": "마름모꼴 형상물",
+               "ex3Str": "원통형 형상물",
+               "ex4Str": "원뿔꼴 형상물",
+               "answer": "나"
+            },            
+            {
+               "num": "24",
+               "questionsStr": "국제해상충돌방지규칙상 수직선 위에 2개의 원뿔을 그 꼭대기에서 위아래로 결합한 형상물 1개를 표시할 수 있는 선박은?",
+               "ex1Str": "끌려가고 있는 선박",
+               "ex2Str": "어로에 종사하고 있는 선박",
+               "ex3Str": "다른 선박을 끌고 있는 선박",
+               "ex4Str": "돛과 기관을 사용하여 진행하고 있는 선박",
+               "answer": "나"
+            },            
+            {
+               "num": "25",
+               "questionsStr": "국제해상충돌방지규칙상 선박이 좁은 수로등에서 서로 상대의 시계 안에 있을 때 다른 선박의 우현 쪽으로 앞지르기 하려는 경우 울려야 하는 기적신호는?",
+               "ex1Str": "장음 1회, 단음 1회",
+               "ex2Str": "장음 1회, 단음 2회",
+               "ex3Str": "장음 2회, 단음 1회",
+               "ex4Str": "장음 2회, 단음 2회",
+               "answer": "사"
+            },            
+            {
+               "num": "26",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "27",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "28",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "29",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "30",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            }
+         ]
+      },      
+      {
+         "string": "4. 영어",
+         "questions": 
+         [            
+            {
+               "num": "1",
+               "questionsStr": "Select one which has correct explanation for spelling letters.",
+               "ex1Str": "G - Golf",
+               "ex2Str": "M - Miky",
+               "ex3Str": "F - Flamenco",
+               "ex4Str": "N - Navy",
+               "answer": "가"
+            },            
+            {
+               "num": "2",
+               "questionsStr": "What range scale should be for the pilot's request? Pilot: 'What range scale are you using in your radar?' Duty officer: 'I am using six miles range scale, sir.' Pilot: 'Change to a larger range scale.'",
+               "ex1Str": "3 miles range scale",
+               "ex2Str": "12 miles range scale",
+               "ex3Str": "24 miles range scale",
+               "ex4Str": "more the 6 miles range scale",
+               "answer": "가"
+            },            
+            {
+               "num": "3",
+               "questionsStr": "Choose the best one to fill the blank. 'Keep your lifejackets ( ).'",
+               "ex1Str": "in",
+               "ex2Str": "on",
+               "ex3Str": "to",
+               "ex4Str": "within",
+               "answer": "나"
+            },            
+            {
+               "num": "4",
+               "questionsStr": "Select one which is proper for the blank. A: 'The hold ladder is ( ).' B: 'Straighten the hold ladder.'",
+               "ex1Str": "crushed",
+               "ex2Str": "renailed",
+               "ex3Str": "torn",
+               "ex4Str": "bent",
+               "answer": "아"
+            },            
+            {
+               "num": "5",
+               "questionsStr": "Choose the improper one to fill the blank. 'How many ( ) can the vessel still load?'",
+               "ex1Str": "tonnes",
+               "ex2Str": "deck cargo",
+               "ex3Str": "cars",
+               "ex4Str": "cubic meters",
+               "answer": "나"
+            },            
+            {
+               "num": "6",
+               "questionsStr": "Choose the unsuitable one to fill the blank. 'The marks on the cargoes in No. 2 hold are ( ).'",
+               "ex1Str": "unclear",
+               "ex2Str": "illegible",
+               "ex3Str": "resewn",
+               "ex4Str": "false",
+               "answer": "사"
+            },            
+            {
+               "num": "7",
+               "questionsStr": "@pic4407",
+               "ex1Str": "hampered",
+               "ex2Str": "established",
+               "ex3Str": "available",
+               "ex4Str": "not functioning",
+               "answer": "아"
+            },            
+            {
+               "num": "8",
+               "questionsStr": "Choose proper words to fill the blanks. A: '( ) vessel leaving from No. 1 anchorage to north channel, how do you read me? over.' B: 'This is M/V Seastar. I read you ( ). Go ahead, over.'",
+               "ex1Str": "Hello, five",
+               "ex2Str": "Questioned, five",
+               "ex3Str": "Unknown, five",
+               "ex4Str": "Obscured, one",
+               "answer": "사"
+            },            
+            {
+               "num": "9",
+               "questionsStr": "Choose the improper one the fill the blank. A: 'Report damage.' B: '( ).'",
+               "ex1Str": "I have no damage",
+               "ex2Str": "Deformation to side plating forward",
+               "ex3Str": "Damage control material is available",
+               "ex4Str": "I have damage to navigational equipment",
+               "answer": "사"
+            },            
+            {
+               "num": "10",
+               "questionsStr": "Select one which is proper for the blank. 'According to SMCP, ( ) means a person designed to co-ordinate search and rescue operations within a specified area.'",
+               "ex1Str": "Chief co-ordinator",
+               "ex2Str": "On-scene co-ordinator",
+               "ex3Str": "Designated rescue co-ordinator",
+               "ex4Str": "Search and rescue co-ordinator",
+               "answer": "나"
+            },            
+            {
+               "num": "11",
+               "questionsStr": "When a light is first seen on the horizon, it will disappear again if the eye is immediately lowered several feet. When the eye is raised to its former height, the light will again be visible. This process is called ( ).",
+               "ex1Str": "luminous range",
+               "ex2Str": "checking a light",
+               "ex3Str": "bobbing a light",
+               "ex4Str": "obscuring a light",
+               "answer": "사"
+            },            
+            {
+               "num": "12",
+               "questionsStr": "What does the following statement explain? 'Area wherein craft congregate to fish; most particularly those area occupied periodically by the large fishing fleets.'",
+               "ex1Str": "Fish trap",
+               "ex2Str": "Fish stakes",
+               "ex3Str": "Fish pound",
+               "ex4Str": "Fishing ground",
+               "answer": "아"
+            },            
+            {
+               "num": "13",
+               "questionsStr": "Select the correct one for the blank. 'One function of the bulkheads is to divide the vessel into watertight compartments, and ( ) is to add strength and rigidity to the structure.'",
+               "ex1Str": "the other",
+               "ex2Str": "one another",
+               "ex3Str": "the latter",
+               "ex4Str": "the former",
+               "answer": "가"
+            },            
+            {
+               "num": "14",
+               "questionsStr": "Choose the correct one for the blanks in order. 'In twin screw ships the starboard propeller is normally right-handed and the port propeller left-handed. The reason for this arrangement is two-fold, firstly to reduce ( ) and secondly to take the great benefit from ( ).'",
+               "ex1Str": "cavitation, squatting",
+               "ex2Str": "racing, propeller immersion",
+               "ex3Str": "cavitation, transverse thrust",
+               "ex4Str": "wake stream, transverse thrust",
+               "answer": "사"
+            },            
+            {
+               "num": "15",
+               "questionsStr": "The difference between propeller speed and actual speed of the vessel is called:",
+               "ex1Str": "slip",
+               "ex2Str": "pitch",
+               "ex3Str": "RPM",
+               "ex4Str": "efficiency",
+               "answer": "가"
+            },            
+            {
+               "num": "16",
+               "questionsStr": "Followings are the explanations which are concerned with navigation with pilot on board. Choose the wrong one.",
+               "ex1Str": "Despite the duties and obligations of pilot, his presence on board does not relieve the master or officer in charge of the navigational watch from their duties and obligations for the safety of the ship.",
+               "ex2Str": "The master and the pilot do not need to exchange information regarding navigation procedures.",
+               "ex3Str": "The master and officer in charge of the navigational watch shall cooperate closely with the pilot.",
+               "ex4Str": "The master and officer in charge of the navigational watch shall maintain an accurate check on the ship's position and movement.",
+               "answer": "나"
+            },            
+            {
+               "num": "17",
+               "questionsStr": "Select the correct one for the blank. 'The decks are ( ) to permit drainage to the scuppers which lead the water either overboard or to the bilges.'",
+               "ex1Str": "closed",
+               "ex2Str": "opened",
+               "ex3Str": "cambered",
+               "ex4Str": "covered",
+               "answer": "사"
+            },            
+            {
+               "num": "18",
+               "questionsStr": "Select the correct one for the blank. '( ) is determined by the pressure gradient.'",
+               "ex1Str": "The current rate",
+               "ex2Str": "The wind speed",
+               "ex3Str": "The cyclone",
+               "ex4Str": "The wind direction",
+               "answer": "나"
+            },            
+            {
+               "num": "19",
+               "questionsStr": "According to SOLAS, Select the incorrect one for the blank. 'The present regulations[SOLAS], unless expressly provided otherwise, do not apply to: ( ).'",
+               "ex1Str": "Fishing vessels",
+               "ex2Str": "Mobile offshore drilling units",
+               "ex3Str": "Ships of war and troopships",
+               "ex4Str": "Cargo ships of less than 500 tons gross tonnage",
+               "answer": "나"
+            },            
+            {
+               "num": "20",
+               "questionsStr": "Select the most suitable one for the blank. 'Any alteration of course and/or speed to avoid collision shall, if the circumstances of the case admit, be large enough to be readily apparent to another vessel observing visually or by radar; a ( ) of small alterations of course and/or speed should be avoided.'",
+               "ex1Str": "following",
+               "ex2Str": "connection",
+               "ex3Str": "reading",
+               "ex4Str": "succession",
+               "answer": "아"
+            },            
+            {
+               "num": "21",
+               "questionsStr": "Select one which has wrong explanation.",
+               "ex1Str": "Distress signals - 조난 신호",
+               "ex2Str": "Range of audibility - 가청 거리",
+               "ex3Str": "Screen for sidelight - 현등 보호막",
+               "ex4Str": "Signals to attract attention - 주의환기신호",
+               "answer": "사"
+            },            
+            {
+               "num": "22",
+               "questionsStr": "Select the correct one for the blank. 'When the cargo has been carried only part of the way and circumstances make it impossible to continue the voyage further, ( ) arises.'",
+               "ex1Str": "pro rata freight",
+               "ex2Str": "dead freight",
+               "ex3Str": "back freight",
+               "ex4Str": "lump-sum freight",
+               "answer": "가"
+            },            
+            {
+               "num": "23",
+               "questionsStr": "Select the correct one for the blank. 'On arriving at the port of discharge, the consignee or holder of the bill of lading will present it to the master for ( ).'",
+               "ex1Str": "selling the cargo",
+               "ex2Str": "paying the freight",
+               "ex3Str": "discharging the cargo",
+               "ex4Str": "obtaining the delivery of the cargo",
+               "answer": "아"
+            },            
+            {
+               "num": "24",
+               "questionsStr": "Select a suitable one for the blank. 'Lowered all derrick booms and battened all hatches ( ).'",
+               "ex1Str": "away",
+               "ex2Str": "down",
+               "ex3Str": "up",
+               "ex4Str": "with",
+               "answer": "나"
+            },            
+            {
+               "num": "25",
+               "questionsStr": "Choose one which cannot be the principles of drawing up clearly the contents of business letters.",
+               "ex1Str": "Sublate to use too much formal expression in business letters.",
+               "ex2Str": "Use the modified block format letter as practicable.",
+               "ex3Str": "Only necessary words and phrases should be used instead of using old-fashioned or having much modifiers.",
+               "ex4Str": "Use auxiliary verb so as to make the sentence simple.",
+               "answer": "나"
+            },            
+            {
+               "num": "26",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "27",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "28",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "29",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "30",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            }
+         ]
+      },      
+      {
+         "string": "5. 상선전문",
+         "questions": 
+         [            
+            {
+               "num": "1",
+               "questionsStr": "화물의 규격화에 속하지 않는 것은?",
+               "ex1Str": "Sling화",
+               "ex2Str": "Container화",
+               "ex3Str": "Pallet화",
+               "ex4Str": "LASH식",
+               "answer": "가"
+            },            
+            {
+               "num": "2",
+               "questionsStr": "B/L의 특성이 아닌 것은?",
+               "ex1Str": "유가증권",
+               "ex2Str": "채권적 증권",
+               "ex3Str": "운임증서",
+               "ex4Str": "화물권리증서",
+               "answer": "사"
+            },            
+            {
+               "num": "3",
+               "questionsStr": "배수량 W, 매 cm 배수톤 T톤인 선박이 비중이 A인 수역에서 B인 수역으로 항해할 때 변화하는 흘수를 나타내는 식은?",
+               "ex1Str": "W/T x (1.025/A - 1.025/B)",
+               "ex2Str": "W/T x (1.025/B - 1.025/A)",
+               "ex3Str": "W/T x (B/1.025 - A/1.025)",
+               "ex4Str": "W/T x (A/1.025 - B/1.025)",
+               "answer": "나"
+            },            
+            {
+               "num": "4",
+               "questionsStr": "＜보기＞에서 용어의 설명으로 옳은 것을 모두 고른 것은? @pic4505",
+               "ex1Str": "ㄱ, ㄴ, ㄹ",
+               "ex2Str": "ㄱ, ㄴ, ㄷ",
+               "ex3Str": "ㄱ, ㄷ, ㄹ",
+               "ex4Str": "ㄴ, ㄷ, ㄹ",
+               "answer": "아"
+            },            
+            {
+               "num": "5",
+               "questionsStr": "원유세정(COW)에 있어서 다단계방식(Multi-stage)에 대한 설명으로 옳지 않은 것은?",
+               "ex1Str": "점도가 높은 화물유 양하 시 적용하면 좋다.",
+               "ex2Str": "다단계방식에서 가장 많이 이용되는 것은 2단계 방식이다.",
+               "ex3Str": "각 세정 단계의 사이에는 노즐의 작동각에 어느 정도의 Over-lapping각을 주는 것이 좋다.",
+               "ex4Str": "상부세정(Top washing)을 할 때에는 세정탱크의 화물유와 다른 Grade의 것으로 세정하는 것이 좋다.",
+               "answer": "아"
+            },            
+            {
+               "num": "6",
+               "questionsStr": "Container freight station(CFS)에 관한 설명으로 옳은 것은?",
+               "ex1Str": "주로 빈 Container를 적재해 두는 장소이다.",
+               "ex2Str": "LCL 화물을 Container에 적입·적출하는 곳이다.",
+               "ex3Str": "Terminal 내의 하역작업, Container 배치 등을 감독, 지시하는 곳이다.",
+               "ex4Str": "빈 Container 및 화물이 실린 Container의 출 입을 감시하고, Container의 총중량을 측정하 는 곳이다.",
+               "answer": "나"
+            },            
+            {
+               "num": "7",
+               "questionsStr": "API 비중에 관한 내용으로 옳지 않은 것은?",
+               "ex1Str": "석유의 비중을 나타내는 단위이다.",
+               "ex2Str": "American petroleum institute(미국 석유 협회) 가 만든 비중단위이다.",
+               "ex3Str": "무거운 것일수록 API 비중은 커진다.",
+               "ex4Str": "비중(SG)과는 일정한 관계식이 성립한다.",
+               "answer": "사"
+            },            
+            {
+               "num": "8",
+               "questionsStr": "선박법에서 사용하는 선박톤수에 관한 설명으로 옳지 않은 것은?",
+               "ex1Str": "국제항해에 종사하는 선박에 대하여 1969년 선박의 톤수 측정에 관한 국제협약규정에 따라 선박 크기를 나타내는 톤수는 국제총톤수이다.",
+               "ex2Str": "국제협약규정에 따라 여객이나 화물의 운송용 으로 제공되는 선박 안에 있는 장소의 크기를 나타내는 톤수는 순톤수이다.",
+               "ex3Str": "항행의 안전확보 범위 내에서 선박의 여객 및 화물 등의 최대적재량을 나타내는 톤수는 재화 중량톤수이다.",
+               "ex4Str": "선박 내 폐위된 장소의 용적 합계로 선박의 크기를 나타내는 톤수는 배수톤수이다.",
+               "answer": "아"
+            },            
+            {
+               "num": "9",
+               "questionsStr": "선박법상 외국선박이 불개항장에 기항할 수 있는 경우 가 아닌 것은?",
+               "ex1Str": "법률 또는 조약에 다른 규정이 있는 경우",
+               "ex2Str": "포획을 피하려는 경우",
+               "ex3Str": "해양사고가 발생한 경우",
+               "ex4Str": "해양수산부장관의 허가를 받은 경우",
+               "answer": "사"
+            },            
+            {
+               "num": "10",
+               "questionsStr": "선박등기신청서의 기재사항이 아닌 것은?",
+               "ex1Str": "선적항",
+               "ex2Str": "선박의 종류",
+               "ex3Str": "총톤수",
+               "ex4Str": "선박번호 및 호출부호",
+               "answer": "아"
+            },            
+            {
+               "num": "11",
+               "questionsStr": "선박법의 적용 대상인 선박에 관한 내용으로 옳지 않 은 것은?",
+               "ex1Str": "선박은 선박국적증서를 발급받아야 한다.",
+               "ex2Str": "선박의 선박국적증서는 선적항을 관할하는 지 방해양수산청장이 발급한다.",
+               "ex3Str": "국제항해에 종사하는 길이 24미터 이상인 한 국선박의 소유자는 국제톤수증서를 발급받아야 한다.",
+               "ex4Str": "외국에서 선박을 취득한 자는 그 취득지에서 대한민국 영사에게 선박국적증서의 발급을 신 청할 수 있다.",
+               "answer": "아"
+            },            
+            {
+               "num": "12",
+               "questionsStr": "선박법상 국제톤수증서의 발급신청을 할 수 없는 자는?",
+               "ex1Str": "한국선박의 소유자",
+               "ex2Str": "공유 선박에 있어서는 선박 관리인",
+               "ex3Str": "대여된 선박에서의 선박 임차인",
+               "ex4Str": "한국선박의 건조자",
+               "answer": "아"
+            },            
+            {
+               "num": "13",
+               "questionsStr": "선박법상 국제톤수증서를 발급받아 국제항해에 종사할 수 있는 선박은?",
+               "ex1Str": "외국인이 소유한 길이 25미터의 내항 여객선",
+               "ex2Str": "대한민국 국민이 소유한 길이 23미터의 예인선",
+               "ex3Str": "대한민국 국민이 소유한 길이 25미터의 소형 유조선",
+               "ex4Str": "대한민국 국민이 용선한 길이 23미터의 외국 적 요트",
+               "answer": "사"
+            },            
+            {
+               "num": "14",
+               "questionsStr": "정기용선계약에서 선주의 부담비용이 아닌 것은?",
+               "ex1Str": "선박보험료",
+               "ex2Str": "선원교체 비용",
+               "ex3Str": "선용품비",
+               "ex4Str": "화물 적·양하 비용",
+               "answer": "아"
+            },            
+            {
+               "num": "15",
+               "questionsStr": "일반적으로 항해용선계약에서 가장 많이 사용하는 서 식은?",
+               "ex1Str": "GENCON",
+               "ex2Str": "BALTIME",
+               "ex3Str": "BARECON",
+               "ex4Str": "PRIDUCE FORM",
+               "answer": "가"
+            },            
+            {
+               "num": "16",
+               "questionsStr": "선박이 도착한 경우, 적재 화물의 상태를 확인하고 만 일 사고가 발생하였다면 손해 정도를 확인하고 원인을 밝혀 책임의 소재를 명확히 할 목적으로 하는 검사는?",
+               "ex1Str": "Hatch survey",
+               "ex2Str": "Stowage survey",
+               "ex3Str": "Draft survey",
+               "ex4Str": "Condition survey",
+               "answer": "가"
+            },            
+            {
+               "num": "17",
+               "questionsStr": "B/L의 면책조항 중 New Jason clause의 적용을 받지 않는 것은?",
+               "ex1Str": "공동해손",
+               "ex2Str": "선체손상희생",
+               "ex3Str": "자매선 구조",
+               "ex4Str": "쌍방과실 충돌",
+               "answer": "아"
+            },            
+            {
+               "num": "18",
+               "questionsStr": "항해용선계약에서 적양하 모두 관습적으로 신속하게 하역작업을 하는 조건하에 선내하역인부임 및 항비를 선주가 부담하는 조건은? (단, 선적비용과 양륙비용은 용선자가 부담)",
+               "ex1Str": "FIO",
+               "ex2Str": "Berth terms",
+               "ex3Str": "FO",
+               "ex4Str": "Net terms",
+               "answer": "나"
+            },            
+            {
+               "num": "19",
+               "questionsStr": "보험료 환불약관에 의해 보험료가 환불될 수 있는 경우가 아닌 것은?",
+               "ex1Str": "선박 보험계약이 합의에 의해 해약되는 경우",
+               "ex2Str": "선박이 화물의 저장용으로 사용되는 경우",
+               "ex3Str": "선박이 보험자가 승인하는 계선지에 계선하게 될 때",
+               "ex4Str": "선박이 보험자가 승인하는 휴항구역에 있을 때",
+               "answer": "나"
+            },            
+            {
+               "num": "20",
+               "questionsStr": "STCW 협약상 총톤수 500톤 이상의 선박에서 항해당직 을 담당하는 해기사가 되고자 하는 자가 갖추어야 할 최소한의 자격 요건으로 옳지 않은 것은?",
+               "ex1Str": "나이는 18세 이상이어야 한다.",
+               "ex2Str": "요구되는 승무 경력 중 6개월 이상의 기간 동안 은 선장 또는 자격을 갖춘 해기사의 감독 하에 선교 당직 근무를 수행하여야 한다.",
+               "ex3Str": "전파규칙에 의하여 지명된 무선통신 직무를 수 행하기 위하여 적절한 경우 STCW 협약 제Ⅳ 장의 규정 중 관련 요건을 충족하여야 한다.",
+               "ex4Str": "선내 훈련을 포함하는 승인된 훈련 프로그램의 일부로서 10개월 이상의 승인된 승무 경력을 갖추어야 하며, 선내 훈련은 STCW 코드 제A- Ⅱ/1조의 요건을 충족하고 승인된 기록부로 문 서화되어야 한다. 그러지 아니할 경우에는 36개 월 이상의 승인된 승무 경력을 갖추어야 한다.",
+               "answer": "아"
+            },            
+            {
+               "num": "21",
+               "questionsStr": "SOLAS 협약상 소방원장구에 대한 설명으로 옳지 않 은 것은?",
+               "ex1Str": "고무 또는 절연성 재료로 제조된 장화 및 장갑 이어야 한다.",
+               "ex2Str": "선박에는 최소한 2조의 소방원장구가 있어야 한다.",
+               "ex3Str": "각 요구되는 호흡구마다 2개의 예비 공기병이 비치되어야 한다.",
+               "ex4Str": "주관청은 국제기준에 추가하여 개인장구 및 호 흡구를 요구할 수 없다.",
+               "answer": "아"
+            },            
+            {
+               "num": "22",
+               "questionsStr": "MARPOL 협약 부속서 Ⅵ의 내용에 대한 설명으로 옳 지 않은 것은?",
+               "ex1Str": "선내소각 및 오존파괴물질에 관한 규칙이다.",
+               "ex2Str": "선박에서 배출되는 액체 화학물질에 관한 규칙 이다.",
+               "ex3Str": "선박에서 배출이 규제되는 오염유발물질에 관한 규칙이다.",
+               "ex4Str": "체약국에서 발행하는 국제대기오염방지증서에 관한 규칙이다.",
+               "answer": "나"
+            },            
+            {
+               "num": "23",
+               "questionsStr": "국제항공 및 해상수색구조 편람상 인명구조 조선법인 윌리암슨 턴(Williamson turn)에 대한 설명으로 옳은 것은?",
+               "ex1Str": "가장 빠른 구조방법이다.",
+               "ex2Str": "거리가 짧아 시간을 절약한다.",
+               "ex3Str": "원래의 항적선으로 양호하게 되돌아간다.",
+               "ex4Str": "익수자를 계속 관찰하면서 구조할 수 있는 방 법이다.",
+               "answer": "사"
+            },            
+            {
+               "num": "24",
+               "questionsStr": "MLC(해사노동협약)에서 설명하고 있는 건강진단서에 대한 설명으로 옳지 않은 것은?",
+               "ex1Str": "선원의 청력 및 시력 그리고 그들이 수행할 직무 상 색각의 결함에 의한 영향을 받기 쉬운 직책 에 고용된 선원의 경우 그 색각이 모두 만족스 러운지 여부에 대한 내용이 포함되어야 한다.",
+               "ex2Str": "건강진단서는 발급일부터 최대 2년간 유효하 다. 다만 16세 미만의 선원의 경우 건강진단서 의 최대 유효기간은 1년이다.",
+               "ex3Str": "긴급한 경우, 권한당국은 허가기간이 3개월을 초과하지 않고, 관련 선원이 최근 일자에 유효 기간이 만료된 건강진단서를 소지하고 있는 것 을 조건으로 하여 자격을 갖춘 개업의사로부터 건강진단서를 취득할 수 있는 차기 항구까지는 선원이 유효한 건강진단서 없이 근로하는 것을 허가할 수 있다.",
+               "ex4Str": "항해 중 건강진단서의 유효기간이 만료되었을 때에는 그 기간이 3개월을 초과하지 않는 것을 조건으로 선원이 자격을 갖춘 개업의사로부터 건강진단서를 취득할 수 있는 차기 항구까지 그 효력이 지속된다.",
+               "answer": "나"
+            },            
+            {
+               "num": "25",
+               "questionsStr": "다음 중 ISPS code의 적용에 대한 내용으로 옳지 않 은 것은?",
+               "ex1Str": "ISPS code는 국제항해에 종사하는 이동식 해 상 구조물에 적용된다.",
+               "ex2Str": "ISPS code는 국제항해에 종사하는 고속여객선 을 포함한 여객선에 적용된다.",
+               "ex3Str": "ISPS code는 국제항해에 종사하는 총톤수 400톤 이상의 고속선을 포함한 화물선에 적용 된다.",
+               "ex4Str": "ISPS code는 군함, 해군 보조함 또는 당사국 정부에 의해 운용되는 비상업용 선박에는 적용 하지 않는다.",
+               "answer": "사"
+            },            
+            {
+               "num": "26",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "27",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "28",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "29",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "30",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            }
+         ]
+      },      
+      {
+         "string": "6. 어선전문",
+         "questions": 
+         [            
+            {
+               "num": "1",
+               "questionsStr": "원양다랑어연승어선에서 어획된 다랑어를 즉살시키는 방법으로 가장 좋은 것은?",
+               "ex1Str": "두부 절단",
+               "ex2Str": "복부 절개",
+               "ex3Str": "척추 절단",
+               "ex4Str": "연수부 파괴",
+               "answer": "아"
+            },            
+            {
+               "num": "2",
+               "questionsStr": "어획물의 선상 처리에서 어획물의 선도 유지를 위하여 반드시 필요한 조치가 아닌 것은?",
+               "ex1Str": "저온 보존",
+               "ex2Str": "신속한 처리",
+               "ex3Str": "청결한 취급",
+               "ex4Str": "나무상자 이용",
+               "answer": "아"
+            },            
+            {
+               "num": "3",
+               "questionsStr": "어획물의 선도 관리를 위한 냉동 방법 중 경제성과 효율성이 양호하여 가장 널리 이용되고 있는 방법은?",
+               "ex1Str": "기체의 팽창에 의한 냉각 방법",
+               "ex2Str": "기한제를 이용하는 방법",
+               "ex3Str": "증발하기 쉬운 액체를 증발시키는 방법",
+               "ex4Str": "열전 냉각을 이용하는 방법",
+               "answer": "사"
+            },            
+            {
+               "num": "4",
+               "questionsStr": "얼음 1㎏이 녹을 때 주변에서 얼마 정도의 열을 빼앗 아 가는가?",
+               "ex1Str": "800cal",
+               "ex2Str": "8kcal",
+               "ex3Str": "80kcal",
+               "ex4Str": "800kcal",
+               "answer": "사"
+            },            
+            {
+               "num": "5",
+               "questionsStr": "어획물 적하에 의한 평균흘수의 변화와 현재의 흘수상 태에서 예정흘수 또는 만재흘수까지 선적할 수 있는 적화중량을 구하는 데 사용되는 것은?",
+               "ex1Str": "Trim 계산도표",
+               "ex2Str": "재화중량톤수표",
+               "ex3Str": "GM 곡선",
+               "ex4Str": "복원력 교차곡선",
+               "answer": "나"
+            },            
+            {
+               "num": "6",
+               "questionsStr": "만재흘수선까지 10cm의 여유가 있는 등흘수 상태인 어선에서 이때 수선면적이 500m²라고 한다면 약 몇 톤의 중량을 적재하면 만재흘수 상태가 되는가? (단, 물의 비중은 1.100, 만재흘수 상태의 수선면적은 같음)",
+               "ex1Str": "약 9.1톤",
+               "ex2Str": "약 11.0톤",
+               "ex3Str": "약 45.5톤",
+               "ex4Str": "약 55.0톤",
+               "answer": "아"
+            },            
+            {
+               "num": "7",
+               "questionsStr": "선폭이 8m인 어선의 횡요주기가 10초였다면 GM은?",
+               "ex1Str": "약 0.21m",
+               "ex2Str": "약 0.31m",
+               "ex3Str": "약 0.41m",
+               "ex4Str": "약 0.51m",
+               "answer": "사"
+            },            
+            {
+               "num": "8",
+               "questionsStr": "처리실이 있는 대형트롤어선에서 양망하여 어획물을 선내에 최초로 보관하는 시설은?",
+               "ex1Str": "급냉실",
+               "ex2Str": "1번 어창",
+               "ex3Str": "준비실",
+               "ex4Str": "피시폰드(Fishpond)",
+               "answer": "아"
+            },            
+            {
+               "num": "9",
+               "questionsStr": "어획물 하역설비의 사용 시 주의사항으로 옳지 않은 것은?",
+               "ex1Str": "적⸱양화용의 컨베이어에 사람이 타고 이동하지 않는다.",
+               "ex2Str": "훅은 항상 훅의 하부에 하중이 걸리도록 사용하 여야 한다.",
+               "ex3Str": "훅에 걸리는 슬링의 각도는 가능하면 클수록 더 안전하다.",
+               "ex4Str": "어획물을 다루는 사람과 윈치 조작자 사이에 신 호체계가 서로 확인되어야 한다.",
+               "answer": "사"
+            },            
+            {
+               "num": "10",
+               "questionsStr": "어선법상 어선의 소유자는 선박국적증서등을 잃어버리 거나 헐어서 못 쓰게 된 경우에 며칠 이내에 재발급 신청을 하여야 하는가?",
+               "ex1Str": "10일",
+               "ex2Str": "12일",
+               "ex3Str": "14일",
+               "ex4Str": "16일",
+               "answer": "사"
+            },            
+            {
+               "num": "11",
+               "questionsStr": "어선법상 만재흘수선을 새로 표시하거나 변경하려는 경우 받아야 하는 검사는?",
+               "ex1Str": "예비검사",
+               "ex2Str": "임시항행검사",
+               "ex3Str": "임시검사",
+               "ex4Str": "특별검사",
+               "answer": "사"
+            },            
+            {
+               "num": "12",
+               "questionsStr": "어선의 제2종 중간검사의 검사 사항에 포함되지 않는 설비는?",
+               "ex1Str": "전기설비",
+               "ex2Str": "배수설비",
+               "ex3Str": "항해설비",
+               "ex4Str": "거주·위생설비",
+               "answer": "가"
+            },            
+            {
+               "num": "13",
+               "questionsStr": "원양다랑어연승어업에서 낚시의 깊이를 조절하는 것이 아닌 것은?",
+               "ex1Str": "뜸줄의 길이",
+               "ex2Str": "모릿줄의 처진 정도",
+               "ex3Str": "아릿줄의 길이",
+               "ex4Str": "낚시와 속구의 무게",
+               "answer": "아"
+            },            
+            {
+               "num": "14",
+               "questionsStr": "저인망 어구에서 예망 중에 망형을 유지시키고 망지가 받는 중량을 분담시키기 위하여 자루 그물의 네 모서 리에 붙이는 줄은?",
+               "ex1Str": "Warp",
+               "ex2Str": "Man rope",
+               "ex3Str": "Net pendant",
+               "ex4Str": "Ground rope",
+               "answer": "나"
+            },            
+            {
+               "num": "15",
+               "questionsStr": "정치망 어구에서 한 번 설치하면 교체하지 않고 장시 간 그대로 사용하는 부분은?",
+               "ex1Str": "길 그물",
+               "ex2Str": "원통 그물",
+               "ex3Str": "헛통 그물",
+               "ex4Str": "테두리줄(그물 뼈대줄)",
+               "answer": "아"
+            },            
+            {
+               "num": "16",
+               "questionsStr": "어업 기기를 분류할 때 수중 정보 수집에 쓰이는 기기 에 해당되지 않는 것은?",
+               "ex1Str": "어군 탐지기(Fish finder)",
+               "ex2Str": "네트 리코더(Net recorder)",
+               "ex3Str": "양승기(Line hauler)",
+               "ex4Str": "네트 존데(Net sonde)",
+               "answer": "사"
+            },            
+            {
+               "num": "17",
+               "questionsStr": "수심이 얕은 곳에서 어군 탐지기에 반사파에 의한 다 중 기록이 나타날 경우에 조절하는 스위치는?",
+               "ex1Str": "휘도 조절기",
+               "ex2Str": "CONTRAST",
+               "ex3Str": "감도 조절기",
+               "ex4Str": "A/C SEA",
+               "answer": "사"
+            },            
+            {
+               "num": "18",
+               "questionsStr": "트롤 윈치의 구동 방식으로 가장 많이 쓰이고 있으며 순간적인 과부하에 동력원이 쉽게 차단되지 않는 장점 을 가진 것은?",
+               "ex1Str": "유압식",
+               "ex2Str": "증기식",
+               "ex3Str": "전동식",
+               "ex4Str": "주기 전도식",
+               "answer": "가"
+            },            
+            {
+               "num": "19",
+               "questionsStr": "유압모터의 회전력이 유압펌프 회전력의 n배라면 유압 모터의 회전수는 유압펌프 회전수의 몇 배인가?",
+               "ex1Str": "@pic4619_a",
+               "ex2Str": "@pic4619_b",
+               "ex3Str": "@pic4619_c",
+               "ex4Str": "@pic4619_d",
+               "answer": "사"
+            },            
+            {
+               "num": "20",
+               "questionsStr": "95 STCW-F 협약상 용어의 정의로 옳지 않은 것은?",
+               "ex1Str": "'당사국'이라 함은 본 협약이 발효한 국가를 말 한다.",
+               "ex2Str": "'증명된'이라 함은 정당하게 증명서를 소지하고 있음을 말한다.",
+               "ex3Str": "'주관청'이라 함은 그 선박이 국기를 게양할 권 리를 가진 당사국의 정부를 말한다.",
+               "ex4Str": "'어선'이라 함은 생계유지를 목적으로 어류 또 는 기타 수중 생물자원을 채포하기 위해 사용 되는 일체의 선박을 말한다.",
+               "answer": "아"
+            },            
+            {
+               "num": "21",
+               "questionsStr": "77/93 토레몰리노스 협약상 당사국의 국기를 게양할 자격이 있는 길이 24미터 이상의 선박 중 이 협약의 적용 대상은?",
+               "ex1Str": "어획물운반 전용선",
+               "ex2Str": "연구 및 훈련 전용선",
+               "ex3Str": "전적으로 어류 또는 기타 해양 생물자원을 가공하 는 선박",
+               "ex4Str": "자기가 잡은 어획물을 가공하는 선박을 포함한 항양어선",
+               "answer": "아"
+            },            
+            {
+               "num": "22",
+               "questionsStr": "95 STCW-F 협약상 당직항해사의 책임과 임무에 관 한 설명으로 옳은 것은?",
+               "ex1Str": "어선 선장이 선교에 있다면 당직항해사에게는 안전 항해에 대한 책임이 없다.",
+               "ex2Str": "어떠한 상황에서도 적절히 당직 교대가 될 때 까지 선교를 떠나서는 아니 된다.",
+               "ex3Str": "당직을 인수 받을 자가 정신이 혼미하여도 정 시에 인계·인수하여야 한다.",
+               "ex4Str": "안전에 관하여 취할 행동에 의문이 있을 시 긍 정적으로 판단하고 집행하여야 한다.",
+               "answer": "나"
+            },            
+            {
+               "num": "23",
+               "questionsStr": "95 STCW-F 협약상 GMDSS 무선종사자 자격증명을 받 고자 하는 자에게 요구되는 지식으로 옳지 않은 것은?",
+               "ex1Str": "선박보고제도",
+               "ex2Str": "표준해사통신영어의 사용",
+               "ex3Str": "무선통신 의료 서비스와 의료 처치",
+               "ex4Str": "무선통신 장비와 관련되는 위험에 대한 예방 조치",
+               "answer": "사"
+            },            
+            {
+               "num": "24",
+               "questionsStr": "73/78 MARPOL 협약상 규제하지 않는 것은?",
+               "ex1Str": "선박으로부터의 기름 배출",
+               "ex2Str": "선박으로부터의 폐기물 배출",
+               "ex3Str": "육상 기인 오염물질의 해양 투기",
+               "ex4Str": "선박으로부터의 대기오염물질 배출",
+               "answer": "사"
+            },            
+            {
+               "num": "25",
+               "questionsStr": "73/78 MARPOL 협약상 질소산화물 Tier Ⅲ 배출 규제 해역은?",
+               "ex1Str": "남극해역",
+               "ex2Str": "말라카 지정해역",
+               "ex3Str": "아라비아해역",
+               "ex4Str": "북아메리카 지정해역",
+               "answer": "아"
+            },            
+            {
+               "num": "26",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "27",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "28",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "29",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            },            
+            {
+               "num": "30",
+               "questionsStr": "",
+               "ex1Str": "",
+               "ex2Str": "",
+               "ex3Str": "",
+               "ex4Str": "",
+               "answer": "가"
+            }
+         ]
+      }
+   ]
+ }
+}

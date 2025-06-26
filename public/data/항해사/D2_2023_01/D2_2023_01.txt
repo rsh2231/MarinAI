@@ -1,0 +1,915 @@
+[2023/항해사 2급/1]
+[제1과목 : 항해]
+1. 자이로컴퍼스의 오차와 그 수정방법이 옳은 것은?
+㉮ 위도오차 - 완전수동식 수정 장치로 수정
+㉯ 동요오차 – NS축선상에 보정추를 부착하여 수정
+㉴ 가속도오차 – 로터의 진동주기를 매우 짧게 조정하여 수정
+㉵ 속도오차 – 속도오차 수정표로부터 수정량을 구하고 이를 속력에 가감하여 수정
+2. 자이로컴퍼스에서 자이로스코프(Gyroscope)의 3축이 아닌 것은?
+㉮ 지축
+㉯ 수직축
+㉴ 수평축
+㉵ 자이로 축
+3. 자이로컴퍼스에서 점성 액체를 사용하여 제진작용을 하려고 할 때 점성 액체를 넣은 용기를 연결하는 곳은?
+㉮ 수직축
+㉯ 컴퍼스 카드
+㉴ 자이로 축
+㉵ 자이로 케이스
+4. 전자기식 로그(EM log)에서 선박의 적화량, 기울기 등에 의하여 발생하며 선속에 비례하여 나타나는 오차를 제거하는 조정은?
+㉮ 영점 조정
+㉯ 경도차 조정
+㉴ 감도차 조정
+㉵ 중간오차 조정
+5. 선박에 설치된 수정시계를 구성하는 부분이 아닌 것은?
+㉮ 구동부
+㉯ 분기회로
+㉴ 표시부
+㉵ 발진회로
+6. 다음 중 측심에 의하여 선위를 추정할 때 주의할 사항으로 옳지 않은 것은?
+㉮ 예상외로 갑자기 얕은 수심이 측정되면 즉시후진한다.
+㉯ 투사지에 기입하는 측심 간격은 외력을 수정한실항정이어야 한다.
+㉴ 선수방향에 중시목표를 설정하여 선위가 항로의앞뒤로 편위되는지 확인하면서 항행한다.
+㉵ 해도의 수심은 기본 수준면을 기준으로 한 것이기 때문에 측정한 수심에 그 시각의 조차를 개정하여 기입한다.
+7. 연안항해 중 자이로컴퍼스로 육상에 있는 3개 물표의방위를 측정하여 위치선을 작도한 결과 오차 삼각형이생겼을 때 오차 삼각형의 발생 원인이 아닌 것은?
+㉮ 관측의 부정확
+㉯ 동시 관측의 불이행
+㉴ 위치선 작도 시의 오차
+㉵ 각 물표 사이 거리의 불일치
+8. Clearing line에 대한 설명으로 옳지 않은 것은?
+㉮ 직접 선위를 결정하는 방법이다.
+㉯ 뚜렷한 물표의 거리, 수평협각 등을 이용한다.
+㉴ 좁은 수로 통과 시 또는 출·입항 시 이용한다.
+㉵ 위험물을 피할 목적으로 준비된 위험예방선이다.
+9. 대권항법의 특징이 아닌 것은?
+㉮ 항해거리를 단축할 수 있다.
+㉯ 침로가 동 또는 서에 가까울수록 좋다.
+㉴ 적도 근처의 동서방향으로 항해할 때 가장 유리한 항법이다.
+㉵ 두 지점 사이의 거리가 멀수록 항정선 거리와차이가 커진다.
+10. 점장도 사용으로 인한 천측위치선의 오차에서 방위선의 오차가 가장 작은 경우는?
+㉮ 고도차의 값이 큰 경우
+㉯ 관측자의 위도가 높은 경우
+㉴ 자오선상의 천체를 관측한 경우
+㉵ 천체방위가 90도 또는 270도에 가까운 경우
+11. 출몰방위각법의 장점과 단점에 관한 내용으로 옳지 않은 것은?
+㉮ 관측을 언제든지 할 수 있다.
+㉯ 오차가 작고 방위각 계산이 간단하다.
+㉴ 관측 시의 고도가 낮아 방위 측정이 쉽다.
+㉵ 달과 항성에 대해서는 적용하기 곤란하다.
+12. 다음 중 천측위치선의 관측고도 오차를 발생시키는 원인이 아닌 것은?
+㉮ 개인차
+㉯ Sextant 오차
+㉴ 고도개정표의 오차
+㉵ 천측계산표 및 항해표 오차
+13. 태양의 출몰방위각 측정시기에 관한 내용으로 옳지 않은 것은? (단, IC는 Sextant 기차 개정, D는 안고차, R은 천문기차, SD는 겉보기반지름, P는 시차이다.)
+㉮ 태양의 시차(P)는 평균적도수평시차를 8˝.8로 하여 계산한 값으로 고도가 0°~70°.07´까지는 0´.1로 정하고 있다.
+㉯ 태양이 출몰할 때 수직방향의 겉보기반지름(SD)의 평균치인 16´을 사용한다.
+㉴ 태양의 진출몰시 하변고도 관측 시의 고도개정식은 일반적으로 hs=±IC+D+R－SD－P이다.
+㉵ 시수평상 태양의 하변고도가 그 겉보기반지름과 같은 높이이거나 약간 높은 시기에 관측하는 것이 좋다.
+14. 레이더에서 1초마다 1,000 ~ 3,000회의 비율로 펄스전압을 만드는 장치는?
+㉮ 변조기
+㉯ 트리거 발진기
+㉴ 마그네트론
+㉵ 중간주파 증폭기
+15. 레이더 사용 시 화면표시에 관한 내용으로 옳은 것은?
+㉮ 부표는 항상 화면에 나타난다.
+㉯ 소형 목선은 화면에 나타나지 않을 수도 있다.
+㉴ 모래사장 해안이 절벽 해안보다 잘 나타난다.
+㉵ 무중에서는 레이더 거리의 정확도가 크게 향상된다.
+16. 본선이 항해하는 중 상대운동 표시방식의 레이더 화면상에서 상대선이 고정된 위치에 계속 관측되는 경우는?
+㉮ 상대선이 정박해 있을 때
+㉯ 상대선과 본선의 침로가 같을 때
+㉴ 상대선과 본선의 속력이 같을 때
+㉵ 상대선과 본선의 침로 및 속력이 같을 때
+17. 레이더 플로팅에 대한 설명으로 옳지 않은 것은?
+㉮ 방향이 다른 벡터를 합성할 경우 작도에 의해서 구할 수 있다.
+㉯ 레이더 플로팅 작업 시 선박의 침로는 스칼라량으로 표시한다.
+㉴ 본선과 상대선의 합성 벡터의 방향으로 충돌여부를 판단할 수 있다.
+㉵ 레이더 플로팅 작업 시 두 개의 벡터가 크기와 방향이 같으면 시작 위치가 달라도 같다고 할 수 있다.
+18. 레이더 화면상의 맹목구간에 물표가 나타났을 때, 그것이 진짜상인지 거짓상인지 확인할 수 있는 가장 쉬운 방법은?
+㉮ 변속한다.
+㉯ 약간 변침한다.
+㉴ Plotting한다.
+㉵ 거리 범위를 바꾼다.
+19. 레이더를 이용한 연안항해 시 주의사항으로 옳지 않은 것은?
+㉮ 가능하면 물표간의 방위가 떨어진 물표를 선택한다.
+㉯ 방위의 정확도보다 거리의 정확도가 더 높은것을 항해에 이용한다.
+㉴ 물표를 선정할 때 물표는 관측자의 방향에서 볼 때 높고, 가파른 것이 좋다.
+㉵ 빔 폭에 의한 왜곡을 줄이기 위해서는 될 수 있는 대로 감도를 높여야 한다.
+20. LORAN C의 주국에서 발사하는 펄스군 중 9번째 펄스의 역할은?
+㉮ 발신국의 원근 식별
+㉯ 정확한 주파수 차 계산
+㉴ 사용하는 국의 적합성 판별
+㉵ 주국신호와 종국신호의 식별
+21. 도파관의 벽면에 홈을 파서 도파관 내의 전파가 새어나오게 한 안테나는?
+㉮ Slot antenna
+㉯ Parabola antenna
+㉴ Horn antenna
+㉵ Cassegrain antenna
+22. 좁은 수로를 항해하는 계획을 세울 때 고려할 사항으로 옳지 않은 것은?
+㉮ 역조의 초기에 통과하도록 계획한다.
+㉯ 법으로 항로가 지정되어 있으면 이에 따른다.
+㉴ 특별한 경우를 제외하고는 수로의 우측을 항행하도록 계획한다.
+㉵ 육지의 돌출된 부분 등을 우회할 때, 돌출된 부분이 우현에 보이는 경우에는 가까이, 좌현에 보이는 경우에는 멀리 떨어지도록 계획한다.
+23. 연안항해를 위한 항해계획 수립 시 변침 목표를 선정할 때 주의사항으로 옳지 않은 것은?
+㉮ 새로운 침로 방향에 있는 물표를 선정한다.
+㉯ 먼 거리에 있는 등대보다는 가까운 거리에 있는 부표를 선정한다.
+㉴ 중요 변침점이나 뚜렷한 물표가 없는 곳은 예비 물표를 선정한다.
+㉵ 등대, 산봉우리, 섬 등과 같이 방위측정이 용이한 물표를 선정한다.
+24. 일반적으로 연료경제속력은 전속력의 얼마 정도인가?
+㉮ 1/5
+㉯ 2/5
+㉴ 3/5
+㉵ 4/5
+25. 항해 중 일정한 시간 동안에 소비하는 연료의 양은?
+㉮ 속력의 제곱에 비례한다.
+㉯ 마력의 제곱에 비례한다.
+㉴ 속력의 세제곱에 비례한다.
+㉵ 마력의 세제곱에 비례한다.
+[제2과목 : 운용]
+1. Windlass 취급 시 주의사항으로 옳지 않은 것은?
+㉮ 브레이크 밴드에는 충분히 주유한다.
+㉯ 사용 전에 클러치를 분리한 후 시운전을 한다.
+㉴ 베어링이나 크랭크 등의 회전부에는 충분히 주유한다.
+㉵ 각 Wheel에는 Black lead와 Tallow를 같은 양으로 혼합한 것을 도포한다.
+2. 일반적으로 해저의 저질이 양호하고 바람 및 조류가 강하지 않은 평상상태에서 Stockless anchor의 적절한 묘쇄 신출량은 수심의 몇 배인가?
+㉮ 2~4배
+㉯ 3~5배
+㉴ 4~6배
+㉵ 5~7배
+3. 선급 및 강선규칙상 불워크(Bulwark)의 구조 및 강도에 대한 설명으로 옳지 않은 것은?
+㉮ 건현갑판 위의 불워크(Bulwark)판의 두께는8mm 이상으로 하여야 한다.
+㉯ 불워크(Bulwark)는 그 높이에 따라 견고한 구조로 하고 그 위 가장자리는 유효하게 보강하여야 한다.
+㉴ 스테이는 구평강이나 플랜지판 등으로써 구성하고 불워크(Bulwark) 및 갑판에 유효하게 고착시켜야 한다.
+㉵ 불워크(Bulwark)에는 튼튼한 스테이를 갑판보의 위치에 설치하여야 하며 건현갑판에 있어서의 스테이의 간격은 1.8m를 넘어서는 안 된다.
+4. 전타 선회 시 횡경사각의 tan값과 선속의 관계는?
+㉮ 선속에 비례한다.
+㉯ 선속에 반비례한다.
+㉴ 선속의 제곱에 비례한다.
+㉵ 선속의 제곱근에 비례한다.
+5. 다음 중 선체 Rolling을 억제하는 역할을 하는 것은?
+㉮ Skeg
+㉯ Cut up
+㉴ Girder
+㉵ Bilge keel
+6. 태풍 영향권 내에서 항해 중 기압계는 계속 하강 중이나 풍향이 바뀌지 않는다면 태풍의 이동은?
+㉮ 본선에서 멀어지고 있다.
+㉯ 본선의 정횡방향을 통과하고 있다.
+㉴ 본선에 접근하고 있으나 방향을 알 수 없다.
+㉵ 본선의 침로선상에서 본선으로 접근하고 있다.
+7. 다음 중 천수의 영향으로 나타나는 현상이 아닌 것은?
+㉮ 선체침하
+㉯ 타효증가
+㉴ 선체진동
+㉵ 저항증가
+8. 선박복원성기준상 근해구역 이상 항해하거나 국제 항해에 종사하는 화물선의 경우 30도 이상의 횡경사각에서 복원정은 최소 몇 m 이상이어야 하는가?
+㉮ 0.15m
+㉯ 0.20m
+㉴ 0.30m
+㉵ 0.50m
+9. 선폭이 20m인 선박의 GM이 선폭의 약 5%일 때 이 선박의 횡요주기는?
+㉮ 약 12초
+㉯ 약 14초
+㉴ 약 16초
+㉵ 약 18초
+10. 항해 중에 화물의 이동으로 선체의 중심이 5m 상승하였다. 이 선박이 10˚로 횡경사할 경우, 이로 인한 정적 복원력 곡선상에 수정해야 할 복원정의 감소량은?(단, tan10˚=0.176, sin10˚=0.174, cos10˚=0.985임)
+㉮ 약 0.87m
+㉯ 약 0.88m
+㉴ 약 2.46m
+㉵ 약 4.92m
+11. 항해경과에 따라 복원력에 미치는 영향이 가장 작은것은?
+㉮ 배수량의 감소
+㉯ 유동수의 발생
+㉴ 연료, 청수 등의 소비
+㉵ 갑판적 화물의 수분흡수
+12. 우리나라 부근의 해양성 기단으로 한랭 다습한 것은?
+㉮ 양쯔강 기단
+㉯ 북태평양 기단
+㉴ 시베리아 기단
+㉵ 오호츠크해 기단
+13. 열대성 저기압의 등압선이 이루고 있는 형태는?
+㉮ 사각형
+㉯ 거의 원형
+㉴ 마름모꼴
+㉵ 완벽한 타원형
+14. 관측된 기상 요소를 기입하여 분석한 것으로, 등압선을 분석하여 고·저기압 등의 위치를 파악하고 바람, 기온, 일기 현상 등의 분포를 판단할 수 있는 일기도는?
+㉮ 보조선도
+㉯ 예상 일기도
+㉴ 지상 일기도
+㉵ 고층 일기도
+15. 교류 발전기를 병렬 운전할 때 두 발전기의 주파수가 일치되었음을 알 수 있는 장치는?
+㉮ 분류기
+㉯ 휘스톤 브리지
+㉴ 동기 검정기
+㉵ 스트로보 스코프
+16. 원심 펌프의 송출량을 조절하는 방법으로 가장 많이 쓰이는 것은?
+㉮ 흡입 밸브의 개도를 조절하는 방법
+㉯ 송출 밸브의 개도를 조절하는 방법
+㉴ 펌프의 임펠러의 피치를 조절하는 방법
+㉵ 흡입과 송출밸브의 개도를 동시에 조절하는 방법
+17. 다음 중 접촉부분의 넓이와 경사각을 고려하지 않을 경우 이초를 위한 해저 저질의 마찰계수가 가장 큰 것은?
+㉮ 모래
+㉯ 자갈
+㉴ 암반
+㉵ 산호초
+18. 선장이 퇴선시기를 결정할 때에 고려해야 할 사항을 <보기>에서 모두 고른 것은?\n〈보기〉\n① 퇴선에 소요되는 인원과 비용\n② 해양사고의 종류와 심각한 정도\n③ 미래에 취해질 비상조치의 성공 가능성\n④ 구조 가능성 및 구조 기관과의 통신상황
+㉮ ①, ③
+㉯ ①, ②, ③
+㉴ ②, ④
+㉵ ②, ③, ④
+19. ( )에 순서대로 적합한 것은?\n'선박구조는 보통 위험구역과 비위험구역으로 구분된다. 위험구역은 화물구역 뿐만 아니라 cofferdam, 케미컬창고, 펌프룸, 기관구역, 페인트창고 등이 속한다. 이러한 구역들은 ( )동안 연기와 화염으로부터 보호될 수 있는 ( ) 격벽과 갑판으로 되어 있다.'
+㉮ 15분, A-0급
+㉯ 30분, A-15급
+㉴ 45분, A-30급
+㉵ 60분, A-60급
+20. 국제항공 및 해상수색구조 편람상 여러 척의 선박이 조난 선박 수색에 참여할 때 수색속력의 기준은?
+㉮ 가장 빠른 선박의 최대 속력
+㉯ 가장 빠른 선박의 중간 속력
+㉴ 가장 느린 선박의 최대 속력
+㉵ 참여 선박들의 최대 속력에 대한 평균 속력
+21. 퇴선 시 비상조치에 대한 설명으로 옳지 않은 것은?
+㉮ 바로 입수해야 할 경우에는 장애물에 주의한다.
+㉯ 퇴선 시 강하할 구명정은 선체에 경사가 없는 한 풍하측의 구명정을 하강한다.
+㉴ 구조선을 표류시켜 물에 떠있는 조난자를 구하고자 할 때는 구조선은 조난자의 풍상측에 정선하여 표류시킨다.
+㉵ 구조선이 구명정을 내려 조난선의 인명을 구하고자 할 때는 먼저 조난선의 풍하측으로 접근하여 구명정을 하강한다.
+22. STCW 협약상 선원의 당직근무 휴식시간에 대한 내용으로 옳지 않은 것은?
+㉮ 매 7일의 기간마다 적어도 77시간의 휴식을주어야 한다.
+㉯ 선내 훈련 등의 이유로 휴식시간을 축소 또는조정하여서는 아니 된다.
+㉴ 당직자에게 임의의 24시간 내에 최소한 10시간의 휴식 시간이 부여되어야 한다.
+㉵ 휴식시간은 2회 이내로 나눌 수 있으며, 그 기간중 하나는 적어도 6시간이어야 한다.
+23. 선박조직에서 승무원 개인의 목표와 조직의 목표 간에 갈등이 생길 때 가장 바람직한 해결방법은?
+㉮ 양 목표의 조정
+㉯ 개인목표의 양보
+㉴ 조직목표의 양보
+㉵ 개인목표의 일방적 수정
+24. 선박설비기준상 국제항해에 종사하는 선박에서 최대 승선인원이 27인인 경우 비치하여야 할 최소 병상의 수는?
+㉮ 1개
+㉯ 2개
+㉴ 3개
+㉵ 4개
+25. STCW 협약상 선내 의료관리자가 알아야 할 지식, 이해, 기술이 아닌 것은?
+㉮ 부상자 관리
+㉯ 알코올 및 약물의 남용
+㉴ 봉합에 관한 기술
+㉵ 주요 질병에 관한 처방
+[제3과목 : 법규]
+1. 선박의 입항 및 출항 등에 관한 법률상 용어의 정의로 옳은 것은?
+㉮ 정박이라 함은 선박을 다른 시설에 붙들어 매어 놓는 것을 말한다.
+㉯ 계류라 함은 선박이 해상에서 일시적으로 운항을 정지하는 것을 말한다.
+㉴ 계선이라 함은 선박이 운항을 정지하고 정박하거나 계류하는 것을 말한다.
+㉵ 정류라 함은 선박이 해상에서 닻을 바다 밑바닥에 내려 놓고 운항을 멈추는 것을 말한다.
+2. 선원법상 소년선원에 대한 규정으로 옳지 않은 것은?
+㉮ 선박소유자는 원칙적으로 16세 미만인 자를 선원으로 사용하지 못한다.
+㉯ 미성년자가 선원이 되고자 하는 경우에는 법정대리인의 동의를 받아야 한다.
+㉴ 18세 미만인 소년선원은 매 3시간 연속 근로 후 즉시 10분 이상의 휴식시간을 주어야 한다.
+㉵ 선박소유자는 18세 미만인 사람을 선원으로 사용하려면 해양수산부령으로 정하는 바에 따라 해양항만관청의 승인을 받아야 한다.
+3. 선박직원법상 해양수산부장관의 허가에 의해 승무기준의 특례를 적용 받는 사유가 아닌 경우는?
+㉮ 외국선박의 경우
+㉯ 다른 선박에 예인되어 항행하는 경우
+㉴ 항행예정시간이 6시간 이내인 국내항간을 긴급히 항행할 필요가 있다고 인정되는 경우
+㉵ 배가 선거에 들어가거나 수리ㆍ계류 또는 그밖의 사유로 항행에 사용되지 아니하는 경우
+4. 선박안전법상 조타, 계선 및 양묘설비에 관한 정기검사의 준비사항이 아닌 것은?
+㉮ 효력시험의 준비를 할 것
+㉯ 압력시험 및 하중시험의 준비를 할 것
+㉴ 처음 검사를 받는 경우 재료시험의 준비를 할 것
+㉵ 닻, 닻쇠사슬 또는 로프와 계선용 로프를 적당한 장소에 진열할 것
+5. 다음 중 선박안전법상 만재흘수선을 표시하여야 하는 선박은?
+㉮ 여객선
+㉯ 공기부양선
+㉴ 시운전을 위하여 항해하는 선박
+㉵ 국제항해에 종사하지 아니하는 선박길이 24미터 미만인 예인선
+6. 해양사고의 조사 및 심판에 관한 법률상 업무정지 또는 견책의 징계를 받은 해기사 등이 그 징계 재결의 집행이 끝난 날부터 얼마 동안 무사고 운항을 하면 그 징계가 실효되는가?
+㉮ 2년 이상
+㉯ 3년 이상
+㉴ 5년 이상
+㉵ 10년 이상
+7. 해양환경관리법상 용어의 정의로 옳은 것은?
+㉮ '해양오염'이란 선박에서 배출되는 선저폐수에 의한 오염을 말한다.
+㉯ '선저폐수'라 함은 선박의 밑바닥에 고인 액상유성혼합물을 말한다.
+㉴ '기름'이라 함은 원유 및 석유제품(석유가스 포함)과 이들을 함유하고 있는 액체상태의 유성 혼합물만을 말한다.
+㉵ '오염물질'이라 함은 해양에 유입 또는 배출되어 해양 환경에 해로운 결과를 미치거나 미칠우려가 있는 폐기물만을 의미한다.
+8. 해양환경관리법상 해양오염방지설비에 대한 선박검사의 종류가 아닌 것은?
+㉮ 정기검사
+㉯ 중간검사
+㉴ 특별검사
+㉵ 임시항해검사
+9. ( )에 적합한 것은?\n'상법상 감항능력에 관한 주의의무를 실행하는 시기는 ( )이다.'
+㉮ 발항 당시
+㉯ 출항과 입항 시
+㉴ 하역기간 동안
+㉵ 발항 전 및 발항 후
+10. 상법상 공동해손으로 인정되는 선박손해가 아닌 것은?
+㉮ 선박의 예비품을 통상연료로 사용
+㉯ 선박의 나포를 피하기 위한 설비의 투하
+㉴ 좌초로부터 탈출하기 위한 무리한 기관사용
+㉵ 선상의 화재를 진압하기 위한 선박 내부시설 파괴
+11. 해사안전법상 선박의 안전관리체제의 수립에 포함되어야하는 사항이 아닌 것은?
+㉮ 선원의 근로조건에 관한 사항
+㉯ 선박소유자의 책임과 권한에 관한 사항
+㉴ 해상에서의 안전과 환경보호에 관한 기본 방침
+㉵ 선박충돌사고 등 발생 시 비상대책의 수립에 관한 사항
+12. 해사안전법상 교통안전특정해역을 항행하려는 경우 항행안전을 확보하기 위하여 필요한 사항을 해양경찰서장이 선장이나 선박소유자에게 명할 수 있는 선박이 아닌 것은?
+㉮ 거대선
+㉯ 흘수제약선
+㉴ 위험화물운반선
+㉵ 예인선열의 길이가 100미터인 예인선
+13. 국제해상충돌방지규칙상 용어의 정의로 옳지 않은 것은?
+㉮ 선박의 길이와 폭이라 함은 그 선박의 전장과 최대의 폭을 말한다.
+㉯ 항행 중이라 함은 선박이 정박하거나 육지에 계류하거나 또는 얹혀 있는 것이 아닌 상태를 말한다.
+㉴ 조종불능선이라 함은 어떠한 예외적인 사정으로 인하여 규칙의 규정에 따라 조종할 수 없고, 또 그 때문에 다른 선박의 진로를 피할 수 없는 선박을 말한다.
+㉵ 선박이라 함은 수상항공기 및 수면비행선박을 포함하여 운송수단으로 사용하거나 또는 사용할 수 있는 수상의 모든 배를 말하며, 무배수량선은 제외된다.
+14. ( )에 순서대로 적합한 것은?\n'국제해상충돌방지규칙의 어느 규정도 이 규칙의 이행을 태만히 한 결과 또는 ( )나/이나 ( )에 의하여 필요로 하는 주의를 태만히 함으로써 생긴 결과에 대하여 어떠한 선박, 선박소유자, ( )의 책임을 면제하여 주지 아니한다.'
+㉮ 부주의, 이 규칙, 선장 또는 도선사
+㉯ 부주의, 특수한 사정, 선장 또는 도선사
+㉴ 선원의 통상적인 업무수행상, 특수한 사정, 용선자
+㉵ 선원의 통상적인 업무수행상, 특수한 사정, 선장 또는 해원
+15. 국제해상충돌방지규칙상 안전한 속력에 대한 설명으로 옳지 않은 것은?
+㉮ 원칙적으로 서로 시계 안에 있는 선박에 대해서만 적용된다.
+㉯ 적절한 거리에서 충돌회피를 위해 정선할 수 있는 속력을 말한다.
+㉴ 충돌회피를 위해 적절하고 유효한 동작을 취할 수 있는 속력을 말한다.
+㉵ 안전한 속력의 결정에는 선박의 조종성능, 흘수 등을 포함하여 제반 주위 여건이 고려되어야 한다.
+16. 국제해상충돌방지규칙상 항법 적용의 요건인 '충돌의 위험이 있는 경우'를 명시적으로 규정하고 있는 규칙이 아닌 것은?
+㉮ 제12조 범선
+㉯ 제13조 앞지르기(추월)
+㉴ 제14조 마주치는 상태
+㉵ 제19조 제한된 시계에서 선박의 항법
+17. 국제해상충돌방지규칙상 통항분리방식을 이용하는 선박의 항행 방법으로 옳은 것은?
+㉮ 가급적 통항 분리선에 가까이 접근하여 항행한다.
+㉯ 통항로 안에서는 통항의 일반적인 방향으로 진행하여야 한다.
+㉴ 통항로의 횡단이 부득이한 경우에는 가능한 일반적인 진행방향에 대하여 소각도로 횡단하여야 한다.
+㉵ 총톤수 20톤 미만의 선박은 통항로를 따라 항행하고 있는 동력선의 안전한 통항을 방해하여서는 아니 된다.
+18. 국제해상충돌방지규칙상 제한된 시계안에서 2분을 넘지 아니하는 간격으로 장음 1회에 이어 단음 3회를 울리는 선박은?
+㉮ 정박 중인 동력선
+㉯ 항행 중인 흘수제약선
+㉴ 수상에서 항행 중인 수상항공기
+㉵ 피예인선박 또는 2척 이상의 선박이 피예인되는 경우 승무원이 승선하고 있는 상태에서 끌려가고 있는 피예인선의 최후단 선박
+19. 국제해상충돌방지규칙상 등화 규정에 관한 설명으로옳지 않은 것은?
+㉮ 동력선의 현등은 전부 마스트등이 설치된 높이의 2분의 1보다 높지 아니한 곳에 설치하여야한다.
+㉯ 2개의 마스트등 사이의 수평거리는 선박의 길이의 2분의 1 이상이어야 하나 100미터를 넘을 필요는 없다.
+㉴ 2개의 마스트등이 설치된 동력선의 전부 마스트등은 최상층의 전통갑판으로부터 6미터 이상의 높이에 설치하여야 한다.
+㉵ 2개의 마스트등이 설치된 경우 후부 마스트등은 전부 마스트등보다 수직선상으로 적어도 4.5미터 높은 곳에 설치하여야 한다.
+20. 국제해상충돌방지규칙상 길이가 12미터 미만인 선박이 표시하여야 할 등화와 최소 가시거리로 옳은 것은?
+㉮ 현등 - 2해리
+㉯ 예선등 - 1해리
+㉴ 선미등 - 3해리
+㉵ 마스트등 - 2해리
+21. 국제해상충돌방지규칙상 밀고 있는 선박과 밀려가고 있는 선박이 단단하게 연결되어 하나의 복합체를 이룬 경우 표시하여야 할 등화는?
+㉮ 항행 중인 1척의 일반 동력선과 동일한 등화 표시하여야 한다.
+㉯ 다른 선박을 앞쪽으로 밀고 있는 동력선의 등화 표시하여야 한다.
+㉴ 다른 선박에 의해 끌려가고 있는 동력선의 등화 표시하여야 한다.
+㉵ 다른 선박을 옆에 붙여서 끌고 있는 동력선의 등화 표시하여야 한다.
+22. 국제해상충돌방지규칙상 형상물에 관한 규정으로 옳지않은 것은?
+㉮ 형상물은 흑색이어야 한다.
+㉯ 둥근꼴 형상물의 직경은 0.6미터 이상이어야한다.
+㉴ 형상물 사이의 수직거리는 적어도 1.0미터 이어야 한다.
+㉵ 원통형 형상물의 직경은 0.6미터 이상이고, 높이는 직경의 2배가 되어야 한다.
+23. 국제해상충돌방지규칙상 항행 중인 길이 12미터 미만의 동력선이 항행 중인 동력선의 등화 표시를 대신하여 표시할 수 있는 등화는?
+㉮ 흰색 섬광등 1개와 현등 1쌍
+㉯ 녹색 전주등 1개와 현등 1쌍
+㉴ 흰색 전주등 1개와 현등 1쌍
+㉵ 붉은색 전주등 1개와 현등 1쌍
+24. 국제해상충돌방지규칙상 주간에 둥근꼴 형상물 2개를 가장 잘 보이는 곳에 수직으로 표시하여야 하는 선박은?
+㉮ 조종불능선
+㉯ 위험화물운반선
+㉴ 어로에 종사하고 있는 선박
+㉵ 준설작업에 종사하고 있는 선박
+25. ( )에 순서대로 적합한 것은?\n'국제해상충돌방지규칙상 준설작업에 종사하고 있는 선박이 조종능력을 제한받고 있는 경우에는 조종제한선의 등화나 형상물을 표시하여야 하며, 장애물이 있는 경우에는 장애물이 있는 쪽을 가리키는 뱃전에 수직으로 ( )나 ( )를 표시하여야 한다.'
+㉮ 붉은색 전주등 1개, 둥근꼴의 형상물 1개
+㉯ 붉은색 전주등 2개, 둥근꼴의 형상물 2개
+㉴ 녹색 전주등 1개, 마름모꼴의 형상물 1개
+㉵ 녹색 전주등 2개, 마름모꼴의 형상물 2개
+[제4과목 : 영어]
+1. Which is not the message markers being used in SMCP?
+㉮ Request
+㉯ Instruction
+㉴ Warning
+㉵ Regulation
+2. Select a group which has no relation each other.
+㉮ Air draught - Height
+㉯ UKC - Depth of water
+㉴ Gross tonnage – Volume
+㉵ Way point - Hydrographic survey
+3. Select the correct one for the blank.\n'What notice is required to ( ) from full sea speed to maneuvering revolutions?'
+㉮ notice
+㉯ reduce
+㉴ increase
+㉵ advance
+4. Select one which has wrong expression in SMCP.
+㉮ You may anchor.
+㉯ The head line is broken.
+㉴ The cable is up and down.
+㉵ Pick up the slack on the stern line.
+5. Fill the blank from the given.\n'When you give your crew members a ballastcontrol briefing, you say: We are waiting for shore instructions and there is no pumping ( ) present.'
+㉮ at
+㉯ for
+㉴ to
+㉵ in
+6. Select a correct translation of the following sentence.\n'본선이 1번 부표 북쪽 1.3마일 지점에 도착할 예정시각은 14시 20분입니다.'
+㉮ My ETA at North of number one buoy, one point three miles off is one four two zero hours.
+㉯ My ETA at one decimal three miles North of number one buoy is one four two zero hours.
+㉴ My ETA of North of number one buoy, from one decimal three miles is fourteen twenty hours.
+㉵ My ETA at one point three miles from number one buoy will be one four hours and two zero minutes.
+7. Select correct explanation.\n'You are heading toward my tow.'
+㉮ 귀선은 예인물의 선미방향으로 향하고 있다.
+㉯ 귀선의 선수는 본선의 선수방향으로 향하고 있다.
+㉴ 귀선은 본선이 예인하고 있는 물체로 향하고 있다.
+㉵ 귀선은 본선이 예인하고 있는 물체를 통과하고 있다.
+8. Select one which is proper for the blank.\n'This indicates that the following message informs others about immediate navigational action intended to be taken. For example: ( ). I will reduce my speed.'
+㉮ Advice
+㉯ Intention
+㉴ Report
+㉵ Instruction
+9. Select one which has no relations with other three sentences.
+㉮ I am in danger of capsizing.
+㉯ I have dangerous list to port.
+㉴ I will jettison cargo to stop listing.
+㉵ I can only proceed at slow speed.
+10. Choose an example for safety message.
+㉮ I require medical assistance.
+㉯ I am sinking. I require immediate assistance.
+㉴ Radio beacon service New harbour has been discontinued.
+㉵ I have lost my anchor and buoyed it in position two miles East of Head Point.
+11. Select one which concerns with the following explanation.\n'This method among radar navigation is not suitable while piloting in restricted waters and should only be used if no more accurate method (combining visual bearings with radar ranges for example) is available.'
+㉮ Fix by radar ranges
+㉯ Fix by radar bearings
+㉴ Fix using tangent bearings and range
+㉵ Fix by range and bearing on one object
+12. Followings are concerned with 'Adjustments of the Sextant'. Choose the incorrect one.
+㉮ The first adjustment consists of making the index mirror perpendicular to the plane of the instrument.
+㉯ The second adjustment consists of making the horizon mirror perpendicular to the plane of the instrument.
+㉴ The third adjustment consists of making the axis of the side mirror parallel to the plane of the instrument.
+㉵ The fourth adjustment consists of making the horizon mirror parallel to the index glass when the vernier is set at zero.
+13. While at anchor, the officer of the watch shall take proper precautions to detect and prevent dragging. Choose the irrelevant one?
+㉮ Anchor chains pulsate or jump when the anchor is not dragging.
+㉯ The most certain indication of dragging is a change of anchorage.
+㉴ These should be checked at regular intervals even in good weather.
+㉵ Another sign of dragging anchor can be discovered by watching the chain or by feeling it on deck.
+14. Select a group of words which are proper for the blanks.\n'Emergency steering drills should take place at least every three months and must include ( ) control within the steering gear compartment, the communications procedure with the bridge and, where applicable, the operation of ( ) power supplies.'
+㉮ on-off, spare
+㉯ direct, alternative
+㉴ override, proper
+㉵ remote, additional
+15. Choose the best one to fill the blank.\n'Nothing in COLREGs shall interfere with the operation of any special rules made by the Government of any State with respect to additional station or signal lights, shapes or whistle signals for ( ) and vessels proceeding under convoy.'
+㉮ seaplanes
+㉯ ships of war
+㉴ hampered vessels
+㉵ vessels not under command
+16. Choose proper one to fill the blanks in order.\n'The Safety Management System should include procedures ensuring that ( ), accidents and hazardous situations are reported to the company,investigated and analysed with the objective of improving safety and ( ).'
+㉮ corrections, recurrence
+㉯ incidents, improvements
+㉴ conformities, corrective action
+㉵ non-conformities, pollution prevention
+17. Select the word which indicates the () part.\n'A vessel of 20 meters or more in length shall be provided with a whistle and a bell, and a vessel of 100 meters or more in length shall, in addition, be provided with a gong, the tone and sound of which cannot be confused with (that) of the bell.'
+㉮ sound of gong
+㉯ sound of whistle
+㉴ tone and sound
+㉵ vessel of 100 meters
+18. Select one which can be replaced with the () part.
+'The officer of the watch should be fully conversant with the general emergency alarm signals, the actions to be taken on hearing or (instigating) an alarm and the ship's emergency plans.'
+㉮ raising
+㉯ disturbing
+㉴ action
+㉵ cancelling
+19. A space should be ventilated when:
+㉮ The cargo temperature is same with the air temperature in the space.
+㉯ The cargo temperature is colder than the dew point of the air in the space.
+㉴ The cargo temperature is warmer than the dew point of the air in the space.
+㉵ The dew point of the air in the space is higher than the dew point of the outside air.
+20. Select proper word for the blank.\n'Charterers frequently contain a clause to effect that the charterer’s liability shall cease in shipment of the cargo. This clause, known as the ( ) is usually inserted in consideration of the granting to the shipowner of a lien, which he could not otherwise possesses, on the cargo for demurrage and dead freight.'
+㉮ cesser clause
+㉯ exclusion clause
+㉴ endorsement clause
+㉵ free shipment clause
+21. This certifies that the holder meets STCW standards of competence in specific functions related to safety, care of persons, or cargo. What is this?
+㉮ Certificate of license
+㉯ Certificate of training
+㉴ Certificate of proficiency
+㉵ Certificate of competence
+22. Select a proper word for the blank.\n'C.I.F.(cost, insurance and freight): the purchase price of the goods including cost, payment of insurance and freight, which is arranged by the ( ).'
+㉮ importer
+㉯ exporter
+㉴ shipowner
+㉵ consignee
+23. Which of the following is not true about the general precautions in keeping a deck log book?
+㉮ Entries should be simple, clear and accurate expressions.
+㉯ Be sure to write with a ball-point pen or ink and never erase it.
+㉴ If there is a mistake, underline it and put the correct entry on or after it with signature.
+㉵ As entries are stated after occurrence, it is desirable to use the present tense in principle.
+24. Choose the suitable one.\n'Mr. Kim ( ) from acute appendicitis seriously. Dropped in the nearest port, Manila, Philippines, to ( ) him ashore.'
+㉮ had, go
+㉯ suffered, make
+㉴ had, hospitalize
+㉵ suffered, hospitalize
+25. What can be inferred from the following entries?\n'Held fire & boat drill in Lat 42˚ 00'N, Long. 167˚ 14'W. 1515 Sounded fire alarm. 6 hoses led out & full pressure applied. Emergency transmitter, emergency generator & watertight doors operated. 1520 Sounded abandon ship. All crew members and passengers mustered at their stations and instructed. boats lowered & raised. Hand propelling gear operated ahead and astern. 1532 Secure from drills. All equipment in apparent good condition.'
+㉮ One of fire hoses was damaged.
+㉯ The vessel is a container vessel.
+㉴ One crew died during the training.
+㉵ The vessel was sailing in the northern hemisphere.
+[제5과목 : 상선전문]
+1. 화물 선적 시 S/O상 100c/s로 되어 있는 화물에 대한 Shipper측의 Tally는 110c/s라고 주장하고, 본선 측에 서는 100c/s라고 주장하는 상태로 화물 개수의 확인이 어려울 때 기재하는 M/R상의 Remarks는?
+㉮ 10c/s shut out
+㉯ 10c/s short shipped
+㉴ 10c/s over in dispute
+㉵ 10c/s short in dispute
+2. 유류화물의 운송 시 화주로부터 확보해야 하는 서류로, 운송화물에 대한 특징과 위험성 및 독성정보, 유출 시의 대응방법 등의 내용을 담고 있는 문서는?
+㉮ Letter of protest
+㉯ Material safety data sheet
+㉴ Ship shore safety checklist
+㉵ Shipboard marine pollution emergency plan
+3. 액화가스운반선으로 운송하는 화물 중 대기온도 하에서 가압된 상태로 운송할 수 없는 화물은?
+㉮ 부탄
+㉯ 프로판
+㉴ 메탄
+㉵ 암모니아
+4.  Tackle의 배율을 구하는 식은?\n@PIC1504 
+㉮@PIC1504_A
+㉯@PIC1504_B
+㉴@PIC1504_C
+㉵@PIC1504_D
+5. 다음 중 선박의 Hydrostatic curves에서 직접 구할 수 없는 자료는?
+㉮ Metacentric height
+㉯ Water plane coefficient
+㉴ Area of midship section
+㉵ Center of buoyancy above base line
+6. 길이 5m, 폭 50cm, 깊이 70cm인 장방형의 목재가해수비중이 1.025인 수역에서 60cm 평행 침하하였을 때 이 목재의 비중은?
+㉮ 약 0.98
+㉯ 약 0.88
+㉴ 약 0.78
+㉵ 약 0.68
+7. 매 cm 트림모멘트가 200m-ton인 선박이 선수흘수 6.60m, 선미흘수 7.60m로 떠 있다. 후방의 중량물을 40m전방으로 이동시켜 50cm trim by the stern을 만들려고 할 때 필요한 무게는?
+㉮ 150톤
+㉯ 200톤
+㉴ 250톤
+㉵ 300톤
+8. 베일용적이 48,000ft³, 그레인용적이 54,000ft³인 선창에 Stowage factor가 80인 Cotton 포대를 적재할 수 있는 최대 중량은?
+㉮ 약 600 Long ton
+㉯ 약 675 Long ton
+㉴ 약 750 Long ton
+㉵ 약 1,275 Long ton
+9. 전체 적화용적 130,000m³에 125,000톤의 화물을 적재할 수 있는 선박에서 No. 1 hold의 적화용적이 9,000㎥일 때, No. 1 hold에 적재할 수 있는 화물의 중량은?
+㉮ 약 8,325톤
+㉯ 약 8,500톤
+㉴ 약 8,654톤
+㉵ 약 9,360톤
+10. 15cm의 Sagging이 생긴 선박에서 배수량을 측정할 경우, 이 Sagging에 대한 배수량 수정량은?(단, T<sub>cm</sub>는 40ton이다.)
+㉮ 약 400톤
+㉯ 약 450톤
+㉴ 약 500톤
+㉵ 약 550톤
+11. 선박의 선수 평균흘수에 1cm의 오차가 있을 때 쿼터민(1/4 mean) 흘수에 미치는 영향은?
+㉮ 1/4cm
+㉯ 1/8cm
+㉴ 3/4cm
+㉵ 3/8cm
+12. 목재의 검재에 있어서 원재의 Brereton Scale을 나타내는 식은? [단, a, b는 각각 상, 하단의 껍질을 포함하지 않은 직경(inch), ℓ는 목재의 길이(ft), t는 두께(inch)임]
+㉮ t × b × ℓ
+㉯ (a/4)² × ℓ × (1/12)
+㉴ (a + b/2) × ℓ × (1/12)
+㉵ {(a + b)/2}² × (π/4) × ℓ × (1/12)
+13. 하중 W를 가속도 a(m/sec2)로 감아올려서 정속도에 도달할 때까지의 실질적인 하중 증가량(f)의 계산식으로 옳은 것은? (단, g는 중력가속도임)
+㉮@PIC1513_A
+㉯@PIC1513_B
+㉴@PIC1513_B
+㉵@PIC1513_D
+14. 수출입 화물 대금 결제방법 중 신용장(L/C) 결제의 경우 Original B/L의 유통경로를 순서대로 나타낸 것은?
+㉮ 송하인 → 선적지 은행 → 양하지 거래은행 →수하인
+㉯ 송하인 → Negotiating bank → L/C 개설은행→ 수하인
+㉴ 송하인 → Collecting bank → Remitting bank→ 수하인
+㉵ 송하인 → Collecting bank → L/C 개설은행→ 수하인
+15. 운송물에 대한 운송인의 면책을 규제하고, 손해배상 한도액을 규정하고 있는 국제규칙은?
+㉮ Liner code
+㉯ Hague Rule
+㉴ IMDG code
+㉵ York-Antwerp Rule
+16. 다음 중 화물환어음(Documentary bill) 결재에 필요한 선적서류가 아닌 것은?
+㉮ 보상장
+㉯ 선화증권
+㉴ 상업송장
+㉵ 해상보험증권
+17. 컨테이너 내부 화물의 내용, 중량, 용적 등과 관련한 어떤 형태의 손해로부터 선주의 면책을 규정한 약관은?
+㉮ Latent clause
+㉯ Unknown clause
+㉴ Deviation clause
+㉵ Negligence clause
+18. 공동해손 정산 공식에 사용되는 용어가 아닌 것은?
+㉮ 공동해손 배상액
+㉯ 공동해손 분담가액
+㉴ 공동해손 분담률
+㉵ 공동해손 희생손해액
+19. 1983년 ITC(Hulls)의 '3/4 Collision Liability' 약관에서 보험자의 면책사항이 아닌 것은?
+㉮ 난파선 제거비용
+㉯ 충돌 상대선박의 손상에 대한 배상
+㉴ 충돌 상대선 선원의 사상에 대한 배상
+㉵ 본선에 적재중인 화물의 손상에 대한 배상
+20. 선박보험에서의 전손에 대한 설명으로 옳지 않은 것은?
+㉮ 현실전손은 절대전손(Absolute total loss)이라고도 한다.
+㉯ 추정전손은 해상보험에서만 유일하게 인정되고있는 전손이다.
+㉴ 선박이 폭풍으로 인하여 침몰되면 어느 경우라도 현실전손으로 처리할 수 있다.
+㉵ 전손이라고 하여 반드시 보험목적물이 완전하게 소멸되는 것만을 뜻하지 않고, 전멸에 가까운 경우라도 전손으로 인정된다.
+21. ( )에 적합한 것은?\n'MARPOL 협약상 ( )은 탱크세정 또는 평형수 배출작업에 의하여 해양에 배출된 경우, 해양자원이나 인체에 위해를 미치거나 해양의 쾌적성 또는 기타의 적법한 이용에 해를 야기하기 때문에 해양환경으로의 배출물의 품질과 양에 대한 제한을 하는 것이 정당하다고 보는 유해액체물질을 말한다.'
+㉮ X류 물질
+㉯ Y류 물질
+㉴ Z류 물질
+㉵ 잠정평가물질
+22. STCW 협약상 당직항해사의 항해장비 점검에 관한 사항으로 옳지 않은 것은?
+㉮ 자기 컴퍼스의 오차는 최소한 1일 1회 점검
+㉯ 자동조타장치는 당직 중 최소한 1회 수동조타 시행
+㉴ 자동조타장치가 정확한 침로를 유지하는지 규칙적으로 점검
+㉵ 선내의 항해장비는 가능한 한 자주 점검하고, 항해일지에 그 기록을 유지
+23. STCW 협약상 적절한 경계를 유지하기 위해 항해당직의 구성이 적합한 지를 결정함에 있어서 선장이 고려하여야 할 사항이 아닌 것은?
+㉮ 해기사와 부원의 성향
+㉯ 시정, 해상 및 기상상태
+㉴ 타 및 프로펠러의 조종과 선박조종특성
+㉵ 해상교통량 및 선박이 항행하는 수역에서의 기타의 활동
+24. BWM 협약상 국제평형수관리증서에 반드시 기재해야할 사항이 아닌 것은?
+㉮ 선적항
+㉯ 평형수 용량
+㉴ IMO 번호
+㉵ 평형수 교환 장소
+25. ISM code상 선박안전관리증서(SMC)에 대한 설명으로 옳지 않은 것은?
+㉮ SMC의 유효기간은 5년이다.
+㉯ 임시 SMC는 6월 이내에서 유효하다.
+㉴ SMC는 최소한 2회의 중간인증심사를 조건으로 유효하다.
+㉵ SMC는 최초인증심사를 통하여 ISM 코드 요건에 적합한 선박에게 발급되어야 한다.
+[제6과목 : 어선전문]
+1. 어육의 자가소화를 억제하기 위하여 어획 직후에 하는 가장 기본적인 처리는?
+㉮ 수세
+㉯ 피뽑기
+㉴ 저온 보장
+㉵ 산화 방지제 첨가
+2. 담수어 육질 속의 자가소화 효소가 작용하는 최적의 어체 온도 범위는?
+㉮ 10 ~ 15℃
+㉯ 20 ~ 30℃
+㉴ 30 ~ 35℃
+㉵ 40 ~ 45℃
+3. 1냉동톤(1RT)을 시간당 열량으로 환산한 것은?
+㉮ 2,320 kcal/h
+㉯ 3,320 kcal/h
+㉴ 4,320 kcal/h
+㉵ 5,320 kcal/h
+4. 어획물을 어상자에 담을 때 유의할 사항으로 옳은 것은?
+㉮ 양륙 때까지의 감량을 고려하여 담는 양을 5%정도 많게 한다.
+㉯ 쇠갈고리로 찍을 때는 몸통 부분과 같이 육질이 많은 부분을 찍는다.
+㉴ 어상자의 규격에 비하여 지나치게 많은 양의 고기를 담지 않는다.
+㉵ 어상자의 규격에 비하여 큰 고기를 담으면 담는 고기의 수량이 적어서 얼음의 냉각 작용이 고루 미친다.
+5. 드립(Drip)의 발생량과 관계 없는 것은?
+㉮ 원료의 품질
+㉯ 동결 저장기간 및 온도 관리
+㉴ 미생물의 수
+㉵ 동결속도
+6. 수산물의 염장 처리에서 식염의 방부 작용에 대한 설명으로 옳은 것은?
+㉮ 염장품은 저온에 저장하고 품질변화에 주의한다.
+㉯ 강한 탈수 작용으로 인하여 세균 발육을 증가시킨다.
+㉴ 산소의 용해도가 늘어나 호기성 세균의 발육을 돕는다.
+㉵ 세균이 분비하는 단백질 분해 효소의 작용을 용이하게 한다.
+7. 항해 중인 어선에서 복원력이 클 때 나타나는 현상은?
+㉮ 횡요가 쉽게 일어나지만 횡요 주기가 길다.
+㉯ 횡요 주기가 짧고 선원이 피로감을 많이 느낀다.
+㉴ 타를 사용하여 회두하면 선체가 크게 경사한다.
+㉵ 한쪽 현으로부터 풍압을 받은 경우 횡경사가 크게 발생한다.
+8. 해치 커버에 대한 설명으로 옳은 것은?
+㉮ 철제 해치 커버의 상부에는 중량물을 보관하여 수밀을 유지할 수 있도록 해야 한다.
+㉯ 해치 코밍에 부착된 클리트 등의 돌출물은 제거해도 무방하다.
+㉴ 해치 코밍과 해치 커버의 접촉부는 천연고무등의 소재로 된 패킹 또는 개스킷을 부착하여야 한다.
+㉵ 만재가 되지 않은 어창의 해치 커버는 가능한 한 수밀 조치를 하지 않아야 한다.
+9. 배수량 1,000톤인 원양어선의 기선상 중심 위치는 2.5m이다. 이 어선의 기선 상부 4m에 150톤의 어획물을 적재한 후의 기선상 중심 위치는?
+㉮ 약 2.55m
+㉯ 약 2.60m
+㉴ 약 2.65m
+㉵ 약 2.70m
+10. 선폭 20m의 원양어선이 출항 시 횡요주기는 10초였고, 입항 시 횡요주기는 20초가 되었다면 중심의 이동거리는? (단, 경심 M은 이동하지 않는 것으로 함)
+㉮ 약 0.192cm
+㉯ 약 1.92cm
+㉴ 약 19.2cm
+㉵ 약 192cm
+11. 멸치의 유영층에 대한 설명으로 옳은 것은?
+㉮ 여름철에 가장 표층으로 부상한다.
+㉯ 날씨가 맑으면 유영층은 표층이다.
+㉴ 아침에는 깊게 잠입하고 석양 무렵에는 표층에 뜬다.
+㉵ 태양 고도가 높아지면 유영층은 깊어진다.
+12. 다랑어 선망어선에서 투망 전 갑판 점검 사항으로 옳지 않은 것은?
+㉮ 전개판의 연결 상태 확인
+㉯ 죔줄과 죔고리의 정리 상태 확인
+㉴ 선미 삼각판과 Towline 체결 상태 확인
+㉵ 파워블럭 로프 및 선수 연락줄 연결 상태
+13. 풍랑에 의한 속력 저하의 원인 중 영향이 가장 적은것은?
+㉮ 풍압에 의한 선체 저항의 증가
+㉯ Yawing에 의한 추진방향 유지 곤란
+㉴ Bottom heavy에 의한 Rolling 의 증가
+㉵ 선체의 동요에 의한 Screw propeller의 공회전
+14. 다음 중 외끌이기선저인망어선에서 끌줄을 감아 들이는데 가장 많이 쓰이는 장비는?
+㉮ 라인 홀러
+㉯ 계선 윈치
+㉴ 로프 와인더
+㉵ 사이드 드럼
+15. 다음 중 어선에서 선내 구성원간의 효율적인 의사소통 방법 설명으로 옳지 않은 것은?
+㉮ 반복과 중복하지 않는 업무지시
+㉯ 주기적인 업무수행 지도 및 평가
+㉴ 만선 입항 전 해당 항차에 대한 디브리핑(Debriefing)
+㉵ 출항 전 해당항차의 전반전인 상황에 대한 브리핑(Briefing)
+16. ( )에 적합한 것은?\n'보험자는 보험의 목적의 공동해손 분담가액이 ( )을/를 초과할 때에는 그 초과액에 대한 분담액은 보상하지 않는다.'
+㉮ 보험가액
+㉯ 보험료
+㉴ 보험금
+㉵ 공증금액
+17. 수산업법상 어업의 면허에 제한 또는 조건을 부가할 수 없는 경우는?
+㉮ 수산동물의 위생관리가 필요한 경우
+㉯ 수산자원의 번식이 필요한 경우
+㉴ 군사훈련을 위해 필요한 경우
+㉵ 소유재산의 과다 억제가 필요한 경우
+18. 길이 방향에 40%의 주름을 주었을 때 그물감이 구김살없이 펼쳐지려면 폭 방향의 성형률은?
+㉮ 60%
+㉯ 70%
+㉴ 80%
+㉵ 90%
+19. 2005 어선원 및 어선안전규칙 A상 선장이 본선의 감항성 유지를 위해 유의하거나 이행해야 하는 사항으로 옳은 것은?
+㉮ 횡요주기 측정에 의한 복원성의 추정은 위험하므로 가급적 다른 방법을 사용한다.
+㉯ 물속에 있는 어구를 당길 때 복원성에 부정적인 영향을 미칠수 있으므로 하중 작용점의 높고 낮음에 따라 주의 하여야 한다.
+㉴ 방수구 덮개는 항상 잠궈 두어야 한다.
+㉵ 전부 또는 일부 열어 놓은 해치는 방수포로 덮어두어야 한다.
+20. 77/93 Torremolinos 협약에서 구명동의는 착용자가 최소 얼마 높이에서 수면으로 뛰어내려도 안전해야 하는가?
+㉮ 3미터
+㉯ 4.5미터
+㉴ 6미터
+㉵ 8미터
+21. 2005 어선원 및 어선 안전규칙 A상 어선의 음용수에 대한 설명으로 옳지 않은 것은?
+㉮ 음용수는 맑고 무색 투명하며 흔들면 기포가 이는 것이어야 한다.
+㉯ 청수용 호스는 최소한 매 6개월마다 100ppm의 강 염소액에 1시간씩 소독해야 한다.
+㉴ 육상 청수는 염소농도 0.2ppm 정도의 것을 선적한다.
+㉵ 음용수 저장탱크는 24개월을 넘지 않는 간격으로 검사 및 보수한다.
+22. 95 STCW-F 협약상 채택된 결의서가 아닌 것은?
+㉮ 레이더 시뮬레이터 훈련
+㉯ 어선 선장에 대한 지침 및 권고
+㉴ 당직기관사와 당직근무 규정 요건
+㉵ GMDSS와 관련한 무선 통신사의 훈련
+23. 73/78 MARPOL 협약상 이 협약을 위반한 선박에 관한 규정으로 옳지 않은 것은?
+㉮ 협약 당사국의 관할권 내에서의 위반이라도 국제재판소의 제재를 받는다.
+㉯ 협약 당사국의 관할권 내에서의 위반은 해당 당사국의 법률에 따라 제재를 받는다.
+㉴ 협약의 각 규정을 위반한 선박은 해당 선박의 주관청의 법률에 따라 제재를 받는다.
+㉵ 당사국의 법률이 규정하는 벌칙은 협약에 대한 위반을 못하도록 제재하는 것이다.
+24. 73/78 MARPOL 협약 부속서 V상 특별해역 외의 해역에서 가장 가까운 육지로부터 12해리 떨어져서 버릴 수 있는 폐기물은?
+㉮ 어구
+㉯ 식용유
+㉴ 소각재
+㉵ 음식쓰레기
+25. 경제수역내에서 허가받은 운반선과 어선간의 어획물을 이적하는 작업을 뜻하는 것은?
+㉮ 전재(Transhipment)
+㉯ 양륙(Unloading)
+㉴ 보급(Supply)
+㉵ 배출(Discharge)
+[답]
+항해
+나
+가
+사
+나
+나
+사
+아
+가
+사
+사
+가
+아
+나
+나
+나
+아
+나
+나
+아
+아
+가
+가
+나
+나
+사
+운용
+가
+아
+가
+사
+아
+아
+나
+나
+사
+가
+가
+아
+나
+사
+사
+나
+사
+사
+아
+사
+아
+나
+가
+나
+아
+법규
+사
+사
+사
+나
+가
+사
+나
+사
+가
+가
+가
+아
+아
+아
+가
+나
+나
+아
+가
+아
+가
+사
+사
+가
+나
+영어
+아
+아
+나
+가
+가
+나
+사
+나
+아
+사
+나
+사
+가
+나
+나
+아
+사
+가
+나
+가
+사
+나
+아
+아
+아
+상선전문
+아
+나
+사
+나
+가
+나
+사
+가
+사
+나
+나
+아
+가
+나
+나
+가
+나
+아
+나
+사
+나
+가
+가
+아
+사
+어선전문
+사
+나
+나
+사
+사
+가
+나
+사
+아
+아
+아
+가
+사
+아
+가
+가
+아
+사
+나
+나
+아
+나
+가
+아
+가

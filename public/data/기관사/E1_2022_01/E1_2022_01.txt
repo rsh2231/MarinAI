@@ -1,0 +1,762 @@
+[2022/기관사 1급/1]
+[제1과목 : 기관1]
+1. 디젤기관에 사용하는 켈밋 베어링의 특성이 아닌 것은?
+㉮ 백색합금에 비해 2배의 면압에 견딘다.
+㉯ 백색합금보다 열전도율이 3~6배 정도 더 크다.
+㉴ 납이 윤활작용을 하기 때문에 눌어 붙는 일이 적다.
+㉵ 백색합금보다 열팽창계수가 크기 때문에 베어링틈을 크게 할 수 있고 윤활유 필터의 구멍을 조금 더 큰 것을 사용할 수 있다.
+2.  '디젤노크를 가장 일으키기 쉬운 연소실은 ( ① )이고, 저온시동성이 가장 나쁜 연소실은 ( ② )이며, 연소가 느리고 최고압력이 낮은 연소실은 ( ③ )이다.' 에서 ( )에 각각 알맞은 것은?
+㉮ ① 예연소실식 연소실 ② 직접분사실식 연소실 ③ 와류실식 연소실
+㉯ ① 공기실식 연소실 ② 예연소실식 연소실 ③ 직접분사실식 연소실
+㉴ ① 와류실식 연소실 ② 공기실식 연소실 ③ 예연소실식 연소실
+㉵ ① 직접분사실식 연소실 ② 와류실식 연소실 ③ 공기실식 연소실
+3. 4행정 사이클 디젤기관에서 배기밸브를 흡기밸브보다 작게 만드는 주된 이유는?
+㉮ 흡입공기의 온도가 배기가스 온도보다 낮기 때문에
+㉯ 흡입공기의 부피가 더 크기 때문에
+㉴ 배기밸브가 흡기밸브보다 빠르게 마멸되기 때문에
+㉵ 배기가스가 고속으로 분출하기 때문에
+4. 디젤기관에서 링플러터가 발생하면 나타나는 현상은?
+㉮ 연소가스의 누설이 많아진다.
+㉯ 윤활유의 소모량이 줄어든다.
+㉴ 압축압력이 상승한다.
+㉵ 전열이 양호하게 된다.
+5. 디젤기관에서 피스톤링에 작용하는 면압의 크기에 대한 설명으로 옳지 않은 것은?
+㉮ 링의 폭에 반비례한다.
+㉯ 링의 장력에 비례한다.
+㉴ 링의 종탄성계수에 비례한다.
+㉵ 링의 자유절구 틈의 거리에 반비례한다.
+6. 다음 중 키스톤 링의 특성이 아닌 것은?
+㉮ 링의 고착을 방지하는 효과가 있다.
+㉯ 저속회전 시에 플러터 방지 효과가 있다.
+㉴ 고속 회전 시에 블로바이 방지 효과가 있다.
+㉵ 단면이 쐐기형 모양이다.
+7. 6기통, 2행정 사이클 기관의 고유진동수가 255[cpm]일 경우 최초의 주 위험회전수는?
+㉮ 21.25[rpm]
+㉯ 42.5[rpm]
+㉴ 85[rpm]
+㉵ 127.5[rpm]
+8. 과급 디젤기관에서 급기압력이 저하하는 원인이 아닌 것은?
+㉮ 블로어 임펠러의 오손
+㉯ 공기냉각기 출구 공기온도의 저하
+㉴ 과급기 터빈 내의 카본 축적
+㉵ 연료분사시기 늦음에 의한 후연소
+9. 배기가스의 배압이 높을 때 기관에 미치는 영향으로 옳지 않은 것은?
+㉮ 가스의 유효 일량이 감소하고 발생 마력이 떨어진다.
+㉯ 실린더 내의 온도가 낮아진다.
+㉴ 실린더 내의 소기 작용이 나빠져서 소기 효율이 떨어진다.
+㉵ 배기관계의 각부 온도가 높아져서 부식을 촉진한다.
+10. 다음은 내연기관의 배기가스 손실에 관한 일반적인 설명으로 옳지 않은 것은?
+㉮ 디젤기관이 가솔린기관보다 배기손실 비율이 적다.
+㉯ 연소지연이 일어나면 배기손실이 커진다.
+㉴ 과잉공기가 많아지면 배기손실이 커진다.
+㉵ 압축비가 높아지면 배기손실이 커진다.
+11. 선박기관기준상 제한기압이 10[bar]를 초과하는 대형 보일러의 과압 방지를 위한 안전밸브 증기통로의 면적에 대한 설명으로 옳지 않은 것은?
+㉮ 저양정식 안전밸브의 밸브체스트 입구 또는 배기구의 최소 증기통로면적은 밸브시트 면적의 각각 0.5배 또는 1.1배 이상이어야 한다.
+㉯ 고양정식 안전밸브의 밸브체스트 입구 또는 배기구의 최소 증기통로면적은 밸브시트 면적의 각각 1.0배 또는 2.0배 이상이어야 한다.
+㉴ 전양정식 안전밸브의 밸브체스트 입구 또는 배기구의 최소 증기통로면적은 밸브시트에서 그 지름의 7분의 1의 값에 따른 면적이 개방되었을 경우에 생기는 면적의 각각 1.1배 또는 2배 이상이어야 한다.
+㉵ 반양정식 안전밸브의 밸브시트 최소 증기통로 면적은 밸브가 개방되었을 경우에 노즐부면적의 1.1배 이상, 밸브의 입구 및 스탠드파이프의 최소 증기통로 면적은 1.7배 이상이어야 하며 배기구의 최소 증기통로면적은 밸브시트 면적의 2배 이상이어야 한다.
+12. 기름 윤활식 선미관 베어링의 특징이 아닌 것은?
+㉮ 선미관 본체의 강성 확보
+㉯ 선미관 내 베어링의 이상 마멸 억제
+㉴ 최소 베어링틈의 유지
+㉵ 청동제 슬리브의 사용
+13. 수관보일러에 대한 설명으로 옳지 않은 것은?
+㉮ 비교적 드럼의 지름이 작고 세관으로 구성되어서 고압에 적합하다.
+㉯ 전열의 형태는 접촉전열과 복사전열에 의한다.
+㉴ 수관의 수를 자유롭게 증가시켜 전열면을 크게 할 수 있으므로 대용량에 적합하다.
+㉵ 열효율을 증가시키기 위해 강수관을 노내에 설치한다.
+14. 보일러의 과열기에 대한 설명으로 옳지 않은 것은?
+㉮ 과열증기를 사용하면 증기관, 터빈 중에서 수분에 의한 부식이 감소된다.
+㉯ 과열증기를 사용하면 증기관, 터빈 중에서 마찰 저항이 감소한다.
+㉴ 일반적으로 사용되는 과열기는 연도에 배치된다.
+㉵ 대류과열기의 경우에 보일러의 부하가 증가하면 과열기 출구 온도는 하강한다.
+15. 보일러 물처리로 해결할 수 없는 것은?
+㉮ 기수공발
+㉯ 가성취화
+㉴ 스케일 형성
+㉵ 저온부식
+16. 디젤기관의 추진축계 종진동 중에서 가장 발생하기 쉬운 것은?
+㉮ 프로펠러축과 크랭크축이 서로 반대방향으로 움직이는 진동
+㉯ 추력베어링을 지지점으로 프로펠러축과 크랭크 축 전체가 전후로 움직이는 진동
+㉴ 추력베어링을 중심으로 프로펠러축만 전후로 움직이는 진동
+㉵ 추력베어링을 중심으로 크랭크축만 전후로 움직이는 진동
+17. 한국선급규정상 선박의 축계에 대한 시험 및 검사에 대한 설명으로 옳지 않은 것은?
+㉮ 선미관은 제조 후 0.2[MPa]의 압력으로 수압시험을 한다.
+㉯ 선미관의 유밀장치는 선내에 설치 후 급유압력의 1.5배의 압력으로 누설시험을 한다.
+㉴ 프로펠러축 슬리브는 축에 수축 끼워맞춤을 하기 전에 0.1[MPa]의 압력으로 수압시험을 한다.
+㉵ 프로펠러축의 선미단에 프로펠러 고정용 키가 있는 경우 축의 테이퍼 부위는 (1/10) 이하이다.
+18. 축계 접지장치에 대한 설명으로 옳지 않은 것은?
+㉮ 축계와 선체간의 전위차를 없애 부식을 방지하는 장치이다.
+㉯ 전위차를 없애는 접촉은 브러시와 슬립링에서 일어난다.
+㉴ 브러시 재질은 접촉저항이 매우 작아야 한다.
+㉵ 브러시의 설치 개수는 일반적으로 전류용량에 의해 결정된다.
+19. 연료소비량과 소요마력에 대한 설명으로 옳지 않은 것은?
+㉮ 배수량이 일정할 때 연료소비량은 선박 속력의 3제곱에 비례한다.
+㉯ 선박에서 1마일당 연료소비량은 선박 속력의 3제곱에 비례한다.
+㉴ 선박의 속력이 일정할 때 연료소비량은 배수량의 (2/3)제곱에 비례한다.
+㉵ 배수량이 일정할 때 소요마력은 선박 속력의 3제곱에 비례한다.
+20. 프로펠러 캐비테이션(cavitation) 현상이 미치는 영향으로 옳지 않은 것은?
+㉮ 선체의 진동과 소음이 발생한다.
+㉯ 선박의 속도가 감소한다.
+㉴ 프로펠러의 수명이 단축된다.
+㉵ 추진축이 절손된다.
+21. 중유 중에 포함되어 있는 각종 슬러지에 대한 설명으로 옳지 않은 것은?
+㉮ 수분과 협잡물에 의한 슬러지는 대부분 수분이나 협잡물의 혼입에 의해 발생한다.
+㉯ 중유안정성 불량 또는 이종 연료 혼합에 의한 아스팔트의 석출에 의해 아스팔텐질 슬러지가 발생한다.
+㉴ 저융점 왁스 함유량이 너무 많아 이종 연료 혼합시 왁스가 석출되어 발생하는 슬러지를 나프텐왁스질 슬러지라 한다.
+㉵ 중유중에 곰팡이가 침입하면 기름과 물의 계면에서 발육하기 시작해서 온도와 수분이 적당해지면 단시간에 크게 번식하고 중질분을 함유한 해태상의 탄성 슬러지로 급속히 성장한다.
+22. 선박용 디젤기관에서 저질 중유를 사용할 때 나타나는 현상으로 옳지 않은 것은?
+㉮ 착화지연으로 인해 후연소기간이 길어진다.
+㉯ 과급기에 의한 충분한 과급으로 완전연소가 되어 배기가스 온도는 내려간다.
+㉴ 연료의 분무 길이가 길어져 피스톤 상부에 닿아 손상을 초래할 수 있다.
+㉵ 연소 압력이 올라가므로 크로스헤드 베어링과 크랭크핀 베어링이 손상되는 경우가 있다.
+23. 디젤 주기관의 실린더 윤활에 사용하는 실린더유의 전 알칼리가(TBN)가 적정수준보다 높을 때 나타나는 현상으로 옳은 것은?
+㉮ 연소에 의해 회분 퇴적물(thick ash deposit)을 생성시키고 이에 따른 기계적 마멸을 증대시킨다.
+㉯ 실린더 라이너 및 피스톤링의 화학적 마멸이 증대되고 Blow by 현상이 발생한다.
+㉴ 윤활유의 청정성이 급격히 하락하고 내마멸 산화 방지 성능이 감소한다.
+㉵ 고온 중에 슬러지 발생을 억제하지 못하고 수분에 의한 유화의 위험성이 증가한다.
+24. 마찰을 저하시키며 윤활성을 향상시키는 것으로서 특히 경계윤활 시에 그 효과를 내는 윤활유 첨가제는?
+㉮ 극압첨가제
+㉯ 유성향상제
+㉴ 청정분산제
+㉵ 산화방지제
+25. 내연기관의 시스템유에 대한 설명으로 옳지 않은 것은?
+㉮ 점도지수가 커야 한다.
+㉯ 유성이 좋아야 한다.
+㉴ 인화점이 낮아야 한다.
+㉵ 내산화성이 있어야 한다.
+[제2과목 : 기관2]
+1. 동일 조건에서 원심펌프의 회전속도가 2배로 증가한다면 펌프의 소비동력은 이론적으로 얼마나 증가하는가?
+㉮ 약 √2배
+㉯ 약 2배
+㉴ 약 4배
+㉵ 약 8배
+2. 터빈 펌프에 대한 설명으로 옳은 것은?
+㉮ 임펠러 날개가 반경이 증가함에 따라 회전방향 쪽으로 굽어져 있으며 와실 대신 디퓨저가 설치된다.
+㉯ 임펠러 날개가 반경이 증가함에 따라 회전방향 쪽으로 굽어져 있으며 디퓨저 대신 와실이 설치된다.
+㉴ 임펠러 날개가 반경이 증가함에 따라 회전방향과 반대쪽으로 굽어져 있으며 디퓨저 대신 와실이 설치된다.
+㉵ 임펠러 날개가 반경이 증가함에 따라 회전방향과 반대쪽으로 굽어져 있으며 와실 대신 디퓨저가 설치된다.
+3. 선박의 기름여과장치에 설치되어 있는 자동배유장치에 대한 설명으로 옳지 않은 것은?
+㉮ 전극이 수중에 있는 동안에 전자밸브는 닫혀있다.
+㉯ 정전 용량식 유면검출기와 배유용 전자밸브로 구성된다.
+㉴ 기름의 비유전율이 물보다 더 크므로 유면 위치에 따라 정전용량이 변하는 원리를 이용하여 유면을 검출한다.
+㉵ 유면이 전극에 도달하면 전자 밸브는 타이머에 의해 미리 설정된 시간만큼 개방되면서 기름을 배출시킨다.
+4. 해양환경관리법상 재화중량톤수 5,000톤인 유조선에서 기름배출감시제어장치의 주요 구성 요소에 포함되지 않는 것은?
+㉮ 유면검출기
+㉯ 유량계
+㉴ 선속계
+㉵ 자동배출정지장치
+5. 냉동장치에서 응축기 출구의 냉매액을 과냉각시키는 주된 이유는?
+㉮ 과열도를 크게 하여 냉동능력을 증가시키기 위해
+㉯ 계통 내 냉매 순환량을 많게 하기 위해
+㉴ 압축기의 윤활유 손실을 줄이기 위해
+㉵ 플래시(flash) 가스의 발생량을 줄이기 위해
+6. 기름여과장치에 대한 설명으로 옳은 것은?
+㉮ 관련밸브의 개폐를 확인 후 펌프를 구동하여 기름여과장치 내를 해수로 먼저 채우고 공기를 배출한 후 빌지 흡입으로 전환시킨다.
+㉯ 펌프용량은 기름여과장치의 처리용량보다 정격유량이 작은 왕복동 펌프 혹은 저속의 원심펌프를 설치해야 한다.
+㉴ 기관실 빌지가 기름여과장치에서 분리된 후의 슬러지는 빌지 펌프를 이용하여 슬러지 탱크로 보내진다.
+㉵ 기름여과장치의 1단에서 분리되지 않은 처리수는 2단에서 분리가 잘 되도록 공급량을 증가시켜 분리효과를 높이도록 한다.
+7. 냉동능력이 5[RT]인 증기 압축식 냉동장치에서 냉매순환량이 400[kg/h]인 경우 증발기에서 단위질량의 냉매가 흡수하는 열량은 약 몇 [kJ/kg]인가?
+㉮ 41.5[kJ/kg]
+㉯ 48.3[kJ/kg]
+㉴ 152.6[kJ/kg]
+㉵ 173.7[kJ/kg]
+8. 냉동장치의 팽창밸브가 냉동용량에 비하여 너무 작으면 발생하는 현상으로 옳은 것은?
+㉮ 증발기 내의 압력 상승
+㉯ 압축기 흡입가스 과열
+㉴ 리퀴드 백의 발생
+㉵ 소요 전류 증대
+9. 냉동사이클의 작도에 많이 이용되는 몰리에르 선도에 대한 설명으로 옳은 것은?
+㉮ 선도 상에서 냉동사이클의 변화는 시계 반대방향으로 과정이 이루어지고 가로축은 엔탈피의 값을 나타낸다.
+㉯ 선도 상에서 냉동사이클의 변화는 시계 반대방향으로 과정이 이루어지고 가로축은 엔트로피의 값을 나타낸다.
+㉴ 선도 상에서 냉동사이클의 변화는 시계방향으로 과정이 이루어지고 가로축은 엔탈피의 값을 나타낸다.
+㉵ 선도 상에서 냉동사이클의 변화는 시계방향으로 과정이 이루어지고 가로축은 엔트로피의 값을 나타낸다.
+10. 노점에 대한 설명으로 옳지 않은 것은?
+㉮ 습공기의 절대습도가 1일 때의 온도이다.
+㉯ 습공기 중의 수증기 분압이 그 온도에 상당하는 수증기의 포화압력과 같게 되는 온도이다.
+㉴ 습공기 중의 수증기가 응축하기 시작하는 온도이다.
+㉵ 노점 상태의 공기를 포화습공기라고 한다.
+11. 물질의 임계점에 대한 설명으로 옳지 않은 것은?
+㉮ 임계점에서의 증발잠열은 0[kJ/kgf]이다.
+㉯ 임계점에서는 물질의 상태가 액체 또는 기체로 구분되지 않는다.
+㉴ 임계압력 이하의 습포화증기는 엔탈피를 증가시키면 증기의 건도가 감소한다.
+㉵ 임계온도 이상의 기체는 아무리 높은 압력을 가해도 액화되지 않는다.
+12. 이상기체를 교축(throttling)시킬 때 변하지 않는 것은?
+㉮ 압력
+㉯ 엔탈피
+㉴ 비체적
+㉵ 엔트로피
+13. 400[℃]의 고온 열원으로부터 열을 받아 27[℃]의 저온 열원으로 열을 방출하는 과정에서 50[PS]의 일을 수행하는 카르노 기관이 있다면 이 기관에 공급한 열량은 약 몇 [kJ/s]인가?
+㉮ 66.4 [kJ/s]
+㉯ 72.3 [kJ/s]
+㉴ 78.9 [kJ/s]
+㉵ 82.5 [kJ/s]
+14. 압력 P, 체적 V, 기체상수 R, 중량 G, 절대온도 T, 비체적 u일 때 이상기체의 상태방정식으로 옳은 것은?
+㉮ Pu = GRT
+㉯ Pu = RT
+㉴ PT = GVR
+㉵ PV = RT
+15. 전도 열전달 해석에 있어서 열전도율의 단위로 옳은 것은?
+㉮ kcal/kgf·℃
+㉯ kcal/m·℃
+㉴ J/m·K
+㉵ W/m·K
+16. 중량 100[kgf]의 물건을 로프에 매달아 1[m/s²]의 가속도로 끌어 올릴 경우 로프에 걸리는 장력은 약 몇 [N]인가?
+㉮ 100[N]
+㉯ 881[N]
+㉴ 981[N]
+㉵ 1,081[N]
+17. 디젤기관에서 축계의 고유진동수, 위험회전수 및 차수의 관계가 옳은 것은?
+㉮ 위험회전수 = 고유 진동수 ÷ 차수
+㉯ 위험회전수 = 고유 진동수 × 차수
+㉴ 차수 = 위험회전수 × 고유진동수
+㉵ 차수 = (2 × 위험회전수) / (고유진동수)
+18. 관로에서의 유동에 대한 설명으로 옳지 않은 것은?
+㉮ 직관의 경우 속도 분포는 중심선을 기준으로 하여 대칭을 이룬다.
+㉯ 직관에서 유동분포는 포물선을 이룬다.
+㉴ 곡관의 경우 속도분포는 불균일분포 유동이다.
+㉵ 곡관의 경우 속도분포는 중심부에서 가장 큰 속도값을 나타낸다.
+19. 수면하 4[m] 깊이에 수문 상단부가 위치하도록 수문을 수직으로 설치한 경우 수문에 작용하는 힘은 몇 톤[t]인가? (단, 물의 비중량은 1,000[kgf/m³]이고, 수문 크기는 폭 1[m], 높이 2[m]이다.)
+㉮ 4[t]
+㉯ 8[t]
+㉴ 10[t]
+㉵ 12[t]
+20. 증기 드럼 내부의 질소 압력을 측정하기 위해 물을 사용하는 액주계의 한 끝은 드럼 내부와 연결하고, 다른 한 끝은 대기중에 두었다. 액주계의 수주 차이가 100[cm]이라면 드럼 내부의 계기압력은 얼마인가? (단, 중력가속도는 9.8[㎨]이다.)
+㉮ 4,900[Pa]
+㉯ 9,800[Pa]
+㉴ 10,000[Pa]
+㉵ 19,600[Pa]
+21. 9톤의 인장하중을 받는 둥근 봉에 발생하는 응력이 900[kgf/cm²]를 넘지 않도록 하려면 이 봉의 지름은 최소 얼마 이상이어야 하는가?
+㉮ 약 2.8[cm]
+㉯ 약 3.6[cm]
+㉴ 약 4.2[cm]
+㉵ 약 4.9[cm]
+22. 100[N·m]의 비틀림 모멘트와 100[N·m]의 굽힙모멘트를 동시에 받는 회전축의 상당 비틀림모멘트는 몇 [N·m]인가?
+㉮ 25√2[N·m]
+㉯ 50√2[N·m]
+㉴ 75√2[N·m]
+㉵ 100√2[N·m]
+23. 굽힘모멘트를 받는 어느 원형단면의 보가 있다면 이것의 단면계수가 나타내는 단위는?
+㉮ [m]
+㉯ [m²]
+㉴ [m³]
+㉵ [m⁴]
+24. 금속재료가 탄성변형 후에 소성변형을 거의 일으키지 않고 갑작스럽게 파괴되는 현상을 무엇이라 하는가?
+㉮ 연성파괴
+㉯ 취성파괴
+㉴ 크리프파괴
+㉵ 피로한계
+25. 금속재료의 인장시험에서 하중(응력)-변위(변형률) 곡선을 얻을 수 있다. 소성변형(plastic deformation)이 일어나기 시작하는 점은?
+㉮ 비례한도점
+㉯ 탄성한도점
+㉴ 인장강도점
+㉵ 파단발생점
+[제3과목 : 기관3]
+1. 다음 그림과 같이 단면적이 균일한 환상철심에 권수가 N₁인 A 코일과 권수가 N₂인 B 코일이 있을 때 A, B코일의 자기 인덕턴스가 각각 L₁[H], L₂[H]이면 두 코일의 상호 인덕턴스 M[H]의 식으로 옳은 것은? (단, 누설자속은 0[Wb]이다.) @pic1301
+㉮ N₂ / L₁N₁
+㉯ N₁ / L₁L₂
+㉴ L₁N₁ / N₂
+㉵ L₁N₂ / N₁
+2. @pic1302
+㉮ @pic1302a
+㉯ @pic1302b
+㉴ @pic1302c
+㉵ @pic1302d
+3. 전계 강도에 대한 설명으로 옳지 않은 것은?
+㉮ 정전하 주위의 전계강도는 거리의 제곱에 반비례한다.
+㉯ 전계강도의 단위는 [V/m]이다.
+㉴ 전계강도는 전속밀도와 유전율의 곱이다.
+㉵ 전계강도의 기호는 E 이다.
+4. 동기 임피던스에 관한 설명으로 옳지 않은 것은?
+㉮ 동기 임피던스는 전기자 반작용, 전기자 누설 리액턴스, 전기자 저항 등의 영향을 포함한다.
+㉯ 단자전압에 동기 임피던스에 의한 전압강하를 더하면 발전기의 유도 기전력이 된다.
+㉴ 동기 임피던스는 전기자 저항과 동기 리액턴스의 합성이다.
+㉵ 동기 임피던스는 부하 전류에 관계 없이 일정하다.
+5. 6극의 3상 유도전동기가 50[Hz]전원에서 운전되고 있다. 회전자 주파수가 2.3[Hz]일 때의 회전자 속도 [rpm]는?
+㉮ 954 [rpm] 
+㉯ 920 [rpm] 
+㉴ 850 [rpm] 
+㉵ 780 [rpm]
+6. 출력 3[kW], 1,500[rpm]인 전동기의 토크는 약 [Nㆍm]인가?
+㉮ 8.5 [Nㆍm]
+㉯ 19.1 [Nㆍm]
+㉴ 23.7 [Nㆍm]
+㉵ 35.2 [Nㆍm]
+7. 그림의 트랜지스터(BJT) 특성곡선에서 40[μA]는 어떤 값을 나타내는가? @pic1307
+㉮ 이미터 전류
+㉯ 베이스 전류
+㉴ 포화 전류
+㉵ 컬렉터 전류
+8. PNP 트랜지스터에서 순방향전류나 컬렉터전류가 흐를 가능성이 없는 전압인가의 경우는?
+㉮ 베이스( + ) → 이미터( - )
+㉯ 컬렉터( + ) → 베이스( - )
+㉴ 이미터( + ) → 컬렉터( - )
+㉵ 이미터( + ) → 베이스( - )
+9. 3스테이트 버퍼라는 소자는 어떠한 3가지의 경우를 갖는가? (단, 1과 0은 논리상태를 말하고 각각 High 및 Low의 전압크기에 해당한다.)
+㉮ High Impedance, Low Impedance, 0
+㉯ 1, High Impedance, Low Impedance
+㉴ 1, 0, High Impedance
+㉵ 1, 0, Low Impedance
+10. 주기관 디지털 거버너의 경우 플라이휠 치차 가까이에 픽업 코일 2개 혹은 근접 릴레이 2개를 설치하여 사용하는 것과 같은 방식의 것은?
+㉮ Absolute rotary encoder
+㉯ Incremental rotary encoder
+㉴ Resolver
+㉵ Torque synchro
+11. 다음 회로에 대한 설명으로 옳지 않은 것은? @pic1311
+㉮ 스위칭 속도가 빠를 때 발생하는 과도 전압을 방지하기 위한 스너버(snubber) 회로이다.
+㉯ Rs값은 턴오프(turn off) 구간동안 Cs의 충전에너지를 모두 방전할 수 있도록 충분히 크게 한다.
+㉴ 분로 커패시터 Cs는 턴오프(turn off) 시의 급격한 전압 상승을 제한하여 SCR을 보호한다.
+㉵ 직렬 인덕턴스 Ls는 턴온(turn on) 시의 급격한 전류 상승을 제한하여 SCR을 보호한다.
+12. 다음 회로에서 입력과 출력의 관계를 나타내는 그래프는? @pic1312
+㉮ @pic1312a
+㉯ @pic1312b
+㉴ @pic1312c
+㉵ @pic1312d
+13. 다음과 같은 6진 카운터회로에서 현재상태가  Q₀Q₁Q₂ = 010(2)이라면 2번의 펄스가 인가될 때 현재 상태로부터 펄스 각 단계에서의 출력 변화는? @pic1313
+㉮ 010→110→001
+㉯ 010→100→000
+㉴ 010→100→011
+㉵ 010→000→111
+14. 아날로그 측정값을 디지털로 변환할 때 12 비트 A/D변환기는 10비트 A/D변환기 보다 몇 배나 더 분해능이 높은가?
+㉮ 2배
+㉯ 3배
+㉴ 4배
+㉵ 6배
+15. 배기온도 측정용 저항 온도계 벌브(bulb)에서 A, B, C표시의 단자 3개에 전선 3개가 연결되어 있는 경우 다음 중 온도측정값이 가장 낮아지는 경우는? (단, B와 C 단자 사이의 저항은 0을 가리킨다)
+㉮ A단자와 B단자 모두 접촉상태가 양호할 때
+㉯ A단자는 접촉이 불량하고 B단자는 양호할 때
+㉴ A단자는 접촉이 양호하고 B단자는 불량할 때
+㉵ A단자와 B단자 모두 접촉상태가 불량할 때
+16. 내부저항이 10[kΩ]인 DC 전압계에 30[kΩ]의 배율기가 연결되어 있다. 배율된 눈금의 전압계 지시가 400[V]를 가리킨다면 배율기에 흐르는 전류는 얼마인가?
+㉮ 5 [mA]
+㉯ 8 [mA]
+㉴ 10 [mA]
+㉵ 12 [mA]
+17. 측정계기에서 지시기의 제동장치 종류가 아닌 것은?
+㉮ 전자 제동장치
+㉯ 유체 제동장치
+㉴ 공기 제동장치
+㉵ 스프링 제동장치
+18. 계측기에 대한 설명으로 옳지 않은 것은?
+㉮ 버니어 캘리퍼스에서 버니어의 역할은 본체 눈금의 끝자리 수를 정확히 읽기 위한 것이다.
+㉯ 마이크로미터의 스핀들 수나사 피치가 0.5[mm] 일 때 눈금통의 둘레를 50등분하면 눈금통에 있는 한 눈금은 0.05[mm] 이다.
+㉴ 마이크로미터의 원리는 나사를 이용하여 길이의 직선 변화를 회전각과 지름에 의해 확대한 것이다.
+㉵ 다이얼 게이지는 스핀들의 직선 변위를 래크(rack)와 피니언(pinion)에 의해 회전 변위로 바꾸고 피니언과 같은 축에 고정된 큰 기어에 의해 신호를 확대한다.
+19. 가동코일형 계기에서 가동코일의 구조가 동일하다면 지침의 응답이 가장 빠른 경우는?
+㉮ 코일의 권수가 많고 코일의 굵기가 가는 경우
+㉯ 코일의 권수가 많고 코일의 굵기가 굵은 경우
+㉴ 코일의 권수가 적고 코일의 굵기가 가는 경우
+㉵ 코일의 권수가 적고 코일의 굵기가 굵은 경우
+20. IEC의 계열 1과 계열 2의 다음 기호 중 수동복귀 접점만으로 짝지어진 것은?
+㉮ @pic1320a
+㉯ @pic1320b
+㉴ @pic1320c
+㉵ @pic1320d
+21. 다음 그림의 스텝 응답 중에서 이득이 가장 큰 경우는? (단, 점선은 스텝입력의 크기이다.) @pic1321
+㉮ A
+㉯ B
+㉴ C
+㉵ D
+22. 캐스케이드 제어에 대한 설명으로 옳은 것은?
+㉮ 주 제어기와 종속 제어기는 서로 독립적으로 동작한다.
+㉯ 주 제어기와 종속 제어기는 모두 정치 제어기로 동작한다.
+㉴ 종속 제어기의 출력이 주 제어기의 입력이 된다.
+㉵ 주 제어기와 종속 제어기는 서로 직렬 연결 관계이다.
+23. 스텝응답에서의 최대 오버슈트란?
+㉮ 출력의 최대값에서 정상값을 뺀 것을 말한다.
+㉯ 출력의 최대값에서 설정값을 뺀 것을 말한다.
+㉴ 최대 편차값에서 정상값을 뺀 것을 말한다.
+㉵ 최대 편차값에서 설정값을 뺀 것을 말한다.
+24. PID 제어동작의 출력 y(t)가 y(t) = 4e(t) + 1.6de(t)/dt + ∫e(t)dt 라고 하면 제어동작의 비례감도(Kp), 적분시간(Ti), 미분시간(Td)는 각각 얼마인가?(단, e(t)는 제어기의 입력인 편차신호이다.)
+㉮ Kp = 4, Ti = 1, Td = 1.6
+㉯ Kp = 4, Ti = 0.25, Td = 2.5
+㉴ Kp = 4, Ti = 4, Td = 0.4
+㉵ Kp = 4, Ti = 4, Td = 2.5
+25. 서보제어계가 아닌 것은?
+㉮ 주기관 원격제어에서 F.O. 핸들의 위치 제어
+㉯ 자동 조타 장치
+㉴ 보일러의 압력 제어
+㉵ 가변피치 프로펠러의 피치 제어
+[제4과목 : 직무일반]
+1. 수면하 h[m]에서 발생된 파공부에서 유입되는 유체의 유속은 약 몇 [m/s]인가?
+㉮ 2.45√h [m/s]
+㉯ 4.43√h [m/s]
+㉴ 5.90√h [m/s]
+㉵ 9.80√h [m/s]
+2. 보슈식 연료분사펌프에서 Puncture valve의 역할은?
+㉮ 기관이 정지할 경우 기관 관제용 압축공기로 열리는 밸브로서 연료분사밸브로 토출되는 연료유를 바이패스 시켜주는 밸브이다.
+㉯ 연료분사가 끝나고 나면 기계적으로 열리는 밸브로서 연료유를 흡입측으로 바이패스 시켜주는 밸브이다.
+㉴ 연료유 계통에 공기가 흡입되어 있을 경우 연료분사를 양호하게 하기 위하여 공기를 빼주는 역할을 하는 밸브이다.
+㉵ 연료분사펌프 플런저의 충격을 방지하기 위하여 연료유를 바이패스시켜 플런저의 완충 역할을 하는 밸브이다.
+3. 운전중인 디젤기관에서 어느 한 실린더의 라이너가 균열되어 실린더 내로 냉각수가 누설할 경우 피스톤을 그대로 둔 채 감통운전을 하기 위해 해당 실린더에 대한 조치방법으로 옳지 않은 것은?
+㉮ 연료유를 차단한다.
+㉯ 피스톤 냉각수를 차단한다.
+㉴ 배기밸브를 개방 상태로 둔다.
+㉵ 시동공기밸브 제어공기를 차단한다.
+4. 기관실 화재 시 자장식 호흡구를 착용하지 않은 채 기관실 내에 직접 진입하여 소화하는 경우의 통풍제어 방법으로 가장 적절한 것은?
+㉮ 화재의 확산을 방지하기 위하여 통풍팬, 댐퍼 및 문 등을 모두 폐쇄한다.
+㉯ 소화작업을 원활하게 하기 위하여 댐퍼를 모두 개방하고 모든 통풍팬을 가동한다.
+㉴ 소방원의 안전확보 및 소화작업을 돕기 위하여 배출팬을 가동하고 필요한 경우에는 공급팬도 함께 가동한다.
+㉵ 기관실 내의 열기를 제거하기 위하여 일시적으로 댐퍼를 열어 연소 생성가스를 방출한 후 통풍팬을 모두 차단한다.
+5. 입거 후 프로펠러축을 발출하여 검사한 결과 프로펠러 보스 부근의 슬리브에 크로스마크가 발견된 경우의 주된 원인은?
+㉮ 추진 축계의 비틀림 진동
+㉯ 추진 축계의 부식
+㉴ 추진 축계의 얼라인먼트 불량
+㉵ 주기관의 토크 리치
+6. 고온부식을 방지하기 위한 대책으로 옳지 않은 것은?
+㉮ 전처리에 의한 Na의 제거
+㉯ 실린더유 개선
+㉴ 2단 청정 채용
+㉵ 유기금속염 첨가
+7. 납축전지의 충전 특성에 대한 설명으로 옳지 않은 것은?
+㉮ 일정 전류로 충전을 시작하면 화학작용에 의해 전해액의 비중이 높아져 축전지의 기전력이 커지기 때문에 충전전압은 급하게 상승한다.
+㉯ 축전지를 일정한 전류로 충전하면 약 2.1[V]에서 2.4[V]까지는 전해액 비중의 상승에 따라 전압이 서서히 상승한다.
+㉴ 축전지 충전 시 2.4[V] 이후 충전 말기에는 전해액 중의 물이 전기분해되어 양극(+)에서 수소가 발생하고 음극(-)에서 산소가 발생한다.
+㉵ 충전 시 축전지의 기전력 E[V]와 충전전압 V[V]와의 관계는 V = E + Ir 이다. (단, I는 충전 전류[A], r은 축전지의 내부저항[Ω]이다.)
+8. 디젤기관에서 과급기 서징의 발생 원인으로 옳지 않은 것은?
+㉮ 선박이 선회할 때 기관의 회전수가 상승하고 토크는 감소하며 기관의 평균유효압력이 감소된 경우
+㉯ 흡·배기밸브, 소기공, 공기냉각기 또는 배기가 스보일러 등의 오손이 심한 경우
+㉴ 선저의 오손이 심하여 추진저항이 증가하여 회전수가 감소된 경우
+㉵ 기관을 전속 항해 중 급히 정지한 경우
+9. 가스용접의 재해방지 대책으로 옳지 않은 것은?
+㉮ 작업 중에는 반드시 보안경을 착용한다.
+㉯ 도금한 금속을 용접할 경우에는 유해 가스가 발생하므로 마스크를 착용한다.
+㉴ 아세틸렌가스 용기에는 역화를 방지하기 위해 안전기를 부착한다.
+㉵ 역화를 방지하기 위해 연속적인 작업을 피한다.
+10. 선박기관기준상 원양구역을 항행구역으로 하는 선박의 주요한 보조 보일러에서 수관보일러의 관 플러그의 최소 보유수량은?
+㉮ 각 치수마다 4개
+㉯ 각 치수 합계 8개
+㉴ 각 치수마다 12개
+㉵ 각 치수 합계 16개
+11. PSC의 Inspection action code에 대한 설명으로 옳지 않은 것은?
+㉮ 40 Code : 다음 항구에 통보
+㉯ 45 Code : 출항정지 결함을 다음 항구에서 시정
+㉴ 50 Code : 기국/MOU에 통보
+㉵ 55 Code : 선급에 통보하여 보고서 작성이 요구됨
+12. 해양환경관리법령상 총톤수 4,000톤 이상의 화물선에서 연료유 탱크에 선박평형수의 적재를 허용하는 경우가 아닌 것은?
+㉮ 교량, 그 밖의 장애물 밑을 안전하게 통과하기 위하여 필요한 경우
+㉯ 비바람이 심한 날씨에 선박이 안전하게 항해하기 위하여 필요한 경우
+㉴ 선박이 부두 접안 중 한쪽으로 기울어져 복원되지 않는 경우
+㉵ 새로이 건조한 선박을 시운전 하는 경우
+13. 선원의 하선공인은 선박소유자나 선장이 선원명부와 함께 선원수첩을 해양수산관청에 제출하여 공인을 받는 것이 원칙이나 하선하려는 선원이 직접 선원수첩의 하선 공인을 받으려 할 때 이것이 가능한 경우가 아닌 것은?
+㉮ 선박소유자 또는 선장이 정당한 사유없이 선원 명부의 공인을 받지 않은 경우
+㉯ 선박소유자 또는 선장이 1개월 이상 행방불명된 경우
+㉴ 법인인 경우의 선박소유자가 파산한 경우
+㉵ 선원의 실수로 선원수첩을 분실하였을 경우
+14. 1등 기관사의 승하선 시 다음 중 인수 인계할 내용의 필요성이 가장 작은 것은?
+㉮ 고장 난 윤활유 청정기의 현재 상태와 수리내역
+㉯ 윤활유 청정기 구동모터의 절연저항 측정치가 특별히 낮게 나타나고 있는 상황
+㉴ 주기관 실린더유의 청정 시 사용되는 청정기의 비중판 번호
+㉵ 각종 윤활유의 현재량과 수급관련 서류
+15. 인사관리(personnel management)가 지향하는 주요 목표가 아닌 것은?
+㉮ 생산성 향상
+㉯ 조직 구성원의 만족 추구
+㉴ 인간의 능력 개발
+㉵ 개인의 지휘 및 통제 능력 배양
+16. 해사안전법상 선박 안전관리체제의 증서에 대한 설명으로 옳지 않은 것은?
+㉮ 안전관리적합증서의 효력이 정지된 경우에는 해당 사업장에 속한 모든 선박의 선박안전관리 증서의 효력도 정지된다.
+㉯ 선박안전관리증서는 5개월, 임시 선박안전관리 증서는 6개월의 범위에서 각각 한 차례만 유효기간을 연장할 수 있다.
+㉴ 중간 인증심사 또는 수시 인증심사에 합격하지 못하면 그 인증심사에 합격할 때까지 안전관리 적합증서 또는 선박 안전관리증서의 효력이 정지된다.
+㉵ 선박안전관리증서와 안전관리적합증서의 유효기간은 각각 5년이고 임시 안전관리적합증서의 유효기관은 6개월, 임시 선박안전관리증서의 유효기간은 1년이다.
+17. 선원법상 화물선의 선내 비상훈련에 관한 내용으로 옳은 것은?
+㉮ 총톤수 1,000톤 미만의 선박은 대상선박에서 제외된다.
+㉯ 선장은 비상시에 조치해야 할 해원의 임무를 정한 비상배치표를 선장실에 비치하여야 한다.
+㉴ 선장은 당해 선박의 해원 3분의 1이상이 교체된 때에는 출항 후 24시간 이내에 선내 비상훈련을 실시해야 한다.
+㉵ 소화훈련, 퇴선훈련 및 기름유출 대처훈련은 매월 1회 실시해야 한다.
+18. 선박에서 보안 3등급일 경우 세부 보안조치사항으로 옳지 않은 것은?
+㉮ 선박 출입구를 하나로 제한하고 보안상 필요한 자에게만 승선을 허락할 것
+㉯ 선박에 모든 조명장치를 점등할 것
+㉴ 선박 전체를 수색할 것
+㉵ 선박에 선적되는 모든 화물과 선용품을 검색할 것
+19. SOLAS 협약 및 개정규정상 중앙제어장소(central control station)에 포함되지 않는 것은?
+㉮ 선내방송장치와 연결된 마이크의 제어 및 지시장치가 집중되어 있는 장소
+㉯ 연료유 차단 및 연료유 펌프 작동의 제어 및 지시장치가 집중되어 있는 장소
+㉴ 고정식 화재탐지 및 화재경보 장치의 제어 및 지시장치가 집중되어 있는 장소
+㉵ 방화문 및 수밀문의 표시반과 폐쇄장치의 제어 및 지시장치가 집중되어 있는 장소
+20. SOLAS 협약 및 개정규정상 증기보일러 및 보일러 급수 장치의 요건으로 옳지 않은 것은?
+㉮ 1개 이상의 수면지시장치를 설치할 것
+㉯ 화염에 닿지 않는 증기발생기에는 2개 이상의 안전밸브를 설치할 것
+㉴ 터빈 추진기관에 사용하는 수관보일러에는 고수위 경보장치를 설치할 것
+㉵ 급수장치에는 과압방지장치를 설치할 것
+21. SOLAS 협약 및 개정규정에서 기관의 안전에 대한 설명으로 옳지 않은 것은?
+㉮ 기관이 과회전할 우려가 있는 경우에는 안전 회전수를 초과하는 것을 방지하기 위한 수단이 강구되어야 한다.
+㉯ 내압을 받는 주기관, 보기 및 압력용기 등에는 과압을 받을 우려가 있는 경우에는 과압방지를 위한 수단이 강구되어야 한다.
+㉴ 실린더 지름이 200[mm]이상 또는 크랭크실 용적이 0.6[m³]이상의 내연기관에는 충분한 배기면적을 가진 적당한 형식의 크랭크실 도출 밸브를 설치해야 한다.
+㉵ 실린더 내경이 1[m] 이상이고 연소최고압력이 120[bar] 이상인 디젤 주기관에서는 최소 2개의 안전밸브를 설치해야 한다.
+22. MARPOL 협약 및 개정규정상 선박에서 해상으로 폐기물을 배출할 수 있는 경우로 옳은 것은?
+㉮ 특별해역 내에서 항해하는 선박이 육지로부터 6해리 떨어진 곳에서 25[mm] 이하로 분쇄된 음식찌꺼기를 처리하는 경우
+㉯ 특별해역 외에서 항해하는 선박이 육지로부터 9해리 떨어진 곳에서 분쇄되지 않은 음식 찌꺼기를 처리하는 경우
+㉴ 특별해역 외에서 항해하는 선박이 육지로부터 2해리 떨어진 곳에서 25[mm] 이하로 분쇄된 음식찌꺼기를 처리하는 경우
+㉵ 특별해역 내에서 항해하는 선박이 육지로부터 12해리 떨어진 곳에서 25[mm] 이하로 분쇄된 음식찌꺼기를 처리하는 경우
+23. MARPOL 협약 및 개정규정상 유해액체물질에 대한 선내해양 오염비상계획에 대한 설명으로 옳지 않은 것은?
+㉮ 기구에 의하여 개발된 지침서에 근거를 두고 선장과 사관이 이해할 수 있는 언어로 표기되어야 한다.
+㉯ 유해액체물질 오염사고 보고에 대하여 선장 또는 다른 본선 책임자가 준수해야 할 절차가 포함되어야 한다.
+㉴ 오염사고 시 방제를 위한 육상의 전문 방제업체의 지원절차가 포함되어야 한다.
+㉵ 사고에 따른 유해액체물질의 유출을 감소시키거나 통제하기 위한 본선 선원이 신속히 취해야 할 조치에 대한 상세사항이 포함되어야 한다.
+24. 2006년 해사노동협약에서 규정하는 선원의 건강진단서의 요건으로 옳은 것은?
+㉮ 18세 미만 선원의 건강진단서 유효기간은 2년이다.
+㉯ 18세 이상 선원의 건강진단서 유효기간은 3년이다.
+㉴ 선원이 승선 중에 건강진단서의 유효기간이 만료될 경우에도 최대 3개월간 승선이 허용된다.
+㉵ 색각에 대한 건강진단서의 유효기간은 5년이다.
+25. STCW 협약상 항만국통제시 인명, 재산 또는 환경에 위험을 끼친다고 간주되는 결함이기 때문에 출항정지를 시킬 수 있는 항목이 아닌 것은?
+㉮ 유효한 증명서를 소지하지 아니한 때
+㉯ 주관청의 안전배승요건을 준수하지 아니한 때
+㉴ 주관청의 기관당직배치에 따르지 아니한 때
+㉵ 선박이 해양오염물질을 배출한 때
+[제5과목 : 영어]
+1. The ratio of BHP to IHP, expressed as a percentage, is the ( ) of the engine. This can be accurately measured only when the BHP can be measured.
+㉮ volume efficiency
+㉯ thermal efficiency
+㉴ mechanical efficiency
+㉵ propulsion efficiency
+2. A strain gauge works on the principle that ( ).
+㉮ plates of different metals have different capacitances
+㉯ different metals expand by different amounts when heated
+㉴ when a wire is stretched, its resistance increases
+㉵ the resistance of a wire is affected by its temperature
+3. If a periodic component of the forcing function is equal to the natural frequency of the system, ( ) will occur.
+㉮ damping
+㉯ resonance
+㉴ critical speed
+㉵ beating phenomenon
+4. What is the term for the ratio of deformation over an original length?
+㉮ Stress
+㉯ Strain
+㉴ Young's modulus
+㉵ Tensile strength
+5. Which one of the following is a tolerance?
+㉮ Clearance between a shaft and a matching hole
+㉯ Measurement error
+㉴ Total permissible variation from a specified dimension
+㉵ Variation in manufacturing
+6. A ( ) is a tool for measuring the distance between points, for transfering a distance directly from a rule, and for scribing circle and arcs. It consists of two legs hardened on the ends and usually has a spring adjustment.
+㉮ divider
+㉯ pinch dog
+㉴ vernier calipers
+㉵ rule
+7. The amount of heat released by steam when it changes to water at the same temperature is called ( ).
+㉮ latent heat of condensation
+㉯ latent heat of saturation
+㉴ sensible heat of condensation
+㉵ sensible heat of saturation
+8. We define ( ) such that in a reversible process any part of the system at temperature T which absorbs heat Qr is said to have increased its ( ) by Qr/T.
+㉮ enthalpy
+㉯ temperature
+㉴ work
+㉵ entropy
+9. The size of conductor used in electric cables and equipment is such that ( ), the heat developed does not raise the temperature beyond about 80[℃]. A copper conductor can withstand very high temperatures, but its insulation cannot withstand temperatures much in excess of 100[℃].
+㉮ with rated full load current flowing
+㉯ with normal service load condition
+㉴ with the current of short circuit fault
+㉵ with the overload condition of 120[%]
+10. Do not weld or use naked lights in the engine room, ( ) it has been ascertained that no explosive gases, vapour or liquids are present.
+㉮ when
+㉯ if
+㉴ until
+㉵ therefore
+11. When preparing to tap a hole, the size of the drill will be ( ).
+㉮ larger than the size of the tap
+㉯ smaller than the size of the tap
+㉴ equal to the size of the tap
+㉵ not concerned with the size of the tap
+12. Frost on the high-pressure side of a thermostatic expansion valve would probably be caused by ( ).
+㉮ loss of circulating water to condenser
+㉯ refrigerator box too cold
+㉴ severe throttling at expansion valve
+㉵ high head pressure
+13. Simply increasing the thickness of the parts forming the combustion chamber as a means of reducing mechanical stresses is not a satisfactory solution because an increased wall thickness would cause increased temperature ( A ) and higher ( B ) stresses.
+㉮ A : change, B : mechanical
+㉯ A : rising, B : concentration
+㉴ A : uprising, B : acting
+㉵ A : gradients, B : thermal
+14. Engine vibrations may occur due to unbalanced rotating forces, unbalanced reciprocating forces, actions in gas pressure, initial forces, and torque. If these fluctuating forces in an engine happen to occur at the same rate as the ( A ) of vibration of the engine structure or one of its part, the resulting condition of resonance may increase the ( B ) of the vibrations to such an extent that serious damages will be done.
+㉮ A : number, B : amplitude
+㉯ A : natural frequency, B : amplitude
+㉴ A : damping frequency, B : number
+㉵ A : number per second, B : swell
+15. In the latest version of marine propulsion diesel engines, fuel injection timing, actuation of exhaust valves, ( ) are controlled electronically.
+㉮ starting air valves and cylinder lubrication
+㉯ starting air valves and starting air distributor
+㉴ VIT and cylinder lubrication
+㉵ VIT and auxiliary blowers
+16. Water in oil is more easily separated when the oil has been heated than when it is cold, because on the application of heat there is a greater expansion of oil than water, and therefore the water has a relatively ( ).
+㉮ greater specific gravity
+㉯ less specific gravity
+㉴ greater specific viscosity
+㉵ less specific viscosity
+17. The lubricating system aboard diesel engines have four main purposes, they are as follows.\n(1) To reduce friction and wear in the engine\n(2) To act as a ( ) between the rings and liners\n(3) To cool the internal parts of the engine\n(4) To ( ) the engine interior of dirt and carbon
+㉮ sealant, clean
+㉯ compression, restore
+㉴ sealant, restore
+㉵ compression, clean
+18. In an impressed current cathodic protection system, the anode is ( ).
+㉮ connected to the hull and deteriorates with time
+㉯ insulated from the hull and does not waste away
+㉴ connected to the hull but does not waste away
+㉵ insulated from the hull but deteriorates with time
+19. The Oil Record Book must be maintained onboard the vessel for ( ).
+㉮ not less than 3 years and be readily available for PSC inspection
+㉯ not less than 3 years and be readily allowed for PSC inspection
+㉴ not less than 3 years and be readily available for CMS
+㉵ not less than 3 years and be readily allowed for CMS
+20. These drawings ( A ) copyright protection. Therefore they must not, either wholly or partly, be copied, reproduced, made public or in any other way made available to a third party without our company's ( B ).
+㉮ A: are subject to, B: written consent
+㉯ A: publicly needs, B: written comments
+㉴ A: are subject with, B: detailed comments
+㉵ A: publicly needs, B: detailed guide
+21. Turn the crank throw towards the exhaust side ( ) the thickness of the shim which is inserted between piston rod and crosshead pin.
+㉮ if you cannot record the crank deflection due to
+㉯ if you cannot determine the scale for
+㉴ to measure the crank deflection according to
+㉵ to provide access for measuring
+22. At the special surveys for oil tankers, all tanks and cofferdams are to be cleaned and gas ( ) thoroughly before the survey.
+㉮ leaked
+㉯ freed
+㉴ removed
+㉵ checked
+23. Every steam boiler essential for the safety of the ship and designed to contain water at a specified level shall be provided with at least ( A ) means for indicating its water level, at least ( B ) of which shall be a direct reading gauge glass according to SOLAS.
+㉮ A : two, B : one
+㉯ A : two, B : two
+㉴ A : one, B : two
+㉵ A : one, B : one
+24. The PSCO may ensure that ( ) are exhibited in conspicuous places throughout the ship, including the navigational bridge, the engine room and crew accommodation spaces.
+㉮ crew lists
+㉯ muster lists
+㉴ spare lists
+㉵ provision lists
+25. According to the MARPOL Convention as amended, the term 'from the nearest land' means from the baseline from which the ( ) of the territory in question is established in accordance with international law.
+㉮ contiguous water
+㉯ internal water
+㉴ exclusive zone
+㉵ territorial sea
+[답]
+기관1
+아
+아
+아
+가
+아
+나
+나
+아
+나
+아
+아
+아
+아
+아
+아
+나
+나
+아
+나
+아
+사
+나
+가
+나
+사
+기관2
+아
+아
+사
+가
+아
+가
+아
+나
+가
+가
+사
+나
+가
+나
+아
+아
+가
+아
+사
+나
+나
+아
+사
+나
+나
+기관3
+아
+아
+사
+아
+가
+나
+나
+가
+사
+나
+나
+가
+아
+사
+사
+사
+아
+나
+사
+아
+아
+아
+가
+사
+사
+직무일반
+나
+가
+나
+사
+가
+사
+사
+가
+아
+사
+아
+사
+아
+사
+아
+아
+아
+아
+나
+가
+아
+아
+사
+사
+아
+영어
+사
+사
+나
+나
+사
+가
+가
+아
+가
+사
+나
+사
+아
+나
+가
+가
+가
+나
+가
+가
+아
+나
+가
+나
+아

@@ -1,79 +1,54 @@
 "use client";
 
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { saveWrongNote } from "@/utils/localWrongNote";
-import AnswerCard from "@/components/solve/AnswerCard";
+import Sidebar from "@/components/layout/Sidebar";
+import ProblemViewer from "@/components/solve/ProblemViewer";
 
 export default function SolvePage() {
-  const [input, setInput] = useState("");
-  const [result, setResult] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [year, setYear] = useState("2023");
+  const [license, setLicense] = useState("항해사");
+  const [level, setLevel] = useState("1급");
+  const [round, setRound] = useState("1회");
 
-  const solveProblem = async () => {
-    if (!input.trim()) return;
-    setLoading(true);
-    setResult("");
-
-    try {
-      const res = await fetch("/api/solve", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ problem: input }),
-      });
-
-      if (!res.ok) throw new Error("문제풀이 요청 실패");
-      const data = await res.json();
-      setResult(data.explanation);
-    } catch (e) {
-      setResult("문제 풀이 중 오류가 발생했습니다.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-blue-800">🔍 AI 문제풀이</h1>
+    <div className="max-w-7xl mx-auto p-4 md:p-6 flex flex-col md:flex-row gap-6 relative">
+      {/* 햄버거 버튼 */}
+      <button
+        onClick={() => setSidebarOpen(true)}
+        className="md:hidden fixed top-4 left-4 z-30 p-2 rounded-md bg-blue-600 text-white shadow-md"
+        aria-label="사이드바 열기"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
 
-      <div className="bg-white border border-blue-100 rounded-xl p-5 shadow-sm space-y-4">
-        <textarea
-          className="w-full border border-gray-300 rounded-md p-3 text-sm min-h-[160px] focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder={`예시 입력:\n다음 중 충돌 회피와 가장 거리가 먼 것은?\n① 선회\n② 감속\n③ 항로 변경\n④ 기관 정지`}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+      {/* 사이드바 */}
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        year={year}
+        setYear={setYear}
+        license={license}
+        setLicense={setLicense}
+        level={level}
+        setLevel={setLevel}
+        round={round}
+        setRound={setRound}
+      />
+
+      {/* 문제 보기 영역 */}
+      <main className="flex-grow bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <h1 className="text-2xl font-bold text-blue-700 mb-4">📘 기출문제 풀이</h1>
+        <ProblemViewer
+          year={year}
+          license={license}
+          level={license === "소형선박조종사" ? "" : level}
+          round={round}
         />
-
-        <button
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded transition disabled:opacity-50"
-          onClick={solveProblem}
-          disabled={loading}
-        >
-          {loading ? "풀이 중..." : "문제 풀이 요청"}
-        </button>
-      </div>
-
-      {result && (
-        <div className="mt-6 space-y-3">
-          <AnswerCard explanation={result} />
-
-          <button
-            onClick={() => {
-              const note = {
-                id: uuidv4(),
-                question: input,
-                explanation: result,
-                createdAt: new Date().toISOString(),
-              };
-              saveWrongNote(note);
-              alert("📌 오답노트에 저장되었습니다!");
-            }}
-            className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded font-medium transition"
-          >
-            📒 오답노트에 저장
-          </button>
-        </div>
-      )}
+      </main>
     </div>
   );
 }

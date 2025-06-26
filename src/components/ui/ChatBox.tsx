@@ -1,6 +1,7 @@
 "use client";
 
 import { useAskLLM } from "@/hooks/useAskLLM";
+import Button from "./Button";
 
 export default function ChatBox() {
   const {
@@ -15,7 +16,7 @@ export default function ChatBox() {
     mode,
     setMode,
     certificate,
-    setCertificate,   // 자격증 상태 추가
+    setCertificate,
   } = useAskLLM();
 
   const certificates = ['항해사', '기관사', '소형선박조종사'];
@@ -34,17 +35,15 @@ export default function ChatBox() {
         <h3 className="text-sm font-semibold text-gray-700 mb-1">자격 선택</h3>
         <div className="flex flex-wrap gap-2">
           {certificates.map((cert) => (
-            <button
+            <Button
               key={cert}
               onClick={() => setCertificate(cert)}
-              className={`px-4 py-1.5 rounded-full text-sm border transition ${
-                certificate === cert
-                  ? "bg-green-600 text-white border-green-600"
-                  : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
-              }`}
+              selected={certificate === cert}
+              color="green"
+              size="md"
             >
               {cert}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -54,17 +53,15 @@ export default function ChatBox() {
         <h3 className="text-sm font-semibold text-gray-700 mb-1">과목 선택</h3>
         <div className="flex flex-wrap gap-2">
           {subjects.map((subj) => (
-            <button
+            <Button
               key={subj}
               onClick={() => setSubject(subj)}
-              className={`px-4 py-1.5 rounded-full text-sm border transition ${
-                subject === subj
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
-              }`}
+              selected={subject === subj}
+              color="blue"
+              size="md"
             >
               {subj}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -74,17 +71,15 @@ export default function ChatBox() {
         <h3 className="text-sm font-semibold text-gray-700 mb-1">해설 난이도</h3>
         <div className="flex gap-2">
           {modes.map((m) => (
-            <button
+            <Button
               key={m}
               onClick={() => setMode(m)}
-              className={`px-4 py-1.5 rounded-full text-sm border transition ${
-                mode === m
-                  ? "bg-blue-500 text-white border-blue-500"
-                  : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
-              }`}
+              selected={mode === m}
+              color="blue"
+              size="md"
             >
               {m}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -99,13 +94,12 @@ export default function ChatBox() {
 
       {/* 질문 버튼 */}
       <div className="text-right">
-        <button
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition disabled:opacity-50"
+        <Button
           onClick={ask}
           disabled={loading}
         >
           {loading ? "생성 중..." : "질문하기"}
-        </button>
+        </Button>
       </div>
 
       {/* 에러 메시지 */}

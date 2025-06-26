@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CBTProblem, mockProblems } from "@/data/mockProblems";
+import { CBTProblem, mockProblems } from "../../../public/data/mockProblems";
+import Button from "@/components/ui/Button";
 
 export default function CBTPage() {
   const [problems, setProblems] = useState<CBTProblem[]>([]);
@@ -76,12 +77,11 @@ export default function CBTPage() {
           총 <strong>20문제</strong>를 <strong>30분</strong> 안에 풀어보세요.<br />
           시험을 시작하면 타이머가 작동됩니다.
         </p>
-        <button
+        <Button
           onClick={() => setStarted(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold text-lg"
         >
           ▶️ 시험 시작
-        </button>
+        </Button>
       </div>
     );
   }
@@ -106,12 +106,12 @@ export default function CBTPage() {
       {/* 제출 버튼 */}
       {!submitted && (
         <div className="mb-6 text-right">
-          <button
+          <Button
             onClick={handleSubmit}
-            className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-semibold"
+            color="green"
           >
             제출하기
-          </button>
+          </Button>
         </div>
       )}
 
@@ -128,7 +128,7 @@ export default function CBTPage() {
               const isWrong = selected && !isCorrect;
 
               return (
-                <button
+                <Button
                   key={i}
                   disabled={submitted}
                   onClick={() => handleChoice(index, i)}
@@ -143,7 +143,7 @@ export default function CBTPage() {
                   }`}
                 >
                   {String.fromCharCode(65 + i)}. {choice}
-                </button>
+                </Button>
               );
             })}
           </div>
