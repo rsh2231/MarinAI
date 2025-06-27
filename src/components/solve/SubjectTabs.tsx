@@ -12,7 +12,7 @@ export default function SubjectTabs({
   setSelected,
 }: Props) {
   return (
-    <div className="flex border-b border-gray-700 mb-6 overflow-x-auto scrollbar-hide">
+    <div className="flex justify-center items-center border-b border-gray-700 mb-6 overflow-x-auto scrollbar-hide">
       {subjects.map((subj) => (
         <button
           key={subj}

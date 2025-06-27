@@ -1,17 +1,15 @@
 "use client";
 
-import ChatBox from "@/components/ui/ChatBox";
-import { motion } from "framer-motion";
+import { useSearchParams } from "next/navigation";
+import ChatBox from "@/components/chat/ChatBox";
 
 export default function ChatPage() {
+  const searchParams = useSearchParams();
+  const initialQuestion = searchParams.get("initialQuestion") ?? "";
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="p-4 max-w-2xl mx-auto">
-      <ChatBox/>
-    </motion.div>
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-20">
+      <ChatBox initialQuestion={initialQuestion} />
+    </div>
   );
 }

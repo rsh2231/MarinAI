@@ -1,15 +1,5 @@
 import FilterSidebar from "@/components/solve/FilterSidebar";
-
-type FilterState = {
-  year: string;
-  setYear: (v: string) => void;
-  license: string;
-  setLicense: (v: string) => void;
-  level: string;
-  setLevel: (v: string) => void;
-  round: string;
-  setRound: (v: string) => void;
-};
+import { FilterState } from "@/types/FilterState";
 
 type SidebarProps = {
   sidebarOpen: boolean;

@@ -1,3 +1,4 @@
+import ScrollToTopButton from "../ui/ScrollToTopButton";
 import Header from "./Header";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -7,6 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6">
         {children}
       </main>
+      <ScrollToTopButton />
     </div>
   );
 }

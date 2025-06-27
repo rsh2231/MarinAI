@@ -105,16 +105,28 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 pb-20 text-white">
+      {/* 경로 제목 */}
+      {selectedBlock && (
+        <h2 className="text-lg sm:text-xl font-medium mb-6">
+          {`${year}년 기출 > ${round} > ${license}${
+            levelStr ? ` ${levelStr}급` : ""
+          } > `}
+          <span className="font-bold text-blue-400">
+            {selectedBlock.string}
+          </span>
+        </h2>
+      )}
+
+      {/* 과목 탭 */}
       <SubjectTabs
         subjects={subjects}
         selected={selectedSubject}
         setSelected={setSelectedSubject}
       />
+
+      {/* 문제 영역 */}
       {selectedBlock ? (
         <section>
-          <h2 className="text-lg sm:text-xl font-semibold text-blue-300 mb-6">
-            {selectedBlock.string}
-          </h2>
           {selectedBlock.questions.map((q) => (
             <QuestionCard
               key={q.num}
@@ -128,6 +140,7 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
             />
           ))}
 
+          {/* 과목 전환 버튼 */}
           <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-10">
             <Button
               variant="neutral"

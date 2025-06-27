@@ -3,6 +3,7 @@ import React from "react";
 type ButtonProps = {
   onClick?: () => void;
   children: React.ReactNode;
+  type?: "button" | "submit" | "reset";
   variant?: "primary" | "secondary" | "neutral";
   size?: "sm" | "md" | "lg";
   disabled?: boolean;
@@ -13,6 +14,7 @@ type ButtonProps = {
 export default function Button({
   onClick,
   children,
+  type = "button",
   variant = "primary",
   size = "md",
   disabled = false,
@@ -61,7 +63,7 @@ export default function Button({
     <button
       onClick={onClick}
       disabled={disabled}
-      type="button"
+      type={type}
       className={`
         ${baseStyle}
         ${sizeStyles[size]}

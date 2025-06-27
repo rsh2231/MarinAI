@@ -8,7 +8,7 @@ import HamburgerButton from "@/components/solve/HamburgerButton";
 
 export default function SolvePage() {
   const [year, setYear] = useState("2023");
-  const [license, setLicense] = useState("항해사");
+  const [license, setLicense] = useState<"항해사" | "기관사" | "소형선박조종사">("항해사");
   const [level, setLevel] = useState("1급");
   const [round, setRound] = useState("1회");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -53,11 +53,6 @@ export default function SolvePage() {
         className="flex-grow bg-[#1f2937] p-6 md:p-8 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.6)] border border-gray-700
                    transition-all duration-300 min-w-0 overflow-auto"
       >
-        <div className="flex items-center gap-2 mb-6">
-          <h1 className="text-2xl md:text-2xl font-bold select-none">
-            기출문제 풀이
-          </h1>
-        </div>
         {/* 문제풀이 */}
         <ProblemViewer
           year={year}

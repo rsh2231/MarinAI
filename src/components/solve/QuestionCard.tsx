@@ -131,7 +131,7 @@ export default function QuestionCard({
         onClick={onToggle}
         className="mt-4 text-sm text-blue-400 hover:underline"
       >
-        {showAnswer ? "정답 숨기기" : "정답 보기"}
+        {showAnswer ? "해설 숨기기" : "해설 보기"}
       </button>
 
       {showAnswer && (
