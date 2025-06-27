@@ -31,7 +31,7 @@ export default function SolvePage() {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className="max-w-7xl mx-auto p-4 md:p-6 flex flex-col md:flex-row gap-6 md:gap-8 relative min-h-screen
-                 bg-[#1e293b] text-white overflow-x-hidden"
+                 bg-[#1e293b] text-white overflow-x-auto"
     >
       {/* 햄버거 버튼 */}
       {!sidebarOpen && (

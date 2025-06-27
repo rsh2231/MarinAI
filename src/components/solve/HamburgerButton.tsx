@@ -3,11 +3,18 @@ type HamburgerButtonProps = {
   className?: string;
 };
 
-export default function HamburgerButton({ onClick, className }: HamburgerButtonProps) {
+export default function HamburgerButton({
+  onClick,
+  className,
+}: HamburgerButtonProps) {
   return (
     <button
       onClick={onClick}
-      className="md:hidden fixed top-4 left-4 z-30 p-2 rounded-md bg-blue-600 text-white shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+      className={`md:hidden fixed top-4 left-4 z-50 p-2 rounded-xl border border-gray-600
+                 bg-[var(--background-dark)] text-[var(--foreground-dark)]
+                 hover:bg-[#1e293b] transition-colors duration-200
+                 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]
+                 shadow-lg backdrop-blur-sm ${className ?? ""}`}
       aria-label="사이드바 열기"
     >
       <svg
@@ -18,7 +25,11 @@ export default function HamburgerButton({ onClick, className }: HamburgerButtonP
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
       </svg>
     </button>
   );

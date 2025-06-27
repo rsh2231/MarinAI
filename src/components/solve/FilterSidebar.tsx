@@ -91,7 +91,7 @@ export default function FilterSidebar({
         </button>
       )}
 
-      <h2 className="text-2xl font-bold mb-8 border-b border-blue-600 pb-2">
+      <h2 className="text-2xl font-bold mb-8 border-b  pb-2">
         문제 필터
       </h2>
 

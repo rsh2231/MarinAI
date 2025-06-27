@@ -7,6 +7,7 @@ import SubjectTabs from "./SubjectTabs";
 import QuestionCard from "./QuestionCard";
 import { saveWrongNote, loadWrongNotes } from "@/utils/localWrongNote";
 import { Question, ProblemData } from "@/types/ProblemViwer";
+import { getCode } from "@/utils/getCode";
 import Button from "@/components/ui/Button";
 
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -36,7 +37,7 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
 
   const levelStr = license === "소형선박조종사" ? "" : level.replace("급", "");
   const roundNum = round.replace("회", "").padStart(2, "0");
-  const code = `${licenseCodeMap[license]}${levelStr}_${year}_${roundNum}`;
+  const code = getCode(license, year, round, level);
   const filePath = `/data/${license}/${code}/${code}.json`;
 
   useEffect(() => {
