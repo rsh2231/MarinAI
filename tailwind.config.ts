@@ -15,6 +15,10 @@ const config: Config = {
           hover: "#1e40af",
           light: "#dbeafe",
         },
+        success: {
+          DEFAULT: "#22c55e",  
+          light: "#bbf7d0",
+        },
         background: {
           light: "#f9fbfc",
           dark: "#121212",
@@ -23,17 +27,15 @@ const config: Config = {
           light: "#111827",
           dark: "#e0e0e0",
         },
-        danger: "#ef4444",
+        secondary: "#374151",
+        danger: "#ef4444",  
         accent: "#eff6ff",
       },
       fontFamily: {
         sans: [
-          "-apple-system",
-          "BlinkMacSystemFont",
-          '"Segoe UI"',
-          "Roboto",
-          '"Helvetica Neue"',
+          "'Inter'",
           "Arial",
+          "Helvetica",
           '"Noto Sans KR"',
           "sans-serif",
         ],

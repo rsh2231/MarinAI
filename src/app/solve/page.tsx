@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Sidebar from "@/components/layout/Sidebar";
-import ProblemViewer from "@/app/solve/ProblemViewer";
-import HamburgerButton from "@/app/solve/HamburgerButton";
+import ProblemViewer from "@/components/solve/ProblemViewer";
+import HamburgerButton from "@/components/solve/HamburgerButton";
 
 export default function SolvePage() {
   const [year, setYear] = useState("2023");

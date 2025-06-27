@@ -1,4 +1,4 @@
-import FilterSidebar from "@/app/solve/FilterSidebar";
+import FilterSidebar from "@/components/solve/FilterSidebar";
 
 type FilterState = {
   year: string;

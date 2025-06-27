@@ -1,10 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #1a1a1a;       /* 진한 다크 그레이 */
-  --foreground: #e0e0e0;       /* 밝은 회색 텍스트 */
-  --primary: #2563eb;          /* 푸른 포인트 컬러 */
-  --secondary: #374151;        /* 중간 톤 그레이 (보조색) */
+  --background: #121212;
+  --background-dark: #121212;
+  --foreground: #e0e0e0;
+  --foreground-dark: #e0e0e0;
+  --foreground-light: #111827;
+  --primary: #2563eb;
+  --success: #22c55e;
+  --secondary: #374151;
+  --danger: #ef4444;
+  --accent: #eff6ff;
   --font-sans: 'Inter', Arial, Helvetica, sans-serif;
 }
 
@@ -15,4 +21,49 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.Toastify__toast-container {
+  z-index: 9999;
+  font-family: 'Inter', Arial, Helvetica, 'Noto Sans KR', sans-serif;
+}
+
+/* 모든 토스트 배경 통일 (짙은 다크 배경) */
+.Toastify__toast {
+  background-color: var(--background-dark) !important;
+  color: var(--foreground-dark) !important;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  font-weight: 500;
+  font-size: 0.9rem;
+  font-family: 'Inter', Arial, Helvetica, 'Noto Sans KR', sans-serif;
+}
+
+/* 토스트 텍스트 */
+.Toastify__toast-body {
+  color: inherit;
+  font-weight: 500;
+}
+
+/* 진행바 색상만 상태별로 다르게 */
+.Toastify__progress-bar--success {
+  background-color: var(--success) !important;
+}
+
+.Toastify__progress-bar--error {
+  background-color: var(--danger) !important;
+}
+
+.Toastify__progress-bar--warning {
+  background-color: var(--secondary) !important;
+}
+
+.Toastify__progress-bar--info {
+  background-color: var(--primary) !important;
+}
+
+/* 아이콘도 텍스트 색상과 동일하게 */
+.Toastify__toast-icon svg {
+  fill: currentColor !important;
+  filter: none !important;
 }

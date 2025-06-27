@@ -14,12 +14,12 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="bg-[#1f2937] text-gray-100 sticky top-0 z-50 shadow-md">
+    <header className="bg-[#121212] sticky top-0 z-50 border-b">
       <div className="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
         {/* 로고/타이틀 */}
         <h1 className="text-xl font-bold tracking-wide">
           <Link href="/" className="hover:text-primary">
-            Marin<span className="text-blue-500">AI</span>
+           Marin<span className="text-blue-500">AI</span>
           </Link>
         </h1>
 

@@ -12,24 +12,25 @@ export const metadata: Metadata = {
   description: "LLM 기반 해기사 시험 질의응답/문제풀이 서비스",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="ko" className="dark">
       <body
-        className={`${inter.className} bg-background text-foreground transition-colors duration-300`}
+        className={`${inter.className} bg-background-dark text-foreground-dark transition-colors duration-300`}
       >
         <Layout>{children}</Layout>
         <ToastContainer
-          position="top-center"
-          autoClose={800}
+          position="bottom-center"
+          autoClose={1000}
           hideProgressBar={false}
-          newestOnTop={false}
           closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
+          draggable={false}
+          pauseOnHover={false}
+          theme="dark"
         />
       </body>
     </html>

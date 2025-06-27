@@ -1,6 +1,6 @@
 "use client";
 
-import SelectBox from "../../components/ui/SelectBox";
+import SelectBox from "../ui/SelectBox";
 
 type FilterState = {
   year: string;
