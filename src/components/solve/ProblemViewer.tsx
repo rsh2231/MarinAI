@@ -9,9 +9,7 @@ import { saveWrongNote, loadWrongNotes } from "@/utils/localWrongNote";
 import { Question, ProblemData } from "@/types/ProblemViwer";
 import { getCode } from "@/utils/getCode";
 import Button from "@/components/ui/Button";
-
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 const licenseCodeMap = {
   기관사: "E",
@@ -36,7 +34,6 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 
   const levelStr = license === "소형선박조종사" ? "" : level.replace("급", "");
-  const roundNum = round.replace("회", "").padStart(2, "0");
   const code = getCode(license, year, round, level);
   const filePath = `/data/${license}/${code}/${code}.json`;
 
@@ -61,11 +58,10 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
     const correct = question.answer;
     setAnswers((prev) => ({ ...prev, [qNum]: choice }));
 
-    if (choice === correct) {
-      toast.success("정답입니다! 🎉");
-    } else {
-      toast.error("오답입니다. ❌");
-    }
+    toast[choice === correct ? "success" : "error"](
+      choice === correct ? "✅ 정답입니다!" : "❌ 오답입니다.",
+      { position: "top-center", autoClose: 1200 }
+    );
   };
 
   const toggleAnswer = (qNum: string, question: Question) => {
@@ -84,49 +80,57 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
     }
   };
 
-  if (error)
-    return <p className="text-red-400 text-center mt-4 text-sm">⚠️ {error}</p>;
-  if (!data)
+  if (error) {
+    return <p className="text-danger text-center mt-6 text-sm">⚠️ {error}</p>;
+  }
+
+  if (!data) {
     return (
-      <p className="text-gray-400 text-center mt-4 text-sm">
+      <p className="text-gray-400 text-center mt-6 text-sm">
         문제를 불러오는 중입니다...
       </p>
     );
+  }
 
   const subjects = data.subject.type.map((t) => t.string);
-  const selectedBlock = data.subject.type.find(
-    (t) => t.string === selectedSubject
-  );
+  const selectedBlock = data.subject.type.find((t) => t.string === selectedSubject);
   const selectedIndex = subjects.findIndex((s) => s === selectedSubject);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "auto" });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "auto" });
 
   return (
-    <div className="max-w-4xl mx-auto px-4 pb-20 text-white">
-      {/* 경로 제목 */}
+    <div className="max-w-4xl mx-auto px-4 pb-24 text-foreground-dark">
+      {/* 문제 경로 정보 */}
       {selectedBlock && (
-        <h2 className="text-lg sm:text-xl font-medium mb-6">
-          {`${year}년 기출 > ${round} > ${license}${
-            levelStr ? ` ${levelStr}급` : ""
-          } > `}
-          <span className="font-bold text-blue-400">
-            {selectedBlock.string}
-          </span>
+        <h2 className="text-lg sm:text-xl font-semibold mb-3">
+          {year}년 {round} {license} {levelStr && `${levelStr}급`} &gt;{" "}
+          <span className="text-primary">{selectedBlock.string}</span>
         </h2>
       )}
 
-      {/* 과목 탭 */}
+      {/* 진행률 바 */}
+      <div className="w-full mb-6">
+        <div className="text-sm text-gray-400 mb-1 text-center">
+          {selectedIndex + 1} / {subjects.length} 과목
+        </div>
+        <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-primary transition-all duration-300"
+            style={{ width: `${((selectedIndex + 1) / subjects.length) * 100}%` }}
+          />
+        </div>
+      </div>
+
+      {/* 탭 */}
       <SubjectTabs
         subjects={subjects}
         selected={selectedSubject}
         setSelected={setSelectedSubject}
       />
 
-      {/* 문제 영역 */}
+      {/* 문제 카드 렌더링 */}
       {selectedBlock ? (
-        <section>
+        <section className="mt-6 space-y-8">
           {selectedBlock.questions.map((q) => (
             <QuestionCard
               key={q.num}
@@ -140,8 +144,8 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
             />
           ))}
 
-          {/* 과목 전환 버튼 */}
-          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-10">
+          {/* 과목 전환 */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mt-10">
             <Button
               variant="neutral"
               onClick={() => {
@@ -150,7 +154,7 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
               }}
               disabled={selectedIndex === 0}
             >
-              <ArrowBackIosIcon fontSize="small" className="mr-1" aria-hidden />
+              <ArrowBackIos className="mr-1 text-sm" />
               이전 과목
             </Button>
 
@@ -162,16 +166,12 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
               disabled={selectedIndex === subjects.length - 1}
             >
               다음 과목
-              <ArrowForwardIosIcon
-                fontSize="small"
-                className="ml-1"
-                aria-hidden
-              />
+              <ArrowForwardIos className="ml-1 text-sm" />
             </Button>
           </div>
         </section>
       ) : (
-        <p className="text-gray-400">선택된 과목의 문제가 없습니다.</p>
+        <p className="text-gray-400 mt-6">선택된 과목의 문제가 없습니다.</p>
       )}
     </div>
   );

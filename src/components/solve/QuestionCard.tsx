@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Question } from "@/types/ProblemViwer";
-import { extractImageCode, getAnswerLabel } from "@/utils/problemUtils";
+import { extractImageCode } from "@/utils/problemUtils";
 
 interface Props {
   question: Question;
@@ -14,30 +14,8 @@ interface Props {
   code: string;
 }
 
-// 보기에 이미지 코드가 포함됐는지 확인하는 함수
 function isImageCode(str: string) {
   return /^@pic/.test(str.trim());
-}
-
-// 보기에 이미지가 있으면 경로를 만들어서 <Image> 반호나, 아니면 텍스트 반환
-function renderOptionContent(value: string, license: string, code: string) {
-  if (isImageCode(value)) {
-    const imgCode = value.trim().slice(1);
-    const imgPath = `/data/${license}/${code}/${code}-${imgCode}.png`;
-
-    return (
-      <div className="relative inline-block w-[120px] h-[90px] align-middle">
-        <Image
-          src={imgPath}
-          alt={imgCode}
-          fill
-          className="object-contain rounded"
-        />
-      </div>
-    );
-  } else {
-    return <span>{value}</span>;
-  }
 }
 
 export default function QuestionCard({
@@ -59,87 +37,101 @@ export default function QuestionCard({
   const correctOption = options.find((opt) => opt.label === correctAnswer);
   const correctText = correctOption ? correctOption.value : "";
 
-  const { textWithoutImage, imageCode } = extractImageCode(
-    question.questionsStr
-  );
+  const { textWithoutImage, imageCode } = extractImageCode(question.questionsStr);
   const finalImageCode = question.image ?? imageCode;
-  const hasImage =
-    typeof finalImageCode === "string" && finalImageCode.trim().length > 0;
+  const hasImage = !!finalImageCode?.trim();
   const imagePath = hasImage
     ? `/data/${license}/${code}/${code}-${finalImageCode}.png`
     : null;
 
   return (
-    <article className="bg-[#1f2937] border border-gray-700 rounded-xl shadow-sm mb-6 p-5">
+    <article className="bg-background-dark border border-gray-700 rounded-xl shadow-card mb-6 p-5 transition-colors">
+      {/* 문제 텍스트 */}
       <div className="mb-4 text-gray-100">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 font-medium text-sm sm:text-base">
-          <span className="text-gray-400 flex-shrink-0">
-            문제 {question.num}
-          </span>
+        <div className="flex flex-col sm:flex-col sm:items-left gap-2 font-medium text-sm sm:text-base">
+          <span className="text-gray-400">문제 {question.num}</span>
           <p className="whitespace-pre-wrap">{textWithoutImage}</p>
         </div>
       </div>
 
+      {/* 문제 이미지 */}
       {hasImage && imagePath && (
         <div className="mb-4 flex justify-center">
           <Image
             src={imagePath}
             alt={`문제 ${question.num} 이미지`}
-            layout="intrinsic"
-            width={600}
-            height={400}
-            className="rounded border border-gray-600 w-auto h-auto max-w-full max-h-[400px] object-contain"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="rounded border border-gray-600 w-auto h-auto max-h-[300px] max-w-full object-contain"
           />
         </div>
       )}
 
-      <ul className="space-y-2 mt-3">
+      {/* 보기 영역 */}
+      <ul className="space-y-3 mt-4">
         {options.map((opt) => {
           const isSelected = selected === opt.label;
           const isCorrect = opt.label === correctAnswer;
           const isWrong = isSelected && !isCorrect && showAnswer;
 
           const base =
-            "w-full text-left px-4 py-2 rounded-md border transition-all duration-200 ease-in-out cursor-pointer select-none text-sm";
+            "flex items-center gap-3 px-4 py-3 rounded-md border text-sm cursor-pointer transition-all";
           const selectedCls = isSelected
-            ? "border-blue-500 bg-blue-900/20"
-            : "border-gray-600 hover:bg-gray-800";
+            ? "border-primary bg-primary/10"
+            : "border-gray-700 hover:bg-gray-800/30";
           const correctCls =
             showAnswer && isCorrect
-              ? "bg-green-900/30 border-green-500 text-green-300"
+              ? "border-green-500 bg-green-900/20 text-green-300"
               : "";
           const wrongCls =
             showAnswer && isWrong
-              ? "bg-red-900/30 border-red-500 text-red-300"
+              ? "border-red-500 bg-red-900/20 text-red-300"
               : "";
-          const finalCls = `${base} ${selectedCls} ${correctCls} ${wrongCls}`;
 
           return (
             <li
               key={opt.label}
-              className={finalCls}
+              className={`${base} ${selectedCls} ${correctCls} ${wrongCls}`}
               onClick={() => onSelect(opt.label)}
             >
-              <span className="mr-1">{opt.label}.</span>{" "}
-              {renderOptionContent(opt.value, license, code)}
+              <span className="font-semibold text-sm min-w-[24px]">
+                {opt.label}.
+              </span>
+              {isImageCode(opt.value) ? (
+                <div className="w-full flex justify-start">
+                  <Image
+                    src={`/data/${license}/${code}/${code}-${opt.value.trim().slice(1)}.png`}
+                    alt={`보기 ${opt.label}`}
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="h-auto w-auto max-h-[200px] max-w-full object-contain border border-gray-600 rounded"
+                  />
+                </div>
+              ) : (
+                <span className="text-gray-100 text-sm">{opt.value}</span>
+              )}
             </li>
           );
         })}
       </ul>
 
+      {/* 해설 보기 버튼 */}
       <button
         onClick={onToggle}
-        className="mt-4 text-sm text-blue-400 hover:underline"
+        className="mt-5 text-sm text-blue-400 hover:underline"
       >
         {showAnswer ? "해설 숨기기" : "해설 보기"}
       </button>
 
+      {/* 해설 내용 */}
       {showAnswer && (
-        <div className="mt-3 text-sm text-gray-300 whitespace-pre-wrap">
-          ✅ <strong>정답 :</strong> {correctAnswer}. {correctText}
+        <div className="mt-3 text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
+          ✅ <strong>정답:</strong> {correctAnswer}. {correctText}
           {question.explanation && (
             <p className="mt-2 text-gray-400">
-              💡 <strong>해설 :</strong> {question.explanation}
+              💡 <strong>해설:</strong> {question.explanation}
             </p>
           )}
         </div>

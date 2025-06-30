@@ -10,7 +10,7 @@ export default function HamburgerButton({
   return (
     <button
       onClick={onClick}
-      className={`md:hidden fixed top-4 left-4 z-50 p-2 rounded-xl border border-gray-600
+      className={`md:hidden fixed top-4 left-30 z-50 p-2 rounded-xl border border-gray-600
                  bg-[var(--background-dark)] text-[var(--foreground-dark)]
                  hover:bg-[#1e293b] transition-colors duration-200
                  focus:outline-none focus:ring-2 focus:ring-[var(--primary)]
