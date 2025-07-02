@@ -163,19 +163,26 @@ export default function ProblemViewer({
       )}
 
       {/* 진행률 */}
-      <div className="w-full mb-6">
-        <div className="text-sm text-gray-400 mb-1 text-center">
-          {selectedIndex + 1} / {filteredSubjectNames.length} 과목
-        </div>
-        <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary transition-all duration-300"
-            style={{
-              width: `${
-                ((selectedIndex + 1) / filteredSubjectNames.length) * 100
-              }%`,
-            }}
-          />
+      <div className="w-full mb-6 flex justify-center">
+        <div className="w-full px-4 sm:w-3/4 md:w-1/2">
+          <div className="flex items-center justify-center text-xs text-gray-300 mb-2">
+            <div className="flex items-center gap-2">
+              <span className="text-blue-400">📘</span>
+              <span>
+                {selectedIndex + 1} / {filteredSubjectNames.length} 과목
+              </span>
+            </div>
+          </div>
+          <div className="w-full bg-gray-800 h-2 rounded-full overflow-hidden shadow-inner">
+            <div
+              className="h-full bg-blue-500 rounded-full transition-all duration-300 ease-in-out"
+              style={{
+                width: `${
+                  ((selectedIndex + 1) / filteredSubjectNames.length) * 100
+                }%`,
+              }}
+            />
+          </div>
         </div>
       </div>
 
