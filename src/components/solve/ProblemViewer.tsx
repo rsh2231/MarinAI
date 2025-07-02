@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
+import { motion, AnimatePresence } from "framer-motion";
+
 import SubjectTabs from "./SubjectTabs";
 import QuestionCard from "./QuestionCard";
 import { saveWrongNote, loadWrongNotes } from "@/utils/localWrongNote";
@@ -24,9 +26,16 @@ interface Props {
   license: LicenseType;
   level: string;
   round: string;
+  selectedSubjects: string[];
 }
 
-export default function ProblemViewer({ year, license, level, round }: Props) {
+export default function ProblemViewer({
+  year,
+  license,
+  level,
+  round,
+  selectedSubjects,
+}: Props) {
   const [data, setData] = useState<ProblemData | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showAnswer, setShowAnswer] = useState<Record<string, boolean>>({});
@@ -37,6 +46,7 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
   const code = getCode(license, year, round, level);
   const filePath = `/data/${license}/${code}/${code}.json`;
 
+  // 문제 JSON 데이터 로딩
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,7 +56,6 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
         setData(json);
         setAnswers({});
         setShowAnswer({});
-        setSelectedSubject(json.subject.type[0].string);
       } catch (err: any) {
         setError(err.message);
       }
@@ -54,6 +63,49 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
     fetchData();
   }, [filePath]);
 
+  // 숫자를 제거한 과목명 추출
+  const normalizeSubject = (s: string) => s.replace(/^\d+\.\s*/, "");
+
+  // 선택된 과목명에 맞는 데이터 필터링
+  const filteredSubjects = useMemo(() => {
+    if (!data) return [];
+    if (selectedSubjects.length === 0) return [];
+    return data.subject.type.filter((t) =>
+      selectedSubjects.includes(normalizeSubject(t.string))
+    );
+  }, [data, selectedSubjects]);
+
+  const filteredSubjectNames = useMemo(() => {
+    return filteredSubjects.map((t) => t.string);
+  }, [filteredSubjects]);
+
+  // 선택된 과목 설정 (선택되지 않았거나 변경되었을 때 자동 설정)
+  useEffect(() => {
+    if (!filteredSubjectNames.length) {
+      if (selectedSubject !== null) setSelectedSubject(null);
+    } else if (
+      !selectedSubject ||
+      !filteredSubjectNames.includes(selectedSubject)
+    ) {
+      setSelectedSubject(filteredSubjectNames[0]);
+    }
+  }, [filteredSubjectNames, selectedSubject]);
+
+  const onSelectSubject = useCallback(
+    (subj: string) => {
+      setSelectedSubject(subj);
+    },
+    [setSelectedSubject]
+  );
+
+  const selectedBlock = filteredSubjects.find(
+    (t) => t.string === selectedSubject
+  );
+  const selectedIndex = filteredSubjectNames.findIndex(
+    (s) => s === selectedSubject
+  );
+
+  // 정답 선택 처리
   const handleSelect = (qNum: string, choice: string, question: Question) => {
     const correct = question.answer;
     setAnswers((prev) => ({ ...prev, [qNum]: choice }));
@@ -64,8 +116,10 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
     );
   };
 
+  // 해설 보기/오답노트 저장 처리
   const toggleAnswer = (qNum: string, question: Question) => {
     setShowAnswer((prev) => ({ ...prev, [qNum]: !prev[qNum] }));
+
     const selected = answers[qNum];
     if (selected && selected !== question.answer) {
       const savedNotes = loadWrongNotes();
@@ -80,6 +134,10 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
     }
   };
 
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "auto" });
+
+  // --- 렌더링 ---
+
   if (error) {
     return <p className="text-danger text-center mt-6 text-sm">⚠️ {error}</p>;
   }
@@ -92,87 +150,110 @@ export default function ProblemViewer({ year, license, level, round }: Props) {
     );
   }
 
-  const subjects = data.subject.type.map((t) => t.string);
-  const selectedBlock = data.subject.type.find((t) => t.string === selectedSubject);
-  const selectedIndex = subjects.findIndex((s) => s === selectedSubject);
-
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "auto" });
-
   return (
     <div className="max-w-4xl mx-auto px-4 pb-24 text-foreground-dark">
-      {/* 문제 경로 정보 */}
+      {/* 상단 경로 */}
       {selectedBlock && (
         <h2 className="text-lg sm:text-xl font-semibold mb-3">
-          {year}년 {round} {license} {levelStr && `${levelStr}급`} &gt;{" "}
-          <span className="text-primary">{selectedBlock.string}</span>
+          {year}년 {license} {levelStr && `${levelStr}급`} {round} &gt;{" "}
+          <span className="text-primary">
+            {selectedBlock.string.replace(/^\d+\.\s*/, "")}
+          </span>
         </h2>
       )}
 
-      {/* 진행률 바 */}
+      {/* 진행률 */}
       <div className="w-full mb-6">
         <div className="text-sm text-gray-400 mb-1 text-center">
-          {selectedIndex + 1} / {subjects.length} 과목
+          {selectedIndex + 1} / {filteredSubjectNames.length} 과목
         </div>
         <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
           <div
             className="h-full bg-primary transition-all duration-300"
-            style={{ width: `${((selectedIndex + 1) / subjects.length) * 100}%` }}
+            style={{
+              width: `${
+                ((selectedIndex + 1) / filteredSubjectNames.length) * 100
+              }%`,
+            }}
           />
         </div>
       </div>
 
       {/* 탭 */}
       <SubjectTabs
-        subjects={subjects}
+        subjects={filteredSubjectNames}
         selected={selectedSubject}
-        setSelected={setSelectedSubject}
+        setSelected={onSelectSubject}
       />
 
-      {/* 문제 카드 렌더링 */}
-      {selectedBlock ? (
-        <section className="mt-6 space-y-8">
-          {selectedBlock.questions.map((q) => (
-            <QuestionCard
-              key={q.num}
-              question={q}
-              selected={answers[q.num]}
-              showAnswer={showAnswer[q.num]}
-              onSelect={(choice) => handleSelect(q.num, choice, q)}
-              onToggle={() => toggleAnswer(q.num, q)}
-              license={license}
-              code={code}
-            />
-          ))}
+      {/* 문제 카드 */}
+      <AnimatePresence mode="wait">
+        {selectedBlock ? (
+          <motion.section
+            key={selectedBlock.string}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="mt-6 space-y-8"
+          >
+            {selectedBlock.questions.map((q) => (
+              <QuestionCard
+                key={q.num}
+                question={q}
+                selected={answers[q.num]}
+                showAnswer={showAnswer[q.num]}
+                onSelect={(choice) => handleSelect(q.num, choice, q)}
+                onToggle={() => toggleAnswer(q.num, q)}
+                license={license}
+                code={code}
+              />
+            ))}
 
-          {/* 과목 전환 */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mt-10">
-            <Button
-              variant="neutral"
-              onClick={() => {
-                setSelectedSubject(subjects[selectedIndex - 1]);
-                scrollToTop();
-              }}
-              disabled={selectedIndex === 0}
-            >
-              <ArrowBackIos className="mr-1 text-sm" />
-              이전 과목
-            </Button>
+            {/* 과목 이동 */}
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mt-10">
+              <Button
+                variant="neutral"
+                onClick={() => {
+                  setSelectedSubject(filteredSubjectNames[selectedIndex - 1]);
+                  scrollToTop();
+                }}
+                disabled={selectedIndex === 0}
+              >
+                <ArrowBackIos className="mr-1 text-sm" />
+                이전 과목
+              </Button>
 
-            <Button
-              onClick={() => {
-                setSelectedSubject(subjects[selectedIndex + 1]);
-                scrollToTop();
-              }}
-              disabled={selectedIndex === subjects.length - 1}
-            >
-              다음 과목
-              <ArrowForwardIos className="ml-1 text-sm" />
-            </Button>
-          </div>
-        </section>
-      ) : (
-        <p className="text-gray-400 mt-6">선택된 과목의 문제가 없습니다.</p>
-      )}
+              <Button
+                onClick={() => {
+                  setSelectedSubject(filteredSubjectNames[selectedIndex + 1]);
+                  scrollToTop();
+                }}
+                disabled={selectedIndex === filteredSubjectNames.length - 1}
+              >
+                다음 과목
+                <ArrowForwardIos className="ml-1 text-sm" />
+              </Button>
+            </div>
+          </motion.section>
+        ) : (
+          <motion.div
+            key="empty-state"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex flex-col items-center justify-center text-gray-400 text-center mt-12 px-4 py-10 border border-gray-700 rounded-xl bg-[#1f2937]/40 shadow-inner"
+          >
+            <span className="text-4xl mb-3">📭</span>
+            <span className="text-lg font-medium text-blue-300">
+              선택한 과목에 해당하는 문제가 없습니다.
+            </span>
+            <span className="text-sm text-gray-500 mt-2">
+              사이드바에서 과목을 선택해 보세요.
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

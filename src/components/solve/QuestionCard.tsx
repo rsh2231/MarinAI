@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import React from "react";
+import { motion } from "framer-motion";
 import { Question } from "@/types/ProblemViwer";
 import { extractImageCode } from "@/utils/problemUtils";
 
@@ -18,7 +20,7 @@ function isImageCode(str: string) {
   return /^@pic/.test(str.trim());
 }
 
-export default function QuestionCard({
+function QuestionCardComponent({
   question,
   selected,
   showAnswer,
@@ -45,7 +47,14 @@ export default function QuestionCard({
     : null;
 
   return (
-    <article className="bg-background-dark border border-gray-700 rounded-xl shadow-card mb-6 p-5 transition-colors">
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.25 }}
+      className="bg-background-dark border border-white rounded-xl shadow-card mb-6 p-5 transition-colors"
+    >
       {/* 문제 텍스트 */}
       <div className="mb-4 text-gray-100">
         <div className="flex flex-col sm:flex-col sm:items-left gap-2 font-medium text-sm sm:text-base">
@@ -63,6 +72,8 @@ export default function QuestionCard({
             width={0}
             height={0}
             sizes="100vw"
+            priority
+            key={imagePath} // 깜빡임 방지
             className="rounded border border-gray-600 w-auto h-auto max-h-[300px] max-w-full object-contain"
           />
         </div>
@@ -101,11 +112,13 @@ export default function QuestionCard({
               {isImageCode(opt.value) ? (
                 <div className="w-full flex justify-start">
                   <Image
+                    key={opt.value} // 깜빡임 방지
                     src={`/data/${license}/${code}/${code}-${opt.value.trim().slice(1)}.png`}
                     alt={`보기 ${opt.label}`}
                     width={0}
                     height={0}
                     sizes="100vw"
+                    priority
                     className="h-auto w-auto max-h-[200px] max-w-full object-contain border border-gray-600 rounded"
                   />
                 </div>
@@ -121,6 +134,7 @@ export default function QuestionCard({
       <button
         onClick={onToggle}
         className="mt-5 text-sm text-blue-400 hover:underline"
+        type="button"
       >
         {showAnswer ? "해설 숨기기" : "해설 보기"}
       </button>
@@ -136,6 +150,14 @@ export default function QuestionCard({
           )}
         </div>
       )}
-    </article>
+    </motion.article>
   );
 }
+
+export default React.memo(
+  QuestionCardComponent,
+  (prev, next) =>
+    prev.selected === next.selected &&
+    prev.showAnswer === next.showAnswer &&
+    prev.question.num === next.question.num
+);

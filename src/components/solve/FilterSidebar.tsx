@@ -1,27 +1,51 @@
+"use client";
+
+import React, { useCallback } from "react";
 import SelectBox from "../ui/SelectBox";
 import { X } from "lucide-react";
+import { FilterState } from "@/types/FilterState";
+import { SUBJECTS_BY_LICENSE } from "@/lib/constants";
 
 const YEARS = ["2023", "2022", "2021"];
 const LICENSES = ["항해사", "기관사", "소형선박조종사"];
 const LEVELS = ["1급", "2급", "3급", "4급", "5급", "6급"];
 const ROUNDS = ["1회", "2회", "3회", "4회"];
 
-type FilterState = {
-  year: string;
-  setYear: (v: string) => void;
-  license: string;
-  setLicense: (v: string) => void;
-  level: string;
-  setLevel: (v: string) => void;
-  round: string;
-  setRound: (v: string) => void;
-};
-
 type Props = FilterState & {
   className?: string;
   sidebarOpen?: boolean;
   onClose?: () => void;
+  selectedSubjects: string[];
+  setSelectedSubjects: React.Dispatch<React.SetStateAction<string[]>>;
 };
+
+interface SubjectButtonProps {
+  subject: string;
+  isSelected: boolean;
+  onToggle: (subject: string) => void;
+}
+
+// 과목 버튼 컴포넌트 (React.memo 적용)
+const SubjectButton = React.memo(function SubjectButton({
+  subject,
+  isSelected,
+  onToggle,
+}: SubjectButtonProps) {
+  return (
+    <button
+      type="button"
+      onClick={() => onToggle(subject)}
+      className={`px-3 py-1 rounded-full text-sm font-medium border transition-colors duration-200
+        ${
+          isSelected
+            ? "bg-blue-600 text-white border-blue-500"
+            : "bg-gray-700 text-gray-300 border-gray-500 hover:bg-gray-600"
+        }`}
+    >
+      {subject}
+    </button>
+  );
+});
 
 export default function FilterSidebar({
   year,
@@ -32,21 +56,40 @@ export default function FilterSidebar({
   setLevel,
   round,
   setRound,
+  selectedSubjects,
+  setSelectedSubjects,
   className = "",
   sidebarOpen = false,
   onClose,
 }: Props) {
   const isSmallShip = license === "소형선박조종사";
 
-  const handleLicenseChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = e.target.value;
-    setLicense(selected);
-    if (selected === "소형선박조종사") {
-      setLevel("");
-    } else if (!LEVELS.includes(level)) {
-      setLevel(LEVELS[0]);
-    }
-  };
+  // license 변경시 과목 선택 초기화
+  const handleLicenseChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      const selected = e.target.value as "항해사" | "기관사" | "소형선박조종사";
+      setLicense(selected);
+      if (selected === "소형선박조종사") {
+        setLevel("");
+      } else if (!LEVELS.includes(level)) {
+        setLevel(LEVELS[0]);
+      }
+      setSelectedSubjects([]); // 과목 선택 초기화
+    },
+    [level, setLevel, setLicense, setSelectedSubjects]
+  );
+
+  // 과목 선택 토글 함수 (useCallback으로 메모이제이션)
+  const toggleSubject = useCallback(
+    (subject: string) => {
+      setSelectedSubjects((prev) =>
+        prev.includes(subject) ? prev.filter((s) => s !== subject) : [...prev, subject]
+      );
+    },
+    [setSelectedSubjects]
+  );
+
+  const subjects = license ? SUBJECTS_BY_LICENSE[license] || [] : [];
 
   return (
     <aside
@@ -110,6 +153,27 @@ export default function FilterSidebar({
           onChange={(e) => setRound(e.target.value)}
           options={ROUNDS}
         />
+
+        {/* 자격증별 과목 선택 영역 */}
+        <div>
+          <h3 className="text-white mb-2 text-sm font-semibold">과목 선택</h3>
+          {license === "" ? (
+            <p className="text-gray-400 text-xs">먼저 자격증을 선택하세요.</p>
+          ) : subjects.length === 0 ? (
+            <p className="text-gray-400 text-xs">과목 정보가 없습니다.</p>
+          ) : (
+            <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto pr-1">
+              {subjects.map((subject) => (
+                <SubjectButton
+                  key={subject}
+                  subject={subject}
+                  isSelected={selectedSubjects.includes(subject)}
+                  onToggle={toggleSubject}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </aside>
   );
