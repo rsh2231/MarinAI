@@ -1,36 +1,59 @@
+"use client";
+
+import { useAtom } from "jotai";
+import { sidebarOpenAtom } from "@/atoms/sidebarAtom";
+import { motion } from "framer-motion";
+
 type HamburgerButtonProps = {
-  onClick: () => void;
   className?: string;
 };
 
-export default function HamburgerButton({
-  onClick,
-  className,
-}: HamburgerButtonProps) {
+export default function HamburgerButton({ className }: HamburgerButtonProps) {
+  const [sidebarOpen, setSidebarOpen] = useAtom(sidebarOpenAtom);
+
   return (
     <button
-      onClick={onClick}
-      className={`md:hidden fixed top-4 left-30 z-50 p-2 rounded-xl border border-gray-600
-                 bg-[var(--background-dark)] text-[var(--foreground-dark)]
-                 hover:bg-[#1e293b] transition-colors duration-200
-                 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]
-                 shadow-lg backdrop-blur-sm ${className ?? ""}`}
-      aria-label="사이드바 열기"
+      onClick={() => setSidebarOpen(!sidebarOpen)}
+      className={`shrink-0 flex flex-col justify-center items-center w-10 h-10 
+              rounded-lg bg-black/40 hover:bg-black/60 transition-colors duration-200
+              backdrop-blur-md border border-gray-600 text-white shadow-md
+              focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
+              ${className ?? ""}`}
+      aria-label="사이드바 토글"
     >
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M4 6h16M4 12h16M4 18h16"
-        />
-      </svg>
+      {/* 줄 1 */}
+      <motion.span
+        initial="closed"
+        animate={sidebarOpen ? "open" : "closed"}
+        variants={{
+          open: { rotate: 45, y: 6 },
+          closed: { rotate: 0, y: -6 },
+        }}
+        transition={{ duration: 0.3 }}
+        className="block w-6 h-0.5 sm:w-7 sm:h-0.5 bg-white"
+      />
+      {/* 줄 2 */}
+      <motion.span
+        initial="closed"
+        animate={sidebarOpen ? "open" : "closed"}
+        variants={{
+          open: { opacity: 0 },
+          closed: { opacity: 1 },
+        }}
+        transition={{ duration: 0.3 }}
+        className="block w-6 h-0.5 sm:w-7 sm:h-0.5 bg-white my-1"
+      />
+      {/* 줄 3 */}
+      <motion.span
+        initial="closed"
+        animate={sidebarOpen ? "open" : "closed"}
+        variants={{
+          open: { rotate: -45, y: -6 },
+          closed: { rotate: 0, y: 6 },
+        }}
+        transition={{ duration: 0.3 }}
+        className="block w-6 h-0.5 sm:w-7 sm:h-0.5 bg-white"
+      />
     </button>
   );
 }

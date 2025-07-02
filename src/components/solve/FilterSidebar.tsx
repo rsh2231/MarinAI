@@ -11,10 +11,10 @@ const LICENSES = ["항해사", "기관사", "소형선박조종사"];
 const LEVELS = ["1급", "2급", "3급", "4급", "5급", "6급"];
 const ROUNDS = ["1회", "2회", "3회", "4회"];
 
-type Props = FilterState & {
+type FilterSidebarProps = FilterState & {
+  sidebarOpen: boolean;
+  onClose: () => void;
   className?: string;
-  sidebarOpen?: boolean;
-  onClose?: () => void;
   selectedSubjects: string[];
   setSelectedSubjects: React.Dispatch<React.SetStateAction<string[]>>;
 };
@@ -36,10 +36,9 @@ const SubjectButton = React.memo(function SubjectButton({
       type="button"
       onClick={() => onToggle(subject)}
       className={`px-3 py-1 rounded-full text-sm font-medium border transition-colors duration-200
-        ${
-          isSelected
-            ? "bg-blue-600 text-white border-blue-500"
-            : "bg-gray-700 text-gray-300 border-gray-500 hover:bg-gray-600"
+        ${isSelected
+          ? "bg-blue-600 text-white border-blue-500"
+          : "bg-gray-700 text-gray-300 border-gray-500 hover:bg-gray-600"
         }`}
     >
       {subject}
@@ -61,7 +60,7 @@ export default function FilterSidebar({
   className = "",
   sidebarOpen = false,
   onClose,
-}: Props) {
+}: FilterSidebarProps) {
   const isSmallShip = license === "소형선박조종사";
 
   // license 변경시 과목 선택 초기화

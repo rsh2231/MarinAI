@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React from "react";
 
 interface Props {
   subjects: string[];
@@ -8,7 +8,6 @@ interface Props {
   setSelected: (v: string) => void;
 }
 
-// 개별 버튼 컴포넌트, selected 변경시에만 리렌더링됨
 const SubjectButton = React.memo(function SubjectButton({
   subj,
   isSelected,
@@ -25,7 +24,7 @@ const SubjectButton = React.memo(function SubjectButton({
         ${
           isSelected
             ? "border-blue-500 text-blue-400"
-            : "border-transparent text-gray-400 hover:text-blue-300"
+            : "border-transparent text-gray-400 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
         }`}
     >
       {subj.replace(/^\d+\.\s*/, "")}
@@ -38,13 +37,6 @@ const SubjectTabs = React.memo(function SubjectTabs({
   selected,
   setSelected,
 }: Props) {
-  // 클릭 핸들러 메모이제이션
-  const handleClick = useCallback(
-    (subj: string) => {
-      setSelected(subj);
-    },
-    [setSelected]
-  );
   return (
     <div className="flex justify-center items-center border-b border-gray-700 mb-6 overflow-x-auto scrollbar-hide">
       {subjects.map((subj) => (
