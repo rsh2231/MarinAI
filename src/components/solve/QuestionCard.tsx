@@ -39,7 +39,9 @@ function QuestionCardComponent({
   const correctOption = options.find((opt) => opt.label === correctAnswer);
   const correctText = correctOption ? correctOption.value : "";
 
-  const { textWithoutImage, imageCode } = extractImageCode(question.questionsStr);
+  const { textWithoutImage, imageCode } = extractImageCode(
+    question.questionsStr
+  );
   const finalImageCode = question.image ?? imageCode;
   const hasImage = !!finalImageCode?.trim();
   const imagePath = hasImage
@@ -56,11 +58,13 @@ function QuestionCardComponent({
       className="bg-background-dark border border-white rounded-xl shadow-card mb-6 p-5 transition-colors"
     >
       {/* 문제 텍스트 */}
-      <div className="mb-4 text-gray-100">
-        <div className="flex flex-col gap-2 font-medium text-base sm:text-lg">
-          <span className="text-gray-400 text-sm sm:text-base">문제 {question.num}</span>
-          <p className="whitespace-pre-wrap leading-relaxed">{textWithoutImage}</p>
-        </div>
+      <div className="flex flex-col gap-2 font-medium text-sm sm:text-base">
+        <span className="text-gray-400 text-xs sm:text-sm">
+          문제 {question.num}
+        </span>
+        <p className="whitespace-pre-wrap leading-relaxed text-sm sm:text-base">
+          {textWithoutImage}
+        </p>
       </div>
 
       {/* 문제 이미지 */}
@@ -73,8 +77,8 @@ function QuestionCardComponent({
             height={0}
             sizes="100vw"
             priority
-            key={imagePath} // 깜빡임 방지
-            className="rounded border border-gray-600 w-auto h-auto max-h-[300px] max-w-full object-contain"
+            key={imagePath}
+            className="rounded border border-gray-600 w-full sm:w-auto max-w-full sm:max-w-[80%] h-auto max-h-[300px] sm:max-h-[400px] object-contain"
           />
         </div>
       )}
@@ -106,24 +110,28 @@ function QuestionCardComponent({
               className={`${base} ${selectedCls} ${correctCls} ${wrongCls}`}
               onClick={() => onSelect(opt.label)}
             >
-              <span className="font-semibold text-base min-w-[24px]">
+              <span className="font-semibold text-sm sm:text-base min-w-[24px]">
                 {opt.label}.
               </span>
               {isImageCode(opt.value) ? (
                 <div className="w-full flex justify-start">
                   <Image
                     key={opt.value} // 깜빡임 방지
-                    src={`/data/${license}/${code}/${code}-${opt.value.trim().slice(1)}.png`}
+                    src={`/data/${license}/${code}/${code}-${opt.value
+                      .trim()
+                      .slice(1)}.png`}
                     alt={`보기 ${opt.label}`}
                     width={0}
                     height={0}
                     sizes="100vw"
                     priority
-                    className="h-auto w-auto max-h-[200px] max-w-full object-contain border border-gray-600 rounded"
+                    className="h-auto w-full sm:w-auto max-w-full sm:max-w-[80%] max-h-[200px] sm:max-h-[300px] object-contain border border-gray-600 rounded"
                   />
                 </div>
               ) : (
-                <span className="text-gray-100 text-base">{opt.value}</span>
+                <span className="text-gray-100 text-sm sm:text-base">
+                  {opt.value}
+                </span>
               )}
             </li>
           );

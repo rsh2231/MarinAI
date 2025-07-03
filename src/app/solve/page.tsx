@@ -1,20 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Lightbulb } from "lucide-react";
 import { SUBJECTS_BY_LICENSE } from "@/lib/constants";
 import Sidebar from "@/components/layout/Sidebar";
 import ProblemViewer from "@/components/solve/ProblemViewer";
-import { useAtom } from "jotai";
-import { sidebarOpenAtom } from "@/atoms/sidebarAtom";
+import CbtViewer from "@/components/solve/CbtViewer";
+import Button from "@/components/ui/Button";
 
 export default function SolvePage() {
   const [year, setYear] = useState("");
-  const [license, setLicense] = useState<"항해사" | "기관사" | "소형선박조종사" | "">("");
+  const [license, setLicense] = useState<
+    "항해사" | "기관사" | "소형선박조종사" | null
+  >(null);
   const [level, setLevel] = useState("");
   const [round, setRound] = useState("");
-  const [sidebarOpen, setSidebarOpen] = useAtom(sidebarOpenAtom);
+  const [mode, setMode] = useState<"practice" | "exam" | null>(null);
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
   useEffect(() => {
@@ -55,34 +57,81 @@ export default function SolvePage() {
       />
 
       {/* 메인 콘텐츠 */}
-      <main
-        className="flex-grow bg-[#1f2937] p-4 sm:p-6 md:p-8 rounded-lg md:rounded-2xl shadow-md md:shadow-[0_4px_12px_rgba(0,0,0,0.6)] border border-gray-700 transition-all duration-300 min-w-0 overflow-auto"
-      >
-        {isFilterReady ? (
-          <ProblemViewer
-            year={year}
-            license={license}
-            level={license === "소형선박조종사" ? "" : level}
-            round={round}
-            selectedSubjects={selectedSubjects}
-          />
-        ) : (
+      <main className="flex-grow bg-[#1f2937] p-4 sm:p-6 md:p-8 rounded-lg md:rounded-2xl shadow-md md:shadow-[0_4px_12px_rgba(0,0,0,0.6)] border border-gray-700 transition-all duration-300 min-w-0 overflow-auto">
+        {/* 연습/실전 모드 선택 안내 UI */}
+        {!mode || !isFilterReady ? (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="flex flex-col items-center justify-center text-center bg-[#0f172a] mt-10 p-6 sm:p-10 rounded-lg border border-gray-700 shadow"
+            className="flex flex-col items-center justify-center text-center bg-[#0f172a] mt-30 p-6 sm:p-10 rounded-lg border border-gray-700 shadow"
           >
             <Lightbulb className="w-8 h-8 sm:w-10 sm:h-10 text-blue-400 mb-4 animate-pulse" />
-            <p className="text-sm sm:text-base text-gray-300 font-medium leading-relaxed">
-              왼쪽 사이드바에서{" "}
+            <p className="text-sm sm:text-base text-gray-300 font-medium leading-relaxed mb-6">
               <span className="text-blue-400 font-semibold">연도</span>,
-              <span className="text-blue-400 font-semibold">자격증</span>,
-              <span className="text-blue-400 font-semibold">급수</span>,
-              <span className="text-blue-400 font-semibold">회차</span>를 선택하면<br />
+              <span className="text-blue-400 font-semibold"> 자격증</span>,
+              <span className="text-blue-400 font-semibold"> 급수</span>,
+              <span className="text-blue-400 font-semibold"> 회차</span>를
+              선택하면
+              <br />
               문제를 자동으로 생성해드릴게요!
             </p>
+
+            {isFilterReady && (
+              <AnimatePresence>
+                {!mode && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="flex gap-4 justify-center"
+                  >
+                    <Button
+                      onClick={() => setMode("practice")}
+                      variant="neutral"
+                      size="md"
+                      selected={mode === "practice"}
+                    >
+                      연습 모드
+                    </Button>
+                    <Button
+                      onClick={() => setMode("exam")}
+                      variant="neutral"
+                      size="md"
+                      selected={mode === "exam"}
+                    >
+                      실전 모드
+                    </Button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            )}
           </motion.div>
+        ) : null}
+
+        {/* 연습 모드 컴포넌트 */}
+        {license && mode === "practice" && isFilterReady && (
+          <ProblemViewer
+            year={year}
+            license={license as "항해사" | "기관사" | "소형선박조종사"}
+            level={license === "소형선박조종사" ? "" : level}
+            round={round}
+            selectedSubjects={selectedSubjects}
+            visible
+          />
+        )}
+
+        {/* 실전 모드 컴포넌트 */}
+        {license && mode === "exam" && isFilterReady && (
+          <CbtViewer
+            year={year}
+            license={license as "항해사" | "기관사" | "소형선박조종사"}
+            level={license === "소형선박조종사" ? "" : level}
+            round={round}
+            selectedSubjects={selectedSubjects}
+            visible
+          />
         )}
       </main>
     </motion.div>

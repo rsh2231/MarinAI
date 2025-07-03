@@ -29,38 +29,42 @@ export default function Home() {
     }
   };
 
+ 
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="relative min-h-screen flex flex-col items-center justify-center px-6 py-24 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center px-3 py-10 sm:px-6 sm:py-30 overflow-hidden"
     >
+      {/* 제목 */}
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="text-4xl sm:text-5xl font-extrabold text-center text-white bg-clip-text mb-4 z-10 select-none"
+        className="text-2xl xs:text-3xl sm:text-5xl font-extrabold text-center text-white mb-4 z-10 select-none"
       >
         Marin<span className="text-blue-500">AI</span>
       </motion.h1>
 
+      {/* 설명 */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="max-w-xl text-center text-gray-400 text-base sm:text-lg mb-12 z-10 leading-relaxed select-none"
+        className="max-w-md text-center text-gray-400 text-sm xs:text-base sm:text-lg mb-10 z-10 leading-relaxed select-none"
       >
         질문을 입력하거나 <br />
         문제를 복사해 붙여넣고 AI와 함께 학습하세요.
       </motion.p>
 
+      {/* 입력 폼 */}
       <motion.form
         onSubmit={handleSubmit}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.8 }}
-        className="z-10 w-full max-w-2xl bg-background-dark border border-gray-700 rounded-2xl p-5 shadow-lg space-y-4"
+        className="z-10 w-full max-w-xl bg-background-dark border border-gray-700 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4"
       >
         <textarea
           ref={textareaRef}
@@ -68,7 +72,7 @@ export default function Home() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="무엇이 궁금하신가요?"
-          className="w-full bg-transparent text-white placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-primary rounded-md p-4 text-base max-h-[50vh] min-h-[3rem] overflow-y-auto transition-shadow duration-300"
+          className="w-full bg-transparent text-white placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-primary rounded-md p-3 text-sm sm:text-base max-h-[50vh] min-h-[3rem] overflow-y-auto transition-shadow duration-300"
           rows={1}
           required
         />
@@ -84,12 +88,12 @@ export default function Home() {
         </div>
       </motion.form>
 
-      {/* 회전 이미지 유지 */}
+      {/* 회전 이미지 */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 0.1, scale: 1 }}
         transition={{ duration: 1, delay: 1.6 }}
-        className="absolute w-[60vw] h-[60vw] sm:w-[400px] sm:h-[400px] z-0 select-none pointer-events-none"
+        className="absolute w-[45vw] h-[45vw] xs:w-[60vw] xs:h-[60vw] sm:w-[400px] sm:h-[400px] z-0 select-none pointer-events-none"
       >
         <motion.div
           animate={{ rotate: 360 }}

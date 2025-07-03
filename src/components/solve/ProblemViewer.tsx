@@ -27,6 +27,7 @@ interface Props {
   level: string;
   round: string;
   selectedSubjects: string[];
+  visible?: boolean;
 }
 
 export default function ProblemViewer({
@@ -35,7 +36,10 @@ export default function ProblemViewer({
   level,
   round,
   selectedSubjects,
+  visible = false,
 }: Props) {
+  if (!visible) return null;
+  
   const [data, setData] = useState<ProblemData | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showAnswer, setShowAnswer] = useState<Record<string, boolean>>({});
@@ -151,24 +155,25 @@ export default function ProblemViewer({
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pb-20 text-foreground-dark">
+    <div className="w-full max-w-3xl mx-auto px-2 sm:px-4 pb-20 text-foreground-dark">
       {/* 상단 경로 */}
       {selectedBlock && (
-        <h2 className="text-base sm:text-lg font-semibold mb-3">
-          {year}년 {license} {levelStr && `${levelStr}급`} {round} &gt;{" "}
-          <span className="text-primary">
+        <h2 className="text-s xs:text-base sm:text-2xl font-semibold mb-3 text-center px-2 truncate">
+          {year}년 &gt; {license} &gt; {levelStr && `${levelStr}급`} &gt;{" "}
+          {round} &gt;{" "}
+          <span className="text-primary whitespace-nowrap">
             {selectedBlock.string.replace(/^\d+\.\s*/, "")}
           </span>
         </h2>
       )}
 
       {/* 진행률 */}
-      <div className="w-full mb-6 flex justify-center">
-        <div className="w-full px-3 sm:px-4 sm:w-3/4 md:w-1/2">
-          <div className="flex items-center justify-center text-xs text-gray-300 mb-2">
-            <div className="flex items-center gap-2">
-              <span className="text-blue-400">📘</span>
-              <span>
+      <div className="w-full mb-4 flex justify-center px-2">
+        <div className="w-full sm:w-3/4 md:w-1/2">
+          <div className="flex items-center justify-center text-xs xs:text-sm text-gray-300 mb-1">
+            <div className="flex items-center gap-1 xs:gap-2">
+              <span className="text-blue-400 text-base xs:text-lg">📘</span>
+              <span className="truncate">
                 {selectedIndex + 1} / {filteredSubjectNames.length} 과목
               </span>
             </div>
@@ -187,7 +192,7 @@ export default function ProblemViewer({
       </div>
 
       {/* 탭 */}
-      <div className="flex justify-center px-4 sm:px-6">
+      <div className="flex justify-center overflow-x-auto px-2 sm:px-6 no-scrollbar">
         <SubjectTabs
           subjects={filteredSubjectNames}
           selected={selectedSubject}
@@ -195,7 +200,7 @@ export default function ProblemViewer({
         />
       </div>
 
-      {/* 문제 카드 */}
+      {/* 문제 카드 & 과목 이동 버튼 */}
       <AnimatePresence mode="wait">
         {selectedBlock ? (
           <motion.section
@@ -204,7 +209,7 @@ export default function ProblemViewer({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="mt-6 sm:mt-8 space-y-5 sm:space-y-8"
+            className="mt-6 sm:mt-8 space-y-5 sm:space-y-8 px-2"
           >
             {selectedBlock.questions.map((q) => (
               <QuestionCard
@@ -219,8 +224,8 @@ export default function ProblemViewer({
               />
             ))}
 
-            {/* 과목 이동 */}
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mt-10">
+            {/* 과목 이동 버튼 */}
+            <div className="flex flex-row sm:flex-row justify-between items-center gap-3 mt-8">
               <Button
                 variant="neutral"
                 onClick={() => {
@@ -228,8 +233,9 @@ export default function ProblemViewer({
                   scrollToTop();
                 }}
                 disabled={selectedIndex === 0}
+                className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
               >
-                <ArrowBackIos className="mr-1 text-sm" />
+                <ArrowBackIos className="mr-1 text-xs sm:text-sm" />
                 이전 과목
               </Button>
 
@@ -239,9 +245,10 @@ export default function ProblemViewer({
                   scrollToTop();
                 }}
                 disabled={selectedIndex === filteredSubjectNames.length - 1}
+                className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
               >
                 다음 과목
-                <ArrowForwardIos className="ml-1 text-sm" />
+                <ArrowForwardIos className="ml-1 text-xs sm:text-sm" />
               </Button>
             </div>
           </motion.section>
@@ -251,7 +258,7 @@ export default function ProblemViewer({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex flex-col items-center justify-center text-gray-400 text-center mt-12 px-4 py-10 border border-gray-700 rounded-xl bg-[#1f2937]/40 shadow-inner"
+            className="flex flex-col items-center justify-center text-gray-400 text-center mt-12 px-4 py-10 border border-gray-700 rounded-xl bg-[#1f2937]/40 shadow-inner mx-2"
           >
             <span className="text-4xl mb-3">📭</span>
             <span className="text-base sm:text-lg font-medium text-blue-300">

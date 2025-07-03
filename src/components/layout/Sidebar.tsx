@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 import { sidebarOpenAtom } from "@/atoms/sidebarAtom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import FilterSidebar from "../solve/FilterSidebar";
+import FilterSidebar from "./FilterSidebar";
 import { FilterState } from "@/types/FilterState";
 
 type SidebarProps = {
@@ -42,7 +42,7 @@ export default function Sidebar({ filterState, className = "" }: SidebarProps) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.3 }}
-              className={`fixed top-0 left-0 z-40 h-full w-1/2 p-4 bg-[#1f2937] text-white border-r border-gray-700 shadow-xl md:hidden ${className}`}
+              className="fixed top-0 left-0 z-40 h-full p-4 bg-[#1f2937] text-white border-r border-gray-700 shadow-xl md:hidden w-[65%] max-w-[280px]"
             >
              
               <FilterSidebar

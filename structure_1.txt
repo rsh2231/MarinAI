@@ -1,80 +1,88 @@
-└─src
-    ├─app
-    │  │  favicon.ico
-    │  │  layout.tsx
-    │  │  page.tsx
-    │  │  
-    │  ├─api
-    │  │  ├─ask
-    │  │  │      route.ts
-    │  │  │      
-    │  │  └─solve
-    │  │          route.ts
-    │  │          
-    │  ├─atoms
-    │  │      IsLoginAtom.tsx
-    │  │      
-    │  ├─cbt
-    │  │      page.tsx
-    │  │      
-    │  ├─chat
-    │  │      page.tsx
-    │  │      
-    │  ├─exam
-    │  │      page.tsx
-    │  │      
-    │  ├─mypage
-    │  │      page.tsx
-    │  │      
-    │  ├─note
-    │  │      page.tsx
-    │  │      
-    │  └─solve
-    │          page.tsx
-    │          
-    ├─components
-    │  ├─layout
-    │  │      AnimatePageWrapper.tsx
-    │  │      Header.tsx
-    │  │      Layout.tsx
-    │  │      Sidebar.tsx
-    │  │      
-    │  ├─solve
-    │  │      FilterSidebar.tsx
-    │  │      HamburgerButton.tsx
-    │  │      ProblemViewer.tsx
-    │  │      QuestionCard.tsx
-    │  │      SubjectTabs.tsx
-    │  │      
-    │  └─ui
-    │          AnswerToggle.tsx
-    │          Button.tsx
-    │          ChatBox.tsx
-    │          ErrorAlert.tsx
-    │          LoadingIndicator.tsx
-    │          QuestionCard.tsx
-    │          ScrollToTopButton.tsx
-    │          SelectBox.tsx
-    │          SubjectSelect.tsx
-    │          
-    ├─hooks
-    │      useAskLLM.ts
-    │      useSolveProblem.ts
-    │      
-    ├─lib
-    │      constants.ts
-    │      utils.ts
-    │      
-    ├─styles
-    │      globals.css
-    │      
-    ├─types
-    │      FilterState.ts
-    │      ProblemViwer.ts
-    │      wrongNote.ts
-    │      
-    └─utils
+\---src
+    +---app
+    |   |   favicon.ico
+    |   |   layout.tsx
+    |   |   page.tsx
+    |   |   
+    |   +---api
+    |   |   +---ask
+    |   |   |       route.ts
+    |   |   |       
+    |   |   +---chat
+    |   |   |       route.ts
+    |   |   |       
+    |   |   \---solve
+    |   |           route.ts
+    |   |           
+    |   +---atoms
+    |   |       IsLoginAtom.tsx
+    |   |       
+    |   +---cbt
+    |   |       page.tsx
+    |   |       
+    |   +---chat
+    |   |       page.tsx
+    |   |       
+    |   +---exam
+    |   |       page.tsx
+    |   |       
+    |   +---mypage
+    |   |       page.tsx
+    |   |       
+    |   +---note
+    |   |       page.tsx
+    |   |       
+    |   \---solve
+    |           page.tsx
+    |           
+    +---atoms
+    |       sidebarAtom.ts
+    |       
+    +---components
+    |   +---chat
+    |   |       ChatBox.tsx
+    |   |       ChatInput.tsx
+    |   |       
+    |   +---layout
+    |   |       Header.tsx
+    |   |       Layout.tsx
+    |   |       Sidebar.tsx
+    |   |       
+    |   +---solve
+    |   |       FilterSidebar.tsx
+    |   |       HamburgerButton.tsx
+    |   |       ProblemViewer.tsx
+    |   |       QuestionCard.tsx
+    |   |       SubjectTabs.tsx
+    |   |       
+    |   \---ui
+    |           Button.tsx
+    |           ErrorAlert.tsx
+    |           ScrollToTopButton.tsx
+    |           SelectBox.tsx
+    |           
+    +---hooks
+    |       useAskLLM.ts
+    |       useAutoResizeTextarea.ts
+    |       useChat.ts
+    |       useSolveProblem.ts
+    |       
+    +---lib
+    |       constants.ts
+    |       utils.ts
+    |       
+    +---styles
+    |       globals.css
+    |       
+    +---types
+    |       Chat.ts
+    |       FilterState.ts
+    |       Message.ts
+    |       Problem.ts
+    |       ProblemViwer.ts
+    |       wrongNote.ts
+    |       
+    \---utils
             getCode.ts
             localWrongNote.ts
             problemUtils.ts
-            

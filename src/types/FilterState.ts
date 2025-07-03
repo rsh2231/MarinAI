@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
 
-export type LicenseType = "항해사" | "기관사" | "소형선박조종사" | "";
+export type LicenseType = "항해사" | "기관사" | "소형선박조종사" | null;
 
 export type FilterState = {
   year: string;
