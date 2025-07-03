@@ -151,10 +151,10 @@ export default function ProblemViewer({
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 pb-24 text-foreground-dark">
+    <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pb-20 text-foreground-dark">
       {/* 상단 경로 */}
       {selectedBlock && (
-        <h2 className="text-lg sm:text-xl font-semibold mb-3">
+        <h2 className="text-base sm:text-lg font-semibold mb-3">
           {year}년 {license} {levelStr && `${levelStr}급`} {round} &gt;{" "}
           <span className="text-primary">
             {selectedBlock.string.replace(/^\d+\.\s*/, "")}
@@ -164,7 +164,7 @@ export default function ProblemViewer({
 
       {/* 진행률 */}
       <div className="w-full mb-6 flex justify-center">
-        <div className="w-full px-4 sm:w-3/4 md:w-1/2">
+        <div className="w-full px-3 sm:px-4 sm:w-3/4 md:w-1/2">
           <div className="flex items-center justify-center text-xs text-gray-300 mb-2">
             <div className="flex items-center gap-2">
               <span className="text-blue-400">📘</span>
@@ -187,11 +187,13 @@ export default function ProblemViewer({
       </div>
 
       {/* 탭 */}
-      <SubjectTabs
-        subjects={filteredSubjectNames}
-        selected={selectedSubject}
-        setSelected={onSelectSubject}
-      />
+      <div className="flex justify-center px-4 sm:px-6">
+        <SubjectTabs
+          subjects={filteredSubjectNames}
+          selected={selectedSubject}
+          setSelected={onSelectSubject}
+        />
+      </div>
 
       {/* 문제 카드 */}
       <AnimatePresence mode="wait">
@@ -202,7 +204,7 @@ export default function ProblemViewer({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="mt-6 space-y-8"
+            className="mt-6 sm:mt-8 space-y-5 sm:space-y-8"
           >
             {selectedBlock.questions.map((q) => (
               <QuestionCard
@@ -252,7 +254,7 @@ export default function ProblemViewer({
             className="flex flex-col items-center justify-center text-gray-400 text-center mt-12 px-4 py-10 border border-gray-700 rounded-xl bg-[#1f2937]/40 shadow-inner"
           >
             <span className="text-4xl mb-3">📭</span>
-            <span className="text-lg font-medium text-blue-300">
+            <span className="text-base sm:text-lg font-medium text-blue-300">
               선택한 과목에 해당하는 문제가 없습니다.
             </span>
             <span className="text-sm text-gray-500 mt-2">

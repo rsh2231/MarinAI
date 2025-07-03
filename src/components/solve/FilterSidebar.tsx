@@ -35,7 +35,7 @@ const SubjectButton = React.memo(function SubjectButton({
     <button
       type="button"
       onClick={() => onToggle(subject)}
-      className={`px-3 py-1 rounded-full text-sm font-medium border transition-colors duration-200
+      className={`px-3 py-1 rounded-lg text-sm font-medium border transition-colors duration-200
         ${isSelected
           ? "bg-blue-600 text-white border-blue-500"
           : "bg-gray-700 text-gray-300 border-gray-500 hover:bg-gray-600"

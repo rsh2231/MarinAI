@@ -57,9 +57,9 @@ function QuestionCardComponent({
     >
       {/* 문제 텍스트 */}
       <div className="mb-4 text-gray-100">
-        <div className="flex flex-col sm:flex-col sm:items-left gap-2 font-medium text-sm sm:text-base">
-          <span className="text-gray-400">문제 {question.num}</span>
-          <p className="whitespace-pre-wrap">{textWithoutImage}</p>
+        <div className="flex flex-col gap-2 font-medium text-base sm:text-lg">
+          <span className="text-gray-400 text-sm sm:text-base">문제 {question.num}</span>
+          <p className="whitespace-pre-wrap leading-relaxed">{textWithoutImage}</p>
         </div>
       </div>
 
@@ -106,7 +106,7 @@ function QuestionCardComponent({
               className={`${base} ${selectedCls} ${correctCls} ${wrongCls}`}
               onClick={() => onSelect(opt.label)}
             >
-              <span className="font-semibold text-sm min-w-[24px]">
+              <span className="font-semibold text-base min-w-[24px]">
                 {opt.label}.
               </span>
               {isImageCode(opt.value) ? (
@@ -123,7 +123,7 @@ function QuestionCardComponent({
                   />
                 </div>
               ) : (
-                <span className="text-gray-100 text-sm">{opt.value}</span>
+                <span className="text-gray-100 text-base">{opt.value}</span>
               )}
             </li>
           );

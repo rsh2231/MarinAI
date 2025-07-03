@@ -42,28 +42,9 @@ export default function Sidebar({ filterState, className = "" }: SidebarProps) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.3 }}
-              className={`fixed top-0 left-0 z-40 h-full w-72 p-6 bg-[#1f2937] text-white border-r border-gray-700 shadow-xl md:hidden ${className}`}
+              className={`fixed top-0 left-0 z-40 h-full w-1/2 p-4 bg-[#1f2937] text-white border-r border-gray-700 shadow-xl md:hidden ${className}`}
             >
-              {/* 닫기 버튼 */}
-              <motion.button
-                onClick={handleClose}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="mb-6 p-2 rounded-md bg-[#273449] hover:bg-[#324264] focus:outline-none focus:ring-2 focus:ring-blue-500"
-                aria-label="사이드바 닫기"
-              >
-                <motion.div
-                  initial={{ rotate: -90 }}
-                  animate={{ rotate: 0 }}
-                  exit={{ rotate: 90 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <X className="w-6 h-6 text-blue-400" />
-                </motion.div>
-              </motion.button>
-
+             
               <FilterSidebar
                 {...filterState}
                 sidebarOpen={sidebarOpen}

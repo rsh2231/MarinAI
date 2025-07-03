@@ -8,8 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "해기사 GPT Q&A",
-  description: "LLM 기반 해기사 시험 질의응답/문제풀이 서비스",
+  title: "MarinAI",
+  description: "해기사 시험 대비 지능형 QA 튜터 서비스",
 };
 
 export default function RootLayout({
@@ -19,12 +19,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className="dark">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body
-        className={`${inter.className} bg-background-dark text-foreground-dark transition-colors duration-300`}
+        className={`${inter.className} bg-background-dark text-foreground-dark transition-colors duration-300 overflow-x-hidden`}
       >
         <Layout>{children}</Layout>
         <ToastContainer
-          position="bottom-center"
+          position="top-center"
           autoClose={1000}
           hideProgressBar={false}
           closeOnClick

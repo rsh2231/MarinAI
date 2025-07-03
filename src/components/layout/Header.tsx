@@ -1,8 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useSetAtom } from "jotai";
-import { sidebarOpenAtom } from "@/atoms/sidebarAtom";
 import HamburgerButton from "../solve/HamburgerButton";
 import Link from "next/link";
 
@@ -17,7 +15,7 @@ export default function Header() {
   const isSolvePage = pathname === "/solve";
 
   return (
-    <header className="bg-[#121212] sticky top-0 z-50 border-b border-gray-800">
+    <header className="bg-[#121212] sticky top-0 z-50 border-b border-gray-300">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-2 sm:gap-4">
 
         {/* 왼쪽: 햄버거 + 로고 */}
