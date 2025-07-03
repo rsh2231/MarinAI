@@ -14,17 +14,16 @@ export default function Header() {
   const pathname = usePathname();
   const isSolvePage = pathname === "/solve";
 
-  // 클릭 시 부드럽게 최상단으로 스크롤 이동 함수
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <header className="bg-[#121212] sticky top-0 z-50 border-b border-gray-300 w-full">
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-3 sm:px-4 py-3 gap-2">
+    <header className="bg-[#121212] sticky top-0 z-50 border-b border-gray-700 w-full"> 
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-3 sm:px-4 py-3 gap-2">
         {/* 왼쪽: 햄버거 + 로고 */}
         <div className="flex items-center gap-3 min-w-0">
-          {isSolvePage && <HamburgerButton className="sm:hidden" />}
+          {isSolvePage && <HamburgerButton className="md:hidden" />}
           <h1 className="text-lg sm:text-xl font-bold tracking-wide truncate whitespace-nowrap">
             <Link
               href="/"
@@ -39,7 +38,7 @@ export default function Header() {
         {/* 오른쪽: 네비게이션 */}
         <nav className="flex items-center gap-1 sm:gap-3 text-sm sm:text-base overflow-x-auto whitespace-nowrap">
           {navItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}

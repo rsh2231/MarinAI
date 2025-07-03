@@ -13,13 +13,7 @@ import { getCode } from "@/utils/getCode";
 import Button from "@/components/ui/Button";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
-const licenseCodeMap = {
-  기관사: "E",
-  항해사: "D",
-  소형선박조종사: "S",
-} as const;
-
-type LicenseType = keyof typeof licenseCodeMap;
+type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
 interface Props {
   year: string;
@@ -27,7 +21,6 @@ interface Props {
   level: string;
   round: string;
   selectedSubjects: string[];
-  visible?: boolean;
 }
 
 export default function ProblemViewer({
@@ -36,10 +29,7 @@ export default function ProblemViewer({
   level,
   round,
   selectedSubjects,
-  visible = false,
 }: Props) {
-  if (!visible) return null;
-  
   const [data, setData] = useState<ProblemData | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showAnswer, setShowAnswer] = useState<Record<string, boolean>>({});
@@ -47,7 +37,7 @@ export default function ProblemViewer({
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 
   const levelStr = license === "소형선박조종사" ? "" : level.replace("급", "");
-  const code = getCode(license, year, round, level);
+  const code = getCode(license, year, round, levelStr);
   const filePath = `/data/${license}/${code}/${code}.json`;
 
   // 문제 JSON 데이터 로딩
@@ -58,10 +48,14 @@ export default function ProblemViewer({
         if (!res.ok) throw new Error("문제 파일을 불러올 수 없습니다.");
         const json = await res.json();
         setData(json);
+        // 상태 초기화
         setAnswers({});
         setShowAnswer({});
+        setError("");
+        setSelectedSubject(null); // 과목 선택도 초기화
       } catch (err: any) {
         setError(err.message);
+        setData(null);
       }
     };
     fetchData();
@@ -85,22 +79,18 @@ export default function ProblemViewer({
 
   // 선택된 과목 설정 (선택되지 않았거나 변경되었을 때 자동 설정)
   useEffect(() => {
-    if (!filteredSubjectNames.length) {
-      if (selectedSubject !== null) setSelectedSubject(null);
-    } else if (
-      !selectedSubject ||
-      !filteredSubjectNames.includes(selectedSubject)
-    ) {
-      setSelectedSubject(filteredSubjectNames[0]);
+    if (filteredSubjectNames.length > 0) {
+      if (!selectedSubject || !filteredSubjectNames.includes(selectedSubject)) {
+        setSelectedSubject(filteredSubjectNames[0]);
+      }
+    } else {
+      setSelectedSubject(null);
     }
   }, [filteredSubjectNames, selectedSubject]);
 
-  const onSelectSubject = useCallback(
-    (subj: string) => {
-      setSelectedSubject(subj);
-    },
-    [setSelectedSubject]
-  );
+  const onSelectSubject = useCallback((subj: string) => {
+    setSelectedSubject(subj);
+  }, []);
 
   const selectedBlock = filteredSubjects.find(
     (t) => t.string === selectedSubject
@@ -122,18 +112,21 @@ export default function ProblemViewer({
 
   // 해설 보기/오답노트 저장 처리
   const toggleAnswer = (qNum: string, question: Question) => {
-    setShowAnswer((prev) => ({ ...prev, [qNum]: !prev[qNum] }));
+    const isNowShowing = !showAnswer[qNum];
+    setShowAnswer((prev) => ({ ...prev, [qNum]: isNowShowing }));
 
-    const selected = answers[qNum];
-    if (selected && selected !== question.answer) {
-      const savedNotes = loadWrongNotes();
-      if (!savedNotes.find((note) => note.question === question.questionsStr)) {
-        saveWrongNote({
-          id: uuidv4(),
-          question: question.questionsStr,
-          explanation: question.explanation ?? "",
-          createdAt: new Date().toISOString(),
-        });
+    if (isNowShowing) { // 해설을 방금 열었을 때
+      const selected = answers[qNum];
+      if (selected && selected !== question.answer) {
+        const savedNotes = loadWrongNotes();
+        if (!savedNotes.find((note) => note.question === question.questionsStr)) {
+          saveWrongNote({
+            id: uuidv4(),
+            question: question.questionsStr,
+            explanation: question.explanation ?? "",
+            createdAt: new Date().toISOString(),
+          });
+        }
       }
     }
   };
@@ -159,7 +152,7 @@ export default function ProblemViewer({
       {/* 상단 경로 */}
       {selectedBlock && (
         <h2 className="text-s xs:text-base sm:text-2xl font-semibold mb-3 text-center px-2 truncate">
-          {year}년 &gt; {license} &gt; {levelStr && `${levelStr}급`} &gt;{" "}
+          {year}년 &gt;{" "}{license} &gt;{" "} {levelStr && `${levelStr}급`} &gt;{" "}
           {round} &gt;{" "}
           <span className="text-primary whitespace-nowrap">
             {selectedBlock.string.replace(/^\d+\.\s*/, "")}
@@ -182,9 +175,10 @@ export default function ProblemViewer({
             <div
               className="h-full bg-blue-500 rounded-full transition-all duration-300 ease-in-out"
               style={{
-                width: `${
-                  ((selectedIndex + 1) / filteredSubjectNames.length) * 100
-                }%`,
+                width: `${filteredSubjectNames.length > 0
+                  ? ((selectedIndex + 1) / filteredSubjectNames.length) * 100
+                  : 0
+                  }%`,
               }}
             />
           </div>
@@ -229,10 +223,12 @@ export default function ProblemViewer({
               <Button
                 variant="neutral"
                 onClick={() => {
-                  setSelectedSubject(filteredSubjectNames[selectedIndex - 1]);
-                  scrollToTop();
+                  if (selectedIndex > 0) {
+                    setSelectedSubject(filteredSubjectNames[selectedIndex - 1]);
+                    scrollToTop();
+                  }
                 }}
-                disabled={selectedIndex === 0}
+                disabled={selectedIndex <= 0}
                 className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
               >
                 <ArrowBackIos className="mr-1 text-xs sm:text-sm" />
@@ -241,10 +237,12 @@ export default function ProblemViewer({
 
               <Button
                 onClick={() => {
-                  setSelectedSubject(filteredSubjectNames[selectedIndex + 1]);
-                  scrollToTop();
+                  if (selectedIndex < filteredSubjectNames.length - 1) {
+                    setSelectedSubject(filteredSubjectNames[selectedIndex + 1]);
+                    scrollToTop();
+                  }
                 }}
-                disabled={selectedIndex === filteredSubjectNames.length - 1}
+                disabled={selectedIndex >= filteredSubjectNames.length - 1}
                 className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
               >
                 다음 과목

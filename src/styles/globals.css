@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  --header-height: 60px;
   --background: #121212;
   --background-dark: #121212;
   --foreground: #e0e0e0;
@@ -21,6 +22,11 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.bg-dots {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 1rem 1rem;
 }
 
 .Toastify__toast-container {
