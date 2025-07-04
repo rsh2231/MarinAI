@@ -48,11 +48,12 @@ export const OmrSheet: React.FC = () => {
 
       {/* OMR 시트 본체 */}
       <motion.aside
-        className="fixed top-0 right-0 h-full w-[90vw] max-w-[280px] bg-[#1e293b] border-l border-gray-700 z-50 flex flex-col lg:static lg:flex lg:w-64 lg:rounded-l-lg"
+        className="fixed top-0 right-0 h-full w-[90vw] max-w-[280px] bg-[#1e293b] border-l border-gray-700 z-50 flex flex-col lg:w-64 lg:max-w-none overflow-auto"
         initial={{ x: "100%" }}
         animate={{
           x:
-            isVisible || (typeof window !== "undefined" && window.innerWidth >= 1024)
+            isVisible ||
+            (typeof window !== "undefined" && window.innerWidth >= 1024)
               ? 0
               : "100%",
         }}
@@ -87,8 +88,7 @@ export const OmrSheet: React.FC = () => {
                     let bgClass = isAnswered
                       ? "bg-gray-600 hover:bg-gray-500"
                       : "bg-gray-800 hover:bg-gray-700";
-                    if (isCurrent)
-                      bgClass = "bg-blue-600 ring-2 ring-blue-400";
+                    if (isCurrent) bgClass = "bg-blue-600 ring-2 ring-blue-400";
 
                     return (
                       <button

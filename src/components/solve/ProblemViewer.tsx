@@ -12,6 +12,7 @@ import { Question, ProblemData } from "@/types/ProblemViwer";
 import { getCode } from "@/utils/getCode";
 import Button from "@/components/ui/Button";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { EmptyMessage } from "../ui/EmptyMessage";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
@@ -145,14 +146,7 @@ export default function ProblemViewer({
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-2 sm:px-4 pb-20 text-foreground-dark">
-      {/* {selectedBlock && (
-        <h2 className="text-s xs:text-base sm:text-2xl font-semibold mb-3 text-center px-2 truncate">
-          {year}년 &gt;{" "} {license} &gt;{" "} {levelStr && `${levelStr}급`} &gt;{" "}
-          {round}
-        </h2>
-      )} */}
-
+    <div className="w-full max-w-3xl mx-auto px-2 sm:px-4 pb-10 text-foreground-dark">
       <div className="w-full mb-4 flex justify-center px-2">
         <div className="w-full sm:w-3/4 md:w-1/2">
           <div className="flex items-center justify-center text-xs xs:text-sm text-gray-300 mb-1">
@@ -241,21 +235,9 @@ export default function ProblemViewer({
             </div>
           </motion.section>
         ) : (
-          <motion.div
-            key="empty-state"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex flex-col items-center justify-center text-gray-400 text-center mt-12 px-4 py-10 border border-gray-700 rounded-xl bg-[#1f2937]/40 shadow-inner mx-2"
-          >
-            <span className="text-4xl mb-3">📭</span>
-            <span className="text-base sm:text-lg font-medium text-blue-300">
-              선택한 과목에 해당하는 문제가 없습니다.
-            </span>
-            <span className="text-sm text-gray-500 mt-2">
-              사이드바에서 과목을 선택해 보세요.
-            </span>
-          </motion.div>
+          <div className="flex-1 flex items-center justify-center min-h-[300px]">
+            <EmptyMessage />
+          </div>
         )}
       </AnimatePresence>
     </div>

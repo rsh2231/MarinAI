@@ -35,8 +35,8 @@ export const SubmitModal: React.FC<SubmitModalProps> = ({ onConfirm, onCancel, t
         <p className="text-sm text-gray-400">제출 후에는 수정할 수 없습니다.</p>
       </div>
       <div className="mt-6 flex gap-3">
-        <Button onClick={onCancel} variant="neutral" className="flex-1">취소</Button>
-        <Button onClick={onConfirm} variant="primary" className="flex-1">제출</Button>
+        <Button onClick={onCancel} variant="neutral" className="flex-1 justify-center">취소</Button>
+        <Button onClick={onConfirm} variant="primary" className="flex-1 justify-center">제출</Button>
       </div>
     </motion.div>
   </motion.div>

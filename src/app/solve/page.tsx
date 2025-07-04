@@ -57,9 +57,9 @@ export default function SolvePage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="bg-[#0f172a] text-white"
+      className="bg-[#0f172a] text-white min-h[100dvh]"
     >
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 p-4 min-h-screen">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 p-4 flex-1">
         {/* 왼쪽: 사이드바 */}
         <Sidebar
           filterState={filterState}
