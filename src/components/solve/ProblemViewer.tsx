@@ -40,7 +40,6 @@ export default function ProblemViewer({
   const code = getCode(license, year, round, levelStr);
   const filePath = `/data/${license}/${code}/${code}.json`;
 
-  // 문제 JSON 데이터 로딩
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,11 +47,10 @@ export default function ProblemViewer({
         if (!res.ok) throw new Error("문제 파일을 불러올 수 없습니다.");
         const json = await res.json();
         setData(json);
-        // 상태 초기화
         setAnswers({});
         setShowAnswer({});
         setError("");
-        setSelectedSubject(null); // 과목 선택도 초기화
+        setSelectedSubject(null);
       } catch (err: any) {
         setError(err.message);
         setData(null);
@@ -61,10 +59,8 @@ export default function ProblemViewer({
     fetchData();
   }, [filePath]);
 
-  // 숫자를 제거한 과목명 추출
   const normalizeSubject = (s: string) => s.replace(/^\d+\.\s*/, "");
 
-  // 선택된 과목명에 맞는 데이터 필터링
   const filteredSubjects = useMemo(() => {
     if (!data) return [];
     if (selectedSubjects.length === 0) return [];
@@ -77,7 +73,6 @@ export default function ProblemViewer({
     return filteredSubjects.map((t) => t.string);
   }, [filteredSubjects]);
 
-  // 선택된 과목 설정 (선택되지 않았거나 변경되었을 때 자동 설정)
   useEffect(() => {
     if (filteredSubjectNames.length > 0) {
       if (!selectedSubject || !filteredSubjectNames.includes(selectedSubject)) {
@@ -100,7 +95,8 @@ export default function ProblemViewer({
   );
 
   // 정답 선택 처리
-  const handleSelect = (qNum: string, choice: string, question: Question) => {
+  const handleSelect = (question: Question, choice: string) => {
+    const qNum = question.num;
     const correct = question.answer;
     setAnswers((prev) => ({ ...prev, [qNum]: choice }));
 
@@ -111,15 +107,18 @@ export default function ProblemViewer({
   };
 
   // 해설 보기/오답노트 저장 처리
-  const toggleAnswer = (qNum: string, question: Question) => {
+  const toggleAnswer = (question: Question) => {
+    const qNum = question.num;
     const isNowShowing = !showAnswer[qNum];
     setShowAnswer((prev) => ({ ...prev, [qNum]: isNowShowing }));
 
-    if (isNowShowing) { // 해설을 방금 열었을 때
+    if (isNowShowing) {
       const selected = answers[qNum];
       if (selected && selected !== question.answer) {
         const savedNotes = loadWrongNotes();
-        if (!savedNotes.find((note) => note.question === question.questionsStr)) {
+        if (
+          !savedNotes.find((note) => note.question === question.questionsStr)
+        ) {
           saveWrongNote({
             id: uuidv4(),
             question: question.questionsStr,
@@ -132,8 +131,6 @@ export default function ProblemViewer({
   };
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "auto" });
-
-  // --- 렌더링 ---
 
   if (error) {
     return <p className="text-danger text-center mt-6 text-sm">⚠️ {error}</p>;
@@ -149,18 +146,13 @@ export default function ProblemViewer({
 
   return (
     <div className="w-full max-w-3xl mx-auto px-2 sm:px-4 pb-20 text-foreground-dark">
-      {/* 상단 경로 */}
       {selectedBlock && (
         <h2 className="text-s xs:text-base sm:text-2xl font-semibold mb-3 text-center px-2 truncate">
-          {year}년 &gt;{" "}{license} &gt;{" "} {levelStr && `${levelStr}급`} &gt;{" "}
-          {round} &gt;{" "}
-          <span className="text-primary whitespace-nowrap">
-            {selectedBlock.string.replace(/^\d+\.\s*/, "")}
-          </span>
+          {year}년 &gt;{" "} {license} &gt;{" "} {levelStr && `${levelStr}급`} &gt;{" "}
+          {round}
         </h2>
       )}
 
-      {/* 진행률 */}
       <div className="w-full mb-4 flex justify-center px-2">
         <div className="w-full sm:w-3/4 md:w-1/2">
           <div className="flex items-center justify-center text-xs xs:text-sm text-gray-300 mb-1">
@@ -175,17 +167,17 @@ export default function ProblemViewer({
             <div
               className="h-full bg-blue-500 rounded-full transition-all duration-300 ease-in-out"
               style={{
-                width: `${filteredSubjectNames.length > 0
-                  ? ((selectedIndex + 1) / filteredSubjectNames.length) * 100
-                  : 0
-                  }%`,
+                width: `${
+                  filteredSubjectNames.length > 0
+                    ? ((selectedIndex + 1) / filteredSubjectNames.length) * 100
+                    : 0
+                }%`,
               }}
             />
           </div>
         </div>
       </div>
 
-      {/* 탭 */}
       <div className="flex justify-center overflow-x-auto px-2 sm:px-6 no-scrollbar">
         <SubjectTabs
           subjects={filteredSubjectNames}
@@ -194,7 +186,6 @@ export default function ProblemViewer({
         />
       </div>
 
-      {/* 문제 카드 & 과목 이동 버튼 */}
       <AnimatePresence mode="wait">
         {selectedBlock ? (
           <motion.section
@@ -211,14 +202,13 @@ export default function ProblemViewer({
                 question={q}
                 selected={answers[q.num]}
                 showAnswer={showAnswer[q.num]}
-                onSelect={(choice) => handleSelect(q.num, choice, q)}
-                onToggle={() => toggleAnswer(q.num, q)}
+                onSelect={(choice) => handleSelect(q, choice)}
+                onToggle={() => toggleAnswer(q)}
                 license={license}
                 code={code}
               />
             ))}
 
-            {/* 과목 이동 버튼 */}
             <div className="flex flex-row sm:flex-row justify-between items-center gap-3 mt-8">
               <Button
                 variant="neutral"

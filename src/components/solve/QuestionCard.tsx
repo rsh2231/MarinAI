@@ -11,7 +11,7 @@ interface Props {
   selected?: string;
   showAnswer?: boolean;
   onSelect: (choice: string) => void;
-  onToggle: () => void;
+  onToggle?: () => void; // 연습 모드에서만 전달
   license: string;
   code: string;
 }
@@ -48,6 +48,9 @@ function QuestionCardComponent({
     ? `/data/${license}/${code}/${code}-${finalImageCode}.png`
     : null;
 
+  // onToggle prop의 존재 여부로 연습/실전 모드를 명확히 구분
+  const isPracticeMode = !!onToggle;
+
   return (
     <motion.article
       layout
@@ -55,7 +58,9 @@ function QuestionCardComponent({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.25 }}
-      className="bg-background-dark border border-white rounded-xl shadow-card mb-6 p-5 transition-colors"
+      className={`bg-background-dark border ${
+        isPracticeMode && showAnswer ? "border-gray-600" : "border-white"
+      } rounded-xl shadow-card mb-6 p-5 transition-colors`}
     >
       {/* 문제 텍스트 */}
       <div className="flex flex-col gap-2 font-medium text-sm sm:text-base">
@@ -69,7 +74,7 @@ function QuestionCardComponent({
 
       {/* 문제 이미지 */}
       {hasImage && imagePath && (
-        <div className="mb-4 flex justify-center">
+        <div className="my-4 flex justify-center">
           <Image
             src={imagePath}
             alt={`문제 ${question.num} 이미지`}
@@ -88,27 +93,32 @@ function QuestionCardComponent({
         {options.map((opt) => {
           const isSelected = selected === opt.label;
           const isCorrect = opt.label === correctAnswer;
-          const isWrong = isSelected && !isCorrect && showAnswer;
+
+          // 연습 모드일 때만 스타일링 계산
+          const showCorrectStyle = isPracticeMode && showAnswer && isCorrect;
+          const isWrong = isPracticeMode && isSelected && !isCorrect && showAnswer;
 
           const base =
             "flex items-center gap-3 px-4 py-3 rounded-md border text-sm cursor-pointer transition-all";
           const selectedCls = isSelected
             ? "border-primary bg-primary/10"
             : "border-gray-700 hover:bg-gray-800/30";
-          const correctCls =
-            showAnswer && isCorrect
-              ? "border-green-500 bg-green-900/20 text-green-300"
-              : "";
-          const wrongCls =
-            showAnswer && isWrong
-              ? "border-red-500 bg-red-900/20 text-red-300"
-              : "";
+          const correctCls = showCorrectStyle
+            ? "border-green-500 bg-green-900/20 text-green-300"
+            : "";
+          const wrongCls = isWrong
+            ? "border-red-500 bg-red-900/20 text-red-300"
+            : "";
 
           return (
             <li
               key={opt.label}
               className={`${base} ${selectedCls} ${correctCls} ${wrongCls}`}
-              onClick={() => onSelect(opt.label)}
+              onClick={() => {
+                // 연습 모드에서 해설이 보일 때는 더 이상 선택하지 못하게 방지
+                if (isPracticeMode && showAnswer) return;
+                onSelect(opt.label);
+              }}
             >
               <span className="font-semibold text-sm sm:text-base min-w-[24px]">
                 {opt.label}.
@@ -116,7 +126,7 @@ function QuestionCardComponent({
               {isImageCode(opt.value) ? (
                 <div className="w-full flex justify-start">
                   <Image
-                    key={opt.value} // 깜빡임 방지
+                    key={opt.value}
                     src={`/data/${license}/${code}/${code}-${opt.value
                       .trim()
                       .slice(1)}.png`}
@@ -138,25 +148,32 @@ function QuestionCardComponent({
         })}
       </ul>
 
-      {/* 해설 보기 버튼 */}
-      <button
-        onClick={onToggle}
-        className="mt-5 text-sm text-blue-400 hover:underline"
-        type="button"
-      >
-        {showAnswer ? "해설 숨기기" : "해설 보기"}
-      </button>
-
-      {/* 해설 내용 */}
-      {showAnswer && (
-        <div className="mt-3 text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
-          ✅ <strong>정답:</strong> {correctAnswer}. {correctText}
-          {question.explanation && (
-            <p className="mt-2 text-gray-400">
-              💡 <strong>해설:</strong> {question.explanation}
-            </p>
+      {/* isPracticeMode일 때만 해설 관련 UI 렌더링 */}
+      {isPracticeMode && (
+        <>
+          <button
+            onClick={onToggle}
+            className="mt-5 text-sm text-blue-400 hover:underline"
+            type="button"
+          >
+            {showAnswer ? "해설 숨기기" : "해설 보기"}
+          </button>
+          {showAnswer && (
+            <div className="mt-3 text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
+              <p className="flex items-center gap-2">
+                ✅ <strong>정답:</strong> {correctAnswer}. {correctText}
+              </p>
+              {question.explanation && (
+                <p className="mt-2 text-gray-400 flex items-start gap-2">
+                  <strong className="flex items-center gap-1 shrink-0">
+                    💡 해설:
+                  </strong>
+                  <span>{question.explanation}</span>
+                </p>
+              )}
+            </div>
           )}
-        </div>
+        </>
       )}
     </motion.article>
   );

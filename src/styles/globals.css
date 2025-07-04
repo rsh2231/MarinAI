@@ -24,11 +24,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.bg-dots {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 1rem 1rem;
-}
-
 .Toastify__toast-container {
   z-index: 9999;
   font-family: 'Inter', Arial, Helvetica, 'Noto Sans KR', sans-serif;
