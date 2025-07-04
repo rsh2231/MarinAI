@@ -10,6 +10,10 @@ export type Question = {
   explanation?: string;
 };
 
+export type QuestionWithSubject = Question & {
+  subjectName: string;
+};
+
 export interface Subject {
   string: string;
   questions: Question[];
