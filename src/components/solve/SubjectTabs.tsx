@@ -23,7 +23,7 @@ const SubjectButton = React.memo(function SubjectButton({
     <button
       ref={buttonRef}
       onClick={onClick}
-      className={`flex-shrink-0 px-5 py-3 sm:px-6 sm:py-3 mx-1 whitespace-nowrap border-b-2 font-semibold text-base transition-all duration-150 scroll-snap-start
+      className={`flex-shrink-0 px-5 py-3 sm:px-6 sm:py-3 mx-1 whitespace-nowrap border-b-2 font-semibold text-sm transition-all duration-150 scroll-snap-start
         ${
           isSelected
             ? "border-blue-500 text-blue-400"

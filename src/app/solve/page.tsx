@@ -85,7 +85,7 @@ export default function SolvePage() {
                   <p className="text-base text-gray-300 font-medium leading-relaxed mb-6">
                     {isFilterReady
                       ? "아래에서 모드를 선택하여 시험을 시작하세요!"
-                      : "왼쪽 필터에서 시험 정보를 선택하세요."}
+                      : "필터에서 시험 정보를 선택하세요."}
                   </p>
                 </div>
 

@@ -35,7 +35,7 @@ export default function Home() {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="relative min-h-screen flex flex-col items-center px-3 py-10 sm:px-6 sm:py-30 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center px-3 py-30 sm:px-6 overflow-hidden"
     >
       {/* 제목 */}
       <motion.h1

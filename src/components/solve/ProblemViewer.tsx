@@ -146,12 +146,12 @@ export default function ProblemViewer({
 
   return (
     <div className="w-full max-w-3xl mx-auto px-2 sm:px-4 pb-20 text-foreground-dark">
-      {selectedBlock && (
+      {/* {selectedBlock && (
         <h2 className="text-s xs:text-base sm:text-2xl font-semibold mb-3 text-center px-2 truncate">
           {year}년 &gt;{" "} {license} &gt;{" "} {levelStr && `${levelStr}급`} &gt;{" "}
           {round}
         </h2>
-      )}
+      )} */}
 
       <div className="w-full mb-4 flex justify-center px-2">
         <div className="w-full sm:w-3/4 md:w-1/2">
