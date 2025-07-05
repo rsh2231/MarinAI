@@ -7,10 +7,11 @@ import { SUBJECTS_BY_LICENSE } from "@/lib/constants";
 
 import Sidebar from "@/components/layout/Sidebar";
 import ProblemViewer from "@/components/solve/ProblemViewer";
-import CbtViewer from "@/components/cbt/CbtViewer";
+import ExamViewer from "@/components/exam/ExamViewer";
 import Button from "@/components/ui/Button";
 
 import { useWindowWidth } from "@/hooks/useWindowWidth";
+import { OmrSheet } from "@/components/exam/OmrSheet";
 
 export default function SolvePage() {
   // 1. 모든 상태를 "선택되지 않음"으로 초기화합니다.
@@ -61,9 +62,9 @@ export default function SolvePage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="bg-[#0f172a] text-white min-h[100dvh]"
+      className="bg-[#0f172a] min-h-screen md:min-h-0 flex flex-col"
     >
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 p-4 flex-1">
+      <div className="max-w-7xl mx-auto w-full flex md:flex-row md:gap-8 flex-1">
         {/* 왼쪽: 사이드바 */}
         <Sidebar
           filterState={filterState}
@@ -72,7 +73,7 @@ export default function SolvePage() {
         />
 
         {/* 오른쪽: 메인 콘텐츠 */}
-        <main className="flex-1 min-w-0">
+        <main className="flex-1 min-w-0 flex flex-col items-center p-6">
           <AnimatePresence mode="wait">
             {/* 4. isFilterReady와 mode에 따라 적절한 UI를 조건부로 렌더링 */}
             {!isFilterReady || !mode ? (
@@ -82,9 +83,9 @@ export default function SolvePage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="flex flex-col items-center text-center bg-[#1e293b] h-full p-6 sm:p-10 rounded-lg border border-gray-700 shadow-lg min-h-[calc(100vh-8rem)]"
+                className="flex flex-col items-center w-full max-w-lg text-center bg-[#1e293b] p-6 sm:p-10 rounded-lg border border-gray-700 shadow-lg mt-25"
               >
-                <div className="flex flex-col items-center mt-30">
+                <div className="flex flex-col items-center m-8">
                   <Lightbulb className="w-10 h-10 text-blue-400 mb-4 animate-pulse" />
                   <p className="text-base text-gray-300 font-medium leading-relaxed mb-6">
                     {isFilterReady
@@ -126,6 +127,7 @@ export default function SolvePage() {
                 key="practice-viewer"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                className="w-full h-full"
               >
                 {/* license가 null이 아님을 isFilterReady와 mode 조건으로 보장 */}
                 <ProblemViewer
@@ -141,16 +143,18 @@ export default function SolvePage() {
                 key="exam-viewer"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                className="w-full md:w-10/12 h-auto"
               >
-                {/* license가 null이 아님을 isFilterReady와 mode 조건으로 보장 */}
-                <CbtViewer
+                <ExamViewer
                   year={year}
                   license={license!}
                   level={level}
                   round={round}
                   selectedSubjects={selectedSubjects}
-                  durationMinutes={125}
-                />
+                  durationMinutes={125} />
+                <div className="w-full lg:w-64 shrink-0">
+                  <OmrSheet />
+                </div>
               </motion.div>
             )}
           </AnimatePresence>

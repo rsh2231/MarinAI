@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import {
   groupedQuestionsAtom,
   answersAtom,
-} from "@/atoms/cbtAtoms";
+} from "@/atoms/examAtoms";
 import { Eye, EyeOff, RotateCcw, BarChart2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";

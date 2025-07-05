@@ -1,8 +1,8 @@
 import { atom } from "jotai";
 import { QuestionWithSubject } from "@/types/ProblemViwer";
 
-export const cbtLoadingAtom = atom<boolean>(true); // 로딩 상태 atom
-export const cbtErrorAtom = atom<string | null>(null); // 에러 메시지 atom
+export const examLoadingAtom = atom<boolean>(true); // 로딩 상태 atom
+export const examErrorAtom = atom<string | null>(null); // 에러 메시지 atom
 
 export const groupedQuestionsAtom = atom<
   { subjectName: string; questions: QuestionWithSubject[] }[]

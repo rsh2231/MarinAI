@@ -10,7 +10,7 @@ import {
   answersAtom,
   currentQuestionIndexAtom,
   isOmrVisibleAtom,
-} from "@/atoms/cbtAtoms";
+} from "@/atoms/examAtoms";
 
 export const OmrSheet: React.FC = () => {
   const [groupedQuestions] = useAtom(groupedQuestionsAtom);

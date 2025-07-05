@@ -10,13 +10,13 @@ import QuestionCard from "../solve/QuestionCard";
 import { getCode } from "@/utils/getCode";
 import { ResultView } from "./ResultView";
 import { SubmitModal } from "./SubmitModal";
-import { CbtLoader } from "./CbtLoader";
+import { ExamLoader } from "./ExamLoader";
 import { EmptyMessage } from "../ui/EmptyMessage";
 import { OmrSheet } from "./OmrSheet";
 
 import {
-  cbtLoadingAtom,
-  cbtErrorAtom,
+  examLoadingAtom,
+  examErrorAtom,
   groupedQuestionsAtom,
   allQuestionsAtom,
   currentQuestionIndexAtom,
@@ -24,7 +24,7 @@ import {
   showResultAtom,
   timeLeftAtom,
   isOmrVisibleAtom,
-} from "@/atoms/cbtAtoms";
+} from "@/atoms/examAtoms";
 
 import { ProblemData } from "@/types/ProblemViwer";
 
@@ -37,7 +37,7 @@ interface Props {
   durationMinutes: number;
 }
 
-export default function CbtViewer({
+export default function ExamViewer({
   year,
   license,
   level,
@@ -45,8 +45,8 @@ export default function CbtViewer({
   selectedSubjects,
   durationMinutes,
 }: Props) {
-  const [isLoading, setIsLoading] = useAtom(cbtLoadingAtom);
-  const [error, setError] = useAtom(cbtErrorAtom);
+  const [isLoading, setIsLoading] = useAtom(examLoadingAtom);
+  const [error, setError] = useAtom(examErrorAtom);
   const [, setGroupedQuestions] = useAtom(groupedQuestionsAtom);
   const allQuestions = useAtomValue(allQuestionsAtom);
   const [currentIdx, setCurrentIdx] = useAtom(currentQuestionIndexAtom);
@@ -148,7 +148,7 @@ export default function CbtViewer({
 
   if (!isMounted) return null; // SSR-safe: hydration 불일치 방지
 
-  if (isLoading) return <CbtLoader />;
+  if (isLoading) return <ExamLoader />;
   if (error) return <div className="text-red-400 flex justify-center">{error}</div>;
   if (allQuestions.length === 0) return <EmptyMessage />;
 
@@ -167,45 +167,37 @@ export default function CbtViewer({
   return (
     <div className="flex flex-col lg:flex-row border border-gray-700 rounded-lg bg-[#0f172a] h-full overflow-hidden">
       <div className="flex-1 flex flex-col">
-        <header className="flex justify-between items-center p-3 border-b border-gray-700 bg-[#1e293b]">
-          <div className="flex items-center gap-2 text-sm sm:text-base">
-            <Timer className="w-5 h-5 text-blue-400" />
-            <span className="font-mono">{formatTime(timeLeft)}</span>
+        <header className="flex justify-between items-center p-3 border-b border-gray-700 bg-[#0f172a]">
+          <div className="flex items-center gap-2 text-sm text-blue-400 font-mono">
+            <Timer className="w-4 h-4" />
+            <span>{formatTime(timeLeft)}</span>
           </div>
-          <div className="text-center">
-            <h2 className="text-sm font-semibold">
+          <div className="flex flex-col items-center">
+            <h2 className="text-xs sm:text-sm text-white/80">
               문제 {currentIdx + 1} / {allQuestions.length}
             </h2>
-            <div className="w-24 sm:w-32 h-1.5 bg-gray-600 rounded-full overflow-hidden mt-1">
+            <div className="w-24 h-1.5 bg-gray-700 rounded-full mt-1">
               <div
-                className="h-full bg-blue-500"
+                className="h-full bg-blue-500 transition-all duration-300"
                 style={{ width: `${(answeredCount / allQuestions.length) * 100}%` }}
               />
             </div>
           </div>
           <Button onClick={() => setIsOmrVisible(true)} className="lg:hidden p-2 hover:bg-gray-700">
-            <List className="w-5 h-5" />
+            <List className="w-5 h-5 text-white" />
           </Button>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-3 sm:p-6">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${key}-${currentIdx}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.2 }}
-            >
-              <QuestionCard
-                question={q}
-                selected={answers[key]}
-                onSelect={handleSelect}
-                license={license}
-                code={code}
-              />
-            </motion.div>
-          </AnimatePresence>
+        <main className="flex-1 overflow-y-auto p-3 sm:p-6 bg-[#0f172a]">
+          <div className="max-w-3xl mx-auto bg-[#0f1a2f] p-4 rounded-xl shadow-inner">
+            <QuestionCard
+              question={q}
+              selected={answers[key]}
+              onSelect={handleSelect}
+              license={license}
+              code={code}
+            />
+          </div>
         </main>
 
         <footer className="flex flex-col sm:flex-row items-center justify-between gap-2 p-3 border-t border-gray-700 bg-[#1e293b] text-sm">
