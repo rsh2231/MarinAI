@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAtom } from "jotai";
 import { X } from "lucide-react";
@@ -18,9 +18,15 @@ export const OmrSheet: React.FC = () => {
   const [currentIdx, setCurrentIdx] = useAtom(currentQuestionIndexAtom);
   const [isVisible, setIsVisible] = useAtom(isOmrVisibleAtom);
 
+  const [isMounted, setIsMounted] = useState(false); // SSR-safe용
   const omrItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const onClose = () => setIsVisible(false);
-  const onSelectQuestion = (index: number) => setCurrentIdx(index);
+
+  useEffect(() => {
+    setIsMounted(true);
+    if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+      setIsVisible(true); // 데스크탑에서는 항상 열림
+    }
+  }, [setIsVisible]);
 
   useEffect(() => {
     omrItemRefs.current[currentIdx]?.scrollIntoView({
@@ -29,13 +35,18 @@ export const OmrSheet: React.FC = () => {
     });
   }, [currentIdx]);
 
+  const onClose = () => setIsVisible(false);
+  const onSelectQuestion = (index: number) => setCurrentIdx(index);
+
+  if (!isMounted) return null; // SSR 시 아무것도 렌더링하지 않음
+
   let questionIndexOffset = 0;
 
   return (
     <>
-      {/* 모바일 배경 오버레이 */}
+      {/* 모바일 전용 오버레이 */}
       <AnimatePresence>
-        {isVisible && (
+        {isVisible && window.innerWidth < 1024 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -50,13 +61,8 @@ export const OmrSheet: React.FC = () => {
       <motion.aside
         className="fixed top-0 right-0 h-full w-[90vw] max-w-[280px] bg-[#1e293b] border-l border-gray-700 z-50 flex flex-col lg:w-64 lg:max-w-none overflow-auto"
         initial={{ x: "100%" }}
-        animate={{
-          x:
-            isVisible ||
-            (typeof window !== "undefined" && window.innerWidth >= 1024)
-              ? 0
-              : "100%",
-        }}
+        animate={{ x: isVisible ? 0 : "100%" }}
+        exit={{ x: "100%" }}
         transition={{ type: "tween", duration: 0.3 }}
       >
         <div className="p-4 border-b border-gray-700 flex items-center justify-between shrink-0">
@@ -98,7 +104,7 @@ export const OmrSheet: React.FC = () => {
                         }}
                         onClick={() => {
                           onSelectQuestion(globalIndex);
-                          onClose();
+                          onClose(); // 모바일에서만 닫힘
                         }}
                         className={`h-8 w-8 text-xs font-mono rounded flex items-center justify-center transition-colors ${bgClass}`}
                       >

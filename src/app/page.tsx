@@ -54,8 +54,8 @@ export default function Home() {
         transition={{ duration: 0.6, delay: 0.5 }}
         className="max-w-md text-center text-gray-400 text-sm xs:text-base sm:text-lg mb-10 z-10 leading-relaxed select-none"
       >
-        질문을 입력하거나 <br />
-        문제를 복사해 붙여넣고 AI와 함께 학습하세요.
+        해기사 시험 준비의 새로운 항해, <br />
+        MarinAI와 함께 스마트하게 준비하세요.
       </motion.p>
 
       {/* 입력 폼 */}

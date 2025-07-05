@@ -19,7 +19,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-[#121212] sticky top-0 z-50 border-b border-gray-700 w-full"> 
+    <header className="bg-[#121212] sticky top-0 z-50 border-b border-gray-700 w-full">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-3 sm:px-4 py-3 gap-2">
         {/* 왼쪽: 햄버거 + 로고 */}
         <div className="flex items-center gap-3 min-w-0">
@@ -28,9 +28,11 @@ export default function Header() {
             <Link
               href="/"
               onClick={handleScrollTop}
-              className="hover:text-primary text-white"
+              className="flex gap-2 hover:text-primary text-white"
             >
-              Marin<span className="text-blue-500">AI</span>
+              <span className="text-xl font-bold text-white">
+                Marin<span className="text-blue-500">AI</span>
+              </span>
             </Link>
           </h1>
         </div>
@@ -44,11 +46,10 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 onClick={handleScrollTop}
-                className={`px-2 sm:px-3 py-1 rounded-md font-medium transition-colors duration-200 ${
-                  isActive
+                className={`px-2 sm:px-3 py-1 rounded-md font-medium transition-colors duration-200 ${isActive
                     ? "bg-primary text-white"
                     : "text-gray-300 hover:bg-gray-700 hover:text-white"
-                }`}
+                  }`}
               >
                 {item.name}
               </Link>

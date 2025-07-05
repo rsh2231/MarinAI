@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import FilterSidebar from "./FilterSidebar";
 import { FilterState } from "@/types/FilterState";
+import { useEffect } from "react";
 
 type SidebarProps = {
   filterState: FilterState;
@@ -17,51 +18,61 @@ export default function Sidebar({ filterState, className = "" }: SidebarProps) {
 
   const handleClose = () => setSidebarOpen(false);
 
+  // body 스크롤 잠금/해제 로직
+  useEffect(() => {
+    if (sidebarOpen && window.innerWidth < 768) {
+      const originalStyle = window.getComputedStyle(document.body).overflow;
+      document.body.style.overflow = 'hidden';
+
+      // 컴포넌트가 언마운트되거나 sidebarOpen이 false가 될 때 원래 스타일로 복구
+      return () => {
+        document.body.style.overflow = originalStyle;
+      };
+    }
+  }, [sidebarOpen])
+
   return (
     <>
-      {/* 데스크탑 전용 */}
+      {/* 데스크탑 전용 사이드바 (FilterSidebar를 직접 렌더링) */}
       <aside
-        className={`hidden md:block w-64 bg-[#1f2937] text-white border-r border-gray-700 p-6 ${className}`}
-      >
+        className={`hidden md:block w-64 bg-[#1f2937] text-white border-r border-gray-700 p-6 ${className}`}>
         <FilterSidebar
           {...filterState}
-          sidebarOpen={sidebarOpen}
-          onClose={handleClose}
+          sidebarOpen={false}
+          onClose={() => {}}
         />
       </aside>
 
-      {/* 모바일 전용 */}
+        {/* 모바일 전용 오버레이 및 사이드바 */}
       <AnimatePresence>
         {sidebarOpen && (
           <>
-            {/* 슬라이딩 사이드바 */}
+            {/* 오버레이 */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm md:hidden"
+              onClick={handleClose}
+              aria-hidden="true"
+            />
+            {/* 슬라이딩 사이드바 (FilterSidebar를 직접 렌더링) */}
             <motion.aside
               role="dialog"
               aria-modal="true"
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
-              transition={{ duration: 0.3 }}
-              className="fixed top-0 left-0 z-40 h-full p-4 bg-[#1f2937] text-white border-r border-gray-700 shadow-xl md:hidden w-[65%] max-w-[280px]"
+              transition={{ type: 'tween', duration: 0.3 }}
+              className="fixed top-0 left-0 z-40 h-full md:hidden"
             >
-             
               <FilterSidebar
                 {...filterState}
                 sidebarOpen={sidebarOpen}
                 onClose={handleClose}
               />
             </motion.aside>
-
-            {/* 오버레이 */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-30 bg-black backdrop-blur-sm md:hidden"
-              onClick={handleClose}
-              aria-hidden="true"
-            />
           </>
         )}
       </AnimatePresence>

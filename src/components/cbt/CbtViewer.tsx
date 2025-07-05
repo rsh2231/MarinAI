@@ -3,14 +3,16 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAtom, useAtomValue } from "jotai";
-import { List, Timer } from "lucide-react";
-import SubjectTabs from "../solve/SubjectTabs";
+import { List, Timer, ChevronLeft, ChevronRight, Send } from "lucide-react";
 
-import { OmrSheet } from "./OmrSheet";
-import { ArrowLeft, ArrowRight, Send } from "lucide-react";
 import Button from "@/components/ui/Button";
 import QuestionCard from "../solve/QuestionCard";
 import { getCode } from "@/utils/getCode";
+import { ResultView } from "./ResultView";
+import { SubmitModal } from "./SubmitModal";
+import { CbtLoader } from "./CbtLoader";
+import { EmptyMessage } from "../ui/EmptyMessage";
+import { OmrSheet } from "./OmrSheet";
 
 import {
   cbtLoadingAtom,
@@ -25,10 +27,6 @@ import {
 } from "@/atoms/cbtAtoms";
 
 import { ProblemData } from "@/types/ProblemViwer";
-import { ResultView } from "./ResultView";
-import { SubmitModal } from "./SubmitModal";
-import { CbtLoader } from "./CbtLoader";
-import { EmptyMessage } from "../ui/EmptyMessage";
 
 interface Props {
   year: string;
@@ -47,37 +45,36 @@ export default function CbtViewer({
   selectedSubjects,
   durationMinutes,
 }: Props) {
-  // 상태
   const [isLoading, setIsLoading] = useAtom(cbtLoadingAtom);
   const [error, setError] = useAtom(cbtErrorAtom);
-  const [groupedQuestions, setGroupedQuestions] = useAtom(groupedQuestionsAtom);
+  const [, setGroupedQuestions] = useAtom(groupedQuestionsAtom);
   const allQuestions = useAtomValue(allQuestionsAtom);
   const [currentIdx, setCurrentIdx] = useAtom(currentQuestionIndexAtom);
   const [answers, setAnswers] = useAtom(answersAtom);
   const [showResult, setShowResult] = useAtom(showResultAtom);
   const [timeLeft, setTimeLeft] = useAtom(timeLeftAtom);
-  const [isOmrVisible, setIsOmrVisible] = useAtom(isOmrVisibleAtom);
+  const [, setIsOmrVisible] = useAtom(isOmrVisibleAtom);
 
-  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
-  
   const [showSubmitModal, setShowSubmitModal] = useState(false);
+  const [isMounted, setIsMounted] = useState(false); // SSR-safe
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    if (window.innerWidth >= 1024) {
+      setIsOmrVisible(true);
+    } else {
+      setIsOmrVisible(false);
+    }
+  }, [isMounted, setIsOmrVisible]);
 
   const levelStr = license === "소형선박조종사" ? "" : level.replace("급", "");
   const code = getCode(license, year, round, levelStr);
   const filePath = `/data/${license}/${code}/${code}.json`;
 
-  // 데스크탑 진입 시 OMR 시트 항상 보이도록 설정
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (window.innerWidth >= 1024) {
-        setIsOmrVisible(true);
-      } else {
-        setIsOmrVisible(false);
-      }
-    }
-  }, [setIsOmrVisible]);
-
-  // 시험 초기화
   const resetExam = useCallback(() => {
     setCurrentIdx(0);
     setAnswers({});
@@ -85,219 +82,152 @@ export default function CbtViewer({
     setTimeLeft(durationMinutes * 60);
   }, [durationMinutes, setCurrentIdx, setAnswers, setShowResult, setTimeLeft]);
 
-  // 답안 선택
   const handleSelect = useCallback(
     (choice: string) => {
-      const currentQuestion = allQuestions[currentIdx];
-      if (!currentQuestion) return;
-      const cleanSubjectName = currentQuestion.subjectName.replace(
-        /^\d+\.\s*/,
-        ""
-      );
-      const key = `${cleanSubjectName}-${currentQuestion.num}`;
+      const q = allQuestions[currentIdx];
+      if (!q) return;
+      const key = `${q.subjectName.replace(/^\d+\.\s*/, "")}-${q.num}`;
       setAnswers((prev) => ({ ...prev, [key]: choice }));
     },
     [allQuestions, currentIdx, setAnswers]
   );
 
-  // 문제 데이터 로딩
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const res = await fetch(filePath);
-        if (!res.ok)
-          throw new Error(`파일을 불러오지 못했습니다: ${res.status}`);
+        if (!res.ok) throw new Error(`파일을 불러오지 못했습니다: ${res.status}`);
         const data: ProblemData = await res.json();
 
-        const filteredGroups = data.subject.type
-          .filter((subj) =>
-            selectedSubjects.includes(subj.string.replace(/^\d+\.\s*/, ""))
-          )
-          .map((subj) => ({
-            subjectName: subj.string,
-            questions: subj.questions.map((q) => ({
-              ...q,
-              subjectName: subj.string,
-            })),
+        const filtered = data.subject.type
+          .filter((s) => selectedSubjects.includes(s.string.replace(/^\d+\.\s*/, "")))
+          .map((s) => ({
+            subjectName: s.string,
+            questions: s.questions.map((q) => ({ ...q, subjectName: s.string })),
           }));
 
-        setGroupedQuestions(filteredGroups);
+        setGroupedQuestions(filtered);
         resetExam();
       } catch (err: any) {
-        console.error("데이터 로딩 중 에러 발생:", err);
         setError(err.message || "알 수 없는 에러가 발생했습니다.");
         setGroupedQuestions([]);
       } finally {
         setIsLoading(false);
       }
     };
-    fetchData();
 
+    fetchData();
     return () => {
       setGroupedQuestions([]);
       resetExam();
     };
-  }, [
-    filePath,
-    selectedSubjects,
-    setGroupedQuestions,
-    setIsLoading,
-    setError,
-    resetExam,
-  ]);
+  }, [filePath, selectedSubjects, setGroupedQuestions, setIsLoading, setError, resetExam]);
 
-  // 타이머 useEffect
   useEffect(() => {
     if (showResult || allQuestions.length === 0 || timeLeft <= 0) return;
-
-    const interval = setInterval(() => {
+    const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
-          clearInterval(interval);
+          clearInterval(timer);
           setShowResult(true);
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
-
-    return () => clearInterval(interval);
+    return () => clearInterval(timer);
   }, [timeLeft, showResult, allQuestions.length, setTimeLeft, setShowResult]);
 
-  if (isLoading) return <CbtLoader />;
-  if (error)
-    return (
-      <div className="flex items-center justify-center h-full text-red-400">
-        에러: {error}
-      </div>
-    );
-  if (allQuestions.length === 0)
-    return (
-      <div className="flex-1 flex items-center justify-center">
-        <EmptyMessage />
-      </div>
-    );
-
-  if (showResult) {
-    const correctCount = allQuestions.reduce((count, q) => {
-      const cleanSubjectName = q.subjectName.replace(/^\d+\.\s*/, "");
-      const key = `${cleanSubjectName}-${q.num}`;
-      return answers[key] === q.answer ? count + 1 : count;
-    }, 0);
-    return (
-      <ResultView
-        total={allQuestions.length}
-        correct={correctCount}
-        onRetry={resetExam}
-      />
-    );
-  }
-
-  const currentQuestion = allQuestions[currentIdx];
-  const cleanSubjectName = currentQuestion.subjectName.replace(/^\d+\.\s*/, "");
-  const selectedKey = `${cleanSubjectName}-${currentQuestion.num}`;
-  const answeredCount = Object.keys(answers).length;
-
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (seconds % 60).toString().padStart(2, "0");
+  const formatTime = (sec: number) => {
+    const m = Math.floor(sec / 60).toString().padStart(2, "0");
+    const s = (sec % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
 
-  const prevQuestion = () => setCurrentIdx((idx) => Math.max(0, idx - 1));
-  const nextQuestion = () =>
-    setCurrentIdx((idx) => Math.min(allQuestions.length - 1, idx + 1));
+  if (!isMounted) return null; // SSR-safe: hydration 불일치 방지
+
+  if (isLoading) return <CbtLoader />;
+  if (error) return <div className="text-red-400 flex justify-center">{error}</div>;
+  if (allQuestions.length === 0) return <EmptyMessage />;
+
+  if (showResult) {
+    const correctCount = allQuestions.reduce((count, q) => {
+      const key = `${q.subjectName.replace(/^\d+\.\s*/, "")}-${q.num}`;
+      return answers[key] === q.answer ? count + 1 : count;
+    }, 0);
+    return <ResultView total={allQuestions.length} correct={correctCount} onRetry={resetExam} />;
+  }
+
+  const q = allQuestions[currentIdx];
+  const key = `${q.subjectName.replace(/^\d+\.\s*/, "")}-${q.num}`;
+  const answeredCount = Object.keys(answers).length;
 
   return (
-    <div className="flex flex-col bg-[#0f172a] rounded-lg border border-gray-700 overflow-hidden h-full lg:flex-row">
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="flex items-center justify-between p-3 border-b border-gray-700 bg-[#1e293b] shrink-0">
+    <div className="flex flex-col lg:flex-row border border-gray-700 rounded-lg bg-[#0f172a] h-full overflow-hidden">
+      <div className="flex-1 flex flex-col">
+        <header className="flex justify-between items-center p-3 border-b border-gray-700 bg-[#1e293b]">
           <div className="flex items-center gap-2 text-sm sm:text-base">
             <Timer className="w-5 h-5 text-blue-400" />
             <span className="font-mono">{formatTime(timeLeft)}</span>
           </div>
           <div className="text-center">
-            <h2 className="text-sm font-semibold sm:text-base">
+            <h2 className="text-sm font-semibold">
               문제 {currentIdx + 1} / {allQuestions.length}
             </h2>
             <div className="w-24 sm:w-32 h-1.5 bg-gray-600 rounded-full overflow-hidden mt-1">
               <div
                 className="h-full bg-blue-500"
-                style={{
-                  width: `${(answeredCount / allQuestions.length) * 100}%`,
-                }}
+                style={{ width: `${(answeredCount / allQuestions.length) * 100}%` }}
               />
             </div>
           </div>
-          <Button
-            onClick={() => setIsOmrVisible(true)}
-            className="p-2 rounded-md hover:bg-gray-700 lg:hidden"
-          >
+          <Button onClick={() => setIsOmrVisible(true)} className="lg:hidden p-2 hover:bg-gray-700">
             <List className="w-5 h-5" />
           </Button>
         </header>
 
-        <main className="flex-1 overflow-y-auto min-h-0 p-3 sm:p-6">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-6">
           <AnimatePresence mode="wait">
-            {currentQuestion && (
-              <motion.div
-                key={`${currentQuestion.subjectName}-${currentQuestion.num}-${currentIdx}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.2 }}
-              >
-                <QuestionCard
-                  question={currentQuestion}
-                  selected={answers[selectedKey]}
-                  onSelect={handleSelect}
-                  license={license}
-                  code={code}
-                />
-              </motion.div>
-            )}
+            <motion.div
+              key={`${key}-${currentIdx}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+            >
+              <QuestionCard
+                question={q}
+                selected={answers[key]}
+                onSelect={handleSelect}
+                license={license}
+                code={code}
+              />
+            </motion.div>
           </AnimatePresence>
         </main>
 
-        <footer className="flex flex-col sm:flex-row items-center justify-between gap-2 p-3 border-t border-gray-700 bg-[#1e293b] shrink-0 text-sm">
+        <footer className="flex flex-col sm:flex-row items-center justify-between gap-2 p-3 border-t border-gray-700 bg-[#1e293b] text-sm">
           <div className="w-full sm:w-auto flex gap-2">
-            <Button
-              onClick={prevQuestion}
-              disabled={currentIdx === 0}
-              variant="neutral"
-              className="w-full sm:w-auto"
-            >
-              <ArrowLeft className="w-4 h-4" /> 이전
+            <Button onClick={() => setCurrentIdx(Math.max(0, currentIdx - 1))} disabled={currentIdx === 0} variant="neutral">
+              <ChevronLeft className="w-4 h-4" /> 이전
             </Button>
             {currentIdx === allQuestions.length - 1 ? (
-              <Button
-                onClick={() => setShowSubmitModal(true)}
-                variant="primary"
-                className="w-full sm:w-auto"
-              >
+              <Button onClick={() => setShowSubmitModal(true)} variant="primary">
                 제출하기 <Send className="w-4 h-4" />
               </Button>
             ) : (
-              <Button
-                onClick={nextQuestion}
-                variant="neutral"
-                className="w-full sm:w-auto"
-              >
-                다음 <ArrowRight className="w-4 h-4" />
+              <Button onClick={() => setCurrentIdx(Math.min(allQuestions.length - 1, currentIdx + 1))} variant="neutral">
+                다음 <ChevronRight className="w-4 h-4" />
               </Button>
             )}
           </div>
         </footer>
       </div>
 
-      {/* OmrSheet 컴포넌트 바로 렌더링 (데스크탑/모바일 공통) */}
       <OmrSheet />
 
-      {/* 제출 모달 */}
       <AnimatePresence>
         {showSubmitModal && (
           <SubmitModal

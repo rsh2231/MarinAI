@@ -11,7 +11,7 @@ import { saveWrongNote, loadWrongNotes } from "@/utils/localWrongNote";
 import { Question, ProblemData } from "@/types/ProblemViwer";
 import { getCode } from "@/utils/getCode";
 import Button from "@/components/ui/Button";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { EmptyMessage } from "../ui/EmptyMessage";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
@@ -215,7 +215,7 @@ export default function ProblemViewer({
                 disabled={selectedIndex <= 0}
                 className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
               >
-                <ArrowBackIos className="mr-1 text-xs sm:text-sm" />
+                <ChevronLeft className="mr-1 text-xs sm:text-sm" />
                 이전 과목
               </Button>
 
@@ -230,7 +230,7 @@ export default function ProblemViewer({
                 className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
               >
                 다음 과목
-                <ArrowForwardIos className="ml-1 text-xs sm:text-sm" />
+                <ChevronRight className="ml-1 text-xs sm:text-sm" />
               </Button>
             </div>
           </motion.section>

@@ -10,6 +10,8 @@ import ProblemViewer from "@/components/solve/ProblemViewer";
 import CbtViewer from "@/components/cbt/CbtViewer";
 import Button from "@/components/ui/Button";
 
+import { useWindowWidth } from "@/hooks/useWindowWidth";
+
 export default function SolvePage() {
   // 1. 모든 상태를 "선택되지 않음"으로 초기화합니다.
   const [year, setYear] = useState("");
@@ -20,6 +22,8 @@ export default function SolvePage() {
   const [round, setRound] = useState("");
   const [mode, setMode] = useState<"practice" | "exam" | null>(null);
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
+
+  const isMobile = useWindowWidth(768);
 
   // 2. 라이선스 선택에 따라 기본 과목을 설정하거나 초기화합니다.
   useEffect(() => {
@@ -85,7 +89,9 @@ export default function SolvePage() {
                   <p className="text-base text-gray-300 font-medium leading-relaxed mb-6">
                     {isFilterReady
                       ? "아래에서 모드를 선택하여 시험을 시작하세요!"
-                      : "필터에서 시험 정보를 선택하세요."}
+                      : isMobile ?
+                        "햄버거 버튼을 눌러 시험 정보를 선택하세요."
+                        : "사이드바에서 시험 정보를 선택하세요."}
                   </p>
                 </div>
 
