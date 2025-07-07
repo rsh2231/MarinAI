@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Lottie from "lottie-react";
 import { SUBJECTS_BY_LICENSE } from "@/lib/constants";
@@ -23,6 +23,8 @@ export default function SolvePage() {
   const [round, setRound] = useState("");
   const [mode, setMode] = useState<"practice" | "exam" | null>(null);
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
+
+  const mainContentRef = useRef<HTMLElement>(null);
 
   const isMobile = useWindowWidth(768);
 
@@ -56,8 +58,17 @@ export default function SolvePage() {
 
   const isFilterReady =
     year && license && round && (license === "소형선박조종사" || level);
-  console.log("Rendering with:", { isFilterReady, mode });
 
+  // 모드 선택을 처리하는 함수 생성
+  const handleModeSelect = (selectedMode: "practice" | "exam") => {
+    setMode(selectedMode);
+    // 모바일 환경에서 모드 선택 시, 잠시 후 main 콘텐츠로 스크롤
+    if (isMobile) {
+      setTimeout(() => {
+        mainContentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100); // 컴포넌트가 렌더링될 시간을 줍니다.
+    }
+  };
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -74,12 +85,14 @@ export default function SolvePage() {
         />
 
         {/* 오른쪽: 메인 콘텐츠 */}
-        <main className="flex-1 min-w-0 flex flex-col items-center p-6">
+        <main
+          ref={mainContentRef}
+          className="flex-1 min-w-0 flex flex-col items-center p-6">
           <AnimatePresence mode="wait">
             {/* 4. isFilterReady와 mode에 따라 적절한 UI를 조건부로 렌더링 */}
             {!isFilterReady || !mode ? (
               <motion.div
-                key={`select-${year}-${license}-${level}-${round}`}
+                key="mode-selection-propmpt"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -96,8 +109,8 @@ export default function SolvePage() {
                     {isFilterReady
                       ? "아래에서 모드를 선택하여 시험을 시작하세요!"
                       : isMobile
-                      ? "햄버거 버튼을 눌러 시험 정보를 선택하세요."
-                      : "사이드바에서 시험 정보를 선택하세요."}
+                        ? "햄버거 버튼을 눌러 시험 정보를 선택하세요."
+                        : "사이드바에서 시험 정보를 선택하세요."}
                   </p>
                 </div>
 
@@ -109,7 +122,7 @@ export default function SolvePage() {
                     className="flex gap-4 justify-center"
                   >
                     <Button
-                      onClick={() => setMode("practice")}
+                      onClick={() => handleModeSelect("practice")}
                       variant="neutral"
                       size="md"
                       selected={mode === "practice"}
@@ -117,7 +130,7 @@ export default function SolvePage() {
                       연습 모드
                     </Button>
                     <Button
-                      onClick={() => setMode("exam")}
+                      onClick={() => handleModeSelect("exam")}
                       variant="neutral"
                       size="md"
                       selected={mode === "exam"}

@@ -2,6 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
 import Button from "@/components/ui/Button";
+import Lottie from "lottie-react";
+import think from "@/assets/animations/think.json";
 
 interface SubmitModalProps {
   onConfirm: () => void;
@@ -24,7 +26,8 @@ export const SubmitModal: React.FC<SubmitModalProps> = ({ onConfirm, onCancel, t
       className="bg-[#1e293b] rounded-lg shadow-xl p-6 w-full max-w-sm border border-gray-700"
     >
       <div className="text-center">
-        <AlertTriangle className="w-12 h-12 mx-auto text-yellow-500 mb-4" />
+        <Lottie animationData={think}
+          className="w-25 h-25 mx-auto mb-4"/>
         <h3 className="text-lg font-bold">답안을 제출하시겠습니까?</h3>
         <p className="text-sm text-gray-400 mt-2">
           {totalCount > answeredCount
