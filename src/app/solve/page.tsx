@@ -12,7 +12,6 @@ import Button from "@/components/ui/Button";
 import question from "@/assets/animations/question.json";
 
 import { useWindowWidth } from "@/hooks/useWindowWidth";
-import { OmrSheet } from "@/components/exam/OmrSheet";
 
 export default function SolvePage() {
   // 모든 상태를 "선택되지 않음"으로 초기화
@@ -157,11 +156,8 @@ export default function SolvePage() {
                   level={level}
                   round={round}
                   selectedSubjects={selectedSubjects}
-                  durationMinutes={125}
+                  durationSeconds={25 * 60}
                 />
-                <div className="w-full lg:w-64 shrink-0">
-                  <OmrSheet />
-                </div>
               </motion.div>
             )}
           </AnimatePresence>

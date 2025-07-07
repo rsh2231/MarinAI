@@ -1,47 +1,38 @@
 "use client";
 
-import React, { useEffect, useCallback, useState } from "react";
-import { AnimatePresence } from "framer-motion";
-import { useAtom, useAtomValue } from "jotai";
+import { useEffect, useState, useMemo, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useAtom } from "jotai";
 import {
-  List,
-  Timer,
-  ChevronLeft,
-  ChevronRight,
-  Send,
-} from "lucide-react";
-
-import Button from "@/components/ui/Button";
-import QuestionCard from "../solve/QuestionCard";
-import { getCode } from "@/utils/getCode";
-import { ResultView } from "./ResultView";
-import { SubmitModal } from "./SubmitModal";
-import { ExamLoader } from "./ExamLoader";
-import { EmptyMessage } from "../ui/EmptyMessage";
-import { OmrSheet } from "./OmrSheet";
-import SubjectTabs from "../solve/SubjectTabs";
-
-import {
-  examLoadingAtom,
-  examErrorAtom,
   groupedQuestionsAtom,
-  allQuestionsAtom,
-  currentQuestionIndexAtom,
   answersAtom,
-  showResultAtom,
-  timeLeftAtom,
+  currentQuestionIndexAtom,
   isOmrVisibleAtom,
 } from "@/atoms/examAtoms";
 
-import { ProblemData } from "@/types/ProblemViwer";
+import SubjectTabs from "../solve/SubjectTabs";
+import QuestionCard from "../solve/QuestionCard";
+import {
+  Question,
+  QuestionWithSubject,
+  ProblemData,
+} from "@/types/ProblemViwer";
+import { getCode } from "@/utils/getCode";
+import Button from "@/components/ui/Button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { EmptyMessage } from "../ui/EmptyMessage";
+import { OmrSheet } from "@/components/exam/OmrSheet";
+
+// 타입
+type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
 interface Props {
   year: string;
-  license: string;
+  license: LicenseType;
   level: string;
   round: string;
   selectedSubjects: string[];
-  durationMinutes: number;
+  durationSeconds?: number;
 }
 
 export default function ExamViewer({
@@ -50,185 +41,155 @@ export default function ExamViewer({
   level,
   round,
   selectedSubjects,
-  durationMinutes,
+  durationSeconds = 3600,
 }: Props) {
-  const [isLoading, setIsLoading] = useAtom(examLoadingAtom);
-  const [error, setError] = useAtom(examErrorAtom);
-  const [grouped, setGroupedQuestions] = useAtom(groupedQuestionsAtom);
-  const allQuestions = useAtomValue(allQuestionsAtom);
-  const [currentIdx, setCurrentIdx] = useAtom(currentQuestionIndexAtom);
+  const [data, setData] = useState<ProblemData | null>(null);
+  const [error, setError] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [timeLeft, setTimeLeft] = useState<number>(durationSeconds);
+
+  const [groupedQuestions, setGroupedQuestions] = useAtom(groupedQuestionsAtom);
   const [answers, setAnswers] = useAtom(answersAtom);
-  const [showResult, setShowResult] = useAtom(showResultAtom);
-  const [timeLeft, setTimeLeft] = useAtom(timeLeftAtom);
-  const [, setIsOmrVisible] = useAtom(isOmrVisibleAtom);
-
-  const [showSubmitModal, setShowSubmitModal] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  const [subjectNames, setSubjectNames] = useState<string[]>([]);
-
-  useEffect(() => setIsMounted(true), []);
-
-  useEffect(() => {
-    if (!isMounted) return;
-    setIsOmrVisible(window.innerWidth >= 1024);
-  }, [isMounted, setIsOmrVisible]);
+  const [, setCurrentIdx] = useAtom(currentQuestionIndexAtom);
 
   const levelStr = license === "소형선박조종사" ? "" : level.replace("급", "");
   const code = getCode(license, year, round, levelStr);
   const filePath = `/data/${license}/${code}/${code}.json`;
 
-  const resetExam = useCallback(() => {
-    setCurrentIdx(0);
-    setAnswers({});
-    setShowResult(false);
-    setTimeLeft(durationMinutes * 60);
-  }, [durationMinutes, setCurrentIdx, setAnswers, setShowResult, setTimeLeft]);
+  const normalizeSubject = (s: string) => s.replace(/^\d+\.\s*/, "");
 
-  const handleSelect = useCallback(
-    (choice: string) => {
-      const q = allQuestions[currentIdx];
-      if (!q) return;
-      const key = `${q.subjectName.replace(/^\d+\.\s*/, "")}-${q.num}`;
-      setAnswers((prev) => ({ ...prev, [key]: choice }));
-    },
-    [allQuestions, currentIdx, setAnswers]
-  );
-
+  // 1. 문제 데이터 fetch
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
-      setError(null);
       try {
         const res = await fetch(filePath);
-        if (!res.ok)
-          throw new Error(`파일을 불러오지 못했습니다: ${res.status}`);
-        const data: ProblemData = await res.json();
-
-        const filtered = data.subject.type
-          .filter((s) =>
-            selectedSubjects.includes(s.string.replace(/^\d+\.\s*/, ""))
-          )
-          .map((s) => ({
-            subjectName: s.string,
-            questions: s.questions.map((q) => ({
-              ...q,
-              subjectName: s.string,
-            })),
-          }));
-
-        setSubjectNames(filtered.map((g) => g.subjectName));
-        setGroupedQuestions(filtered);
-        resetExam();
-      } catch (err: any) {
-        setError(err.message || "알 수 없는 에러가 발생했습니다.");
+        if (!res.ok) throw new Error("문제 파일을 불러올 수 없습니다.");
+        const json = await res.json();
+        setData(json);
+        setAnswers({});
         setGroupedQuestions([]);
-      } finally {
-        setIsLoading(false);
+        setSelectedSubject(null);
+        setTimeLeft(durationSeconds);
+        setError("");
+        setCurrentIdx(0);
+      } catch (err: any) {
+        setError(err.message);
       }
     };
-
     fetchData();
-    return () => {
-      setGroupedQuestions([]);
-      resetExam();
-    };
-  }, [
-    filePath,
-    selectedSubjects,
-    setGroupedQuestions,
-    setIsLoading,
-    setError,
-    resetExam,
-  ]);
+  }, [filePath, durationSeconds]);
+
+  // 2. 과목 필터링
+  const filteredSubjects = useMemo(() => {
+    if (!data) return [];
+    return data.subject.type.filter((t) =>
+      selectedSubjects.includes(normalizeSubject(t.string))
+    );
+  }, [data, selectedSubjects]);
+
+  const filteredSubjectNames = useMemo(
+    () => filteredSubjects.map((t) => t.string),
+    [filteredSubjects]
+  );
+
+  const selectedIndex = filteredSubjectNames.findIndex(
+    (s) => s === selectedSubject
+  );
+  const selectedBlock = filteredSubjects.find(
+    (t) => t.string === selectedSubject
+  );
+
+  // 3. groupedQuestionsAtom 설정
+  useEffect(() => {
+    if (data) {
+      const normalized = data.subject.type
+        .filter((t) => selectedSubjects.includes(normalizeSubject(t.string)))
+        .map((block) => ({
+          subjectName: block.string,
+          questions: block.questions.map((q) => ({
+            ...q,
+            subject: block.string,
+            subjectName: block.string,
+          })),
+        }));
+
+      setGroupedQuestions(normalized);
+    }
+  }, [data, selectedSubjects, setGroupedQuestions]);
 
   useEffect(() => {
-    if (showResult || allQuestions.length === 0 || timeLeft <= 0) return;
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          setShowResult(true);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [timeLeft, showResult, allQuestions.length, setTimeLeft, setShowResult]);
+    if (filteredSubjectNames.length > 0) {
+      if (!selectedSubject || !filteredSubjectNames.includes(selectedSubject)) {
+        setSelectedSubject(filteredSubjectNames[0]);
+      }
+    } else {
+      setSelectedSubject(null);
+    }
+  }, [filteredSubjectNames, selectedSubject]);
 
-  const formatTime = (sec: number) => {
-    const m = Math.floor(sec / 60)
+  const onSelectSubject = useCallback((subj: string) => {
+    setSelectedSubject(subj);
+  }, []);
+
+  // 4. 타이머
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+    const timerId = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, [timeLeft]);
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "auto" });
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60)
       .toString()
       .padStart(2, "0");
-    const s = (sec % 60).toString().padStart(2, "0");
+    const s = (seconds % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
 
-  const q = allQuestions[currentIdx];
-  const key = `${q?.subjectName.replace(/^\d+\.\s*/, "")}-${q?.num}`;
-  const answeredCount = Object.keys(answers).length;
+  const handleSelect = (q: QuestionWithSubject, choice: string) => {
+    const key = `${q.subjectName}-${q.num}`;
+    setAnswers((prev) => ({ ...prev, [key]: choice }));
+  };
 
-  if (!isMounted) return null;
-  if (isLoading) return <ExamLoader />;
   if (error)
-    return <div className="text-red-400 flex justify-center">{error}</div>;
-  if (!q)
+    return <p className="text-danger text-center mt-6 text-sm">⚠️ {error}</p>;
+  if (!data)
     return (
-      <div className="flex-1 flex items-center justify-center min-h-[300px]">
-        <EmptyMessage />
-      </div>
+      <p className="text-gray-400 text-center mt-6 text-sm">
+        문제를 불러오는 중입니다...
+      </p>
     );
-
-  if (showResult) {
-    const correctCount = allQuestions.reduce((count, q) => {
-      const key = `${q.subjectName.replace(/^\d+\.\s*/, "")}-${q.num}`;
-      return answers[key] === q.answer ? count + 1 : count;
-    }, 0);
-    return (
-      <ResultView
-        total={allQuestions.length}
-        correct={correctCount}
-        onRetry={resetExam}
-      />
-    );
-  }
 
   return (
-    <div className="flex flex-col lg:flex-row border border-gray-700 rounded-lg bg-[#0f172a] h-full overflow-hidden">
-      <div className="flex-1 flex flex-col">
-        <header className="flex flex-col gap-2 p-3 border-b border-gray-700 bg-[#0f172a]">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2 text-xl border-2 border-gray-100 p-2 rounded-xl text-blue-400 font-mono">
-              <Timer className="w-6 h-6" />
-              <span
-                className={`text-2xl font-bold ${
-                  timeLeft < 600 ? "text-red-500" : "text-white"
-                }`}
-              >
-                {formatTime(timeLeft)}
-              </span>
-            </div>
-            <Button
-              onClick={() => setIsOmrVisible(true)}
-              className="lg:hidden p-2 hover:bg-gray-700"
-            >
-              <List className="w-5 h-5 text-white" />
-            </Button>
-          </div>
+    <div className="relative w-full max-w-3xl mx-auto px-2 sm:px-4 pb-10 text-foreground-dark">
+      <OmrSheet />
 
-          <div className="w-full mb-2 flex justify-center">
+      <div className="fixed top-2 right-2 z-10 flex items-center bg-gray-800 px-3 py-1 rounded-lg text-blue-400 font-mono select-none">
+        {formatTime(timeLeft)}
+      </div>
+
+      {filteredSubjectNames.length > 0 && (
+        <>
+          <div className="w-full mb-4 flex justify-center px-2">
             <div className="w-full sm:w-3/4 md:w-1/2">
-              <div className="flex items-center justify-center text-xs text-gray-300 mb-1">
-                <span className="text-blue-400 text-base">📘</span>
-                <span className="truncate">
-                  {currentIdx + 1} / {allQuestions.length} 번 문제
-                </span>
+              <div className="flex items-center justify-center text-xs xs:text-sm text-gray-300 mb-1">
+                <div className="flex items-center gap-1 xs:gap-2">
+                  <span className="text-blue-400 text-base xs:text-lg">📘</span>
+                  <span className="truncate">
+                    {selectedIndex + 1} / {filteredSubjectNames.length} 과목
+                  </span>
+                </div>
               </div>
               <div className="w-full bg-gray-800 h-2 rounded-full overflow-hidden shadow-inner">
                 <div
                   className="h-full bg-blue-500 rounded-full transition-all duration-300 ease-in-out"
                   style={{
-                    width: `${((currentIdx + 1) / allQuestions.length) * 100}%`,
+                    width: `${
+                      ((selectedIndex + 1) / filteredSubjectNames.length) * 100
+                    }%`,
                   }}
                 />
               </div>
@@ -237,80 +198,93 @@ export default function ExamViewer({
 
           <div className="flex justify-center overflow-x-auto px-2 sm:px-6 no-scrollbar">
             <SubjectTabs
-              subjects={subjectNames}
-              selected={q.subjectName}
-              setSelected={(name) => {
-                const foundIdx = allQuestions.findIndex(
-                  (q) => q.subjectName === name
-                );
-                if (foundIdx !== -1) {
-                  setCurrentIdx(foundIdx);
-                  window.scrollTo({ top: 0, behavior: "auto" });
-                }
-              }}
+              subjects={filteredSubjectNames}
+              selected={selectedSubject}
+              setSelected={onSelectSubject}
             />
           </div>
-        </header>
+        </>
+      )}
 
-        <main className="flex-1 overflow-y-auto p-3 sm:p-6 bg-[#0f172a]">
-          <div className="max-w-3xl mx-auto bg-[#0f1a2f] p-4 rounded-xl shadow-inner">
-            <QuestionCard
-              key={`${q.subjectName}-${q.num}`}
-              question={q}
-              selected={answers[key]}
-              onSelect={handleSelect}
-              license={license}
-              code={code}
-            />
-          </div>
-        </main>
+      <AnimatePresence mode="wait">
+        {selectedBlock ? (
+          <motion.section
+            key={selectedBlock.string}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="mt-6 sm:mt-8 space-y-5 sm:space-y-8 px-2"
+          >
+            {selectedBlock.questions.map((q, idx) => {
+              const enrichedQuestion: QuestionWithSubject = {
+                ...q,
+                subjectName: selectedBlock.string,
+              };
 
-        <footer className="flex flex-col sm:flex-row items-center justify-center gap-2 p-3 border-t border-gray-700 bg-[#1e293b] text-sm">
-          <div className="flex justify-between w-auto gap-2">
-            <Button
-              onClick={() => setCurrentIdx(Math.max(0, currentIdx - 1))}
-              disabled={currentIdx === 0}
-              variant="neutral"
-            >
-              <ChevronLeft className="w-4 h-4" /> 이전
-            </Button>
-            {currentIdx === allQuestions.length - 1 ? (
+              return (
+                <QuestionCard
+                  key={enrichedQuestion.num}
+                  question={enrichedQuestion}
+                  selected={
+                    answers[
+                      `${enrichedQuestion.subjectName}-${enrichedQuestion.num}`
+                    ]
+                  }
+                  showAnswer={false}
+                  onSelect={(choice) => {
+                    handleSelect(enrichedQuestion, choice);
+                    setCurrentIdx(
+                      groupedQuestions
+                        .flatMap((g) => g.questions)
+                        .findIndex(
+                          (item) =>
+                            `${item.subjectName}-${item.num}` ===
+                            `${enrichedQuestion.subjectName}-${enrichedQuestion.num}`
+                        )
+                    );
+                  }}
+                  license={license}
+                  code={code}
+                />
+              );
+            })}
+
+            <div className="flex flex-row sm:flex-row justify-center items-center gap-3 mt-8">
               <Button
-                onClick={() => setShowSubmitModal(true)}
-                variant="primary"
-              >
-                제출하기
-                <Send className="ml-1 w-5 h-5" />
-              </Button>
-            ) : (
-              <Button
-                onClick={() =>
-                  setCurrentIdx(
-                    Math.min(allQuestions.length - 1, currentIdx + 1)
-                  )
-                }
                 variant="neutral"
+                onClick={() => {
+                  if (selectedIndex > 0) {
+                    setSelectedSubject(filteredSubjectNames[selectedIndex - 1]);
+                    scrollToTop();
+                  }
+                }}
+                disabled={selectedIndex <= 0}
+                className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
               >
-                다음 <ChevronRight className="w-4 h-4" />
+                <ChevronLeft className="mr-1 text-xs sm:text-sm" />
+                이전 과목
               </Button>
-            )}
+
+              <Button
+                onClick={() => {
+                  if (selectedIndex < filteredSubjectNames.length - 1) {
+                    setSelectedSubject(filteredSubjectNames[selectedIndex + 1]);
+                    scrollToTop();
+                  }
+                }}
+                disabled={selectedIndex >= filteredSubjectNames.length - 1}
+                className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
+              >
+                다음 과목
+                <ChevronRight className="ml-1 text-xs sm:text-sm" />
+              </Button>
+            </div>
+          </motion.section>
+        ) : (
+          <div className="flex-1 flex items-center justify-center min-h-[300px]">
+            <EmptyMessage />
           </div>
-        </footer>
-      </div>
-
-      <OmrSheet />
-
-      <AnimatePresence>
-        {showSubmitModal && (
-          <SubmitModal
-            onConfirm={() => {
-              setShowSubmitModal(false);
-              setShowResult(true);
-            }}
-            onCancel={() => setShowSubmitModal(false)}
-            totalCount={allQuestions.length}
-            answeredCount={answeredCount}
-          />
         )}
       </AnimatePresence>
     </div>

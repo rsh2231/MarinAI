@@ -18,13 +18,13 @@ export const OmrSheet: React.FC = () => {
   const [currentIdx, setCurrentIdx] = useAtom(currentQuestionIndexAtom);
   const [isVisible, setIsVisible] = useAtom(isOmrVisibleAtom);
 
-  const [isMounted, setIsMounted] = useState(false); // SSR-safe용
+  const [isMounted, setIsMounted] = useState(false);
   const omrItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
     setIsMounted(true);
     if (typeof window !== "undefined" && window.innerWidth >= 1024) {
-      setIsVisible(true); // 데스크탑에서는 항상 열림
+      setIsVisible(true);
     }
   }, [setIsVisible]);
 
@@ -38,15 +38,14 @@ export const OmrSheet: React.FC = () => {
   const onClose = () => setIsVisible(false);
   const onSelectQuestion = (index: number) => setCurrentIdx(index);
 
-  if (!isMounted) return null; // SSR 시 아무것도 렌더링하지 않음
+  if (!isMounted) return null;
 
   let questionIndexOffset = 0;
 
   return (
     <>
-      {/* 모바일 전용 오버레이 */}
       <AnimatePresence>
-        {isVisible && window.innerWidth < 1024 && (
+        {isVisible && typeof window !== "undefined" && window.innerWidth < 1024 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -57,7 +56,6 @@ export const OmrSheet: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* OMR 시트 본체 */}
       <motion.aside
         className="fixed top-0 right-0 h-full w-[90vw] max-w-[280px] bg-[#1e293b] border-l border-gray-700 z-50 flex flex-col lg:w-64 lg:max-w-none overflow-auto"
         initial={{ x: "100%" }}
@@ -77,20 +75,20 @@ export const OmrSheet: React.FC = () => {
 
         <div className="flex-1 overflow-y-auto p-3 space-y-4 text-sm">
           {groupedQuestions.map((group) => {
-            const subjectTitle = group.subjectName.replace(/^\d+\.\s*/, "");
             const groupStartIndex = questionIndexOffset;
 
             const renderedGroup = (
               <div key={group.subjectName}>
                 <h4 className="font-semibold text-xs text-blue-300 mb-2 border-b border-gray-700 pb-1">
-                  {subjectTitle}
+                  {group.subjectName.replace(/^[0-9]+\.\s*/, "")}
                 </h4>
                 <div className="grid grid-cols-5 gap-1">
                   {group.questions.map((q, localIndex) => {
                     const globalIndex = groupStartIndex + localIndex;
                     const isCurrent = globalIndex === currentIdx;
-                    const key = `${subjectTitle}-${q.num}`;
+                    const key = `${group.subjectName}-${q.num}`;
                     const isAnswered = answers[key] !== undefined;
+
                     let bgClass = isAnswered
                       ? "bg-gray-600 hover:bg-gray-500"
                       : "bg-gray-800 hover:bg-gray-700";
@@ -104,7 +102,9 @@ export const OmrSheet: React.FC = () => {
                         }}
                         onClick={() => {
                           onSelectQuestion(globalIndex);
-                          onClose(); // 모바일에서만 닫힘
+                          if (typeof window !== "undefined" && window.innerWidth < 1024) {
+                            onClose();
+                          }
                         }}
                         className={`h-8 w-8 text-xs font-mono rounded flex items-center justify-center transition-colors ${bgClass}`}
                       >
