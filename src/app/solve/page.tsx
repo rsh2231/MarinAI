@@ -2,19 +2,20 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lightbulb } from "lucide-react";
+import Lottie from "lottie-react";
 import { SUBJECTS_BY_LICENSE } from "@/lib/constants";
 
 import Sidebar from "@/components/layout/Sidebar";
 import ProblemViewer from "@/components/solve/ProblemViewer";
 import ExamViewer from "@/components/exam/ExamViewer";
 import Button from "@/components/ui/Button";
+import question from "@/assets/animations/question.json";
 
 import { useWindowWidth } from "@/hooks/useWindowWidth";
 import { OmrSheet } from "@/components/exam/OmrSheet";
 
 export default function SolvePage() {
-  // 1. 모든 상태를 "선택되지 않음"으로 초기화합니다.
+  // 모든 상태를 "선택되지 않음"으로 초기화
   const [year, setYear] = useState("");
   const [license, setLicense] = useState<
     "항해사" | "기관사" | "소형선박조종사" | null
@@ -26,19 +27,16 @@ export default function SolvePage() {
 
   const isMobile = useWindowWidth(768);
 
-  // 2. 라이선스 선택에 따라 기본 과목을 설정하거나 초기화합니다.
+  // 필터 값이 변경되면, mode를 초기화하여 다시 선택하도록 유도
   useEffect(() => {
     if (license) {
+      console.log("Filter changed:", {year, license, level, round});
       const defaultSubjects = SUBJECTS_BY_LICENSE[license] || [];
       setSelectedSubjects(defaultSubjects);
     } else {
       setSelectedSubjects([]);
     }
-  }, [license]);
-
-  // 3. 필터 값이 변경되면, mode를 초기화하여 다시 선택하도록 유도
-  useEffect(() => {
-    setMode(null);
+    setMode(null); // 필터 변경에 따른 mode 초기화
   }, [year, license, level, round]);
 
   const filterState = {
@@ -86,13 +84,17 @@ export default function SolvePage() {
                 className="flex flex-col items-center w-full max-w-lg text-center bg-[#1e293b] p-6 sm:p-10 rounded-lg border border-gray-700 shadow-lg mt-25"
               >
                 <div className="flex flex-col items-center m-8">
-                  <Lightbulb className="w-10 h-10 text-blue-400 mb-4 animate-pulse" />
+                  {/* <Lightbulb className="w-10 h-10 text-blue-400 mb-4 animate-pulse" /> */}
+                  <Lottie
+                    animationData={question}
+                    className="w-15 h-15 sm:w-20 sm:h-20 "
+                  />
                   <p className="text-base text-gray-300 font-medium leading-relaxed mb-6">
                     {isFilterReady
                       ? "아래에서 모드를 선택하여 시험을 시작하세요!"
-                      : isMobile ?
-                        "햄버거 버튼을 눌러 시험 정보를 선택하세요."
-                        : "사이드바에서 시험 정보를 선택하세요."}
+                      : isMobile
+                      ? "햄버거 버튼을 눌러 시험 정보를 선택하세요."
+                      : "사이드바에서 시험 정보를 선택하세요."}
                   </p>
                 </div>
 
@@ -151,7 +153,8 @@ export default function SolvePage() {
                   level={level}
                   round={round}
                   selectedSubjects={selectedSubjects}
-                  durationMinutes={125} />
+                  durationMinutes={125}
+                />
                 <div className="w-full lg:w-64 shrink-0">
                   <OmrSheet />
                 </div>

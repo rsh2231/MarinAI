@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -100,11 +99,6 @@ export default function ProblemViewer({
     const qNum = question.num;
     const correct = question.answer;
     setAnswers((prev) => ({ ...prev, [qNum]: choice }));
-
-    toast[choice === correct ? "success" : "error"](
-      choice === correct ? "✅ 정답입니다!" : "❌ 오답입니다.",
-      { position: "top-center", autoClose: 1200 }
-    );
   };
 
   // 해설 보기/오답노트 저장 처리
@@ -147,38 +141,45 @@ export default function ProblemViewer({
 
   return (
     <div className="w-full max-w-3xl mx-auto px-2 sm:px-4 pb-10 text-foreground-dark">
-      <div className="w-full mb-4 flex justify-center px-2">
-        <div className="w-full sm:w-3/4 md:w-1/2">
-          <div className="flex items-center justify-center text-xs xs:text-sm text-gray-300 mb-1">
-            <div className="flex items-center gap-1 xs:gap-2">
-              <span className="text-blue-400 text-base xs:text-lg">📘</span>
-              <span className="truncate">
-                {selectedIndex + 1} / {filteredSubjectNames.length} 과목
-              </span>
+      {filteredSubjects.length > 0 && (
+        <>
+          {/* 진행률 바 */}
+          <div className="w-full mb-4 flex justify-center px-2">
+            <div className="w-full sm:w-3/4 md:w-1/2">
+              <div className="flex items-center justify-center text-xs xs:text-sm text-gray-300 mb-1">
+                <div className="flex items-center gap-1 xs:gap-2">
+                  <span className="text-blue-400 text-base xs:text-lg">📘</span>
+                  <span className="truncate">
+                    {selectedIndex + 1} / {filteredSubjectNames.length} 과목
+                  </span>
+                </div>
+              </div>
+              <div className="w-full bg-gray-800 h-2 rounded-full overflow-hidden shadow-inner">
+                <div
+                  className="h-full bg-blue-500 rounded-full transition-all duration-300 ease-in-out"
+                  style={{
+                    width: `${
+                      filteredSubjectNames.length > 0
+                        ? ((selectedIndex + 1) / filteredSubjectNames.length) *
+                          100
+                        : 0
+                    }%`,
+                  }}
+                />
+              </div>
             </div>
           </div>
-          <div className="w-full bg-gray-800 h-2 rounded-full overflow-hidden shadow-inner">
-            <div
-              className="h-full bg-blue-500 rounded-full transition-all duration-300 ease-in-out"
-              style={{
-                width: `${
-                  filteredSubjectNames.length > 0
-                    ? ((selectedIndex + 1) / filteredSubjectNames.length) * 100
-                    : 0
-                }%`,
-              }}
+
+          {/* 탭 */}
+          <div className="flex justify-center overflow-x-auto px-2 sm:px-6 no-scrollbar">
+            <SubjectTabs
+              subjects={filteredSubjectNames}
+              selected={selectedSubject}
+              setSelected={onSelectSubject}
             />
           </div>
-        </div>
-      </div>
-
-      <div className="flex justify-center overflow-x-auto px-2 sm:px-6 no-scrollbar">
-        <SubjectTabs
-          subjects={filteredSubjectNames}
-          selected={selectedSubject}
-          setSelected={onSelectSubject}
-        />
-      </div>
+        </>
+      )}
 
       <AnimatePresence mode="wait">
         {selectedBlock ? (
@@ -203,7 +204,7 @@ export default function ProblemViewer({
               />
             ))}
 
-            <div className="flex flex-row sm:flex-row justify-between items-center gap-3 mt-8">
+            <div className="flex flex-row sm:flex-row justify-center items-center gap-3 mt-8">
               <Button
                 variant="neutral"
                 onClick={() => {

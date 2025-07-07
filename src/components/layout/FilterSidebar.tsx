@@ -79,9 +79,8 @@ export default function FilterSidebar({
       } else if (!LEVELS.includes(level)) {
         setLevel(LEVELS[0]);
       }
-      setSelectedSubjects([]); // 과목 선택 초기화
     },
-    [level, setLevel, setLicense, setSelectedSubjects]
+    [level, setLevel, setLicense]
   );
 
   // 과목 선택 토글 함수 (useCallback으로 메모이제이션)

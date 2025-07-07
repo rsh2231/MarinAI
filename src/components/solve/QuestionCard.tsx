@@ -1,17 +1,21 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
+
 import { Question } from "@/types/ProblemViwer";
 import { extractImageCode } from "@/utils/problemUtils";
+import correctAnimation from "@/assets/animations/correct.json";
+import incorrectAnimation from "@/assets/animations/incorrect.json";
 
 interface Props {
   question: Question;
   selected?: string;
   showAnswer?: boolean;
   onSelect: (choice: string) => void;
-  onToggle?: () => void; // 연습 모드에서만 전달
+  onToggle?: () => void;
   license: string;
   code: string;
 }
@@ -48,8 +52,30 @@ function QuestionCardComponent({
     ? `/data/${license}/${code}/${code}-${finalImageCode}.png`
     : null;
 
-  // onToggle prop의 존재 여부로 연습/실전 모드를 명확히 구분
   const isPracticeMode = !!onToggle;
+
+  const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(
+    null
+  );
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+
+  useEffect(() => {
+    if (feedback && lottieRef.current) {
+      requestAnimationFrame(() => {
+        lottieRef.current?.setSpeed(2.5);
+      });
+
+      const timer = setTimeout(() => setFeedback(null), 600);
+      return () => clearTimeout(timer);
+    }
+  }, [feedback]);
+
+  const handleClickOption = (optLabel: string) => {
+    if (isPracticeMode && showAnswer) return;
+    onSelect(optLabel);
+    const isCorrect = optLabel === correctAnswer;
+    setFeedback(isCorrect ? "correct" : "incorrect");
+  };
 
   return (
     <motion.article
@@ -58,16 +84,31 @@ function QuestionCardComponent({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.25 }}
-      className={`bg-background-dark border ${
+      className={`relative bg-background-dark border ${
         isPracticeMode && showAnswer ? "border-gray-600" : "border-white"
       } rounded-xl shadow-card mb-6 p-5 transition-colors`}
     >
+      {/* Lottie 애니메이션 조건부 렌더링 */}
+      {isPracticeMode && feedback && (
+        <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none rounded-xl">
+          <div className="w-40 h-40 sm:w-48 sm:h-48">
+            <Lottie
+              lottieRef={lottieRef}
+              animationData={
+                feedback === "correct" ? correctAnimation : incorrectAnimation
+              }
+              loop={false}
+            />
+          </div>
+        </div>
+      )}
+
       {/* 문제 텍스트 */}
       <div className="flex flex-col gap-2 font-medium text-sm sm:text-base">
         <span className="text-gray-400 text-xs sm:text-sm">
           문제 {question.num}
         </span>
-        <p className="whitespace-pre-wrap leading-relaxed text-sm sm:text-base">
+        <p className="whitespace-pre-wrap leading-relaxed">
           {textWithoutImage}
         </p>
       </div>
@@ -82,26 +123,25 @@ function QuestionCardComponent({
             height={0}
             sizes="100vw"
             priority
-            key={imagePath}
             className="rounded border border-gray-600 w-full sm:w-auto max-w-full sm:max-w-[80%] h-auto max-h-[300px] sm:max-h-[400px] object-contain"
           />
         </div>
       )}
 
-      {/* 보기 영역 */}
+      {/* 보기 */}
       <ul className="space-y-3 mt-4">
         {options.map((opt) => {
           const isSelected = selected === opt.label;
           const isCorrect = opt.label === correctAnswer;
 
-          // 연습 모드일 때만 스타일링 계산
           const showCorrectStyle = isPracticeMode && showAnswer && isCorrect;
-          const isWrong = isPracticeMode && isSelected && !isCorrect && showAnswer;
+          const isWrong =
+            isPracticeMode && isSelected && !isCorrect && showAnswer;
 
           const base =
             "flex items-center gap-3 px-4 py-3 rounded-md border text-sm cursor-pointer transition-all";
           const selectedCls = isSelected
-            ? "border-primary bg-primary/10"
+            ? "border-primary bg-black/50"
             : "border-gray-700 hover:bg-gray-800/30";
           const correctCls = showCorrectStyle
             ? "border-green-500 bg-green-900/20 text-green-300"
@@ -114,11 +154,7 @@ function QuestionCardComponent({
             <li
               key={opt.label}
               className={`${base} ${selectedCls} ${correctCls} ${wrongCls}`}
-              onClick={() => {
-                // 연습 모드에서 해설이 보일 때는 더 이상 선택하지 못하게 방지
-                if (isPracticeMode && showAnswer) return;
-                onSelect(opt.label);
-              }}
+              onClick={() => handleClickOption(opt.label)}
             >
               <span className="font-semibold text-sm sm:text-base min-w-[24px]">
                 {opt.label}.
@@ -148,7 +184,7 @@ function QuestionCardComponent({
         })}
       </ul>
 
-      {/* isPracticeMode일 때만 해설 관련 UI 렌더링 */}
+      {/* 해설 보기 */}
       {isPracticeMode && (
         <>
           <button
@@ -159,16 +195,21 @@ function QuestionCardComponent({
             {showAnswer ? "해설 숨기기" : "해설 보기"}
           </button>
           {showAnswer && (
-            <div className="mt-3 text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
-              <p className="flex items-center gap-2">
-                ✅ <strong>정답:</strong> {correctAnswer}. {correctText}
+            <div className="mt-3 text-sm text-gray-300 whitespace-pre-wrap leading-relaxed break-words">
+              <p className="flex flex-wrap items-start gap-x-2 gap-y-1">
+                <span className="shrink-0">✅</span>
+                <span className="shrink-0 font-semibold">정답:</span>
+                <span>
+                  {correctAnswer}. {correctText}
+                </span>
               </p>
+
               {question.explanation && (
-                <p className="mt-2 text-gray-400 flex items-start gap-2">
-                  <strong className="flex items-center gap-1 shrink-0">
-                    💡 해설:
-                  </strong>
-                  <span>{question.explanation}</span>
+                <p className="mt-2 flex flex-wrap items-start gap-x-2 gap-y-1 text-gray-400">
+                  <span className="shrink-0 flex items-center gap-1">
+                    💡 <strong>해설:</strong>
+                  </span>
+                  <span className="min-w-0">{question.explanation}</span>
                 </p>
               )}
             </div>

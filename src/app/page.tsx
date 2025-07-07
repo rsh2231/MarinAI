@@ -9,6 +9,7 @@ import { SendHorizontal } from "lucide-react";
 import Button from "@/components/ui/Button";
 
 export default function Home() {
+  
   const [input, setInput] = useState("");
   const router = useRouter();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -81,9 +82,8 @@ export default function Home() {
             type="submit"
             variant="neutral"
             className="flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-2.5 text-sm sm:text-base"
-          >
-            <SendHorizontal className="w-5 h-5" />
-            시작
+          >  
+            <SendHorizontal className="w-4 h-4" />
           </Button>
         </div>
       </motion.form>
