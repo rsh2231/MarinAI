@@ -5,6 +5,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
+import { useSolveProblem } from "@/hooks/useSolveProblem";
 import { Question } from "@/types/ProblemViwer";
 import { extractImageCode } from "@/utils/problemUtils";
 import correctAnimation from "@/assets/animations/correct.json";
@@ -77,6 +78,29 @@ function QuestionCardComponent({
     setFeedback(isCorrect ? "correct" : "incorrect");
   };
 
+  const { result, loading, error, solve } = useSolveProblem();
+
+  const [aiExplanation, setAiExplanation] = useState("");
+
+  useEffect(() => {
+    if (
+      isPracticeMode &&
+      showAnswer &&
+      !question.explanation &&
+      !aiExplanation &&
+      !loading
+    ) {
+      const prompt = `문제 ${question.num}\n${question.questionsStr}\n\n보기:\n가. ${question.ex1Str}\n나. ${question.ex2Str}\n사. ${question.ex3Str}\n아. ${question.ex4Str}\n\n정답: ${correctAnswer}`;
+      solve(prompt);
+    }
+  }, [question.num, showAnswer]);
+
+  useEffect(() => {
+    if (result && !aiExplanation) {
+      setAiExplanation(result);
+    }
+  }, [result]);
+
   return (
     <motion.article
       layout
@@ -84,9 +108,8 @@ function QuestionCardComponent({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.25 }}
-      className={`relative bg-background-dark border ${
-        isPracticeMode && showAnswer ? "border-gray-600" : "border-white"
-      } rounded-xl shadow-card mb-6 p-5 transition-colors`}
+      className={`relative bg-background-dark border ${isPracticeMode && showAnswer ? "border-gray-600" : "border-white"
+        } rounded-xl shadow-card mb-6 p-5 transition-colors`}
     >
       {/* Lottie 애니메이션 조건부 렌더링 */}
       {isPracticeMode && feedback && (
@@ -204,14 +227,21 @@ function QuestionCardComponent({
                 </span>
               </p>
 
-              {question.explanation && (
-                <p className="mt-2 flex flex-wrap items-start gap-x-2 gap-y-1 text-gray-400">
-                  <span className="shrink-0 flex items-center gap-1">
-                    💡 <strong>해설:</strong>
-                  </span>
-                  <span className="min-w-0">{question.explanation}</span>
-                </p>
-              )}
+              {/* 해설 영역 */}
+              <p className="mt-2 flex flex-wrap items-start gap-x-2 gap-y-1 text-gray-400">
+                <span className="shrink-0 flex items-center gap-1">
+                  💡 <strong>해설:</strong>
+                </span>
+                <span className="min-w-0">
+                  {question.explanation
+                    ? question.explanation
+                    : loading
+                      ? "AI가 해설을 생성 중입니다..."
+                      : error
+                        ? "해설을 가져오는 데 실패했습니다."
+                        : aiExplanation}
+                </span>
+              </p>
             </div>
           )}
         </>
