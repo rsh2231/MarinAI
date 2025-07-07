@@ -27,16 +27,19 @@ export default function SolvePage() {
 
   const isMobile = useWindowWidth(768);
 
-  // 필터 값이 변경되면, mode를 초기화하여 다시 선택하도록 유도
+  // 자격증(license) 변경 시 과목 목록을 업데이트하는 useEffect
   useEffect(() => {
     if (license) {
-      console.log("Filter changed:", {year, license, level, round});
       const defaultSubjects = SUBJECTS_BY_LICENSE[license] || [];
       setSelectedSubjects(defaultSubjects);
     } else {
       setSelectedSubjects([]);
     }
-    setMode(null); // 필터 변경에 따른 mode 초기화
+  }, [license]);
+
+  // 주요 필터 변경 시 모드를 초기화하는 useEffect
+  useEffect(() => {
+    setMode(null);
   }, [year, license, level, round]);
 
   const filterState = {
@@ -54,6 +57,7 @@ export default function SolvePage() {
 
   const isFilterReady =
     year && license && round && (license === "소형선박조종사" || level);
+  console.log("Rendering with:", { isFilterReady, mode });
 
   return (
     <motion.div
@@ -76,7 +80,7 @@ export default function SolvePage() {
             {/* 4. isFilterReady와 mode에 따라 적절한 UI를 조건부로 렌더링 */}
             {!isFilterReady || !mode ? (
               <motion.div
-                key="selection-prompt"
+                key={`select-${year}-${license}-${level}-${round}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -126,7 +130,7 @@ export default function SolvePage() {
               </motion.div>
             ) : mode === "practice" ? (
               <motion.div
-                key="practice-viewer"
+                key={`practice-${year}-${license}-${level}-${round}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="w-full h-full"
@@ -142,7 +146,7 @@ export default function SolvePage() {
               </motion.div>
             ) : (
               <motion.div
-                key="exam-viewer"
+                key={`exam-${year}-${license}-${level}-${round}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="w-full md:w-10/12 h-auto"

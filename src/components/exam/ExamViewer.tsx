@@ -8,7 +8,6 @@ import {
   Timer,
   ChevronLeft,
   ChevronRight,
-  SendHorizontal,
   Send,
 } from "lucide-react";
 
