@@ -1,17 +1,15 @@
-"use client";
+import { useEffect, useState } from "react";
 
-import { useState, useEffect } from "react";
-
-export const useWindowWidth = (breakpoint: number = 768) => {
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth < breakpoint : false
-  );
+export const useWindowWidth = (breakpoint = 768) => {
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const update = () => setIsMobile(window.innerWidth < breakpoint);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < breakpoint);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, [breakpoint]);
 
   return isMobile;

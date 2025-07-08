@@ -1,97 +1,120 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAutoResizeTextarea } from "@/hooks/useAutoResizeTextarea";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import { SendHorizontal, Image as ImageIcon, X } from "lucide-react";
-import Button from "@/components/ui/Button";
+import NextImage from "next/image"; // next/image는 NextImage로 임포트
+import {
+  X,
+  Plus,
+  ArrowUp,
+  Paperclip,
+  Mic,
+  FileText,
+  Image as ImageIcon // lucide-react의 Image는 ImageIcon으로 임포트
+} from "lucide-react";
+
+// 팝업 메뉴에 표시할 아이콘 데이터
+const menuIcons = [
+  { icon: Paperclip, label: "파일" },
+  { icon: Mic, label: "음성" },
+  { icon: FileText, label: "템플릿" },
+];
 
 export default function Home() {
   const [input, setInput] = useState("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const router = useRouter();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   useAutoResizeTextarea(textareaRef, input);
 
+  // 메모리 누수 방지를 위해 생성된 URL을 관리하는 useEffect
+  useEffect(() => {
+    // 컴포넌트가 언마운트될 때, 이전에 생성된 URL이 있다면 해제합니다.
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
+
+  // 이미지 파일 변경 핸들러
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
+      // 기존 미리보기 URL이 있다면 먼저 해제합니다.
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
       setSelectedImage(file);
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
+      const newUrl = URL.createObjectURL(file);
+      setPreviewUrl(newUrl);
     }
   };
 
+  // 첨부된 이미지 제거 핸들러
   const handleRemoveImage = () => {
     setSelectedImage(null);
-    setPreviewUrl(null);
+    setPreviewUrl(null); // URL 상태도 null로 설정 (useEffect에서 해제됨)
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   };
 
-  const handleDragEvents = (
-    e: React.DragEvent<HTMLFormElement>,
-    type: "enter" | "leave" | "drop"
-  ) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (type === "enter") setIsDragging(true);
-    else if (type === "leave") setIsDragging(false);
-    else {
-      // drop
-      setIsDragging(false);
-      const file = e.dataTransfer.files[0];
-      if (file && file.type.startsWith("image/")) {
-        setSelectedImage(file);
-        const url = URL.createObjectURL(file);
-        setPreviewUrl(url);
-      }
-    }
-  };
-
+  // 폼 제출 핸들러
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isSubmitting) return;
+    if ((!input.trim() && !selectedImage) || isSubmitting) return;
 
     setIsSubmitting(true);
-    let imageUrl = "";
 
+    // 1. 이미지가 선택된 경우, 먼저 서버에 업로드합니다.
+    let imageUrl = "";
     if (selectedImage) {
       try {
         const formData = new FormData();
-        formData.append("image", selectedImage);
-        const res = await fetch("/api/upload", {
+        formData.append("file", selectedImage); // 'file'이라는 키로 이미지를 전송 (API와 일치해야 함)
+
+        const res = await fetch("/api/upload", { // 이미지 업로드 API 엔드포인트
           method: "POST",
           body: formData,
         });
-        if (res.ok) {
-          const data = await res.json();
-          imageUrl = data.url;
-        } else {
-          throw new Error("이미지 업로드에 실패했습니다.");
+
+        if (!res.ok) {
+          // 업로드 실패 시 사용자에게 알림
+          const errorData = await res.json();
+          throw new Error(errorData.error || "이미지 업로드에 실패했습니다.");
         }
+
+        const data = await res.json();
+        imageUrl = data.url; // 업로드 후 반환된 이미지 URL
+
       } catch (error) {
         console.error(error);
-        alert("이미지 업로드 중 오류가 발생했습니다.");
+        // alert(error.message); // 실제 서비스에서는 toast 라이브러리 사용 추천
         setIsSubmitting(false);
-        return;
+        return; // 업로드 실패 시 함수 종료
       }
     }
 
+    // 2. 쿼리 파라미터를 생성합니다.
     const params = new URLSearchParams();
     params.set("initialQuestion", input.trim());
-    if (imageUrl) params.set("imageUrl", imageUrl);
+    if (imageUrl) {
+      params.set("imageUrl", imageUrl);
+    }
+
+    // 3. 생성된 쿼리 파라미터와 함께 /chat 페이지로 이동합니다.
     router.push(`/chat?${params.toString()}`);
   };
 
+  // Enter 키로 제출하는 핸들러
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -100,30 +123,8 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen w-full flex items-center justify-center overflow-hidden relative px-4 sm:px-6 md:px-8">
-      {/* 배경 회전 이미지 */}
-      <motion.div
-        className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 0.05, scale: 1 }}
-        transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-      >
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 80, ease: "linear" }}
-          className="w-[80vw] h-[80vw] md:w-[400px] md:h-[400px]"
-        >
-          <Image
-            src="/images/wheel.png"
-            alt="Ship Wheel"
-            fill
-            style={{ objectFit: "contain" }}
-            priority
-            draggable={false}
-          />
-        </motion.div>
-      </motion.div>
-
+    <div className="h-screen w-full flex items-center justify-center overflow-hidden relative bg-neutral-900 px-4 sm:px-6 md:px-8">
+      {/* 콘텐츠 */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-2xl text-center">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -133,7 +134,6 @@ export default function Home() {
         >
           Marin<span className="text-blue-500">AI</span>
         </motion.h1>
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -144,83 +144,115 @@ export default function Home() {
           궁금한 점을 질문하거나, 관련 이미지를 첨부하여 물어보세요.
         </motion.p>
 
+        {/* 폼 UI */}
         <motion.form
           onSubmit={handleSubmit}
-          onDragEnter={(e) => handleDragEvents(e, "enter")}
-          onDragLeave={(e) => handleDragEvents(e, "leave")}
-          onDrop={(e) => handleDragEvents(e, "drop")}
-          onDragOver={(e) => e.preventDefault()}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
-          className={`w-full bg-black/30 backdrop-blur-sm border rounded-xl transition-colors duration-300 ${
-            isDragging ? "border-blue-500" : "border-neutral-700"
-          }`}
+          className="relative w-full"
         >
-          <div className="p-2 sm:p-3 space-y-3">
-            <AnimatePresence>
-              {previewUrl && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="relative w-fit max-w-xs overflow-hidden px-1 pt-1 sm:px-2 sm:pt-2"
-                >
-                  <img
-                    src={previewUrl}
-                    alt="미리보기"
-                    className="rounded-md border border-neutral-600 max-h-[120px] sm:max-h-[150px]"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleRemoveImage}
-                    className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 bg-black/60 rounded-full p-1 text-white hover:bg-black/80 transition-colors"
+          {/* 입력창 전체 컨테이너 */}
+          <div className="flex w-full gap-3 rounded-2xl border border-neutral-700 bg-neutral-800/50 p-3 shadow-lg backdrop-blur-sm">
+            {/* 왼쪽 영역 (미리보기 + 입력창) */}
+            <div className="flex flex-grow flex-col gap-3">
+              <AnimatePresence>
+                {previewUrl && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="relative w-fit"
                   >
-                    <X size={16} />
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <div className="flex items-end gap-2 sm:gap-3 p-1 sm:p-0">
-              <input
-                type="file"
-                accept="image/*"
-                hidden
-                ref={fileInputRef}
-                onChange={handleImageChange}
-              />
-
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="p-2 sm:p-2.5 self-stretch flex items-center justify-center rounded-lg hover:bg-neutral-700/70 text-neutral-400 hover:text-white transition-colors border-neutral-700"
-                title="이미지 업로드"
-              >
-                <ImageIcon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform" />
-              </button>
+                    <img
+                      src={previewUrl}
+                      alt="미리보기"
+                      className="max-h-32 rounded-lg border border-neutral-600"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleRemoveImage}
+                      className="absolute -right-2 -top-2 rounded-full bg-neutral-900 p-1 text-white ring-2 ring-neutral-800 transition-transform hover:scale-110"
+                      aria-label="이미지 제거"
+                    >
+                      <X size={14} />
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <textarea
                 ref={textareaRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="질문 또는 이미지..."
-                className="flex-grow bg-transparent text-white placeholder-neutral-500 resize-none focus:outline-none text-sm sm:text-base max-h-[7rem] overflow-y-auto min-h-[3rem] leading-snug py-3"
+                placeholder="무엇이든 물어보세요"
+                className="w-full flex-grow resize-none bg-transparent text-lg text-neutral-200 placeholder-neutral-500 focus:outline-none"
                 rows={1}
-                required
               />
+            </div>
 
-              <Button
-                type="submit"
-                variant="neutral"
-                disabled={!input.trim() || isSubmitting}
-                className="p-2 sm:p-2.5 self-stretch"
+            {/* 오른쪽 버튼 영역 */}
+            <div className="flex flex-shrink-0 justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-700/60 text-neutral-300 transition-colors hover:bg-neutral-700"
+                aria-label="첨부 파일 메뉴 열기"
               >
-                <SendHorizontal className="w-5 h-5 sm:w-6 sm:h-6 transition-transform" />
-              </Button>
+                <Plus size={20} />
+              </button>
+              <button
+                type="submit"
+                disabled={(!input.trim() && !selectedImage) || isSubmitting}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white transition-all hover:bg-blue-500 disabled:bg-neutral-700 disabled:text-neutral-500 disabled:cursor-not-allowed"
+                aria-label="전송"
+              >
+                <ArrowUp size={20} />
+              </button>
             </div>
           </div>
+
+          {/* 팝업 메뉴 */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                className="absolute bottom-20 right-2 grid grid-cols-4 gap-3 rounded-xl border border-neutral-700 bg-neutral-800 p-3 shadow-xl"
+              >
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex h-12 w-12 flex-col items-center justify-center rounded-lg text-neutral-300 transition-colors hover:bg-neutral-700"
+                  title="이미지 첨부"
+                >
+                  <ImageIcon size={24} />
+                </button>
+                {menuIcons.map((item, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className="flex h-12 w-12 flex-col items-center justify-center rounded-lg text-neutral-300 transition-colors hover:bg-neutral-700"
+                    title={item.label}
+                  >
+                    <item.icon size={24} />
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* 파일 입력을 위한 숨겨진 태그 */}
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            ref={fileInputRef}
+            onChange={handleImageChange}
+          />
         </motion.form>
       </div>
     </div>
