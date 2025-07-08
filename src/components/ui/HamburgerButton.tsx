@@ -66,7 +66,7 @@ export default function HamburgerButton({
           closed: { opacity: 1 },
         }}
         transition={{ duration: 0.3 }}
-        className={`block ${lineW} h-0.5 ${colorClass} my-1`}
+        className={`block ${lineW} h-0.5 ${colorClass} my-0.5`}
       />
       <motion.span
         initial="closed"

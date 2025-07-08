@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
 import { useSolveProblem } from "@/hooks/useSolveProblem";
@@ -10,6 +10,8 @@ import { Question } from "@/types/ProblemViwer";
 import { extractImageCode } from "@/utils/problemUtils";
 import correctAnimation from "@/assets/animations/correct.json";
 import incorrectAnimation from "@/assets/animations/incorrect.json";
+import Loading from "@/assets/animations/loading.json";
+import Fail from "@/assets/animations/fail.json";
 
 interface Props {
   question: Question;
@@ -80,26 +82,25 @@ function QuestionCardComponent({
 
   const { result, loading, error, solve } = useSolveProblem();
 
-  const [aiExplanation, setAiExplanation] = useState("");
-
   useEffect(() => {
     if (
       isPracticeMode &&
       showAnswer &&
       !question.explanation &&
-      !aiExplanation &&
+      !result &&
       !loading
     ) {
       const prompt = `문제 ${question.num}\n${question.questionsStr}\n\n보기:\n가. ${question.ex1Str}\n나. ${question.ex2Str}\n사. ${question.ex3Str}\n아. ${question.ex4Str}\n\n정답: ${correctAnswer}`;
       solve(prompt);
     }
-  }, [question.num, showAnswer]);
-
-  useEffect(() => {
-    if (result && !aiExplanation) {
-      setAiExplanation(result);
-    }
-  }, [result]);
+  }, [
+    question.num,
+    showAnswer,
+    result,
+    loading,
+    isPracticeMode,
+    question.explanation,
+  ]);
 
   return (
     <motion.article
@@ -108,8 +109,9 @@ function QuestionCardComponent({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.25 }}
-      className={`relative bg-background-dark border ${isPracticeMode && showAnswer ? "border-gray-600" : "border-white"
-        } rounded-xl shadow-card mb-6 p-5 transition-colors`}
+      className={`relative bg-background-dark border ${
+        isPracticeMode && showAnswer ? "border-gray-600" : "border-white"
+      } rounded-xl shadow-card mb-6 p-5 transition-colors`}
     >
       {/* Lottie 애니메이션 조건부 렌더링 */}
       {isPracticeMode && feedback && (
@@ -125,7 +127,6 @@ function QuestionCardComponent({
           </div>
         </div>
       )}
-
       {/* 문제 텍스트 */}
       <div className="flex flex-col gap-2 font-medium text-sm sm:text-base">
         <span className="text-gray-400 text-xs sm:text-sm">
@@ -135,7 +136,6 @@ function QuestionCardComponent({
           {textWithoutImage}
         </p>
       </div>
-
       {/* 문제 이미지 */}
       {hasImage && imagePath && (
         <div className="my-4 flex justify-center">
@@ -150,7 +150,6 @@ function QuestionCardComponent({
           />
         </div>
       )}
-
       {/* 보기 */}
       <ul className="space-y-3 mt-4">
         {options.map((opt) => {
@@ -206,7 +205,6 @@ function QuestionCardComponent({
           );
         })}
       </ul>
-
       {/* 해설 보기 */}
       {isPracticeMode && (
         <>
@@ -215,45 +213,62 @@ function QuestionCardComponent({
             className="mt-5 text-sm text-blue-400 hover:underline"
             type="button"
           >
-            {showAnswer ? "해설 숨기기" : "해설 보기"}
+            {showAnswer ? "▲ 해설 숨기기" : "▼ 해설 보기"}
           </button>
-          {showAnswer && (
-            <div className="mt-3 text-sm text-gray-300 whitespace-pre-wrap leading-relaxed break-words">
-              <p className="flex flex-wrap items-start gap-x-2 gap-y-1">
-                <span className="shrink-0">✅</span>
-                <span className="shrink-0 font-semibold">정답:</span>
-                <span>
-                  {correctAnswer}. {correctText}
-                </span>
-              </p>
+          <AnimatePresence>
+            {showAnswer && (
+              <motion.div
+                key="explanation"
+                layoutRoot
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden mt-3 text-sm"
+              >
+                <div className="text-gray-300 whitespace-pre-wrap leading-relaxed break-words">
+                  {/* 정답 표시 부분 */}
+                  {/* <p className="flex flex-wrap items-start gap-x-2 gap-y-1">
+                        <span className="shrink-0">✅</span>
+                        <span className="shrink-0 font-semibold">정답 :</span>
+                        <span>
+                          {correctAnswer}. {correctText}
+                        </span>
+                      </p> */}
+        
+                  <div className="mt-2">
+                    {/* 1. "해설" 제목 부분 */}
+                    <div className="flex items-center gap-2 mb-2 text-gray-300">
+                      <span className="shrink-0">💡</span>
+                      <strong>해설</strong>
+                    </div>
 
-              {/* 해설 영역 */}
-              <p className="mt-2 flex flex-wrap items-start gap-x-2 gap-y-1 text-gray-400">
-                <span className="shrink-0 flex items-center gap-1">
-                  💡 <strong>해설:</strong>
-                </span>
-                <span className="min-w-0">
-                  {question.explanation
-                    ? question.explanation
-                    : loading
-                      ? "AI가 해설을 생성 중입니다..."
-                      : error
-                        ? "해설을 가져오는 데 실패했습니다."
-                        : aiExplanation}
-                </span>
-              </p>
-            </div>
-          )}
+                    {/* 2. 콘텐츠 부분 (들여쓰기 효과를 위해 pl-6 추가) */}
+                    <div className="pl-6 border-l-2 border-gray-700">
+                      {question.explanation ? (
+                        <p>{question.explanation}</p>
+                      ) : loading && !result ? (
+                        <div className="flex items-center gap-2 text-gray-400">
+                          <Lottie animationData={Loading} className="w-20 h-20" />
+                        </div>
+                      ) : error ? (
+                        <div className="flex items-center gap-2 text-red-500">
+                          <span>해설을 가져오는 데 실패했습니다.</span>
+                          <Lottie animationData={Fail} className="w-5 h-5" />
+                        </div>
+                      ) : (
+                        <p>{result}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </>
       )}
     </motion.article>
   );
 }
 
-export default React.memo(
-  QuestionCardComponent,
-  (prev, next) =>
-    prev.selected === next.selected &&
-    prev.showAnswer === next.showAnswer &&
-    prev.question.num === next.question.num
-);
+export default QuestionCardComponent;

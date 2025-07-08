@@ -31,11 +31,13 @@ export default function Sidebar({ filterState, className = "" }: SidebarProps) {
     }
   }, [sidebarOpen])
 
+  const sidebarBaseStyles = "w-64 bg-[#1f2937] text-white border-r border-gray-700 rounded-lg";
+
   return (
     <>
-      {/* 데스크탑 전용 사이드바 (FilterSidebar를 직접 렌더링) */}
+      {/* 데스크탑 전용 사이드바 */}
       <aside
-        className={`hidden md:block w-64 bg-[#1f2937] text-white border-r border-gray-700 p-6 ${className}`}>
+        className={`hidden md:block ${sidebarBaseStyles} p-15 h-auto ${className}`}>
         <FilterSidebar
           {...filterState}
           sidebarOpen={false}
@@ -57,7 +59,8 @@ export default function Sidebar({ filterState, className = "" }: SidebarProps) {
               onClick={handleClose}
               aria-hidden="true"
             />
-            {/* 슬라이딩 사이드바 (FilterSidebar를 직접 렌더링) */}
+
+            {/* 슬라이딩 사이드바 */}
             <motion.aside
               role="dialog"
               aria-modal="true"
@@ -65,7 +68,7 @@ export default function Sidebar({ filterState, className = "" }: SidebarProps) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: 'tween', duration: 0.3 }}
-              className="fixed top-0 left-0 z-40 h-full md:hidden"
+              className={`fixed top-0 left-0 z-40 h-full md:hidden ${sidebarBaseStyles} p-10 mt-15 shadow-2xl`}
             >
               <FilterSidebar
                 {...filterState}

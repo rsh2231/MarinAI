@@ -98,34 +98,20 @@ export default function FilterSidebar({
   const subjects = license ? SUBJECTS_BY_LICENSE[license] || [] : [];
 
   return (
-    <aside
+    <div
       className={`
-        fixed top-0 left-0 z-50 h-full w-50 bg-[#1f2937] p-6 shadow-2xl border-r border-gray-700
-        transform transition-transform duration-300 ease-in-out
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-        md:translate-x-0 md:static md:shadow-none
-        flex flex-col space-y-6
+        flex flex-col space-y-6 h-full overflow-y-auto
         ${className}
       `}
       role="complementary"
-      aria-label="문제 필터 사이드바"
+      aria-label="문제 필터"
     >
-      {/* 모바일 닫기 버튼 */}
-      {onClose && (
-        <button
-          onClick={onClose}
-          className="self-end text-gray-400 hover:text-white p-1 md:hidden"
-          aria-label="사이드바 닫기"
-        >
-          <X className="w-6 h-6" />
-        </button>
-      )}
 
       <h2 className="text-2xl font-bold text-white border-b border-gray-700 pb-3">
         문제 필터
       </h2>
 
-      <div className="space-y-4 text-sm text-gray-300">
+      <div className="space-y-4 text-sm text-gray-300 flex-grow">
         <SelectBox
           label="연도 선택"
           id="year-select"
@@ -181,6 +167,6 @@ export default function FilterSidebar({
           )}
         </div>
       </div>
-    </aside>
+    </div>
   );
 }

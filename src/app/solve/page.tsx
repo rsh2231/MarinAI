@@ -145,9 +145,8 @@ export default function SolvePage() {
                 key={`practice-${year}-${license}-${level}-${round}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="w-full h-full"
+                className="w-full max-w-3xl h-full"
               >
-                {/* license가 null이 아님을 isFilterReady와 mode 조건으로 보장 */}
                 <ProblemViewer
                   year={year}
                   license={license!}
@@ -156,12 +155,12 @@ export default function SolvePage() {
                   selectedSubjects={selectedSubjects}
                 />
               </motion.div>
-            ) : (
+            ) : mode === "exam" ? (
               <motion.div
                 key={`exam-${year}-${license}-${level}-${round}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="w-full md:w-10/12 h-auto"
+                className="w-full max-w-3xl h-full"
               >
                 <ExamViewer
                   year={year}
@@ -172,7 +171,7 @@ export default function SolvePage() {
                   durationSeconds={25 * 60}
                 />
               </motion.div>
-            )}
+            ) : null}
           </AnimatePresence>
         </main>
       </div>

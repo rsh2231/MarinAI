@@ -140,15 +140,15 @@ export default function ProblemViewer({
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-2 sm:px-4 pb-10 text-foreground-dark">
+    <div className="relative w-full max-w-3xl px-2 sm:px-4 pb-10 text-foreground-dark">
       {filteredSubjects.length > 0 && (
         <>
           {/* 진행률 바 */}
           <div className="w-full mb-4 flex justify-center px-2">
             <div className="w-full sm:w-3/4 md:w-1/2">
-              <div className="flex items-center justify-center text-xs xs:text-sm text-gray-300 mb-1">
+              <div className="flex items-center justify-center text-gray-300 mb-1">
                 <div className="flex items-center gap-1 xs:gap-2">
-                  <span className="text-blue-400 text-base xs:text-lg">📘</span>
+                  <span className="text-base xs:text-lg">📘</span>
                   <span className="truncate">
                     {selectedIndex + 1} / {filteredSubjectNames.length} 과목
                   </span>
@@ -189,7 +189,7 @@ export default function ProblemViewer({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="mt-6 sm:mt-8 space-y-5 sm:space-y-8 px-2"
+            className="mt-6 sm:mt-8 space-y-5 sm:space-y-8"
           >
             {selectedBlock.questions.map((q) => (
               <QuestionCard
