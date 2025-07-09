@@ -57,7 +57,7 @@ const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
         ...choice,
         isImage: isImg,
         text: isImg ? "" : choice.text,
-        imageUrl: imgPath ? `/api/img?${imgPath}` : undefined,
+        imageUrl: imgPath ? `/api/img/${imgPath}` : undefined,
       };
     });
 
