@@ -1,18 +1,17 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useChat } from "@/hooks/useChat";
-import ChatInput from "./ChatInput";
+import ChatInput from "./ChatInput"; // 통합된 ChatInput
 import ChatMessage from "./ChatMessage";
 
-export default function ChatBox() {
-  // 1. 쿼리 파라미터에서 초기값 가져오기
+// searchParams를 읽는 컴포넌트를 분리하여 Suspense 사용
+function ChatBoxContent() {
   const searchParams = useSearchParams();
   const initialQuestion = searchParams.get("initialQuestion") || "";
   const initialImageUrl = searchParams.get("imageUrl") || "";
 
-// 2. 훅에 초기값을 전달
   const {
     messages,
     input,
@@ -25,32 +24,24 @@ export default function ChatBox() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // 스마트 스크롤 로직
   useEffect(() => {
-    const chatContainer = messagesEndRef.current?.parentElement;
-    if (chatContainer) {
-      const { scrollHeight, scrollTop, clientHeight } = chatContainer;
-      // 사용자가 스크롤을 많이 올리지 않았을 때만 자동 스크롤
-      if (scrollHeight - scrollTop < clientHeight + 200) {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-      }
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   return (
-    <div className="flex flex-col max-w-4xl mx-auto w-full h-[85vh] rounded-2xl border border-neutral-700 bg-neutral-900/80 shadow-2xl">
-      <div className="flex-grow p-4 sm:p-6 overflow-y-auto space-y-5 scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-transparent">
+    <div className="mx-auto flex h-full w-full max-w-4xl flex-col rounded-2xl border border-neutral-700 bg-neutral-900/80 shadow-2xl">
+      <div className="flex-grow space-y-5 overflow-y-auto p-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral-700 sm:p-6">
         {messages.map((msg) => (
           <ChatMessage key={msg.id} message={msg} />
         ))}
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="px-4 sm:px-6 pb-4 sm:pb-6 border-t border-neutral-800 pt-4">
-        {isLoading && !messages[messages.length - 1]?.content && (
-          <div className="text-neutral-400 text-sm mb-2 select-none self-start flex items-center gap-2">
-            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-            <span>AI가 생각 중...</span>
+      <div className="border-t border-neutral-800 p-4 sm:p-6">
+        {isLoading && messages.length > 0 && messages[messages.length - 1].role === "assistant" && !messages[messages.length - 1].content && (
+          <div className="mb-2 flex items-center gap-2 self-start select-none text-sm text-neutral-400">
+            <div className="h-2 w-2 animate-pulse rounded-full bg-blue-500"></div>
+            <span>MarinAI가 답변을 생성 중입니다...</span>
           </div>
         )}
         <ChatInput
@@ -60,8 +51,18 @@ export default function ChatBox() {
           disabled={isLoading}
           onImageUpload={setUploadedImage}
           uploadedImage={uploadedImage}
+          placeholder="추가 질문을 입력하거나 이미지를 첨부하세요..."
         />
       </div>
     </div>
   );
+}
+
+// 최종적으로 내보낼 컴포넌트
+export default function ChatBox() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ChatBoxContent />
+    </Suspense>
+  )
 }

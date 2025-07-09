@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { Message } from "@/types/Message";
-import { count } from "console";
-import { resolve } from "path";
 
 export function useChat(initialQuestion?: string, initialImageUrl?: string) {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -12,7 +10,11 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
 
   const initialMessageSent = useRef(false);
 
-  const sendMessage = async (messageContent: string, imageFile: File | null, imageUrl?: string) => {
+  const sendMessage = async (
+    messageContent: string,
+    imageFile: File | null,
+    imageUrl?: string
+  ) => {
     if (!messageContent.trim() && !imageFile && !imageUrl) return;
 
     const userMessage: Message = {
@@ -21,33 +23,54 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
       content: messageContent,
       image: imageFile ? URL.createObjectURL(imageFile) : imageUrl,
     };
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
 
     const assistantMessageId = crypto.randomUUID();
-    setMessages(prev => [...prev, { id: assistantMessageId, role: "assistant", content: "" }]);
+    setMessages((prev) => [
+      ...prev,
+      { id: assistantMessageId, role: "assistant", content: "" },
+    ]);
     setIsLoading(true);
     setInput("");
     setUploadedImage(null);
 
     try {
-      // fetch 로직 복원
-      const formData = new FormData();
-      formData.append("message", messageContent.trim());
-      // 초기 메시지에는 imageFile이 없으므로, 사용자가 직접 올린 경우에만 추가
+      let res;
+      // 새로 업로드한 파일이 있을 경우 FormData로 전송
       if (imageFile) {
+        const formData = new FormData();
+        formData.append("message", messageContent.trim());
         formData.append("image", imageFile);
+        res = await fetch("/api/chat", {
+          method: "POST",
+          body: formData,
+        });
       }
-      // 초기 이미지 URL이 있다면 별도 필드로 추가 (API 설계에 따라 변경 가능)
-      if (imageUrl) {
-        formData.append("imageUrl", imageUrl);
+      // 파일 없이 텍스트와 URL만 있을 경우 JSON으로 전송
+      else {
+        // imageUrl이 존재하고, 상대 경로인 경우 절대 경로로 변환
+        let absoluteImageUrl = imageUrl;
+        if (imageUrl && imageUrl.startsWith("/")) {
+          absoluteImageUrl = new URL(imageUrl, window.location.origin).href;
+        }
+
+        // 이미지 URL을 포함하여 JSON으로 전송
+        res = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: messageContent.trim(),
+            imageUrl: absoluteImageUrl,
+          }),
+        });
       }
 
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok || !res.body) throw new Error("API 요청 실패");
+      if (!res.ok || !res.body) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "API 요청에 실패했습니다.");
+      }
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
@@ -57,29 +80,30 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
         const { value, done } = await reader.read();
         if (done) break;
 
-        const chunk = decoder.decode(value);
-
-        for (const char of chunk) {
-          accumulatedContent += char;
-
-          setMessages(prev =>
-            prev.map(msg =>
-              msg.id === assistantMessageId ? { ...msg, content: accumulatedContent } : msg
-            )
-          );
-          await new Promise(resolve => setTimeout(resolve, 30));
-        }
+        accumulatedContent += decoder.decode(value, { stream: true });
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === assistantMessageId
+              ? { ...msg, content: accumulatedContent }
+              : msg
+          )
+        );
       }
     } catch (error) {
       console.error("전송 오류:", error);
-      toast.error("답변 생성 중 오류가 발생했습니다.");
-      setMessages(prev =>
-        prev.map(msg =>
-          msg.id === assistantMessageId ? { ...msg, content: "⚠️ 답변을 가져오지 못했습니다." } : msg
+      toast.error(
+        (error as Error).message || "답변 생성 중 오류가 발생했습니다."
+      );
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === assistantMessageId
+            ? { ...msg, content: "⚠️ 답변을 가져오지 못했습니다." }
+            : msg
         )
       );
     } finally {
       setIsLoading(false);
+      // 생성된 임시 URL 해제 (imageFile이 있었던 경우에만)
       if (userMessage.image && imageFile) {
         URL.revokeObjectURL(userMessage.image);
       }
@@ -87,13 +111,10 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
   };
 
   useEffect(() => {
-    // 👇 initialQuestion이 있고, 아직 전송되지 않았을 때만 실행
-    if (initialQuestion && !initialMessageSent.current) {
-      sendMessage(initialQuestion, null, initialImageUrl);
-      // 👇 전송되었음을 표시
+    if ((initialQuestion || initialImageUrl) && !initialMessageSent.current) {
+      sendMessage(initialQuestion || "", null, initialImageUrl);
       initialMessageSent.current = true;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialQuestion, initialImageUrl]);
 
   const handleSubmit = (e: React.FormEvent) => {

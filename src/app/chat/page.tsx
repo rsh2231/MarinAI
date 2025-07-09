@@ -1,15 +1,22 @@
 "use client";
-
-import { useSearchParams } from "next/navigation";
+import React from "react";
 import ChatBox from "@/components/chat/ChatBox";
 
 export default function ChatPage() {
-  const searchParams = useSearchParams();
-  const initialQuestion = searchParams.get("initialQuestion") ?? "";
-
+  // Suspense를 사용하여 searchParams를 안전하게 읽도록 보장
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-20">
-      <ChatBox initialQuestion={initialQuestion} />
+    <React.Suspense
+      fallback={<div className="h-screen w-full bg-neutral-900" />}
+    >
+      <ChatPageContent />
+    </React.Suspense>
+  );
+}
+
+function ChatPageContent() {
+  return (
+    <div className="flex h-screen w-full items-center justify-center bg-neutral-900 p-4">
+      <ChatBox />
     </div>
   );
 }
