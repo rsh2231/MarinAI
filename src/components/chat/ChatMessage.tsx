@@ -1,9 +1,8 @@
 "use client";
 import { Message } from "@/types/Message";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import Markdown from "react-markdown"; // 마크다운 렌더링을 위해
-import remarkGfm from 'remark-gfm'; // GFM (테이블, 취소선 등) 지원
+import Markdown from "react-markdown"; 
+import remarkGfm from 'remark-gfm'; 
 import Lottie from "lottie-react";
 import AI from "@/assets/animations/AI.json";
 
@@ -15,15 +14,18 @@ export default function ChatMessage({ message }: { message: Message }) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
-      className={`flex items-start gap-3 ${isUser ? "justify-end" : ""}`}
+      className={`flex items-start gap-2 sm:gap-4 ${isUser ? "justify-end" : ""}`}
     >
+      {/* AI 아바타 */}
       {!isUser && (
-        <Lottie animationData={AI} className="w-20 h-20" />
+        <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
+           <Lottie animationData={AI} loop={false} />
+        </div>
       )}
 
+      {/* 메시지 버블 컨테이너 */}
       <div
-        className={`flex flex-col max-w-[85%] sm:max-w-[75%] ${isUser ? "items-end" : "items-start"
-          }`}
+        className={`flex flex-col max-w-[85%] sm:max-w-[75%] ${isUser ? "items-end" : "items-start"}`}
       >
         <div
           className={`px-4 py-3 rounded-2xl ${isUser
@@ -31,11 +33,16 @@ export default function ChatMessage({ message }: { message: Message }) {
               : "bg-neutral-700 text-neutral-200 rounded-bl-none"
             }`}
         >
+          {/* 텍스트 컨텐츠 */}
           {message.content && (
-            <div className="prose prose-sm prose-invert max-w-none prose-p:my-0 prose-headings:my-2 prose-ul:my-2 prose-ol:my-2">
+            <div className="prose prose-sm prose-invert max-w-none 
+              prose-p:my-0 prose-headings:my-2 prose-ul:my-2 prose-ol:my-2 
+              prose-pre:bg-neutral-800 prose-pre:p-3 prose-pre:rounded-md text-sm md:text-md">
               <Markdown remarkPlugins={[remarkGfm]}>{message.content}</Markdown>
             </div>
           )}
+
+          {/* 이미지 컨텐츠 */}
           {message.image && (
             <div className={`mt-2 ${!message.content ? "mt-0" : ""}`}>
               <img

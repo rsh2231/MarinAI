@@ -167,7 +167,7 @@ export default function ChatInput({
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            className="w-full flex-grow resize-none bg-transparent text-lg text-neutral-200 placeholder-neutral-500 focus:outline-none"
+            className="w-full flex-grow resize-none bg-transparent text-md text-neutral-200 placeholder-neutral-500 focus:outline-none"
             rows={1}
             maxRows={8}
             disabled={disabled}

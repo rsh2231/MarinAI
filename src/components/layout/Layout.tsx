@@ -12,11 +12,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main
-        className={
+        className={`flex-1 ${
           isHomePage
-            ? "flex-1 h-screen overflow-hidden flex items-center justify-center"
-            : "flex-1 max-w-7xl w-full mx-auto sm:px-6 sm:py-6"
-        }
+            ? "flex flex-col items-center justify-center overflow-hidden"
+            : "max-w-7xl w-full mx-auto sm:px-6 sm:py-6"
+        }`}
       >
         {children}
       </main>

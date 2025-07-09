@@ -105,7 +105,7 @@ export default function SolvePage() {
                     animationData={question}
                     className="w-15 h-15 sm:w-20 sm:h-20 "
                   />
-                  <p className="text-base text-gray-300 font-medium leading-relaxed mb-6">
+                  <p className="text-base text-gray-300 font-medium leading-relaxed mb-6 break-keep">
                     {isFilterReady
                       ? "아래에서 모드를 선택하여 시험을 시작하세요!"
                       : isMobile

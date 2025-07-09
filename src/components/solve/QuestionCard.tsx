@@ -127,7 +127,7 @@ function QuestionCardComponent({
         </div>
       )}
       {/* 문제 텍스트 */}
-      <div className="flex flex-col gap-2 font-medium text-sm sm:text-base">
+      <div className="flex flex-col gap-2 font-medium text-sm sm:text-base break-keep">
         <span className="text-gray-400 text-xs sm:text-sm">
           문제 {question.num}
         </span>
@@ -150,7 +150,7 @@ function QuestionCardComponent({
         </div>
       )}
       {/* 보기 */}
-      <ul className="space-y-3 mt-4">
+      <ul className="space-y-3 mt-4 break-keep">
         {options.map((opt) => {
           const isSelected = selected === opt.label;
           const isCorrect = opt.label === correctAnswer;
@@ -224,7 +224,7 @@ function QuestionCardComponent({
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="overflow-hidden mt-3 text-sm"
+                className="overflow-hidden mt-3 text-sm "
               >
                 <div className="text-gray-300 whitespace-pre-wrap leading-relaxed break-words">
                   {/* 정답 표시 부분 */}

@@ -48,7 +48,7 @@ export default function Home() {
     const params = new URLSearchParams();
     if (input.trim()) params.set("initialQuestion", input.trim());
     if (imageUrl) params.set("imageUrl", imageUrl);
-    
+
     // 쿼리 파라미터가 하나라도 있어야 이동
     if (params.toString()) {
       router.push(`/chat?${params.toString()}`);
@@ -59,32 +59,39 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen w-full flex items-center justify-center overflow-hidden relative bg-neutral-900 px-4">
-      <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-2xl text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-4xl sm:text-6xl font-extrabold text-white mb-3 select-none">
-          Marin<span className="text-blue-500">AI</span>
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}
-          className="max-w-lg text-neutral-400 text-base mb-12 leading-relaxed select-none break-keep">
-          해기사 시험 준비의 새로운 항해, MarinAI와 함께 스마트하게 준비하세요. 궁금한 점을 질문하거나, 관련 이미지를 첨부하여 물어보세요.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.6 }}
-          className="w-full">
-          <ChatInput
-            value={input}
-            onChange={setInput}
-            onSubmit={handleSubmit}
-            onImageUpload={setUploadedImage}
-            uploadedImage={uploadedImage}
-            disabled={isSubmitting}
-          />
-        </motion.div>
-      </div>
+    <div className="w-full max-w-2xl text-center px-4">
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="text-4xl sm:text-6xl font-extrabold text-white mb-3 select-none"
+      >
+        Marin<span className="text-blue-500">AI</span>
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="max-w-lg mx-auto text-neutral-400 text-base mb-12 leading-relaxed select-none break-keep"
+      >
+        해기사 시험 준비의 새로운 항해, MarinAI와 함께 스마트하게 준비하세요.
+        궁금한 점을 질문하거나, 관련 이미지를 첨부하여 물어보세요.
+      </motion.p>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.6 }}
+        className="w-full"
+      >
+        <ChatInput
+          value={input}
+          onChange={setInput}
+          onSubmit={handleSubmit}
+          onImageUpload={setUploadedImage}
+          uploadedImage={uploadedImage}
+          disabled={isSubmitting}
+        />
+      </motion.div>
     </div>
   );
 }

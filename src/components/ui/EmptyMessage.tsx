@@ -22,7 +22,7 @@ export const EmptyMessage = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
-      className={`flex flex-col items-center justify-center text-gray-400 text-center mt-12 px-4 py-10 border border-gray-700 rounded-xl bg-[#1f2937]/40 shadow-inner mx-2 ${className}`}
+      className={`flex flex-col items-center justify-center text-gray-400 text-center mt-12 px-4 py-10 border border-gray-700 rounded-xl bg-[#1f2937]/40 shadow-inner mx-2 ${className} break-keep`}
       {...motionProps}
     >
       <Lottie animationData={alert} className="w-20 h-20" />

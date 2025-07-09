@@ -6,7 +6,7 @@ export default function ChatPage() {
   // Suspense를 사용하여 searchParams를 안전하게 읽도록 보장
   return (
     <React.Suspense
-      fallback={<div className="h-screen w-full bg-neutral-900" />}
+      fallback={<div className="h-screen w-full" />}
     >
       <ChatPageContent />
     </React.Suspense>
@@ -14,9 +14,5 @@ export default function ChatPage() {
 }
 
 function ChatPageContent() {
-  return (
-    <div className="flex h-screen w-full items-center justify-center bg-neutral-900 p-4">
-      <ChatBox />
-    </div>
-  );
+  return <ChatBox />;
 }
