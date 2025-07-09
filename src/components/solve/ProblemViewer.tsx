@@ -1,14 +1,12 @@
 "use client";
 
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { motion, AnimatePresence } from "framer-motion";
 
 import SubjectTabs from "./SubjectTabs";
 import QuestionCard from "./QuestionCard";
 import { saveWrongNote, loadWrongNotes } from "@/utils/localWrongNote";
-import { Question, ProblemData } from "@/types/ProblemViwer";
-import { getCode } from "@/utils/getCode";
+import { QnaItem, Question, Choice, SubjectGroup } from "@/types/ProblemViwer";
 import Button from "@/components/ui/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { EmptyMessage } from "../ui/EmptyMessage";
@@ -23,6 +21,70 @@ interface Props {
   selectedSubjects: string[];
 }
 
+// API 응답을 프론트엔드용 데이터 구조로 변환하는 함수
+const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
+  if (!qnas || qnas.length === 0) return [];
+
+  const subjectMap = new Map<string, Question[]>();
+  const isImageCode = (str: string) => str.trim().startsWith("@pic");
+
+  const findImagePath = (code: string, paths: string[]): string | undefined => {
+    const key = code.replace("@", "").trim();
+    return paths.find((p) => p.includes(key));
+  };
+
+  qnas.forEach((item) => {
+    const questionImageCode = isImageCode(item.questionstr)
+      ? item.questionstr
+      : null;
+    const questionImagePath =
+      questionImageCode && item.imgPaths
+        ? findImagePath(questionImageCode, item.imgPaths)
+        : undefined;
+
+    const choices: Choice[] = [
+      { label: "가", text: item.ex1str },
+      { label: "나", text: item.ex2str },
+      { label: "사", text: item.ex3str },
+      { label: "아", text: item.ex4str },
+    ].map((choice) => {
+      const isImg = isImageCode(choice.text);
+      const imgPath =
+        isImg && item.imgPaths
+          ? findImagePath(choice.text, item.imgPaths)
+          : undefined;
+      return {
+        ...choice,
+        isImage: isImg,
+        text: isImg ? "" : choice.text,
+        imageUrl: imgPath ? `/api/img?${imgPath}` : undefined,
+      };
+    });
+
+    const question: Question = {
+      id: item.id,
+      num: item.qnum,
+      questionStr: questionImageCode ? "" : item.questionstr,
+      choices,
+      answer: item.answer,
+      explanation: item.explanation,
+      subjectName: item.subject,
+      isImageQuestion: !!item.imgPaths,
+      imageUrl: questionImagePath ? `/api/img/${questionImagePath}` : undefined,
+    };
+
+    if (!subjectMap.has(item.subject)) {
+      subjectMap.set(item.subject, []);
+    }
+    subjectMap.get(item.subject)!.push(question);
+  });
+
+  return Array.from(subjectMap.entries()).map(([subjectName, questions]) => ({
+    subjectName,
+    questions,
+  }));
+};
+
 export default function ProblemViewer({
   year,
   license,
@@ -30,47 +92,64 @@ export default function ProblemViewer({
   round,
   selectedSubjects,
 }: Props) {
-  const [data, setData] = useState<ProblemData | null>(null);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [showAnswer, setShowAnswer] = useState<Record<string, boolean>>({});
+  const [subjectGroups, setSubjectGroups] = useState<SubjectGroup[]>([]);
+  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [showAnswer, setShowAnswer] = useState<Record<number, boolean>>({});
   const [error, setError] = useState("");
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
-
-  const levelStr = license === "소형선박조종사" ? "" : level.replace("급", "");
-  const code = getCode(license, year, round, levelStr);
-  const filePath = `/data/${license}/${code}/${code}.json`;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
+      setError("");
       try {
-        const res = await fetch(filePath);
-        if (!res.ok) throw new Error("문제 파일을 불러올 수 없습니다.");
-        const json = await res.json();
-        setData(json);
+        const params = new URLSearchParams({ year, license, level, round });
+        const res = await fetch(`/api/solve?${params.toString()}`);
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(
+            errorData.message ||
+              `HTTP ${res.status}: 데이터를 불러오는데 실패했습니다.`
+          );
+        }
+
+        const responseData: { qnas: QnaItem[] } = await res.json();
+        const transformed = transformData(responseData.qnas);
+
+      
+        // ✅ 데이터가 없을 경우에 대한 처리
+        if (transformed.length === 0) {
+          // 404 Not Found의 경우, 백엔드 메시지를 활용할 수 있습니다.
+          setError("선택하신 조건에 해당하는 문제 데이터가 없습니다.");
+        }
+
+        console.log("data", responseData.qnas)
+
+        setSubjectGroups(transformed);
         setAnswers({});
         setShowAnswer({});
-        setError("");
         setSelectedSubject(null);
       } catch (err: any) {
         setError(err.message);
-        setData(null);
+        setSubjectGroups([]);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
-  }, [filePath]);
-
-  const normalizeSubject = (s: string) => s.replace(/^\d+\.\s*/, "");
+  }, [year, license, level, round]);
 
   const filteredSubjects = useMemo(() => {
-    if (!data) return [];
-    if (selectedSubjects.length === 0) return [];
-    return data.subject.type.filter((t) =>
-      selectedSubjects.includes(normalizeSubject(t.string))
+    if (selectedSubjects.length === 0) return subjectGroups;
+    return subjectGroups.filter((group) =>
+      selectedSubjects.includes(group.subjectName)
     );
-  }, [data, selectedSubjects]);
+  }, [subjectGroups, selectedSubjects]);
 
   const filteredSubjectNames = useMemo(() => {
-    return filteredSubjects.map((t) => t.string);
+    return filteredSubjects.map((group) => group.subjectName);
   }, [filteredSubjects]);
 
   useEffect(() => {
@@ -88,36 +167,30 @@ export default function ProblemViewer({
   }, []);
 
   const selectedBlock = filteredSubjects.find(
-    (t) => t.string === selectedSubject
+    (group) => group.subjectName === selectedSubject
   );
   const selectedIndex = filteredSubjectNames.findIndex(
     (s) => s === selectedSubject
   );
 
-  // 정답 선택 처리
-  const handleSelect = (question: Question, choice: string) => {
-    const qNum = question.num;
-    const correct = question.answer;
-    setAnswers((prev) => ({ ...prev, [qNum]: choice }));
+  const handleSelect = (questionId: number, choice: string) => {
+    setAnswers((prev) => ({ ...prev, [questionId]: choice }));
   };
 
-  // 해설 보기/오답노트 저장 처리
   const toggleAnswer = (question: Question) => {
-    const qNum = question.num;
-    const isNowShowing = !showAnswer[qNum];
-    setShowAnswer((prev) => ({ ...prev, [qNum]: isNowShowing }));
+    const isNowShowing = !showAnswer[question.id];
+    setShowAnswer((prev) => ({ ...prev, [question.id]: isNowShowing }));
 
     if (isNowShowing) {
-      const selected = answers[qNum];
-      if (selected && selected !== question.answer) {
+      const selectedChoice = answers[question.id];
+      if (selectedChoice && selectedChoice !== question.answer) {
         const savedNotes = loadWrongNotes();
-        if (
-          !savedNotes.find((note) => note.question === question.questionsStr)
-        ) {
+        if (!savedNotes.find((note) => note.id === question.id.toString())) {
           saveWrongNote({
-            id: uuidv4(),
-            question: question.questionsStr,
-            explanation: question.explanation ?? "",
+            id: question.id.toString(), // 고유 ID 사용
+            question: question.questionStr,
+            explanation:
+              question.explanation ?? "AI 해설을 생성하여 저장하세요.",
             createdAt: new Date().toISOString(),
           });
         }
@@ -127,11 +200,7 @@ export default function ProblemViewer({
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "auto" });
 
-  if (error) {
-    return <p className="text-danger text-center mt-6 text-sm">⚠️ {error}</p>;
-  }
-
-  if (!data) {
+  if (isLoading) {
     return (
       <p className="text-gray-400 text-center mt-6 text-sm">
         문제를 불러오는 중입니다...
@@ -139,11 +208,22 @@ export default function ProblemViewer({
     );
   }
 
+  if (error) {
+    return <p className="text-red-500 text-center mt-6 text-sm">⚠️ {error}</p>;
+  }
+
+  if (filteredSubjects.length === 0) {
+    return (
+      <div className="flex-1 flex items-center justify-center min-h-[300px]">
+        <EmptyMessage />
+      </div>
+    );
+  }
+
   return (
-    <div className="relative w-full max-w-3xl px-2 sm:px-4 pb-10 text-foreground-dark">
+    <div className="relative w-full max-w-3xl px-2 sm:px-4 pb-10">
       {filteredSubjects.length > 0 && (
         <>
-          {/* 진행률 바 */}
           <div className="w-full mb-4 flex justify-center px-2">
             <div className="w-full sm:w-3/4 md:w-1/2">
               <div className="flex items-center justify-center text-gray-300 mb-1">
@@ -169,8 +249,6 @@ export default function ProblemViewer({
               </div>
             </div>
           </div>
-
-          {/* 탭 */}
           <div className="flex justify-center overflow-x-auto px-2 sm:px-6 no-scrollbar">
             <SubjectTabs
               subjects={filteredSubjectNames}
@@ -180,11 +258,10 @@ export default function ProblemViewer({
           </div>
         </>
       )}
-
       <AnimatePresence mode="wait">
         {selectedBlock ? (
           <motion.section
-            key={selectedBlock.string}
+            key={selectedBlock.subjectName}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -193,17 +270,14 @@ export default function ProblemViewer({
           >
             {selectedBlock.questions.map((q) => (
               <QuestionCard
-                key={q.num}
+                key={q.id}
                 question={q}
-                selected={answers[q.num]}
-                showAnswer={showAnswer[q.num]}
-                onSelect={(choice) => handleSelect(q, choice)}
+                selected={answers[q.id]}
+                showAnswer={showAnswer[q.id]}
+                onSelect={(choice) => handleSelect(q.id, choice)}
                 onToggle={() => toggleAnswer(q)}
-                license={license}
-                code={code}
               />
             ))}
-
             <div className="flex flex-row sm:flex-row justify-center items-center gap-3 mt-8">
               <Button
                 variant="neutral"
@@ -216,10 +290,9 @@ export default function ProblemViewer({
                 disabled={selectedIndex <= 0}
                 className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
               >
-                <ChevronLeft className="mr-1 text-xs sm:text-sm" />
+                <ChevronLeft className="mr-1 h-4 w-4" />
                 이전 과목
               </Button>
-
               <Button
                 onClick={() => {
                   if (selectedIndex < filteredSubjectNames.length - 1) {
@@ -231,7 +304,7 @@ export default function ProblemViewer({
                 className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
               >
                 다음 과목
-                <ChevronRight className="ml-1 text-xs sm:text-sm" />
+                <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             </div>
           </motion.section>
