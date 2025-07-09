@@ -14,10 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="flex flex-col h-screen">
       <Header />
       <main
-        className={`flex-1 ${
-          // ✅ 채팅 페이지일 경우, 내용이 넘쳐도 main 스스로는 스크롤되지 않도록 합니다.
-          isChatPage ? "overflow-hidden" : ""
-        } ${
+        className={`h-[calc(100vh-60px)] ${
           isHomePage
             ? "flex flex-col items-center justify-center"
             : "max-w-7xl w-full mx-auto sm:px-6"

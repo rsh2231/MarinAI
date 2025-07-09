@@ -22,7 +22,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body
-        className={`${inter.className} bg-background-dark text-foreground-dark transition-colors duration-300`}
+        className={`${inter.className} h-full bg-background-dark text-foreground-dark transition-colors duration-300`}
         suppressHydrationWarning={true}
       >
         <Providers>
