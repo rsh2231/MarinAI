@@ -1,31 +1,31 @@
+"use client";
+
 import "../styles/globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Layout from "@/components/layout/Layout";
 import Providers from "@/components/Providers";
+import { usePathname } from "next/navigation";
+import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "MarinAI",
-  description: "해기사 시험 대비 지능형 QA 튜터 서비스",
-};
-
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const pathname = usePathname();
+
   return (
     <html lang="ko" className="dark" suppressHydrationWarning>
       <head>
+        <title>MarinAI</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body
-        className={`${inter.className} bg-background-dark text-foreground-dark transition-colors duration-300 overflow-x-hidden`}
+        className={`${inter.className} bg-background-dark text-foreground-dark transition-colors duration-300`}
         suppressHydrationWarning={true}
       >
-        <Providers >
+        <Providers>
           <Layout>{children}</Layout>
         </Providers>
       </body>

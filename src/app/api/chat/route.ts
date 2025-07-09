@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // gemini-1.5-flash 권장
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); // gemini-1.5-flash 권장
 
     const promptParts: any[] = [];
     if (message) promptParts.push({ text: message }); // 텍스트도 객체 형태로 전달

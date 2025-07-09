@@ -4,14 +4,14 @@ import React, { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import TextareaAutosize from 'react-textarea-autosize';
 import { toast } from "react-toastify";
-import { 
-  X, 
-  Plus, 
-  ArrowUp, 
-  Paperclip, 
-  Mic, 
-  FileText, 
-  Image as ImageIcon 
+import {
+  X,
+  Plus,
+  ArrowUp,
+  Paperclip,
+  Mic,
+  FileText,
+  Image as ImageIcon
 } from "lucide-react";
 
 // 팝업 메뉴 아이콘 데이터
@@ -129,8 +129,7 @@ export default function ChatInput({
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      <div className={`relative flex w-full flex-col rounded-2xl border bg-neutral-800/50 p-3 shadow-lg backdrop-blur-sm transition-colors ${
-          isDragging ? 'border-blue-500 ring-2 ring-blue-500/50' : 'border-neutral-700'
+      <div className={`relative flex w-full flex-col rounded-2xl border bg-neutral-800/50 p-3 shadow-lg backdrop-blur-sm transition-colors ${isDragging ? 'border-blue-500 ring-2 ring-blue-500/50' : 'border-neutral-700'
         }`}>
 
         <AnimatePresence>
@@ -145,13 +144,13 @@ export default function ChatInput({
             </motion.div>
           )}
         </AnimatePresence>
-        
+
         <AnimatePresence>
           {previewUrl && (
             <motion.div
               layout initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
-              className="relative mb-3 w-fit">
-              <img src={previewUrl} alt="미리보기" className="max-h-32 rounded-lg border border-neutral-600"/>
+              className="relative mb-3 m-w-full">
+              <img src={previewUrl} alt="미리보기" className="max-h-32 rounded-lg border border-neutral-600" />
               <button type="button" onClick={handleRemoveImage}
                 className="absolute -right-2 -top-2 rounded-full bg-neutral-900 p-1 text-white ring-2 ring-neutral-800 transition-transform hover:scale-110"
                 aria-label="이미지 제거">
@@ -167,7 +166,7 @@ export default function ChatInput({
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            className="w-full flex-grow resize-none bg-transparent text-md text-neutral-200 placeholder-neutral-500 focus:outline-none"
+            className="w-full resize-none bg-transparent py-2.5 text-sm text-neutral-200 placeholder-neutral-500 focus:outline-none sm:text-md"
             rows={1}
             maxRows={8}
             disabled={disabled}
@@ -185,7 +184,7 @@ export default function ChatInput({
           </div>
         </div>
       </div>
-      
+
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -205,8 +204,8 @@ export default function ChatInput({
           </motion.div>
         )}
       </AnimatePresence>
-      
-      <input type="file" accept="image/*" hidden ref={fileInputRef} onChange={handleImageChange} disabled={disabled}/>
+
+      <input type="file" accept="image/*" hidden ref={fileInputRef} onChange={handleImageChange} disabled={disabled} />
     </form>
   );
 }
