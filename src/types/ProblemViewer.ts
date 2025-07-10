@@ -37,3 +37,12 @@ export interface SubjectGroup {
   subjectName: string;
   questions: Question[];
 }
+
+export interface ProblemData {
+  subject: {
+    type: {
+      string: string;
+      questions: QnaItem[];
+    }[];
+  };
+}

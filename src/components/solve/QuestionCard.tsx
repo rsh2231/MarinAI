@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
 import { useSolveProblem } from "@/hooks/useSolveProblem";
-import { Question } from "@/types/ProblemViwer";
+import { Question } from "@/types/ProblemViewer";
 import correctAnimation from "@/assets/animations/correct.json";
 import incorrectAnimation from "@/assets/animations/incorrect.json";
 import Loading from "@/assets/animations/loading.json";

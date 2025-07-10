@@ -1,22 +1,16 @@
 import { atom } from "jotai";
-import { QuestionWithSubject } from "@/types/ProblemViwer";
+import { Question, SubjectGroup } from "@/types/ProblemViewer";
 
-// --- 시험의 전반적인 상태를 관리하는 Atoms ---
 /** 시험 데이터 로딩 상태 */
 export const examLoadingAtom = atom<boolean>(true);
 
 /** 시험 데이터 로드 중 발생한 에러 메시지 */
 export const examErrorAtom = atom<string | null>(null);
 
-
-// --- 문제 데이터 및 구조에 관한 Atoms ---
-/** 과목별로 그룹화된 문제 목록. 데이터 fetch 후 최초 1회 설정됩니다. */
-export const groupedQuestionsAtom = atom<
-  { subjectName: string; questions: QuestionWithSubject[] }[]
->([]);
+export const groupedQuestionsAtom = atom<SubjectGroup[]>([]);
 
 /** 모든 문제를 1차원 배열로 펼친 목록 (파생 atom) */
-export const allQuestionsAtom = atom<QuestionWithSubject[]>((get) =>
+export const allQuestionsAtom = atom<Question[]>((get) =>
   get(groupedQuestionsAtom).flatMap((group) => group.questions)
 );
 

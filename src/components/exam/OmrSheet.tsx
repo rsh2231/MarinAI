@@ -11,7 +11,7 @@ import {
   currentQuestionIndexAtom,
   isOmrVisibleAtom,
 } from "@/atoms/examAtoms";
-import { QuestionWithSubject } from "@/types/ProblemViwer"; 
+import { QuestionWithSubject } from "@/types/ProblemViewer"; 
 
 export const OmrSheet: React.FC = () => {
   const [allQuestions] = useAtom(allQuestionsAtom);

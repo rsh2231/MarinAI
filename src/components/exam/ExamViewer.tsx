@@ -19,7 +19,7 @@ import {
 
 import SubjectTabs from "../solve/SubjectTabs";
 import QuestionCard from "../solve/QuestionCard";
-import { QuestionWithSubject, ProblemData } from "@/types/ProblemViwer";
+import { Question, ProblemData } from "@/types/ProblemViewer";
 import { getCode } from "@/utils/getCode";
 import Button from "@/components/ui/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -154,7 +154,7 @@ export default function ExamViewer({
     }
   };
 
-  const handleSelectAnswer = (question: QuestionWithSubject, choice: string) => {
+  const handleSelectAnswer = (question: Question, choice: string) => {
     const key = `${question.subjectName}-${question.num}`;
     setAnswers((prev) => ({ ...prev, [key]: choice }));
 

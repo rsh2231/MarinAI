@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import SubjectTabs from "./SubjectTabs";
 import QuestionCard from "./QuestionCard";
 import { saveWrongNote, loadWrongNotes } from "@/utils/localWrongNote";
-import { QnaItem, Question, Choice, SubjectGroup } from "@/types/ProblemViwer";
+import { QnaItem, Question, Choice, SubjectGroup } from "@/types/ProblemViewer";
 import Button from "@/components/ui/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { EmptyMessage } from "../ui/EmptyMessage";

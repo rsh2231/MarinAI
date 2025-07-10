@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { AlertTriangle } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Lottie from "lottie-react";
 import think from "@/assets/animations/think.json";
