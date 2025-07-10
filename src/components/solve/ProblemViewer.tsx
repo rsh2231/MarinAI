@@ -57,7 +57,7 @@ const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
         ...choice,
         isImage: isImg,
         text: isImg ? "" : choice.text,
-        imageUrl: imgPath ? `/api/img/${imgPath}` : undefined,
+        imageUrl: imgPath ? `/api/solve/img/${imgPath}` : undefined,
       };
     });
 
@@ -70,7 +70,7 @@ const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
       explanation: item.explanation,
       subjectName: item.subject,
       isImageQuestion: !!item.imgPaths,
-      imageUrl: questionImagePath ? `/api/img/${questionImagePath}` : undefined,
+      imageUrl: questionImagePath ? `/api/solve/img/${questionImagePath}` : undefined,
     };
 
     if (!subjectMap.has(item.subject)) {

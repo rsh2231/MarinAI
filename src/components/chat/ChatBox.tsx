@@ -20,33 +20,38 @@ function ChatBoxContent() {
     handleSubmit,
   } = useChat(initialQuestion, initialImageUrl);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // 자동 스크롤을 수행하는 함수
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  };
-
-  // 메시지 목록이나 내용이 변경될 때마다 항상 맨 아래로 스크롤
+  // 메시지 목록이 변경될 때마다 스크롤을 맨 아래로 이동
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      scrollToBottom();
-    }, 100); // 스트리밍 렌더링을 위한 약간의 지연
-    return () => clearTimeout(timeout);
+    const scrollElement = scrollContainerRef.current;
+    if (scrollElement) {
+      scrollElement.scrollTop = scrollElement.scrollHeight;
+    }
   }, [messages, messages.map(m => m.content).join("")]);
-  
+
   return (
-    <div className="h-full w-full relative">
-      {/* 메시지 영역: 이제 전체 높이를 차지하고 스스로 스크롤됩니다. */}
-      <div className="h-full overflow-y-auto p-4 sm:px-6 space-y-4 max-w-full sm:max-w-3xl mx-auto w-full pb-40"> {/* 입력창 높이를 고려한 하단 패딩 */}
-        {messages.map((msg) => (
-          <ChatMessage key={msg.id} message={msg} />
+    <div className="flex flex-col h-full w-full">
+      {/* 메시지 영역: flex-grow로 남은 공간을 모두 차지하고, 내용이 넘칠 때 스크롤됩니다. */}
+      <div
+        ref={scrollContainerRef}
+        className="flex-grow min-h-0 overflow-y-auto p-4 sm:px-6 space-y-4 max-w-full sm:max-w-3xl mx-auto w-full"
+      >
+        {messages.map((msg, index) => (
+          <ChatMessage
+            key={msg.id}
+            message={msg}
+            isStreaming={
+              isLoading &&
+              index === messages.length - 1 &&
+              msg.role === "assistant"
+            }
+          />
         ))}
-        <div ref={messagesEndRef} />
       </div>
 
-      {/* 하단 고정 입력창: absolute 포지션으로 하단에 고정 */}
-      <div className="absolute bottom-0 left-0 right-0 bg-neutral-900 bg-opacity-90 backdrop-blur-sm border-t border-neutral-800">
+      {/* 하단 입력창: Flexbox의 자식으로 자연스럽게 하단에 위치합니다. */}
+      <div className="w-full">
         <div className="mx-auto w-full max-w-full sm:max-w-4xl px-3 sm:px-6 py-3 break-keep">
           {isLoading &&
             messages.length > 0 &&
