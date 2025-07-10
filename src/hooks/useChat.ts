@@ -10,6 +10,16 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
 
   const initialMessageSent = useRef(false);
 
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  //  답변 생성을 중단하는 함수
+  const stop = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort(); // fetch 요청 중단
+      setIsLoading(false); // 로딩 상태 즉시 해제
+    }
+  };
+
   const sendMessage = async (
     messageContent: string,
     imageFile: File | null,
@@ -34,6 +44,9 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
     setInput("");
     setUploadedImage(null);
 
+    abortControllerRef.current = new AbortController();
+    const signal = abortControllerRef.current.signal;
+
     try {
       let res;
       // 새로 업로드한 파일이 있을 경우 FormData로 전송
@@ -44,6 +57,7 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
         res = await fetch("/api/chat", {
           method: "POST",
           body: formData,
+          signal,
         });
       }
       // 파일 없이 텍스트와 URL만 있을 경우 JSON으로 전송
@@ -64,6 +78,7 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
             message: messageContent.trim(),
             imageUrl: absoluteImageUrl,
           }),
+          signal,
         });
       }
 
@@ -89,7 +104,15 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
           )
         );
       }
-    } catch (error) {
+    } catch (error: any) {
+      // ✅ 요청이 중단된 경우(AbortError)는 에러 메시지를 보여주지 않음
+      if (error.name === 'AbortError') {
+        console.log("답변 생성이 중단되었습니다.");
+        // 중단 시 마지막 빈 메시지 제거
+        setMessages(prev => prev.filter(msg => msg.id !== assistantMessageId));
+        return;
+      }
+
       console.error("전송 오류:", error);
       toast.error(
         (error as Error).message || "답변 생성 중 오류가 발생했습니다."
@@ -130,5 +153,6 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
     uploadedImage,
     setUploadedImage,
     handleSubmit,
+    stop,
   };
 }

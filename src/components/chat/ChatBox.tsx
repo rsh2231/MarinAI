@@ -18,6 +18,7 @@ function ChatBoxContent() {
     uploadedImage,
     setUploadedImage,
     handleSubmit,
+    stop,
   } = useChat(initialQuestion, initialImageUrl);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -70,6 +71,7 @@ function ChatBoxContent() {
             onImageUpload={setUploadedImage}
             uploadedImage={uploadedImage}
             placeholder="추가 질문을 입력하거나 이미지를 첨부하세요..."
+            onStop={stop}
           />
         </div>
       </div>

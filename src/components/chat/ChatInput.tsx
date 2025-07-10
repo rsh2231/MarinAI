@@ -11,7 +11,8 @@ import {
   Paperclip,
   Mic,
   FileText,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Square,
 } from "lucide-react";
 
 // 팝업 메뉴 아이콘 데이터
@@ -30,6 +31,7 @@ interface ChatInputProps {
   uploadedImage: File | null;
   disabled?: boolean;
   placeholder?: string;
+  onStop: () => void;
 }
 
 export default function ChatInput({
@@ -40,6 +42,7 @@ export default function ChatInput({
   uploadedImage,
   disabled,
   placeholder = "무엇이든 물어보세요...",
+  onStop,
 }: ChatInputProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -176,15 +179,25 @@ export default function ChatInput({
               className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-700/60 text-neutral-300 transition-colors hover:bg-neutral-700">
               <Plus size={20} />
             </button>
-            <button type="submit" disabled={disabled || (!value.trim() && !uploadedImage)}
+            
+            {/* 전송/중단 버튼 */}
+            <button
+              // disabled(isLoading) 상태일 때는 'button' 타입으로 변경하여 form 제출을 막음
+              type={disabled ? 'button' : 'submit'}
+              // disabled(isLoading) 상태일 때 onStop 함수 호출
+              onClick={disabled ? onStop : undefined}
+              // disabled가 아닐 때(전송 가능 상태일 때)만 내용이 없으면 비활성화
+              disabled={!disabled && !value.trim() && !uploadedImage}
               className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white transition-all hover:bg-blue-500 disabled:bg-neutral-700 disabled:text-neutral-500 disabled:cursor-not-allowed"
-              aria-label="전송">
-              <ArrowUp size={20} />
+              // disabled(isLoading) 상태에 따라 aria-label 변경
+              aria-label={disabled ? "생성 중단" : "전송"}
+            >
+              {/* disabled(isLoading) 상태에 따라 아이콘 변경 */}
+              {disabled ? <Square size={18} /> : <ArrowUp size={20} />}
             </button>
           </div>
         </div>
       </div>
-
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
