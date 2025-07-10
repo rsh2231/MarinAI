@@ -57,7 +57,7 @@ const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
         ...choice,
         isImage: isImg,
         text: isImg ? "" : choice.text,
-        imageUrl: imgPath ? `/api/img/${imgPath}` : undefined,
+        imageUrl: imgPath ? `/api/solve/img/${imgPath}` : undefined, //endpoint url edited -KO
       };
     });
 
@@ -70,7 +70,7 @@ const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
       explanation: item.explanation,
       subjectName: item.subject,
       isImageQuestion: !!item.imgPaths,
-      imageUrl: questionImagePath ? `/api/img/${questionImagePath}` : undefined,
+      imageUrl: questionImagePath ? `/api/solve/img/${questionImagePath}` : undefined, //endpoint url edited -KO
     };
 
     if (!subjectMap.has(item.subject)) {
@@ -105,7 +105,7 @@ export default function ProblemViewer({
       setError("");
       try {
         const params = new URLSearchParams({ year, license, level, round });
-        const res = await fetch(`/api/solve?${params.toString()}`);
+        const res = await fetch(`/api/solve/?${params.toString()}`);
 
         if (!res.ok) {
           const errorData = await res.json();
