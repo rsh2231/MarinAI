@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef, Suspense, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  Suspense,
+  useState,
+  useCallback,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import { useChat } from "@/hooks/useChat";
 import ChatInput from "./ChatInput";
@@ -29,10 +35,10 @@ function ChatBoxContent() {
     if (scrollElement) {
       scrollElement.scrollTop = scrollElement.scrollHeight;
     }
-  }, [messages, messages.map(m => m.content).join("")]);
+  }, [messages, messages.map((m) => m.content).join("")]);
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex flex-col h-[100dvh] w-full">
       {/* 메시지 영역: flex-grow로 남은 공간을 모두 차지하고, 내용이 넘칠 때 스크롤됩니다. */}
       <div
         ref={scrollContainerRef}
@@ -80,7 +86,13 @@ function ChatBoxContent() {
 }
 export default function ChatBox() {
   return (
-    <Suspense fallback={<div className="w-full text-center text-white">대화 내용을 불러오는 중...</div>}>
+    <Suspense
+      fallback={
+        <div className="w-full text-center text-white">
+          대화 내용을 불러오는 중...
+        </div>
+      }
+    >
       <ChatBoxContent />
     </Suspense>
   );
