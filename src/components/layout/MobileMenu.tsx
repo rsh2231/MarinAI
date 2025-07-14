@@ -47,7 +47,7 @@ export default function MobileMenu({ navItems, pathname, onClose }: MobileMenuPr
           </button>
         </div>
 
-        <nav className="flex flex-col space-y-3">
+        <nav className="flex flex-col items-end space-y-3">
           {navItems.map((item, index) => (
             <motion.div
               key={item.href}

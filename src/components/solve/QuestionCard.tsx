@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
@@ -35,23 +35,19 @@ export default function QuestionCardComponent({
   );
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
-  useEffect(() => {
-    if (feedback && lottieRef.current) {
-      lottieRef.current.setSpeed(2.5);
-      const timer = setTimeout(() => setFeedback(null), 600);
-      return () => clearTimeout(timer);
-    }
-  }, [feedback]);
-
   const handleClickOption = (optLabel: string) => {
     if (isPracticeMode && showAnswer) return;
     onSelect(optLabel);
+
     setFeedback(optLabel === answer ? "correct" : "incorrect");
+    if (lottieRef.current) {
+      lottieRef.current.setSpeed(2.5);
+    }
   };
 
   const { result, loading, error, solve } = useSolveProblem();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (isPracticeMode && showAnswer && !explanation && !result && !loading) {
       const choicesText = choices
         .map((c) => `${c.label}. ${c.isImage ? "(이미지 보기)" : c.text}`)
@@ -76,27 +72,30 @@ export default function QuestionCardComponent({
     <motion.article
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`relative bg-neutral-800 border ${
+      className={`relative bg-neutral-800/50 border ${
         showAnswer ? "border-neutral-700" : "border-neutral-600"
       } rounded-xl shadow-lg mb-6 p-5 transition-colors`}
     >
       {isPracticeMode && feedback && (
         <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none rounded-xl">
-          <div className="w-48 h-48">
-            <Lottie
-              lottieRef={lottieRef}
-              animationData={
-                feedback === "correct" ? correctAnimation : incorrectAnimation
-              }
-              loop={false}
-            />
-          </div>
+          <Lottie
+            lottieRef={lottieRef}
+            animationData={
+              feedback === "correct" ? correctAnimation : incorrectAnimation
+            }
+            loop={false}
+            onComplete={() => setFeedback(null)}
+            style={{ width: 192, height: 192 }} // 12rem = 48px * 4
+          />
         </div>
       )}
 
+      {/* ✅ [수정] 이 div에 반응형 텍스트 크기를 적용하여 자식 요소들이 상속받도록 합니다. */}
       <div className="flex flex-col gap-2 font-medium text-sm sm:text-base break-keep">
-        <span className="text-gray-400 text-sm">문제 {num}</span>
+        {/* 부모의 텍스트 크기를 상속받습니다. */}
+        <span className="text-gray-400">문제 {num}</span>
         {questionStr && (
+          // 부모의 텍스트 크기를 상속받습니다.
           <p className="whitespace-pre-wrap leading-relaxed text-gray-100">
             {questionStr}
           </p>
@@ -105,14 +104,15 @@ export default function QuestionCardComponent({
 
       {imageUrl && (
         <div className="my-4 flex justify-center">
+          {/* ✅ [수정] 이미지 크기 반응형 적용 (최대 너비 및 sizes 속성) */}
           <Image
             src={imageUrl}
             alt={`문제 ${num} 이미지`}
             width={500}
             height={300}
-            sizes="100vw"
+            sizes="(min-width: 768px) 512px, 100vw"
             priority
-            className="rounded border border-gray-600 w-full max-w-full h-auto object-contain"
+            className="rounded border border-gray-600 w-full max-w-lg h-auto object-contain"
           />
         </div>
       )}
@@ -125,8 +125,9 @@ export default function QuestionCardComponent({
           const isWrong =
             isPracticeMode && isSelected && !isCorrect && showAnswer;
 
+          // ✅ [수정] li 요소에 반응형 텍스트 크기를 직접 적용합니다.
           const base =
-            "flex items-center gap-3 px-4 py-3 rounded-md border text-sm cursor-pointer transition-all";
+            "flex items-center gap-3 px-4 py-3 rounded-md border cursor-pointer transition-all text-sm sm:text-base";
           const selectedCls = isSelected
             ? "border-blue-500 bg-blue-900/30"
             : "border-neutral-700 hover:bg-neutral-700/50";
@@ -143,23 +144,25 @@ export default function QuestionCardComponent({
               className={`${base} ${selectedCls} ${correctCls} ${wrongCls}`}
               onClick={() => handleClickOption(opt.label)}
             >
-              <span className="font-semibold text-base min-w-[24px]">
+              {/* ✅ [수정] 부모 li의 텍스트 크기를 상속받도록 text-sm 클래스를 제거합니다. */}
+              <span className="font-semibold min-w-[24px]">
                 {opt.label}.
               </span>
               {opt.isImage && opt.imageUrl ? (
                 <div className="w-full flex justify-start">
+                  {/* ✅ [수정] 보기 이미지 크기 반응형 적용 */}
                   <Image
-                    key={opt.imageUrl}
                     src={opt.imageUrl}
                     alt={`보기 ${opt.label}`}
                     width={400}
                     height={200}
-                    sizes="100vw"
-                    className="h-auto w-auto max-w-full max-h-[250px] object-contain rounded"
+                    sizes="(min-width: 768px) 448px, 100vw"
+                    className="h-auto w-auto max-w-md max-h-[250px] object-contain rounded"
                   />
                 </div>
               ) : (
-                <span className="text-gray-100 text-base">{opt.text}</span>
+                // ✅ [수정] 부모 li의 텍스트 크기를 상속받도록 text-sm 클래스를 제거합니다.
+                <span className="text-gray-100">{opt.text}</span>
               )}
             </li>
           );
@@ -197,13 +200,16 @@ export default function QuestionCardComponent({
                         <div className="flex items-center gap-2 text-gray-400">
                           <Lottie
                             animationData={Loading}
-                            className="w-20 h-20"
+                            style={{ width: 80, height: 80 }}
                           />
                         </div>
                       ) : error ? (
                         <div className="flex items-center gap-2 text-red-500">
                           <span>해설을 가져오는 데 실패했습니다.</span>
-                          <Lottie animationData={Fail} className="w-5 h-5" />
+                          <Lottie
+                            animationData={Fail}
+                            style={{ width: 20, height: 20 }}
+                          />
                         </div>
                       ) : (
                         <p>{result}</p>

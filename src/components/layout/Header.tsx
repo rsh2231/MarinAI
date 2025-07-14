@@ -15,6 +15,8 @@ const navItems = [
   { name: "기출문제풀이", href: "/solve" },
   { name: "오답노트", href: "/note" },
   { name: "CBT", href: "/cbt" },
+  { name: "시험일정", href: "/schedule" },
+
 ];
 
 export default function Header() {

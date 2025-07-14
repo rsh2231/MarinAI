@@ -26,21 +26,34 @@ const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
   if (!qnas || qnas.length === 0) return [];
 
   const subjectMap = new Map<string, Question[]>();
-  const isImageCode = (str: string) => str.trim().startsWith("@pic");
+  // @pic으로 시작하는 단어를 찾는 정규식
+  const imageCodeRegex = /(@pic[\w_-]+)/;
 
   const findImagePath = (code: string, paths: string[]): string | undefined => {
-    const key = code.replace("@", "").trim();
+    // 이미 @를 포함하고 있으므로 @를 제거할 필요 없음
+    const key = code.replace("@", "").trim().toLowerCase();
     return paths.find((p) => p.includes(key));
   };
 
   qnas.forEach((item) => {
-    const questionImageCode = isImageCode(item.questionstr)
-      ? item.questionstr
-      : null;
-    const questionImagePath =
-      questionImageCode && item.imgPaths
-        ? findImagePath(questionImageCode, item.imgPaths)
-        : undefined;
+    let questionStr = item.questionstr;
+    let questionImagePath: string | undefined;
+
+    // ✅ [수정된 로직] 문제 텍스트에서 이미지 코드를 찾습니다.
+    const questionImageMatch = item.questionstr.match(imageCodeRegex);
+
+    if (questionImageMatch && item.imgPaths) {
+      // ex) questionImageMatch[0]는 "@pic1308"
+      const code = questionImageMatch[0];
+      // 찾은 이미지 코드를 사용해 경로를 찾습니다.
+      const foundPath = findImagePath(code, item.imgPaths);
+
+      if (foundPath) {
+        questionImagePath = foundPath;
+        // 원본 문제 텍스트에서 이미지 코드를 제거합니다.
+        questionStr = questionStr.replace(code, "").trim();
+      }
+    }
 
     const choices: Choice[] = [
       { label: "가", text: item.ex1str },
@@ -48,29 +61,47 @@ const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
       { label: "사", text: item.ex3str },
       { label: "아", text: item.ex4str },
     ].map((choice) => {
-      const isImg = isImageCode(choice.text);
-      const imgPath =
-        isImg && item.imgPaths
-          ? findImagePath(choice.text, item.imgPaths)
-          : undefined;
+      // ✅ [수정된 로직] 선택지에서도 정규식을 사용해 이미지 코드를 찾습니다.
+      const choiceImageMatch = choice.text.match(imageCodeRegex);
+      let choiceText = choice.text;
+      let choiceImagePath: string | undefined;
+
+      if (choiceImageMatch && item.imgPaths) {
+        const code = choiceImageMatch[0];
+        const foundPath = findImagePath(code, item.imgPaths);
+        if (foundPath) {
+          choiceImagePath = foundPath;
+          // 선택지에서는 이미지 코드를 포함한 텍스트를 모두 제거합니다.
+          choiceText = "";
+        }
+      }
+
+      // isImage는 이제 choiceImagePath가 있는지 여부로 판단합니다.
+      const isImg = !!choiceImagePath;
+
       return {
         ...choice,
         isImage: isImg,
-        text: isImg ? "" : choice.text,
-        imageUrl: imgPath ? `/api/solve/img/${imgPath}` : undefined,
+        text: choiceText,
+        // 이전에 수정하신 대로 encodeURIComponent는 제거합니다.
+        imageUrl: choiceImagePath
+          ? `/api/solve/img/${choiceImagePath}`
+          : undefined,
       };
     });
 
     const question: Question = {
       id: item.id,
       num: item.qnum,
-      questionStr: questionImageCode ? "" : item.questionstr,
+      questionStr: questionStr, // 정제된 텍스트
       choices,
       answer: item.answer,
       explanation: item.explanation,
       subjectName: item.subject,
       isImageQuestion: !!item.imgPaths,
-      imageUrl: questionImagePath ? `/api/solve/img/${questionImagePath}` : undefined,
+      imageUrl: questionImagePath
+        ? `/api/solve/img/${questionImagePath}`
+        : undefined, // 정제된 이미지 경로
     };
 
     if (!subjectMap.has(item.subject)) {
@@ -84,7 +115,6 @@ const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
     questions,
   }));
 };
-
 export default function ProblemViewer({
   year,
   license,
@@ -107,6 +137,8 @@ export default function ProblemViewer({
         const params = new URLSearchParams({ year, license, level, round });
         const res = await fetch(`/api/solve?${params.toString()}`);
 
+        
+
         if (!res.ok) {
           const errorData = await res.json();
           throw new Error(
@@ -118,14 +150,15 @@ export default function ProblemViewer({
         const responseData: { qnas: QnaItem[] } = await res.json();
         const transformed = transformData(responseData.qnas);
 
-      
+        console.log(responseData)
+
         // ✅ 데이터가 없을 경우에 대한 처리
         if (transformed.length === 0) {
           // 404 Not Found의 경우, 백엔드 메시지를 활용할 수 있습니다.
           setError("선택하신 조건에 해당하는 문제 데이터가 없습니다.");
         }
 
-        console.log("data", responseData.qnas)
+        console.log("data", responseData.qnas);
 
         setSubjectGroups(transformed);
         setAnswers({});

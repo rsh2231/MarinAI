@@ -22,3 +22,7 @@
 - UI/UX 개선
 - 백엔드 코드 연동
 - 코드 분리 및 리팩토링
+
+● 시험일정
+- iframe 활용
+- https://lems.seaman.or.kr/Lems/LAExamSchedule/selectLAExamScheduleView.do 연동 개선 필요

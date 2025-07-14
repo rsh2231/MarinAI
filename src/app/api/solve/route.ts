@@ -1,3 +1,5 @@
+// 파일 경로: src/app/api/solve/route.ts
+
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -11,34 +13,30 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // 프론트엔드에서 온 요청 URL의 파라미터를 가져옵니다.
-  const originalParams = new URL(request.url).searchParams;
-
-  // ✅ [수정된 부분] 외부 API로 보낼 새로운 파라미터를 생성합니다.
+  const originalParams = request.nextUrl.searchParams;
   const targetParams = new URLSearchParams();
 
-  // 1. 'year'와 'license'는 그대로 전달합니다.
-  targetParams.set('year', originalParams.get('year') || '');
-  targetParams.set('license', originalParams.get('license') || '');
-
-  // 2. 'level'과 'round' 값에서 숫자만 추출합니다.
+  const year = originalParams.get('year') || '';
+  const license = originalParams.get('license') || '';
   const levelStr = originalParams.get('level') || '';
   const roundStr = originalParams.get('round') || '';
 
-  // 정규식을 사용하여 문자열에서 첫 번째로 나오는 숫자 시퀀스를 찾습니다.
-  // "1급" -> "1", "2회" -> "2", "소형선박조종사" (level이 없을때) -> ""
-  const levelNum = levelStr.match(/\d+/)?.[0] || '';
-  const roundNum = roundStr.match(/\d+/)?.[0] || '';
+  // ✅ [수정된 로직] 소형선박조종사일 경우 level을 '0'으로 설정
+  const finalLevel = 
+    license === '소형선박조종사'
+      ? '0' // 소형선박조종사는 level을 '0'으로 고정
+      : levelStr.match(/\d+/)?.[0] || ''; // 그 외에는 숫자 추출
 
-  targetParams.set('level', levelNum);
-  targetParams.set('round', roundNum);
+  const finalRound = roundStr.match(/\d+/)?.[0] || '';
 
-  // 3. 정제된 파라미터를 사용하여 외부 API에 요청할 전체 URL을 조립합니다.
-  const targetUrl = `${baseUrl}/api/solve?${targetParams.toString()}`;
+  targetParams.set('year', year);
+  targetParams.set('license', license);
+  targetParams.set('level', finalLevel); // 정제된 level 값 사용
+  targetParams.set('round', finalRound);
 
-  // 디버깅을 위해 최종 요청 URL을 로그로 남깁니다.
-  console.log("Proxying request to:", targetUrl);
-  // 예상 출력: Proxying request to: http://.../api/solve?year=2023&license=항해사&level=1&round=1
+  const targetUrl = `${baseUrl}/solve?${targetParams.toString()}`;
+
+  console.log("Proxying question list request to:", targetUrl);
 
   try {
     const apiResponse = await fetch(targetUrl, {
@@ -52,7 +50,6 @@ export async function GET(request: NextRequest) {
     const data = await apiResponse.json();
 
     if (!apiResponse.ok) {
-      // 외부 API가 보낸 에러 메시지와 상태 코드를 그대로 전달
       console.error(`Error from external API (${apiResponse.status}):`, data);
       return NextResponse.json(data, { status: apiResponse.status });
     }
