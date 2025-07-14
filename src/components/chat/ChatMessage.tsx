@@ -2,11 +2,11 @@
 
 import { Message } from "@/types/Message";
 import { motion } from "framer-motion";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import Lottie from "lottie-react";
 import AI from "@/assets/animations/AI.json";
 import TypingMarkdown from "./TypingMarkdown";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function ChatMessage({
   message,
@@ -22,7 +22,9 @@ export default function ChatMessage({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
-      className={`flex items-start gap-2 sm:gap-4 ${isUser ? "justify-end" : ""}`}
+      className={`flex items-start gap-2 sm:gap-4 ${
+        isUser ? "justify-end" : ""
+      }`}
     >
       {/* AI 아바타 */}
       {!isUser && (
@@ -33,31 +35,32 @@ export default function ChatMessage({
 
       {/* 메시지 버블 */}
       <div
-        className={`flex flex-col max-w-[85%] sm:max-w-[75%] ${isUser ? "items-end" : "items-start"}`}
+        className={`flex flex-col max-w-[80%] sm:max-w-[75%] ${
+          isUser ? "items-end" : "items-start"
+        }`}
       >
         <div
-          className={`px-4 py-3 rounded-2xl ${
+          className={`px-3 py-2 sm:px-4 sm:py-3 rounded-2xl ${
             isUser
               ? "bg-neutral-700 text-white rounded-br-none"
               : "bg-neutral-700 text-neutral-200 rounded-bl-none"
           }`}
         >
-          {/* ✅ 텍스트 컨텐츠 */}
-          {message.content && (
-            isUser || !isStreaming ? (
-              <div className="prose prose-sm prose-invert max-w-none 
-                prose-p:my-0 prose-headings:my-2 prose-ul:my-2 prose-ol:my-2 
-                prose-pre:bg-neutral-800 prose-pre:p-3 prose-pre:rounded-md text-sm md:text-md">
+          {message.content &&
+            (isUser ? (
+              // 사용자 메시지는 그대로 일반 Markdown 사용
+              <div className="...">
                 <Markdown remarkPlugins={[remarkGfm]}>
                   {message.content}
                 </Markdown>
               </div>
             ) : (
-              <TypingMarkdown content={message.content} isStreaming={true} />
-            )
-          )}
-
-          {/* 이미지 컨텐츠 */}
+              // AI 메시지는 항상 TypingMarkdown 사용
+              <TypingMarkdown
+                content={message.content}
+                isStreaming={isStreaming || false} // isStreaming이 undefined가 될 수 있으므로 기본값 추가
+              />
+            ))}
           {message.image && (
             <div className={`mt-2 ${!message.content ? "mt-0" : ""}`}>
               <img

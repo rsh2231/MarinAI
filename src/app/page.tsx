@@ -74,8 +74,8 @@ export default function Home() {
         transition={{ duration: 0.6, delay: 0.4 }}
         className="max-w-lg mx-auto text-neutral-400 text-base mb-12 leading-relaxed select-none break-keep"
       >
-        해기사 시험 준비의 새로운 항해, MarinAI와 함께 스마트하게 준비하세요.
-        궁금한 점을 질문하거나, 관련 이미지를 첨부하여 물어보세요.
+        해기사 시험 준비의 새로운 항해, <br />
+        MarinAI와 함께 스마트하게 준비하세요.
       </motion.p>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
