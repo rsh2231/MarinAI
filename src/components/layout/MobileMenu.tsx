@@ -13,15 +13,34 @@ type MobileMenuProps = {
   navItems: NavItem[];
   pathname: string;
   onClose: () => void;
+  isLoggedIn: boolean;
+  onLoginClick: () => void;
+  onLogoutClick: () => void;
 };
 
-export default function MobileMenu({ navItems, pathname, onClose }: MobileMenuProps) {
+export default function MobileMenu({
+  navItems,
+  pathname,
+  onClose,
+  isLoggedIn,
+  onLoginClick,
+  onLogoutClick,
+}: MobileMenuProps) {
+  const handleAuthClick = () => {
+    if (isLoggedIn) {
+      onLogoutClick();
+    } else {
+      onLoginClick();
+    }
+    onClose();
+  };
+
   return (
     <AnimatePresence>
       {/* 오버레이 */}
       <motion.div
         key="overlay"
-        className="fixed inset-0 bg-black/50 z-40"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -39,32 +58,28 @@ export default function MobileMenu({ navItems, pathname, onClose }: MobileMenuPr
         exit={{ y: '100%' }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       >
-        {/* 상단 닫기 버튼 */}
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-sm text-gray-400">메뉴</span>
-          <button onClick={onClose} aria-label="Close menu">
-            <X className="w-5 h-5 text-gray-400 hover:text-white" />
+        <div className="flex justify-between items-center mb-6">
+          <span className="text-sm font-medium text-gray-400">메뉴</span>
+          <button onClick={onClose} aria-label="Close menu" className="p-1">
+            <X className="w-6 h-6 text-gray-400 hover:text-white transition-colors" />
           </button>
         </div>
 
-        <nav className="flex flex-col items-end space-y-3">
+        <nav className="flex flex-col items-end space-y-2">
           {navItems.map((item, index) => (
             <motion.div
               key={item.href}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 * index }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.05 * index, ease: 'easeOut' }}
             >
               <Link
                 href={item.href}
-                onClick={() => {
-                  onClose();
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className={`block text-lg px-3 py-3 rounded-xl transition-colors ${
+                onClick={onClose}
+                className={`text-lg px-4 py-3 rounded-lg transition-colors duration-200 ${
                   pathname.startsWith(item.href)
                     ? 'bg-primary text-white font-semibold'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    : 'text-gray-200 hover:bg-gray-700 hover:text-white'
                 }`}
               >
                 {item.name}
@@ -72,6 +87,20 @@ export default function MobileMenu({ navItems, pathname, onClose }: MobileMenuPr
             </motion.div>
           ))}
         </nav>
+
+        {/* 로그인/로그아웃 버튼 */}
+        <div className="mt-6 border-t border-gray-700 pt-4 flex justify-end">
+          <button
+            onClick={handleAuthClick}
+            className={`px-4 py-3 rounded-lg text-lg transition-colors duration-200 ${
+              isLoggedIn
+                ? 'text-red-400 hover:bg-red-500/10'
+                : 'text-gray-200 hover:bg-gray-700'
+            }`}
+          >
+            {isLoggedIn ? '로그아웃' : '로그인'}
+          </button>
+        </div>
       </motion.div>
     </AnimatePresence>
   );

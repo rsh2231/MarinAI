@@ -5,30 +5,38 @@ import { usePathname } from "next/navigation";
 import { List, X } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { useAtom } from "jotai";
 
 import { useIsClient } from "@/hooks/useIsClient";
 import { useWindowWidth } from "@/hooks/useWindowWidth";
+import { authAtom } from "@/atoms/authAtom";
 import HamburgerButton from "../ui/HamburgerButton";
 import MobileMenu from "./MobileMenu";
-
-const navItems = [
-  { name: "기출문제풀이", href: "/solve" },
-  { name: "오답노트", href: "/note" },
-  { name: "CBT", href: "/cbt" },
-  { name: "시험일정", href: "/schedule" },
-
-];
+import AuthModal from "../auth/AutModal";
 
 export default function Header() {
   const pathname = usePathname();
   const isSolvePage = pathname === "/solve";
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const isClient = useIsClient();
   const isMobile = useWindowWidth(768);
+  const [auth, setAuth] = useAtom(authAtom);
 
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const handleLogout = () => {
+    setAuth({ isLoggedIn: false, user: null });
+  };
+
+  const navItems = [
+    { name: "기출문제풀이", href: "/solve" },
+    { name: "오답노트", href: "/note" },
+    { name: "CBT", href: "/cbt" },
+    { name: "시험일정", href: "/schedule" },
+  ];
 
   return (
     <header className="bg-[#121212] sticky top-0 z-50 border-b border-gray-700 w-full">
@@ -69,6 +77,14 @@ export default function Header() {
                 </Link>
               );
             })}
+
+            {/* 로그인/로그아웃 버튼 */}
+            <button
+              onClick={auth.isLoggedIn ? handleLogout : () => setIsAuthModalOpen(true)}
+              className="px-2 sm:px-3 py-1 rounded-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+            >
+              {auth.isLoggedIn ? "로그아웃" : "로그인"}
+            </button>
           </nav>
         )}
 
@@ -91,9 +107,15 @@ export default function Header() {
             navItems={navItems}
             pathname={pathname}
             onClose={() => setIsMobileMenuOpen(false)}
+            isLoggedIn={auth.isLoggedIn}
+            onLoginClick={() => setIsAuthModalOpen(true)}
+            onLogoutClick={handleLogout}
           />
         )}
       </AnimatePresence>
+
+      {/* 로그인/회원가입 모달 */}
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </header>
   );
 }
