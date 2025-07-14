@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, AlertCircle } from "lucide-react";
-import { SUBJECTS_BY_LICENSE } from "@/lib/constants";
+import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
 import Button from "@/components/ui/Button";
 import SelectBox from "@/components/ui/SelectBox";
 

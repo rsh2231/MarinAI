@@ -2,9 +2,8 @@
 
 import React, { useCallback } from "react";
 import SelectBox from "../ui/SelectBox";
-import { X } from "lucide-react";
 import { FilterState } from "@/types/FilterState";
-import { SUBJECTS_BY_LICENSE } from "@/lib/constants";
+import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
 
 const YEARS = ["2023", "2022", "2021"];
 const LICENSES = ["항해사", "기관사", "소형선박조종사"];

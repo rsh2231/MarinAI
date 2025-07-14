@@ -1,0 +1,1725 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>해기사 &gt; 연간시험일정표</title>
+<link href="/css/egovframework/koexam/contents.css" rel="stylesheet" type="text/css">
+<script src="/js/egovframework/koexam/merge.js"></script><script src="/js/egovframework/koexam/common/common.js"></script><script src="/js/egovframework/koexam/jquery/jquery.min.js"></script><script src="/js/egovframework/koexam/jquery/jquery-migrate.min.js"></script><script src="/js/egovframework/koexam/common/html5.js"></script><script src="/js/egovframework/koexam/common/select.js"></script><script src="/js/egovframework/koexam/common/url.js"></script><script src="/js/egovframework/koexam/common/topMenu.js"></script><script src="/js/egovframework/koexam/common/hpconfirm.js"></script><script src="/js/egovframework/koexam/jquery/chosen.jquery.min.js"></script><script src="/js/egovframework/koexam/jquery/jquery.dotdotdot.min.js"></script><script src="/js/egovframework/koexam/jquery/jquery.printElement.js"></script><script src="/js/egovframework/koexam/calendar/tomCalendar.js"></script><script src="/js/egovframework/koexam/common/popup.js"></script><script src="/js/egovframework/koexam/common/addrlink.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var d = new Date();
+        d.setDate(d.getDate()+8);
+        if(d.getFullYear()== '2014') $('#TODAY').append('2015');
+        if(d.getFullYear()== '2015') $('#TODAY').append('2016');
+        else $('#TODAY').append(d.getFullYear());
+    });
+    
+    //상세팝업
+    function fnLAExamSchedulePop(examGroup, examYear, examDvn, examNo){
+        $('#examGroup').val(examGroup);
+        $('#examYear').val(examYear);
+        $('#examDvn').val(examDvn);
+        $('#examNo').val(examNo);
+        
+        var width = 600;
+        var height = 500;
+        if(examDvn == "1"){
+            height = 638;
+        }
+        else if(examDvn == "3"){
+            height = 520;
+        }
+        else if(examDvn == "4"){
+            height = 350;
+        }
+        window.open("","laExamSchedulPop","width=" + width + ", height=" + height + ", menubar=no,status=yes,scrollbars=yes");
+        $('form[name=lAExamScheduleForm]').attr('target','laExamSchedulPop').attr('action', "/Lems/LAExamSchedule/selectLAExamSchedulePop.do").submit();        
+    }
+</script>
+
+<script type="text/javascript">
+    $(window).load(function(){
+        
+        if(!fn_IsNull($('#tabIdx').val())){
+            fnTab($('#tabIdx').val());
+        }
+    });
+    
+    // 탭이동
+    function fnTab(tabIdx){
+        $('[id^=H_]').removeClass('on');
+        $('#H_TAB_' + tabIdx).addClass('on');
+        $('[id^=TAB_]').hide();
+        $('#TAB_' + tabIdx).show();
+    }
+</script>
+
+</head>
+<body>
+	<div id="wrap">
+		
+
+<script type="text/javascript">
+	document.oncontextmenu=function(){return false;}
+</script>
+<script type="text/javascript">
+    function show_Allmenu(){
+    	$('#Allmenu').toggle();
+    }
+</script>
+
+
+
+
+<!-- skipnavigation -->
+<div id="skipnavigation">
+	<ul>
+		<li><a href="#contents">본문 바로가기</a></li>
+		<li><a href="#GNB">주요메뉴 바로가기</a></li>
+	</ul>
+</div>
+<!-- //skipnavigation -->
+
+
+<div id="Allmenu">
+	<div class="box_wrap">
+		<div class="box_top"></div>
+		<div class="box">
+			<div class="title">전체메뉴</div>
+			<a href="#GNB" onclick="show_Allmenu();return false" class="btn_close">닫기</a>
+			
+			<div class="menu_wrap">
+				<ul class="depth_1">
+					<li class="m_01"><span class="title_1depth">자격정보</span>
+						<ul class="depth_2">
+							<li class="sm_01"><span class="title_depth_2">해기사</span>
+	                 			<ul class="depth_3">
+		                        	<li class="ssm1"><a href="#a" onclick="fnActionPage('0','0','0','');return false">해기사란?</a></li>
+		                            <li class="ssm2"><a href="#a" onclick="fnActionPage('0','2','0','');return false">시험응시절차</a></li>
+		                            <li class="ssm3"><a href="#a" onclick="fnActionPage('0','3','0','');return false">항해사</a></li>
+		                            <li class="ssm4"><a href="#a" onclick="fnActionPage('0','4','0','');return false">기관사</a></li>
+		                            <li class="ssm5"><a href="#a" onclick="fnActionPage('0','5','0','');return false">통신사</a></li>
+		                            <li class="ssm6"><a href="#a" onclick="fnActionPage('0','6','0','');return false">소형선박조종사</a></li>
+		                            <li class="ssm7"><a href="#a" onclick="fnActionPage('0','8','0','');return false">운항사</a></li>
+		                            <li class="ssm8"><a href="#a" onclick="fnActionPage('0','9','0','');return false">전자기관사</a></li>
+		                            <li class="ssm9"><a href="#a" onclick="fnActionPage('0','11','0','');return false">수면비행선박조종사</a></li>
+		                            <li class="ssm10"><a href="#a" onclick="fnActionPage('0','10','0','');return false">면허발급안내</a></li>
+		                        </ul>
+	               			</li>
+	               			<li class="sm_02"><span class="title_depth_2">선박안전관리사</span>
+	               				<ul class="depth_3">
+	                      			<li class="ssm1"><a href="#a" onclick="fnActionPage('8','0','0','');return false">선박안전관리사란?</a></li>
+	                                <li class="ssm2"><a href="#a" onclick="fnActionPage('8','1','0','');return false">시험과목</a></li>
+	                                <li class="ssm3"><a href="#a" onclick="fnActionPage('8','2','0','');return false">시험응시절차</a></li>
+	                                <li class="ssm4"><a href="#a" onclick="fnActionPage('8','3','0','');return false">자격증발급안내</a></li>
+	                      		</ul>
+	               			</li>
+	               			<li class="sm_03"><span class="title_depth_2">의료관리자</span>
+	               				<ul class="depth_3">
+	                      			<li class="ssm1"><a href="#a" onclick="fnActionPage('1','0','0','');return false">의료관리자란?</a></li>
+		                            <li class="ssm2"><a href="#a" onclick="fnActionPage('1','2','0','');return false">시험응시절차</a></li>
+		                            <li class="ssm3"><a href="#a" onclick="fnActionPage('1','3','0','');return false">자격취득방법</a></li>
+		                            
+		                            <li class="ssm5"><a href="#a" onclick="fnActionPage('1','5','0','');return false">자격증발급안내</a></li>
+	                     		</ul>
+	               			</li>
+	               			<li class="sm_04"><span class="title_depth_2">수산질병관리사</span>
+	               				<ul class="depth_3">
+	                      			<li class="ssm1"><a href="#a" onclick="fnActionPage('2','0','0','');return false">수산질병관리사란?</a></li>
+	                                <li class="ssm2"><a href="#a" onclick="fnActionPage('2','2','0','');return false">시험과목</a></li>
+	                                <li class="ssm3"><a href="#a" onclick="fnActionPage('2','3','0','');return false">시험응시절차</a></li>
+	                                <li class="ssm4"><a href="#a" onclick="fnActionPage('2','4','0','');return false">면허발급안내</a></li>
+	                     		</ul>
+	               			</li>
+	               			<li class="sm_05"><span class="title_depth_2">선박조리사</span>
+	               				<ul class="depth_3">
+	                      			<li class="ssm1"><a href="#a" onclick="fnActionPage('6','0','0','');return false">선박조리사란?</a></li>
+	                                <li class="ssm2"><a href="#a" onclick="fnActionPage('6','1','0','');return false">시험과목</a></li>
+	                                <li class="ssm3"><a href="#a" onclick="fnActionPage('6','2','0','');return false">시험응시절차</a></li>
+	                                <li class="ssm4"><a href="#a" onclick="fnActionPage('6','3','0','');return false">면허발급안내</a></li>
+	                      		</ul>
+	               			</li>
+	               			<li class="sm_05"><span class="title_depth_2">산지경매사</span>
+	               				<ul class="depth_3">
+	                      			<li class="ssm1"><a href="#a" onclick="fnActionPage('7','0','0','');return false">산지경매사란?</a></li>
+	                                <li class="ssm2"><a href="#a" onclick="fnActionPage('7','1','0','');return false">시험과목</a></li>
+	                                <li class="ssm3"><a href="#a" onclick="fnActionPage('7','2','0','');return false">시험응시절차</a></li>
+	                                <li class="ssm4"><a href="#a" onclick="fnActionPage('7','3','0','');return false">면허발급안내</a></li>
+	                      		</ul>
+	               			</li>
+	               			
+	               			<li class="sm_07"><span class="title_depth_2">연간시험일정</span>
+	               				<ul class="depth_3">
+	                      			<li class="ssm1"><a href="#a" onclick="fnActionPage('0','1','0','');return false">연간시험일정표</a></li>
+	                      		</ul>
+	               			</li>
+	               		</ul>
+	               	</li>
+	               	<li class="m_02"><span class="title_1depth">원서접수</span>
+                    	<ul class="depth_2">
+			            	<li class="sm_01"><a href="#a" onclick="fnActionPage('5','1','0','');return false">원서접수 안내</a></li>
+							<li class="sm_02"><a href="#a" onclick="fnActionPage('Etc','1','0','');return false">원서접수 신청</a></li>
+							<li class="sm_03"><a href="#a" onclick="fnActionPage('3','0','0','');return false">원서접수 현황</a></li>
+			            </ul>
+                    </li>
+                    <li class="m_03"><span class="title_1depth">합격자발표</span>
+                    	<ul class="depth_2">
+			            	<li class="sm_01"><a href="#a" onclick="fnActionPage('3','1','0','');return false">시험응시이력 및 결과</a></li>
+                           	<li class="sm_02"><a href="#a" onclick="fnActionPage('3','2','1','');return false">합격정보</a></li>
+                           	<li class="sm_03"><a href="#a" onclick="fnActionPage('3','3','0','');return false">합격증발급</a></li>
+			            </ul>
+                    </li>
+                    <li class="m_04"><span class="title_1depth">문제 및 답안공개</span>
+                    	<ul class="depth_2">
+			            	<li class="sm_01"><a href="#a" onclick="fnActionPage('4','0','0','');return false">정기시험 (가)답안 공개</a></li>
+                            <li class="sm_02"><a href="#a" onclick="fnActionPage('4','1','0','');return false">이의신청</a></li>
+                            <li class="sm_03"><a href="#a" onclick="fnActionPage('4','2','0','');return false">정기시험 최종답안 공개</a></li>
+                            <li class="sm_04"><a href="#a" onclick="fnActionPage('4','3','0','');return false">기출문제</a></li>
+			            </ul>
+                    </li>
+                    <li class="m_05"><span class="title_1depth">고객마당</span>
+                    	<ul class="depth_2">
+			            	<li class="sm_01"><a href="#a" onclick="fnActionPage('5','0','0','');return false">공지사항</a></li>
+                            <!-- <li class="sm_02"><a href="#a" onclick="fnActionPage('5','1','0','');return false">인터넷접수절차안내</a></li> -->
+                            <li class="sm_02"><a href="#a" onclick="fnActionPage('5','2','0','');return false">시험장안내</a></li>
+                            <li class="sm_03"><a href="#a" onclick="fnActionPage('5','3','0','');return false">자료실</a></li>
+                            <li class="sm_04"><a href="#a" onclick="fnActionPage('5','5','0','');return false">자주묻는 질문</a></li>
+			            </ul>
+                    </li>
+                    <li class="m_06"><span class="title_1depth">마이페이지</span>
+                    	<ul class="depth_2">
+			            	<li class="sm_01"><a href="#a" onclick="alert('준비중입니다');return false">나의정보관리</a></li>
+			            </ul>
+                    </li>
+                    <li class="m_07"><a href="#a" class="title_1depth" onclick="fnActionPage('Etc','0','2','');return false">로그인</a></li>
+                    <li class="m_08"><a href="https://www.seaman.or.kr/portal/contents.do?mId=0701000000" target="_blank" title="새창" class="title_1depth">개인정보처리방침</a></li>
+               	</ul>
+               	<div class="btn_area"><a href="#GNB" onclick="show_Allmenu()" class="btn_blue_large">전체메뉴 닫기</a></div>
+			</div>
+		</div><!-- //box -->
+		
+		<div class="box_bottom"></div>
+	</div>
+</div>
+
+<header id="header">
+    <nav class="topmenu">
+    	<div id="GNB_TOP">
+	        <h1>
+	            <a href="#a" onclick="fnActionPage('Etc','0','0','')">
+	                <img src="/images/egovframework/koexam/common/h1_logo_1.png" alt="한국해양수산연수원 국가자격시험">
+	            </a>
+	        </h1>
+	        <ul class="right_menu">
+				
+				    
+				    
+				    
+				    
+				
+	        	
+	        	<li class="m2"><a href="https://www.seaman.or.kr">한국해양수산연수원</a></li>
+	        	<li class="m4"><a href="#Allmenu" onclick="show_Allmenu()" id="GNB_before">전체메뉴</a></li>   
+	        	<li class="m5"><a href="https://www.alime.or.kr">선원정보알림e</a></li>
+	        </ul>
+	    </div>
+	    
+		<script type="text/javascript">
+			// 결제수단선택 시 radio 숨기고 체크
+			/*
+			var depth_2_a = $('#GNB > ul > li >a');
+			$(document).ready(function() {
+				$('#GNB > ul > li >a').bind('mouseover focus click', function() {
+					$(depth_2_a).removeClass('on');
+					$(this).addClass('on');
+					$(depth_2_a).next().css('display', 'none');	
+					$(this).next().css('display', 'block');		
+				});
+			});*/
+		</script>
+		
+        <div id="GNB">
+            <ul id="m99">
+                <li class="m01"><a href="#a">자격정보</a>					
+                    <div class="SubMN Sub01" id="sub01" style="display:none">
+                    	<div class="subnm_wrap">
+                    		<ul class="sub_group">
+                    			<li class="sm_01"><span class="depth_2">해기사</span>
+                    				<ul class="sub_list">
+			                        	<li class="ssm1"><a href="#a" onclick="fnActionPage('0','0','0','');return false">해기사란?</a></li>
+			                            
+			                            <li class="ssm2"><a href="#a" onclick="fnActionPage('0','2','0','');return false">시험응시절차</a></li>
+			                            <li class="ssm3"><a href="#a" onclick="fnActionPage('0','3','0','');return false">항해사</a></li>
+			                            <li class="ssm4"><a href="#a" onclick="fnActionPage('0','4','0','');return false">기관사</a></li>
+			                            <li class="ssm5"><a href="#a" onclick="fnActionPage('0','5','0','');return false">통신사</a></li>
+			                            <li class="ssm6"><a href="#a" onclick="fnActionPage('0','6','0','');return false">소형선박조종사</a></li>
+			                            <!-- 잠정중단 -->
+										<!-- <li><a class="link_point" onclick="fnActionPage('0','7','0','')">수면비행선박조종사</a></li> -->
+			                            <li class="ssm7"><a href="#a" onclick="fnActionPage('0','8','0','');return false">운항사</a></li>
+			                            <li class="ssm8"><a href="#a" onclick="fnActionPage('0','9','0','');return false">전자기관사</a></li>
+			                            <li class="ssm9" style="width:23%;"><a onclick="fnActionPage('0','11','0','');return false">수면비행선박조종사</a></li>
+			                            <li class="ssm10"><a href="#a" onclick="fnActionPage('0','10','0','');return false">면허발급안내</a></li>
+			                        </ul>
+                    			</li>
+                    			<li class="sm_02"><span class="depth_2">선박안전관리사</span>
+		               				<ul class="sub_list">
+		                      			<li class="ssm1"><a href="#a" onclick="fnActionPage('8','0','0','');return false">선박안전관리사란?</a></li>
+		                                <li class="ssm2"><a href="#a" onclick="fnActionPage('8','1','0','');return false">시험과목</a></li>
+		                                <li class="ssm3"><a href="#a" onclick="fnActionPage('8','2','0','');return false">시험응시절차</a></li>
+		                                <li class="ssm4"><a href="#a" onclick="fnActionPage('8','3','0','');return false">자격증발급안내</a></li>
+		                      		</ul>
+	               				</li>
+                    			<li class="sm_03"><span class="depth_2">의료관리자</span>
+                    				<ul class="sub_list">
+			                        	<li class="ssm1"><a href="#a" onclick="fnActionPage('1','0','0','');return false">의료관리자란?</a></li>
+	                                    
+	                                    <li class="ssm2"><a href="#a" onclick="fnActionPage('1','2','0','');return false">시험응시절차</a></li>
+	                                    <li class="ssm3"><a href="#a" onclick="fnActionPage('1','3','0','');return false">자격취득방법</a></li>
+	                                    
+	                                    <li class="ssm5"><a href="#a" onclick="fnActionPage('1','5','0','');return false">자격증발급안내</a></li>
+			                        </ul>
+                    			</li>
+                    			<li class="sm_04"><span class="depth_2">수산질병관리사</span>
+                    				<ul class="sub_list">
+			                        	<li class="ssm1"><a href="#a" onclick="fnActionPage('2','0','0','');return false">수산질병관리사란?</a></li>
+	                                    
+	                                    <li class="ssm2"><a href="#a" onclick="fnActionPage('2','2','0','');return false">시험과목</a></li>
+	                                    <li class="ssm3"><a href="#a" onclick="fnActionPage('2','3','0','');return false">시험응시절차</a></li>
+	                                    <li class="ssm4"><a href="#a" onclick="fnActionPage('2','4','0','');return false">면허발급안내</a></li>
+			                        </ul>
+                    			</li>
+                    			<li class="sm_05"><span class="depth_2">선박조리사</span>
+                    				<ul class="sub_list">
+			                        	<li class="ssm1"><a href="#a" onclick="fnActionPage('6','0','0','');return false">선박조리사란?</a></li>
+	                                    <li class="ssm2"><a href="#a" onclick="fnActionPage('6','1','0','');return false">시험과목</a></li>
+	                                    <li class="ssm3"><a href="#a" onclick="fnActionPage('6','2','0','');return false">시험응시절차</a></li>
+	                                    <li class="ssm4"><a href="#a" onclick="fnActionPage('6','3','0','');return false">면허발급안내</a></li>
+			                        </ul>
+                    			</li>
+                    			<li class="sm_06"><span class="depth_2">산지경매사</span>
+		               				<ul class="sub_list">
+		                      			<li class="ssm1"><a href="#a" onclick="fnActionPage('7','0','0','');return false">산지경매사란?</a></li>
+		                                <li class="ssm2"><a href="#a" onclick="fnActionPage('7','1','0','');return false">시험과목</a></li>
+		                                <li class="ssm3"><a href="#a" onclick="fnActionPage('7','2','0','');return false">시험응시절차</a></li>
+		                                <li class="ssm4"><a href="#a" onclick="fnActionPage('7','3','0','');return false">면허발급안내</a></li>
+		                      		</ul>
+	               				</li>
+                    			<li class="sm_07"><span class="depth_2">연간시험일정</span>
+                    				<ul class="sub_list">
+			                        	<li class="ssm1"><a href="#a" onclick="fnActionPage('0','1','0','')">연간시험일정표</a></li>
+			                        </ul>
+                    			</li>
+                    		</ul>
+                        </div>
+                        
+                        <div class="all_menu_wrap">
+                        	<div class="all_menu">찾으시는 메뉴가 없다면 전체메뉴 버튼을 클릭해보세요. <a href="#Allmenu" onclick="show_Allmenu()" class="btn_all_menu">전체메뉴</a></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="m02"><a href="#a">원서접수</a>
+                    <div class="SubMN Sub02" id="sub02" style="display:none">
+						<div class="subnm_wrap">
+							<ul class="sub_list">
+						    	<li class="sm_01"><a href="#a" onclick="fnActionPage('5','1','0','');return false">원서접수 안내</a></li>
+								<li class="sm_02"><a href="#a" onclick="fnActionPage('Etc','1','0','');return false">원서접수 신청</a></li>
+								<li class="sm_03"><a href="#a" onclick="fnActionPage('3','0','0','');return false">원서접수 현황</a></li>
+								<li class="quick_mn">
+									<a href="#a" onclick="fnActionPage('Etc','0','2','');return false" class="btn_confirm">사용자인증</a><a href="#a" onclick="fnActionPage('Etc','0','3','');return false" class="btn_myinfo">나의 정보관리</a>
+								</li>
+							</ul>
+						</div>
+						
+						<div class="all_menu_wrap">
+                        	<div class="all_menu">찾으시는 메뉴가 없다면 전체메뉴 버튼을 클릭해보세요. <a href="#Allmenu" onclick="show_Allmenu()" class="btn_all_menu">전체메뉴</a></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="m03"><a href="#a">합격자발표</a>
+                    <div class="SubMN Sub03" id="sub03" style="display:none">
+						<div class="subnm_wrap">
+							<ul class="sub_list">
+                            	<li class="sm_01"><a href="#a" onclick="fnActionPage('3','1','0','');return false">시험응시이력 및 결과</a></li>
+                            	<li class="sm_02"><a href="#a" onclick="fnActionPage('3','2','1','');return false">합격정보</a></li>
+                            	<li class="sm_03"><a href="#a" onclick="fnActionPage('3','3','0','');return false">합격증발급</a></li>
+                            	<li class="quick_mn">
+									<a href="#a" onclick="fnActionPage('Etc','0','2','');return false" class="btn_confirm">사용자인증</a><a href="#a" onclick="fnActionPage('Etc','0','3','');return false" class="btn_myinfo">나의 정보관리</a>
+								</li>
+                            </ul>
+                    	</div>
+                    	
+                    	<div class="all_menu_wrap">
+                        	<div class="all_menu">찾으시는 메뉴가 없다면 전체메뉴 버튼을 클릭해보세요. <a href="#Allmenu" onclick="show_Allmenu()" class="btn_all_menu">전체메뉴</a></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="m04"><a href="#a">문제 및 답안공개</a>
+                    <div class="SubMN Sub04" id="sub04" style="display:none">
+                        <div class="subnm_wrap">
+                        	<ul class="sub_list">
+	                            <li class="sm_01"><a href="#a" onclick="fnActionPage('4','0','0','');return false">정기시험 (가)답안 공개</a></li>
+	                            <li class="sm_02"><a href="#a" onclick="fnActionPage('4','1','0','');return false">이의신청</a></li>
+	                            <li class="sm_03"><a href="#a" onclick="fnActionPage('4','2','0','');return false">정기시험 최종답안 공개</a></li>
+	                            <li class="sm_04"><a href="#a" onclick="fnActionPage('4','3','0','');return false">기출문제</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="all_menu_wrap">
+                        	<div class="all_menu">찾으시는 메뉴가 없다면 전체메뉴 버튼을 클릭해보세요. <a href="#Allmenu" onclick="show_Allmenu()" class="btn_all_menu">전체메뉴</a></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="m05"><a href="#a">고객마당</a>
+                    <div class="SubMN Sub05" id="sub05" style="display:none">
+                        <div class="subnm_wrap">
+                        	<ul class="sub_list s06">
+	                            <li class="sm_01"><a href="#a" onclick="fnActionPage('5','0','0','');return false">공지사항</a></li>
+	                            <!-- <li class="sm_02"><a href="#a" onclick="fnActionPage('5','1','0','');return false">인터넷접수절차안내</a></li> -->
+	                            <li class="sm_03"><a href="#a" onclick="fnActionPage('5','2','0','');return false">시험장안내</a></li>
+	                            <li class="sm_04"><a href="#a" onclick="fnActionPage('5','3','0','');return false">자료실</a></li>
+	                            <li class="sm_05"><a href="#a" onclick="fnActionPage('5','5','0','');return false">자주묻는 질문</a></li>
+                        	</ul>
+                        </div>
+                        
+                        <div class="all_menu_wrap">
+                        	<div class="all_menu">찾으시는 메뉴가 없다면 전체메뉴 버튼을 클릭해보세요. <a href="#Allmenu" onclick="show_Allmenu()" class="btn_all_menu">전체메뉴</a></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<form name="hiddenHeaderForm" method="post">
+    <input type="hidden" id="forcePc" name="forcePc" value="">
+</form>
+<input type="hidden" id="isLogin" name="isLogin" value="false">
+<input type="hidden" id="loginName" name="loginName" value="">
+
+
+
+        
+<div class="qmenu qmenu01">
+    <div class="qmenu_title">바로가기 메뉴</div>
+    <ul class="qmenu_list">
+
+    
+    	<li class="m1"><a href="#a" onclick="fnActionPage('Etc','0','2','');return false">본인인증</a></li>
+    
+    
+
+		<li class="m3"><a href="#a" onclick="fnActionPage('Etc','0','3','');return false">나의 정보관리</a></li>
+		<li class="m4"><a href="#a" onclick="fnActionPage('Etc','1','0','');return false">원서접수</a></li>
+	    
+	    <li class="m6"><a href="#a" onclick="fnActionPage('3','0','0','');return false">접수확인/응시표출력</a></li>
+	    <li class="m7"><a href="#a" onclick="fnActionPage('4','2','0','');return false">최종답안</a></li>
+	    <li class="m8"><a href="#a" onclick="fnActionPage('3','2','1','');return false">합격 조회</a></li>
+	    <li class="m9"><a href="#a" onclick="fnActionPage('3','3','0','');return false">합격증 발급</a></li> 
+    </ul>
+</div>
+
+		<section id="container">
+			<div class="content_top test_info">
+				<div class="content_top_inner">
+					<h2 class="lnb_title">자격정보</h2>
+		       			
+
+
+<div class="history">
+
+
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<img src="/images/egovframework/koexam/common/history_icon_home.png" alt="Home"> &nbsp;&gt;&nbsp; 자격정보 &nbsp;&gt;&nbsp; 연간시험일정표 &nbsp;&gt;&nbsp; <b>연간시험일정표</b></div>
+
+		<ul class="right_menu">
+			<li class="m1"><a href="#a" target="_blank" title="새창으로 열림">트위터</a></li>
+			<li class="m2"><a href="#a" target="_blank" title="새창으로 열림">페이스북</a></li>
+			<li class="m3"><a href="#a" target="_self" title="링크공유하기">링크공유</a></li>
+			<li class="m4"><a href="#a" target="_self" title="인쇄">인쇄</a></li>
+		</ul>
+		       	</div>
+			</div>
+		    <form id="lAExamScheduleVO" name="lAExamScheduleForm" action="/Lems/LAExamSchedule/selectLAExamScheduleView.do" method="post">
+			    <input id="examGroup" name="examGroup" type="hidden" value="5">
+			    <input id="examYear" name="examYear" type="hidden" value="">
+			    <input id="examDvn" name="examDvn" type="hidden" value="1">
+			    <input id="examNo" name="examNo" type="hidden" value="">
+				<div class="contwrap">
+					
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var smenu_a = $(".smenu>ul>li>a");
+		var smenu_list = $(".smenu_list");
+		var smenu_2th_a = $(".smenu_list>ul>li>a");
+		
+		// 1depth클릭
+		$(smenu_a).click(function() {
+			$(smenu_a).removeClass('on');	
+			$(this).addClass('on');
+			
+			// 폈다 닫았다
+			if($(this).hasClass('on')){
+				$(smenu_list).css('display', 'none');
+				$(this).siblings().css('display', 'block');
+			} else {
+				$(this).siblings().css('display', 'none');
+			}
+		});
+		
+		
+		// 2depth클릭
+		
+		$(smenu_2th_a).click(function() {
+			$(smenu_2th_a).removeClass('on');	
+			$(this).addClass('on');
+		});
+		
+	});
+</script>
+
+<div class="leftareawrap">
+    <div class="smenu">
+        <ul>
+            <li class="m1"><a href="#a"><span>해기사</span></a>
+            	<div class="smenu_list">
+	            	<ul>
+	            		<li><a href="#a" onclick="fnActionPage('0','0','0','');return false">해기사란?</a>
+	            		
+			            </li><li><a href="#a" onclick="fnActionPage('0','2','0','');return false"><span>시험응시절차</span></a></li>
+			            <li><a href="#a" onclick="fnActionPage('0','3','0','');return false"><span>항해사</span></a></li>
+			            <li><a href="#a" onclick="fnActionPage('0','4','0','');return false"><span>기관사</span></a></li>
+			            <li><a href="#a" onclick="fnActionPage('0','5','0','');return false"><span>통신사</span></a></li>
+			            <li><a href="#a" onclick="fnActionPage('0','6','0','');return false"><span>소형선박조종사</span></a></li>
+			            <!-- 잠정중단 -->
+						<!--<li><a href="#a"  onclick="fnActionPage('0','7','0','');return false"><span>수면비행선박조종사</span></a></li> -->
+			            <li><a href="#a" onclick="fnActionPage('0','8','0','');return false"><span>운항사</span></a></li>
+			            <li><a href="#a" onclick="fnActionPage('0','9','0','');return false"><span>전자기관사</span></a></li>
+			            <li><a href="#a" onclick="fnActionPage('0','11','0','');return false"><span>수면비행선박조종사</span></a></li>
+			            <li><a href="#a" onclick="fnActionPage('0','10','0','');return false"><span>면허발급안내</span></a></li>
+	            	</ul>
+	            </div>	
+            </li>
+             <li class="m2"><a href="#a"><span>선박안전관리사</span></a>
+            	<div class="smenu_list">
+	            	<ul>
+	                	<li><a href="#a" onclick="fnActionPage('8','0','0','');return false">선박안전관리사란?</a></li>
+	                    <li><a href="#a" onclick="fnActionPage('8','1','0','');return false">시험과목</a></li>
+	                    <li><a href="#a" onclick="fnActionPage('8','2','0','');return false">시험응시절차</a></li>
+	                    <li><a href="#a" onclick="fnActionPage('8','3','0','');return false">자격증발급안내</a></li>
+	            	</ul>
+	            </div>	
+            </li>
+            <li class="m3"><a href="#a"><span>수산질병관리사</span></a>
+            	<div class="smenu_list">
+	            	<ul>
+                    	<li><a href="#a" onclick="fnActionPage('2','0','0','');return false">수산질병관리사란?</a></li>
+                        
+                        <li><a href="#a" onclick="fnActionPage('2','2','0','');return false">시험과목</a></li>
+                        <li><a href="#a" onclick="fnActionPage('2','3','0','');return false">시험응시절차</a></li>
+                        <li><a href="#a" onclick="fnActionPage('2','4','0','');return false">면허발급안내</a></li>
+	            	</ul>
+	            </div>	
+            </li>
+            <li class="m4"><a href="#a"><span>선박조리사</span></a>
+            	<div class="smenu_list">
+	            	<ul>
+	                	<li><a href="#a" onclick="fnActionPage('6','0','0','');return false">선박조리사란?</a></li>
+	                    <li><a href="#a" onclick="fnActionPage('6','1','0','');return false">시험과목</a></li>
+	                    <li><a href="#a" onclick="fnActionPage('6','2','0','');return false">시험응시절차</a></li>
+	                    <li><a href="#a" onclick="fnActionPage('6','3','0','');return false">면허발급안내</a></li>
+	            	</ul>
+	            </div>	
+            </li>
+             <li class="m5"><a href="#a"><span>산지경매사</span></a>
+            	<div class="smenu_list">
+	            	<ul>
+	                	<li><a href="#a" onclick="fnActionPage('7','0','0','');return false">산지경매사란?</a></li>
+	                    <li><a href="#a" onclick="fnActionPage('7','1','0','');return false">시험과목</a></li>
+	                    <li><a href="#a" onclick="fnActionPage('7','2','0','');return false">시험응시절차</a></li>
+	                    <li><a href="#a" onclick="fnActionPage('7','3','0','');return false">면허발급안내</a></li>
+	            	</ul>
+	            </div>	
+            </li>
+            <li class="m6"><a href="#a"><span>의료관리자</span></a>
+            	<div class="smenu_list">
+	            	<ul>
+	            		<li><a href="#a" onclick="fnActionPage('1','0','0','');return false">의료관리자란?</a></li>
+                        
+                        <li><a href="#a" onclick="fnActionPage('1','2','0','');return false">시험응시절차</a></li>
+                        <li><a href="#a" onclick="fnActionPage('1','3','0','');return false">자격취득방법</a></li>
+                        
+                        <li><a href="#a" onclick="fnActionPage('1','5','0','');return false">자격증발급안내</a></li>
+	            	</ul>
+	            </div>	
+            </li>
+            <li class="m7 last"><a href="#a" class="on" onclick="fnActionPage('0','1','0','');return false"><span>연간시험일정표</span></a>
+        </li></ul>
+    </div>
+    
+</div>
+					<!-- Contents  Area -->
+					<div id="contents" class="cont">
+						<h3 class="h3">연간시험일정표</h3>
+						
+						<!-- 탭 -->
+						<ul class="tab2">
+							<li id="H_TAB_1" class="on"><a onclick="fnTab('1')"><span>해기사</span></a></li>
+							<li id="H_TAB_2"><a onclick="fnTab('2')"><span>의료관리자</span></a></li>
+							<li id="H_TAB_3"><a onclick="fnTab('3')"><span>수산질병관리사</span></a></li>
+							<li id="H_TAB_4"><a class="link_point" onclick="fnTab('4')"><span>선박조리사</span></a></li>
+							<li id="H_TAB_5"><a class="link_point" onclick="fnTab('5')"><span>산지경매사</span></a></li>
+							<li id="H_TAB_6"><a class="link_point" onclick="fnTab('6')"><span>선박안전관리사</span></a></li>
+						</ul>
+						<!-- //탭 -->
+						<!-- 해기사시험 연간일정 -->
+						<div id="TAB_1">
+					
+							<h4 class="h4 Ml10">2025년도 해기사시험 연간일정</h4>
+						
+							<h5 class="h5 Ml20">정기시험</h5>
+							<ul class="bul_04 Ml40">
+								<li>부산 외 지역에서도 응시할 수 있습니다.</li>
+								<li>시험방식 <br>- 필기 : PBT(Paper Based Test) <br> - 면접 :
+									구술시험 (부산 및 인천지역에 한함)
+								</li>
+								<li><strong>시행대상 : 항해사(상선), 항해사(어선), 기관사, 소형선박조종사, 통신사, 운항사(지역별 시행 직종 및 등급확인)</strong>
+								<br> (회별 숫자를 클릭하시면 시행지역과 직종 및 등급을 확인할 수 있습니다.)</li>
+							</ul>
+							<ul class="bul_important Ml20">
+								<li class="color_org_01">회별 시행지역, 지역별 시행 직종 및 등급을 공고문에서 꼭 확인하시기 바랍니다.(시험일 기준 1개월전 게시)</li>
+								<li class="color_org_01">접수시작일 10:00 ~ 접수마감일 18:00</li>
+							</ul>
+							
+							<div class="tbl_type1" style="margin:0 20px">
+								<table>
+									<caption></caption>
+									<colgroup>
+										<col style="width:35px">
+										<col>
+										<col style="width:70px">
+										<col>
+										<col style="width:70px">
+										<col style="width:70px">
+										<col style="width:70px">
+										<col style="width:70px">
+										<col style="width:60px">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th rowspan="2" scope="col">회</th>
+											<th rowspan="2" scope="col">접수기간</th>
+											<th colspan="3" scope="colgroup">필기시험</th>
+											<th colspan="2" scope="colgroup">면접시험</th>
+											<th rowspan="2" scope="col">시행지역<br>및<br>대상급수</th>
+<!-- 											<th rowspan="2" scope="col">공고문 보기</th> -->
+										</tr>
+										<tr>
+											<th scope="col">필기시험</th>
+											<th scope="col">이의신청 기간</th>
+											<th scope="col">합격발표</th>
+											<th scope="col">면접시험</th>
+											<th scope="col">합격발표</th>
+										</tr>
+										
+									        
+									            
+									                <tr class="t_center">
+									                    <td>1</td>
+									                    <td>
+										                    
+										                    
+										                    	2.12(수) ~ 2.14(금)
+										                    									                    
+									                    </td>
+									                    <td>3.1(토)</td>
+									                    <td>3.1(토) ~ 3.3(월)</td>
+									                    <td>3.6(목)</td>
+									                    <td>3.8(토)</td>
+									                    <td>3.10(월)</td>
+									                    <td>
+									                        <a href="#a" onclick="fnLAExamSchedulePop('1','2025','1','1')" title="팝업">
+									                            <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기">
+									                        </a>
+									                    </td>
+									                </tr>
+									            
+									                <tr class="t_center">
+									                    <td>2</td>
+									                    <td>
+										                    
+										                    
+										                    	5.7(수) ~ 5.9(금)
+										                    									                    
+									                    </td>
+									                    <td>5.24(토)</td>
+									                    <td>5.24(토) ~ 5.26(월)</td>
+									                    <td>5.29(목)</td>
+									                    <td>5.31(토)</td>
+									                    <td>6.2(월)</td>
+									                    <td>
+									                        <a href="#a" onclick="fnLAExamSchedulePop('1','2025','1','2')" title="팝업">
+									                            <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기">
+									                        </a>
+									                    </td>
+									                </tr>
+									            
+									                <tr class="t_center">
+									                    <td>3</td>
+									                    <td>
+										                    
+										                    
+										                    	8.6(수) ~ 8.8(금)
+										                    									                    
+									                    </td>
+									                    <td>8.23(토)</td>
+									                    <td>8.23(토) ~ 8.25(월)</td>
+									                    <td>8.28(목)</td>
+									                    <td>8.30(토)</td>
+									                    <td>9.1(월)</td>
+									                    <td>
+									                        <a href="#a" onclick="fnLAExamSchedulePop('1','2025','1','3')" title="팝업">
+									                            <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기">
+									                        </a>
+									                    </td>
+									                </tr>
+									            
+									                <tr class="t_center">
+									                    <td>4</td>
+									                    <td>
+										                    
+										                    
+										                    	10.29(수) ~ 10.31(금)
+										                    									                    
+									                    </td>
+									                    <td>11.15(토)</td>
+									                    <td>11.15(토) ~ 11.17(월)</td>
+									                    <td>11.20(목)</td>
+									                    <td>11.22(토)</td>
+									                    <td>11.24(월)</td>
+									                    <td>
+									                        <a href="#a" onclick="fnLAExamSchedulePop('1','2025','1','4')" title="팝업">
+									                            <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기">
+									                        </a>
+									                    </td>
+									                </tr>
+									            
+									        
+									        
+									    
+									</tbody>
+								</table>
+							</div>
+							
+							<h5 class="h5 Mt40 Ml20">상시시험(면접)</h5>
+							<ul class="bul_04 Ml40">
+								<li>정기 4회와 별도로 상시면접을 신설하여 CBT시험 후 빠른 응시가 가능하도록 하였습니다.</li>
+								<li>시행지역 및 대상 : 부산(한국해양수산연수원) / 항해사, 기관사, 운항사, 통신사 전 등급 및 소형선박조종사</li>
+							</ul>
+							<ul class="bul_important Ml20">
+								<li class="color_org_01">해기사시험일정은 사정에 따라 변경될 수 있으므로 매회 공고문을 확인하시기 바랍니다.(시험일 기준 15일전 게시)</li>
+								<li class="color_org_01">접수시작일 10:00 ~ 접수마감일 18:00</li>
+							</ul> 
+							
+							<div class="tbl_type1" style="margin:0 20px">
+								<table>
+									<caption></caption>
+									<colgroup>
+										<col style="width:35px">
+										<col>
+										<col style="width:110px">
+										<col style="width:110px">
+										<col style="width:160px">
+										<col style="width:100px">
+									</colgroup>
+									<tbody>
+								        <tr>
+		                                   <th scope="col">회</th>
+		                                   <th scope="col">접수기간</th>
+		                                   <th scope="col">면접시험</th>
+		                                   <th scope="col">합격발표</th>
+		                                   <th scope="col">시행지역 및 대상급수</th>
+<!-- 		                                   <th scope="col">공고문 보기</th> -->
+		                                </tr>
+
+
+						                        
+						                            <tr>
+						                                <td>1</td>
+						                                <td>
+										                    
+										                    
+										                    	1.16(목) ~ 1.17(금)
+										                    									                    
+								                    	</td>						                                
+						                                <td>1.25(토)</td>
+						                                <td>1.27(월)</td>
+						                                <td>
+						                                   <a href="#a" onclick="fnLAExamSchedulePop('1','2025','4','1')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+	                                                       </a>
+	                                                    </td>
+						                            </tr> 
+						                        
+						                            <tr>
+						                                <td>2</td>
+						                                <td>
+										                    
+										                    
+										                    	4.17(목) ~ 4.18(금)
+										                    									                    
+								                    	</td>						                                
+						                                <td>4.26(토)</td>
+						                                <td>4.28(월)</td>
+						                                <td>
+						                                   <a href="#a" onclick="fnLAExamSchedulePop('1','2025','4','2')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+	                                                       </a>
+	                                                    </td>
+						                            </tr> 
+						                        
+						                            <tr>
+						                                <td>3</td>
+						                                <td>
+										                    
+										                    
+										                    	6.19(목) ~ 6.20(금)
+										                    									                    
+								                    	</td>						                                
+						                                <td>6.28(토)</td>
+						                                <td>6.30(월)</td>
+						                                <td>
+						                                   <a href="#a" onclick="fnLAExamSchedulePop('1','2025','4','3')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+	                                                       </a>
+	                                                    </td>
+						                            </tr> 
+						                        
+						                            <tr>
+						                                <td>4</td>
+						                                <td>
+										                    
+										                    
+										                    	7.17(목) ~ 7.18(금)
+										                    									                    
+								                    	</td>						                                
+						                                <td>7.26(토)</td>
+						                                <td>7.28(월)</td>
+						                                <td>
+						                                   <a href="#a" onclick="fnLAExamSchedulePop('1','2025','4','4')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+	                                                       </a>
+	                                                    </td>
+						                            </tr> 
+						                        
+						                            <tr>
+						                                <td>5</td>
+						                                <td>
+										                    
+										                    
+										                    	9.18(목) ~ 9.19(금)
+										                    									                    
+								                    	</td>						                                
+						                                <td>9.27(토)</td>
+						                                <td>9.29(월)</td>
+						                                <td>
+						                                   <a href="#a" onclick="fnLAExamSchedulePop('1','2025','4','5')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+	                                                       </a>
+	                                                    </td>
+						                            </tr> 
+						                        
+						                            <tr>
+						                                <td>6</td>
+						                                <td>
+										                    
+										                    
+										                    	11.27(목) ~ 11.28(금)
+										                    									                    
+								                    	</td>						                                
+						                                <td>12.6(토)</td>
+						                                <td>12.8(월)</td>
+						                                <td>
+						                                   <a href="#a" onclick="fnLAExamSchedulePop('1','2025','4','6')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+	                                                       </a>
+	                                                    </td>
+						                            </tr> 
+						                        
+									</tbody>
+								</table>
+						    </div>
+							
+							<h5 class="h5 Mt40 Ml20">상시시험(필기)</h5>
+							<ul class="bul_04 Ml40">
+								<li>승선 및 어로활동 등으로 정기시험 응시가 어려운 분들의 응시편의를 위한 시험으로 회차별 시행 직종을 달리합니다.</li>
+								<li>시험방식 : CBT(Computer Based Test)<br>- 지정된 시험실에서 컴퓨터
+									모니터를 통해 문제를 푸는 방식<br>- 컴퓨터로 통제되어 자동 채점되며, 시험 당일 합격자를 발표합니다.</li>
+								<li>시행대상 : 항해사(상선), 항해사(어선), 기관사, 소형선박조종사</li>
+								<li>회당 수용가능 인원에 제한이 있으므로 접수기간 중 인터넷 선착순 마감</li>
+							</ul>
+							<ul class="bul_important Ml20">
+								<li class="color_org_01">회별 시행 지역, 직종 및 등급 등 세부사항은 월별 상시시험 공고문을 반드시 확인하시기 바랍니다.<br>(시험일 기준 15일전 게시)</li>
+								<li class="color_org_01">접수시작일 10:00 ~ 접수마감일 18:00(정원이 마감 된 경우 접수시간이 남아 있더라도 접수 안됨)</li>
+							</ul>
+							
+							
+							<div class="tbl_type1" style="margin:0 20px">
+								<table>
+									<caption></caption>
+									<colgroup>
+										<col style="width:35px">
+										<col>
+										<col style="width:110px">
+										<col style="width:110px">
+										<col style="width:160px">
+										<col style="width:100px">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th scope="col">회</th>
+											<th scope="col">접수기간</th>
+											<th scope="col">필기시험</th>
+											<th scope="col">합격발표</th>
+											<th scope="col">시행지역 및 대상급수</th>
+<!-- 		                                	<th scope="col">공고문 보기</th> -->
+										</tr>
+
+
+						                    	
+
+						                            <tr>
+						                                <td>1</td>
+						                                <td>
+										                    
+										                    	1.7(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>1.15(수)</td>
+						                                <td>1.15(수)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','1')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>2</td>
+						                                <td>
+										                    
+										                    	1.7(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>1.16(목)</td>
+						                                <td>1.16(목)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','2')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>3</td>
+						                                <td>
+										                    
+										                    	1.7(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>1.17(금)</td>
+						                                <td>1.17(금)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','3')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>4</td>
+						                                <td>
+										                    
+										                    	1.27(월)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>2.5(수)</td>
+						                                <td>2.5(수)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','4')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>5</td>
+						                                <td>
+										                    
+										                    	1.27(월)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>2.6(목)</td>
+						                                <td>2.6(목)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','5')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>6</td>
+						                                <td>
+										                    
+										                    	1.27(월)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>2.7(금)</td>
+						                                <td>2.7(금)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','6')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>7</td>
+						                                <td>
+										                    
+										                    	3.18(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>3.26(수)</td>
+						                                <td>3.26(수)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','7')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>8</td>
+						                                <td>
+										                    
+										                    	3.18(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>3.27(목)</td>
+						                                <td>3.27(목)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','8')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>9</td>
+						                                <td>
+										                    
+										                    	3.18(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>3.28(금)</td>
+						                                <td>3.28(금)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','9')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>10</td>
+						                                <td>
+										                    
+										                    	4.8(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>4.16(수)</td>
+						                                <td>4.16(수)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','10')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>11</td>
+						                                <td>
+										                    
+										                    	4.8(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>4.17(목)</td>
+						                                <td>4.17(목)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','11')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>12</td>
+						                                <td>
+										                    
+										                    	4.8(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>4.18(금)</td>
+						                                <td>4.18(금)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','12')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>13</td>
+						                                <td>
+										                    
+										                    	6.10(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>6.18(수)</td>
+						                                <td>6.18(수)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','13')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>14</td>
+						                                <td>
+										                    
+										                    	6.10(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>6.19(목)</td>
+						                                <td>6.19(목)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','14')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>15</td>
+						                                <td>
+										                    
+										                    	6.10(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>6.20(금)</td>
+						                                <td>6.20(금)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','15')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>16</td>
+						                                <td>
+										                    
+										                    	7.2(수)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>7.9(수)</td>
+						                                <td>7.9(수)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','16')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>17</td>
+						                                <td>
+										                    
+										                    	7.2(수)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>7.10(목)</td>
+						                                <td>7.10(목)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','17')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>18</td>
+						                                <td>
+										                    
+										                    	7.2(수)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>7.11(금)</td>
+						                                <td>7.11(금)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','18')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>19</td>
+						                                <td>
+										                    
+										                    	8.26(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>9.3(수)</td>
+						                                <td>9.3(수)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','19')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>20</td>
+						                                <td>
+										                    
+										                    	8.26(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>9.4(목)</td>
+						                                <td>9.4(목)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','20')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+
+						                            <tr>
+						                                <td>21</td>
+						                                <td>
+										                    
+										                    	8.26(화)	
+										                    
+										                    									                    
+								                    	</td>
+						                                <td>9.5(금)</td>
+						                                <td>9.5(금)</td>
+						                                <td>
+						                                   <a onclick="fnLAExamSchedulePop('1','2025','3','21')">
+						                                       <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기" title="팝업">
+						                                   </a>
+						                                </td>
+						                            </tr> 
+						                        
+									</tbody>
+								</table>
+							</div>
+							
+							<p class="bul_important color_org_01 Ml20 Mt5">해기사시험일정은 사정에 의하여 변경될 수 있음.</p>
+							
+						</div>
+						<!-- //해기사시험 연간일정 -->
+						
+						<!-- 의료관리자자격시험 연간일정 -->
+						<div class="DisplayNone" id="TAB_2">
+							<h4 class="h4 Ml10">2025년도 의료관리자자격시험 연간일정</h4>
+							
+							<div class="tbl_type1" style="margin:0 20px">
+								<table>
+									<caption></caption>
+									<colgroup>
+										<col style="width:40px">
+										<col>
+										<col style="width:100px">
+										<col style="width:100px">
+										<col>
+									</colgroup>
+									<tbody>
+										<tr>
+											<th scope="col">회</th>
+											<th scope="col">접수기간</th>
+											<th scope="col">필기시험</th>
+											<th scope="col">합격발표</th>
+											<th scope="col">시행지역</th>
+										</tr>
+										
+									        
+									            
+									                <tr class="t_center">
+									                    <td>1</td>
+									                     <td>
+											                    
+											                    
+											                    	2. 12(수) ~ 2. 14(금)
+											                    									                    
+									                    </td>
+									                    <td>3. 1(토)</td>
+
+									                    <td>3.6(목)</td>
+
+									                    <td>- 부산, 인천, 목포, 동해, 제주</td>
+									                </tr>
+									            
+									                <tr class="t_center">
+									                    <td>2</td>
+									                     <td>
+											                    
+											                    
+											                    	5. 7(수) ~ 5. 9(금)
+											                    									                    
+									                    </td>
+									                    <td>5. 24(토)</td>
+
+									                    <td>5.29(목)</td>
+
+									                    <td>- 부산, 인천, 목포, 동해, 제주</td>
+									                </tr>
+									            
+									                <tr class="t_center">
+									                    <td>3</td>
+									                     <td>
+											                    
+											                    
+											                    	8. 6(수) ~ 8. 8(금)
+											                    									                    
+									                    </td>
+									                    <td>8. 23(토)</td>
+
+									                    <td>8.28(목)</td>
+
+									                    <td>- 부산, 인천, 목포, 동해, 제주</td>
+									                </tr>
+									            
+									                <tr class="t_center">
+									                    <td>4</td>
+									                     <td>
+											                    
+											                    
+											                    	10. 29(수) ~ 10. 31(금)
+											                    									                    
+									                    </td>
+									                    <td>11. 15(토)</td>
+
+									                    <td>11.20(목)</td>
+
+									                    <td>- 부산, 인천, 목포, 동해, 제주</td>
+									                </tr>
+									            
+									        
+									        
+									    
+									</tbody>
+								</table>
+							</div>
+					
+							<ul class="bul_important Ml20 Mt5">
+								<li class="color_org_01">의료관리자 자격시험 시험일정은 사정에 의하여 변경될 수 있음</li>
+<!-- 								<li class="color_org_01">입실시간 09:30(정기 제2회 한정) 입니다. 착오없으시길 바랍니다 </li> -->
+							</ul>
+						</div>
+						<!-- //의료관리자자격시험 연간일정 -->
+						
+						<!-- 수산질병관리사시험 연간일정 -->
+						<div class="DisplayNone" id="TAB_3">
+							<h4 class="h4 Ml10">2025년도 수산질병관리사시험 연간일정</h4>
+							
+							<div class="tbl_type1" style="margin:0 20px">
+								<table>
+									<caption></caption>
+									<colgroup>
+										<col>
+										<col style="width:100px">
+										<col style="width:100px">
+										<col>
+									</colgroup>
+									<tbody>
+										<tr>
+											<th scope="col">접수기간</th>
+											<th scope="col">필기시험</th>
+											<th scope="col">합격발표</th>
+											<th scope="col">시행지역</th>
+										</tr>
+										
+											<tr>
+												<td>1.20(월) ~ 1.22(수)</td>
+												<td>2.15(토) AM 09:00</td>
+												<td>2.20(목) PM 03:00</td>
+												<td>한국해양수산연수원</td>
+											</tr>
+										
+											<tr>
+												<td>1.20(월) ~ 1.22(수)</td>
+												<td>2.15(토) AM 09:00</td>
+												<td>2.20(목) PM 03:00</td>
+												<td>선문대학교</td>
+											</tr>
+										
+									</tbody>
+								</table>
+							</div>
+					
+							<p class="bul_important Ml20 Mt5 color_org_01">자세한 사항은 시험공고문을 확인하시기 바랍니다.</p>
+						</div>
+						<!-- //수산질병관리사시험 연간일정 -->
+						
+						<!-- 선박조리사시험 연간일정 -->
+						<div class="DisplayNone" id="TAB_4">
+							<h4 class="h4 Ml10">2025년도 선박조리사시험 연간일정</h4>
+							
+							<div class="tbl_type1" style="margin:0 20px">
+								<table summary="선박조리사시험 연간일정">
+									<caption></caption>
+									<colgroup>
+										<col style="width:50px">
+										<col>
+										<col style="width:50px">
+										<col>
+										<col style="width:50px">
+										<col>
+										<col style="width:50px">
+										<col>
+									</colgroup>
+									<tbody>
+										<tr>
+											<th scope="col">월</th>
+											<th scope="col">일자</th>
+											<th scope="col">월</th>
+											<th scope="col">일자</th>
+											<th scope="col">월</th>
+											<th scope="col">일자</th>
+											<th scope="col">월</th>
+											<th scope="col">일자</th>
+										</tr>
+										
+										
+											<tr>
+												<td>1</td><td>-</td>
+												<td>2</td><td>13</td>
+												<td>3</td><td>-</td>
+												<td>4</td><td>25</td>
+											</tr>
+										
+											<tr>
+												<td>5</td><td>15</td>
+												<td>6</td><td>-</td>
+												<td>7</td><td>24</td>
+												<td>8</td><td>-</td>
+											</tr>
+										
+											<tr>
+												<td>9</td><td>25</td>
+												<td>10</td><td>-</td>
+												<td>11</td><td>20</td>
+												<td>12</td><td>-</td>
+											</tr>
+										
+									</tbody>
+								</table>
+							</div>
+					
+							<p class="bul_important Ml20 Mt5 color_org_01">시험 시행 및 합격자 발표는 공고하지 않음.</p>
+						</div>
+						<!-- //선박조리사시험 연간일정 -->
+						
+						<!-- 산지경매사 연간일정 -->
+						<div class="DisplayNone" id="TAB_5">
+						
+							<h4 class="h4 Ml10">2025년도 산지경매사 국가자격시험 연간일정</h4>
+							
+							<ul class="bul_04 Ml40">
+								<li>시험방식 
+									<br>- 1차 시험(필기) : PBT(Paper Based Test)
+									<br>- 2차 시험(실기) : 모의경매 CBT(Computer Based Test)
+								</li>
+							</ul>
+							<ul class="bul_important Ml20">
+								<li class="color_org_01">2차(실기) 시험은 1차(필기) 시험 합격자만 응시 가능</li>
+								<li class="color_org_01">1차(필기) 합격 유효기간 : 다음 회차 시험까지 유효</li>
+								<li class="color_org_01">접수시작일 10:00 ~ 접수마감일 18:00</li>
+								<li class="color_org_01">제1차 필기시험 면제자(전과목 면제자)의 경우 반드시 제1차 필기시험 접수기간에 접수 하여야 하며, 미 접수 시 제2차 실기시험에 접수 불가</li>
+								<li class="color_org_01">산지경매사 국가자격시험일정은 사정에 의하여 변경될 수 있습니다.</li>
+							</ul>
+							
+							<div class="tbl_type1" style="margin:0 20px">
+								<table>
+									<caption></caption>
+									<colgroup>
+										<col style="width:90px">
+										<col style="width:100px">
+										<col style="width:50px">
+										<col style="width:90px">
+										<col style="width:50px">
+										<col style="width:110px">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th scope="col">구분</th>
+											<th scope="col">접수기간</th>
+											<th scope="colgroup">시험일자</th>
+											<th scope="colgroup">이의신청 기간</th>
+											<th scope="colgroup">합격발표</th>
+											<th scope="colgroup">시행지역</th>
+										</tr>
+										
+									        
+									            
+									                <tr class="t_center">
+									                    <td>제1차(필기)시험</td>
+									                    <td>
+										                    
+										                    
+										                    	6.30(월)  ~ 7.2(수) 
+										                    									                    
+									                    </td>
+									                    <td>7.19(토) </td>
+									                    <td>
+										                    
+										                    
+										                    	7.19(토)  ~ 7.21(월) 
+										                    									                    
+									                    </td>									                    
+									                    <td>7.24(목) </td>
+									                    <td>한국해양수산연수원(부산 영도)</td>
+									                </tr>
+									            
+									                <tr class="t_center">
+									                    <td>제2차(실기)시험</td>
+									                    <td>
+										                    
+										                    
+										                    	7.28(월)  ~ 7.30(수) 
+										                    									                    
+									                    </td>
+									                    <td>8.16(토) </td>
+									                    <td>
+										                    
+										                    	-	
+										                    
+										                    									                    
+									                    </td>									                    
+									                    <td>8.20(수) </td>
+									                    <td>한국해양수산연수원(부산 영도)</td>
+									                </tr>
+									            
+									        
+									        
+									    
+									</tbody>
+								</table>
+							</div><br>
+							<ul class="bul_important Ml20">
+								<li class="color_org_01">자세한 사항은 시험공고문을 확인하시기 바랍니다.</li>
+							</ul>
+							
+
+						
+						</div>
+						<!-- //선박조리사시험 연간일정 -->
+						<!-- 수산질병관리사시험 연간일정 -->
+						<div class="DisplayNone" id="TAB_6">
+							<h4 class="h4 Ml10">2025년도 선박안전관리사 연간일정</h4>
+							
+							<div class="tbl_type1" style="margin:0 20px">
+								<table>
+									<caption></caption>
+									<colgroup>
+										<col style="width:35px">
+										<col>
+										<col style="width:70px">
+										<col>
+										<col style="width:70px">
+										<col style="width:70px">
+										<col style="width:70px">
+										<col style="width:70px">
+										<col style="width:60px">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th rowspan="2" scope="col">회</th>
+											<th rowspan="2" scope="col">접수기간</th>
+											<th colspan="3" scope="colgroup">필기시험</th>
+											<th colspan="2" scope="colgroup">면접시험</th>
+											<th rowspan="2" scope="col">시행지역<br>및<br>대상급수</th>
+<!-- 											<th rowspan="2" scope="col">공고문 보기</th> -->
+										</tr>
+										<tr>
+											<th scope="col">필기시험</th>
+											<th scope="col">이의신청 기간</th>
+											<th scope="col">합격발표</th>
+											<th scope="col">면접시험</th>
+											<th scope="col">합격발표</th>
+										</tr>
+										
+									        
+									            
+									                <tr class="t_center">
+									                    <td>1</td>
+									                    <td>
+										                    
+										                    
+										                    	3.12(수) ~ 3.14(금)
+										                    									                    
+									                    </td>
+									                    <td>4.5(토)</td>
+									                    <td>-</td>
+									                    <td>4.8(화)</td>
+									                    <td>4.12(토)</td>
+									                    <td>4.14(월)</td>
+									                    <td>
+									                        <a href="#a" onclick="fnLAExamSchedulePop('5','2025','1','1')" title="팝업">
+									                            <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기">
+									                        </a>
+									                    </td>
+									                </tr>
+									            
+									                <tr class="t_center">
+									                    <td>2</td>
+									                    <td>
+										                    
+										                    
+										                    	8.27(수) ~ 8.29(금)
+										                    									                    
+									                    </td>
+									                    <td>9.13(토)</td>
+									                    <td>-</td>
+									                    <td>9.16(화)</td>
+									                    <td>9.20(토)</td>
+									                    <td>9.22(월)</td>
+									                    <td>
+									                        <a href="#a" onclick="fnLAExamSchedulePop('5','2025','1','2')" title="팝업">
+									                            <img src="/images/egovframework/koexam/common/glasses_1.png" alt="시행지역 및 대상급수 보기">
+									                        </a>
+									                    </td>
+									                </tr>
+									            
+									        
+									        
+									    
+									</tbody>
+								</table>
+							</div>
+					
+							<p class="bul_important Ml20 Mt5 color_org_01">자세한 사항은 시험공고문을 확인하시기 바랍니다.</p>
+						</div>
+			
+					</div>
+					<!-- //Contents  Area -->
+				</div>
+			</form>
+		</section>
+		
+<footer id="footer">
+    <div class="site_info">
+    	<ul class="cs_center">
+    		<li class="m1">교육 및 시험문의<span class="strong">콜센터 <span class="color_org">1899-3600</span></span></li>
+    		<li class="m2">해외에서 거실 때<span class="strong"><span class="color_blue">+82-51-624-4521</span></span></li>
+    		<li class="m3">상담가능시간<span class="strong">평일 오전 9시~오후6시</span></li>
+    	</ul>
+    	<ul class="cs_menu">
+    		<li class="m1"><a href="#a" onclick="fnActionPage('5','3','0','');return false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자료실</a></li>
+    		<li class="m2"><a href="#a" onclick="fnActionPage('5','5','0','');return false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FAQ</a></li>
+    	</ul>
+    </div>
+    <div class="copyright_wrap">
+<!-- 	    <div class="copyright" onclick="location.href='http://www.seaman.or.kr'" style="cursor: pointer;"> -->
+	    <div class="copyright" style="cursor: pointer;">
+	    	<ul class="bottom_menu">
+	    		<li class="m0" onclick="location.href='http://www.seaman.or.kr'" style="cursor: pointer;"></li>
+	    		<li>
+			    	<ul class="bottom_menu">
+			    		<li class="m1"><a style="font-size:15px;color:blue;font-weight:bold" href="https://www.seaman.or.kr/portal/contents.do?mId=0701000000" target="_blank" title="새창">개인정보 처리방침</a></li>
+			    		<li class="m2"><a href="http://get.adobe.com/kr/reader/" target="_blank">뷰어다운로드</a></li>
+			    	</ul>
+			    	<p class="address">(49111) 부산광역시 영도구 해양로 367(동삼동)   Copyrights(c) SEAMAN, All Rights Reserved.</p>
+	    		</li>
+	    	</ul>
+	    </div>
+	</div>
+</footer>
+
+	</div>
+
+</body></html>

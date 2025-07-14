@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Lottie from "lottie-react";
-import { SUBJECTS_BY_LICENSE } from "@/lib/constants";
+import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
 
 import Sidebar from "@/components/layout/Sidebar";
 import ProblemViewer from "@/components/solve/ProblemViewer";
