@@ -1,22 +1,50 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, AlertCircle } from "lucide-react";
 import { SUBJECTS_BY_LICENSE } from "@/lib/constants";
 import Button from "@/components/ui/Button";
 import SelectBox from "@/components/ui/SelectBox";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
-const LICENSE_LEVELS: Record<string, string[]> = {
+const LICENSE_LEVELS: Record<LicenseType, string[]> = {
   항해사: ["1급", "2급", "3급", "4급", "5급", "6급"],
   기관사: ["1급", "2급", "3급", "4급", "5급", "6급"],
-  소형선박조종사: ["일반"],
+  소형선박조종사: [],
 };
 
-interface ExamSettingsProps {
-  onStartExam: (settings: {
+// 과목 버튼 (공통)
+const SubjectButton = React.memo(function SubjectButton({
+  subject,
+  isSelected,
+  onToggle,
+}: {
+  subject: string;
+  isSelected: boolean;
+  onToggle: (subject: string) => void;
+}) {
+  return (
+    <motion.button
+      layout
+      type="button"
+      onClick={() => onToggle(subject)}
+      className={`px-3 py-1 rounded-lg text-sm font-medium border transition-colors duration-200
+        ${
+          isSelected
+            ? "bg-blue-600 text-white border-blue-500"
+            : "bg-gray-700 text-gray-300 border-gray-500 hover:bg-gray-600"
+        }`}
+      whileTap={{ scale: 0.95 }}
+    >
+      {subject}
+    </motion.button>
+  );
+});
+
+interface CbtSettingsProps {
+  onStartCbt: (settings: {
     license: LicenseType;
     level: string;
     subjects: string[];
@@ -25,82 +53,156 @@ interface ExamSettingsProps {
   error: string;
 }
 
-export function CbtSettings({ onStartExam, isLoading, error }: ExamSettingsProps) {
+export function CbtSettings({ onStartCbt, isLoading, error }: CbtSettingsProps) {
   const [license, setLicense] = useState<LicenseType | "">("");
   const [level, setLevel] = useState<string>("");
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
+  const isSmallShip = license === "소형선박조종사";
+  const subjects = license ? SUBJECTS_BY_LICENSE[license] ?? [] : [];
+
   useEffect(() => {
-    if (license) {
-      setLevel("");
-      setSelectedSubjects([]);
-    }
+    setLevel("");
+    setSelectedSubjects([]);
   }, [license]);
 
+  const toggleSubject = useCallback((subject: string) => {
+    setSelectedSubjects((prev) =>
+      prev.includes(subject)
+        ? prev.filter((s) => s !== subject)
+        : [...prev, subject]
+    );
+  }, []);
+
   const handleStartClick = () => {
-    if (selectedSubjects.length === 0) {
-      alert("과목을 선택해주세요.");
+    if (!license || (!isSmallShip && !level) || selectedSubjects.length === 0) {
+      alert("모든 항목을 선택해주세요.");
       return;
     }
-    if (license) {
-      onStartExam({ license, level, subjects: selectedSubjects });
-    }
+    onStartCbt({
+      license,
+      level: isSmallShip ? "일반" : level,
+      subjects: selectedSubjects,
+    });
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto p-4">
+    <div className="w-full max-w-lg mx-auto p-4 font-sans">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-neutral-800/50 backdrop-blur-sm border border-neutral-700 p-6 rounded-2xl shadow-lg"
+        className="bg-gray-800 border border-gray-700 p-6 rounded-2xl shadow-md"
       >
-        <h2 className="text-3xl font-bold text-white mb-6 text-center">
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">
           CBT 시험 설정
         </h2>
-        <div className="space-y-6">
-          <motion.div layout>
-            <label className="block text-sm font-medium text-neutral-300 mb-2">
-              1. 자격증 선택
+
+        <motion.div layout className="space-y-6 text-sm text-gray-300">
+          {/* 자격증 선택 */}
+          <motion.div layout className="space-y-2">
+            <label htmlFor="license-select" className="block text-sm font-semibold text-gray-200">
+              자격증 종류
             </label>
             <SelectBox
               id="license-select"
-              label="자격증"
+              label="자격증 선택"
               value={license}
               onChange={(e) => setLicense(e.target.value as LicenseType)}
-              options={["", ...Object.keys(LICENSE_LEVELS)]}
+              options={["", "항해사", "기관사", "소형선박조종사"]}
             />
           </motion.div>
+
+          {/* 급수 선택 */}
           <AnimatePresence>
-            {license && (
-              <motion.div layout initial={{ opacity: 0, height: 0, y: -10 }} animate={{ opacity: 1, height: "auto", y: 0 }} exit={{ opacity: 0, height: 0, y: -10 }}>
-                <label className="block text-sm font-medium text-neutral-300 mb-2">2. 급수 선택</label>
-                <SelectBox id="level" label="급수" value={level} onChange={(e) => setLevel(e.target.value)} options={["", ...LICENSE_LEVELS[license]]} />
+            {!isSmallShip && license && (
+              <motion.div
+                layout
+                initial={{ opacity: 0, height: 0, y: -10 }}
+                animate={{ opacity: 1, height: "auto", y: 0 }}
+                exit={{ opacity: 0, height: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-2"
+              >
+                <label htmlFor="level-select" className="block text-sm font-semibold text-gray-200">
+                  급수
+                </label>
+                <SelectBox
+                  id="level-select"
+                  label="급수 선택"
+                  value={level}
+                  onChange={(e) => setLevel(e.target.value)}
+                  options={["", ...LICENSE_LEVELS[license]]}
+                />
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* 과목 선택 */}
           <AnimatePresence>
-            {license && level && (
-              <motion.div layout initial={{ opacity: 0, height: 0, y: -10 }} animate={{ opacity: 1, height: "auto", y: 0 }} exit={{ opacity: 0, height: 0, y: -10 }} className="pt-2">
-                <label className="block text-sm font-medium text-neutral-300 mb-2">3. 과목 선택 (다중 선택 가능)</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {SUBJECTS_BY_LICENSE[license]?.map((subject) => (
-                    <Button key={subject} onClick={() => setSelectedSubjects((prev) => prev.includes(subject) ? prev.filter((s) => s !== subject) : [...prev, subject])} variant={selectedSubjects.includes(subject) ? "primary" : "neutral"} className="w-full text-xs sm:text-sm flex items-center justify-center gap-2">
-                      {selectedSubjects.includes(subject) && <Check size={16} />}
-                      {subject}
-                    </Button>
-                  ))}
-                </div>
+            {license && (isSmallShip || level) && (
+              <motion.div
+                layout
+                initial={{ opacity: 0, height: 0, y: -10 }}
+                animate={{ opacity: 1, height: "auto", y: 0 }}
+                exit={{ opacity: 0, height: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-2"
+              >
+                <label className="block text-sm font-semibold text-gray-200">
+                  과목 선택 (다중 선택 가능)
+                </label>
+
+                {subjects.length === 0 ? (
+                  <p className="text-gray-400 text-xs">과목 정보가 없습니다.</p>
+                ) : (
+                  <motion.div
+                    layout
+                    className="flex flex-wrap gap-2 max-h-40 overflow-y-auto pr-1"
+                  >
+                    {subjects.map((subject) => (
+                      <SubjectButton
+                        key={subject}
+                        subject={subject}
+                        isSelected={selectedSubjects.includes(subject)}
+                        onToggle={toggleSubject}
+                      />
+                    ))}
+                  </motion.div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
-        <div className="mt-8">
-          <Button onClick={handleStartClick} disabled={!license || !level || selectedSubjects.length === 0 || isLoading} className="w-full text-lg py-3 transition-all disabled:opacity-50" variant="primary">
+        </motion.div>
+
+        {/* 버튼 */}
+        <motion.div layout className="mt-10">
+          <Button
+            onClick={handleStartClick}
+            disabled={
+              !license || (!isSmallShip && !level) || selectedSubjects.length === 0 || isLoading
+            }
+            className="w-full text-lg py-3"
+            variant="primary"
+          >
             {isLoading ? "불러오는 중..." : "시험 시작"}
           </Button>
-        </div>
-        {error && <p className="text-red-500 text-center mt-4">⚠️ {error}</p>}
+        </motion.div>
+
+        {/* 오류 메시지 */}
+        <AnimatePresence>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="mt-4 flex items-center justify-center gap-2 text-red-400 text-sm"
+            >
+              <AlertCircle size={16} />
+              <span>{error}</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </div>
   );

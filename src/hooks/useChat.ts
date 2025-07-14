@@ -9,14 +9,13 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
 
   const initialMessageSent = useRef(false);
-
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  //  답변 생성을 중단하는 함수
+  // 답변 생성을 중단하는 함수
   const stop = () => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort(); // fetch 요청 중단
-      setIsLoading(false); // 로딩 상태 즉시 해제
+      setIsLoading(false); // 즉시 중단 시 로딩 해제
     }
   };
 
@@ -49,7 +48,6 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
 
     try {
       let res;
-      // 새로 업로드한 파일이 있을 경우 FormData로 전송
       if (imageFile) {
         const formData = new FormData();
         formData.append("message", messageContent.trim());
@@ -59,16 +57,12 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
           body: formData,
           signal,
         });
-      }
-      // 파일 없이 텍스트와 URL만 있을 경우 JSON으로 전송
-      else {
-        // imageUrl이 존재하고, 상대 경로인 경우 절대 경로로 변환
+      } else {
         let absoluteImageUrl = imageUrl;
         if (imageUrl && imageUrl.startsWith("/")) {
           absoluteImageUrl = new URL(imageUrl, window.location.origin).href;
         }
 
-        // 이미지 URL을 포함하여 JSON으로 전송
         res = await fetch("/api/chat", {
           method: "POST",
           headers: {
@@ -104,12 +98,16 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
           )
         );
       }
+
+      // ✅ 스트리밍이 정상적으로 끝난 경우에만 로딩 해제
+      setIsLoading(false);
+
     } catch (error: any) {
-      // ✅ 요청이 중단된 경우(AbortError)는 에러 메시지를 보여주지 않음
-      if (error.name === 'AbortError') {
+      if (error.name === "AbortError") {
         console.log("답변 생성이 중단되었습니다.");
-        // 중단 시 마지막 빈 메시지 제거
-        setMessages(prev => prev.filter(msg => msg.id !== assistantMessageId));
+        setMessages((prev) =>
+          prev.filter((msg) => msg.id !== assistantMessageId)
+        );
         return;
       }
 
@@ -124,15 +122,18 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
             : msg
         )
       );
-    } finally {
+
+      // ✅ 예외 상황에서만 로딩 해제
       setIsLoading(false);
-      // 생성된 임시 URL 해제 (imageFile이 있었던 경우에만)
+    } finally {
+      // ✅ finally에서는 오직 cleanup (URL revoke 등)만
       if (userMessage.image && imageFile) {
         URL.revokeObjectURL(userMessage.image);
       }
     }
   };
 
+  // 초기 질문이 있을 경우 자동 전송
   useEffect(() => {
     if ((initialQuestion || initialImageUrl) && !initialMessageSent.current) {
       sendMessage(initialQuestion || "", null, initialImageUrl);

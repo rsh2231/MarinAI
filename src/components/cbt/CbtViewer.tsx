@@ -110,7 +110,7 @@ export default function CbtViewer() {
     default:
       return (
         <CbtSettings
-          onStartExam={handleStartExam}
+          onStartCbt={handleStartExam}
           isLoading={isLoading}
           error={error}
         />

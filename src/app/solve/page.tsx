@@ -74,7 +74,7 @@ export default function SolvePage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="bg-[#0f172a] min-h-screen md:min-h-0 flex flex-col"
+      className="bg-[#0f172a] min-h-screen md:min-h-0 flex flex-col md:mt-12"
     >
       <div className="max-w-7xl mx-auto w-full flex md:flex-row md:gap-8 flex-1">
         {/* 왼쪽: 사이드바 */}
