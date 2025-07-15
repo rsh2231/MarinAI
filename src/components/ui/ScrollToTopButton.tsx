@@ -1,23 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, RefObject } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import { motion } from "framer-motion";
+interface ScrollToTopButtonProps {
+  scrollableRef: RefObject<HTMLElement | null>;
+}
 
-export default function ScrollToTop() {
+export default function ScrollToTopButton({
+  scrollableRef,
+}: ScrollToTopButtonProps) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    const scrollableElement = scrollableRef.current;
+
+    // ref.current가 아직 없을 수 있으므로, 방어 코드를 추가
+    if (!scrollableElement) return;
+
     const handleScroll = () => {
-      setVisible(window.scrollY > 300);
+      setVisible(scrollableElement.scrollTop > 300);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    scrollableElement.addEventListener("scroll", handleScroll);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너를 제거
+    return () => scrollableElement.removeEventListener("scroll", handleScroll);
+  }, [scrollableRef]); // ref 객체가 변경될 경우를 대비해 dependency array에 추가
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollableRef.current?.scrollTo({ top: 0, behavior: "auto" });
   };
 
   if (!visible) return null;
