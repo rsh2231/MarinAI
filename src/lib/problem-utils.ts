@@ -2,13 +2,6 @@
 
 import { QnaItem, Question, Choice, SubjectGroup } from "@/types/ProblemViewer";
 
-// 여기에 프로젝트에 정의된 타입들을 가져오거나 정의합니다.
-// 예시:
-// export interface QnaItem { ... }
-// export interface Question { ... }
-// ...
-
-// ProblemViewer와 ExamViewer에서 가져온 데이터 변환 함수
 export const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
   if (!qnas || qnas.length === 0) return [];
 
@@ -35,12 +28,11 @@ export const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
       }
     }
 
-    // ExamViewer의 수정 사항을 반영하여 '다', '라'로 통일
     const choices: Choice[] = [
       { label: "가", text: item.ex1str },
       { label: "나", text: item.ex2str },
-      { label: "다", text: item.ex3str },
-      { label: "라", text: item.ex4str },
+      { label: "사", text: item.ex3str },
+      { label: "아", text: item.ex4str },
     ].map((choice) => {
       const choiceImageMatch = choice.text.match(imageCodeRegex);
       let choiceText = choice.text;
