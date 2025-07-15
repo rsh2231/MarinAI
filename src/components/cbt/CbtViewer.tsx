@@ -11,7 +11,7 @@ import {
 import { transformData } from "@/lib/cbt-utils";
 import { CbtSettings } from "./CbtSetting";
 import { CbtInProgress } from "./CbtInProgress";
-import { ResultView } from "@/components/exam/ResultView";
+import { ResultView } from "@/components/problem/UI/ResultView";
 import { useAtomValue } from "jotai";
 import { allQuestionsAtom } from "@/atoms/examAtoms";
 

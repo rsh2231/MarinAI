@@ -6,8 +6,8 @@ import Lottie from "lottie-react";
 import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
 
 import Sidebar from "@/components/layout/Sidebar";
-import ProblemViewer from "@/components/solve/ProblemViewer";
-import ExamViewer from "@/components/exam/ExamViewer";
+import ProblemViewer from "@/components/problem/solve/ProblemViewer";
+import ExamViewer from "@/components/problem/exam/ExamViewer";
 import Button from "@/components/ui/Button";
 import question from "@/assets/animations/question.json";
 

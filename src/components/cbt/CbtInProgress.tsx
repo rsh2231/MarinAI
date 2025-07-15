@@ -11,11 +11,11 @@ import {
 } from "@/atoms/examAtoms";
 
 import Button from "@/components/ui/Button";
-import QuestionCard from "@/components/solve/QuestionCard";
-import { OmrSheet } from "@/components/exam/OmrSheet";
-import { SubmitModal } from "@/components/exam/SubmitModal";
+import QuestionCard from "@/components/problem/UI/QuestionCard";
+import { OmrSheet } from "@/components/problem/exam/OmrSheet";
+import { SubmitModal } from "@/components/problem/exam/SubmitModal";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import SubjectTabs from "@/components/solve/SubjectTabs";
+import SubjectTabs from "@/components/problem/UI/SubjectTabs";
 import { EmptyMessage } from "../ui/EmptyMessage";
 
 interface CbtInProgressProps {

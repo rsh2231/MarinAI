@@ -2,26 +2,30 @@
 
 import React, { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { X } from "lucide-react";
 
 import {
+  isOmrVisibleAtom,
   allQuestionsAtom,
   answersAtom,
   currentQuestionIndexAtom,
-  isOmrVisibleAtom,
 } from "@/atoms/examAtoms";
-import { QuestionWithSubject } from "@/types/ProblemViewer"; 
+import { Question } from "@/types/ProblemViewer";
 
-export const OmrSheet: React.FC = () => {
-  const [allQuestions] = useAtom(allQuestionsAtom);
-  const [answers] = useAtom(answersAtom);
-  const [currentIdx, setCurrentIdx] = useAtom(currentQuestionIndexAtom);
+interface OmrSheetProps {
+  onSelectQuestion: (question: Question, index: number) => void;
+}
+
+export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
+  const allQuestions = useAtomValue(allQuestionsAtom);
+  const answers = useAtomValue(answersAtom);
+  const currentIdx = useAtomValue(currentQuestionIndexAtom);
   const [isVisible, setIsVisible] = useAtom(isOmrVisibleAtom);
 
   const omrItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  // 창 크기 변경에 반응하는 useEffect
+  // 창 크기 변경 로직 (변경 없음)
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
@@ -33,9 +37,9 @@ export const OmrSheet: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [setIsVisible]);
 
+  // 스크롤 로직 (변경 없음)
   useEffect(() => {
     if (isVisible) {
-      // 사이드바가 열리는 애니메이션 시간을 기다린 후 스크롤
       setTimeout(() => {
         omrItemRefs.current[currentIdx]?.scrollIntoView({
           behavior: "smooth",
@@ -47,20 +51,18 @@ export const OmrSheet: React.FC = () => {
 
   const onClose = () => setIsVisible(false);
 
-  const onSelectQuestion = (index: number) => {
-    setCurrentIdx(index);
+  const handleItemClick = (question: Question, index: number) => {
+    onSelectQuestion(question, index);
     if (window.innerWidth < 1024) {
       onClose();
     }
   };
 
-  // 과목별 그룹핑
   const groupedBySubject = allQuestions.reduce((acc, q) => {
     (acc[q.subjectName] = acc[q.subjectName] || []).push(q);
     return acc;
-  }, {} as Record<string, QuestionWithSubject[]>);
+  }, {} as Record<string, Question[]>);
 
-  // 루프 외부에서 offset 변수 선언
   let questionIndexOffset = 0;
 
   return (
@@ -85,7 +87,10 @@ export const OmrSheet: React.FC = () => {
       >
         <div className="p-4 border-b border-gray-700 flex items-center justify-between shrink-0">
           <h3 className="font-semibold text-sm">문제 목록</h3>
-          <button onClick={onClose} className="p-1 rounded-md hover:bg-gray-700 lg:hidden">
+          <button
+            onClick={onClose}
+            className="p-1 rounded-md hover:bg-gray-700 lg:hidden"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -113,8 +118,10 @@ export const OmrSheet: React.FC = () => {
                     return (
                       <button
                         key={key}
-                        ref={(el) => { omrItemRefs.current[globalIndex] = el; }}
-                        onClick={() => onSelectQuestion(globalIndex)}
+                        ref={(el) => {
+                          omrItemRefs.current[globalIndex] = el;
+                        }}
+                        onClick={() => handleItemClick(q, globalIndex)}
                         className={`h-8 w-8 text-xs font-mono rounded flex items-center justify-center transition-colors ${bgClass}`}
                       >
                         {q.num}
@@ -124,7 +131,6 @@ export const OmrSheet: React.FC = () => {
                 </div>
               </div>
             );
-            // 다음 그룹을 위해 offset 업데이트
             questionIndexOffset += questions.length;
             return renderedGroup;
           })}
