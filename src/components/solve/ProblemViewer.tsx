@@ -175,7 +175,8 @@ export default function ProblemViewer({
   }, [year, license, level, round]);
 
   const filteredSubjects = useMemo(() => {
-    if (selectedSubjects.length === 0) return subjectGroups;
+    // 선택된 과목이 없으면 빈 배열 반환
+    if (selectedSubjects.length === 0) return [];
     return subjectGroups.filter((group) =>
       selectedSubjects.includes(group.subjectName)
     );

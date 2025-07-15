@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
   targetParams.set('level', finalLevel); // 정제된 level 값 사용
   targetParams.set('round', finalRound);
 
-  const targetUrl = `${baseUrl}/solve?${targetParams.toString()}`;
+  const targetUrl = `${baseUrl}/solve/?${targetParams.toString()}`;
 
   console.log("Proxying question list request to:", targetUrl);
 

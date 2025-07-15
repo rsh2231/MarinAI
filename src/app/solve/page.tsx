@@ -12,6 +12,7 @@ import Button from "@/components/ui/Button";
 import question from "@/assets/animations/question.json";
 
 import { useWindowWidth } from "@/hooks/useWindowWidth";
+import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 
 export default function SolvePage() {
   // 모든 상태를 "선택되지 않음"으로 초기화
@@ -65,7 +66,10 @@ export default function SolvePage() {
     // 모바일 환경에서 모드 선택 시, 잠시 후 main 콘텐츠로 스크롤
     if (isMobile) {
       setTimeout(() => {
-        mainContentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        mainContentRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       }, 100); // 컴포넌트가 렌더링될 시간을 줍니다.
     }
   };
@@ -87,7 +91,8 @@ export default function SolvePage() {
         {/* 오른쪽: 메인 콘텐츠 */}
         <main
           ref={mainContentRef}
-          className="flex-1 min-w-0 flex flex-col items-center p-6">
+          className="flex-1 min-w-0 flex flex-col items-center p-6"
+        >
           <AnimatePresence mode="wait">
             {/* 4. isFilterReady와 mode에 따라 적절한 UI를 조건부로 렌더링 */}
             {!isFilterReady || !mode ? (
@@ -109,8 +114,8 @@ export default function SolvePage() {
                     {isFilterReady
                       ? "아래에서 모드를 선택하여 시험을 시작하세요!"
                       : isMobile
-                        ? "햄버거 버튼을 눌러 시험 정보를 선택하세요."
-                        : "사이드바에서 시험 정보를 선택하세요."}
+                      ? "햄버거 버튼을 눌러 시험 정보를 선택하세요."
+                      : "사이드바에서 시험 정보를 선택하세요."}
                   </p>
                 </div>
 
@@ -175,6 +180,8 @@ export default function SolvePage() {
           </AnimatePresence>
         </main>
       </div>
+
+      <ScrollToTopButton scrollableRef={mainContentRef} />
     </motion.div>
   );
 }

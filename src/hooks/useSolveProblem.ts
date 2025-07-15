@@ -15,7 +15,7 @@ export function useSolveProblem() {
     setError(""); // 이전 에러를 초기화
 
     try {
-      const res = await fetch("/api/solve", {
+      const res = await fetch("/api/solve/explanation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ problem: input }),

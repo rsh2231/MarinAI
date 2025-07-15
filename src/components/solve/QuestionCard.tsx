@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
@@ -38,16 +38,12 @@ export default function QuestionCardComponent({
   const handleClickOption = (optLabel: string) => {
     if (isPracticeMode && showAnswer) return;
     onSelect(optLabel);
-
     setFeedback(optLabel === answer ? "correct" : "incorrect");
-    if (lottieRef.current) {
-      lottieRef.current.setSpeed(2.5);
-    }
   };
 
   const { result, loading, error, solve } = useSolveProblem();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isPracticeMode && showAnswer && !explanation && !result && !loading) {
       const choicesText = choices
         .map((c) => `${c.label}. ${c.isImage ? "(이미지 보기)" : c.text}`)
@@ -80,22 +76,19 @@ export default function QuestionCardComponent({
         <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none rounded-xl">
           <Lottie
             lottieRef={lottieRef}
-            animationData={
-              feedback === "correct" ? correctAnimation : incorrectAnimation
-            }
+            animationData={feedback === "correct" ? correctAnimation : incorrectAnimation}
             loop={false}
+            onDOMLoaded={() => {
+              lottieRef.current?.setSpeed(2.5);
+            }}
             onComplete={() => setFeedback(null)}
-            style={{ width: 192, height: 192 }} // 12rem = 48px * 4
+            style={{ width: 192, height: 192 }}
           />
         </div>
       )}
-
-      {/* ✅ [수정] 이 div에 반응형 텍스트 크기를 적용하여 자식 요소들이 상속받도록 합니다. */}
       <div className="flex flex-col gap-2 font-medium text-sm sm:text-base break-keep">
-        {/* 부모의 텍스트 크기를 상속받습니다. */}
         <span className="text-gray-400">문제 {num}</span>
         {questionStr && (
-          // 부모의 텍스트 크기를 상속받습니다.
           <p className="whitespace-pre-wrap leading-relaxed text-gray-100">
             {questionStr}
           </p>
@@ -104,7 +97,6 @@ export default function QuestionCardComponent({
 
       {imageUrl && (
         <div className="my-4 flex justify-center">
-          {/* ✅ [수정] 이미지 크기 반응형 적용 (최대 너비 및 sizes 속성) */}
           <Image
             src={imageUrl}
             alt={`문제 ${num} 이미지`}
@@ -125,7 +117,6 @@ export default function QuestionCardComponent({
           const isWrong =
             isPracticeMode && isSelected && !isCorrect && showAnswer;
 
-          // ✅ [수정] li 요소에 반응형 텍스트 크기를 직접 적용합니다.
           const base =
             "flex items-center gap-3 px-4 py-3 rounded-md border cursor-pointer transition-all text-sm sm:text-base";
           const selectedCls = isSelected
@@ -144,13 +135,9 @@ export default function QuestionCardComponent({
               className={`${base} ${selectedCls} ${correctCls} ${wrongCls}`}
               onClick={() => handleClickOption(opt.label)}
             >
-              {/* ✅ [수정] 부모 li의 텍스트 크기를 상속받도록 text-sm 클래스를 제거합니다. */}
-              <span className="font-semibold min-w-[24px]">
-                {opt.label}.
-              </span>
+              <span className="font-semibold min-w-[24px]">{opt.label}.</span>
               {opt.isImage && opt.imageUrl ? (
                 <div className="w-full flex justify-start">
-                  {/* ✅ [수정] 보기 이미지 크기 반응형 적용 */}
                   <Image
                     src={opt.imageUrl}
                     alt={`보기 ${opt.label}`}
@@ -161,7 +148,6 @@ export default function QuestionCardComponent({
                   />
                 </div>
               ) : (
-                // ✅ [수정] 부모 li의 텍스트 크기를 상속받도록 text-sm 클래스를 제거합니다.
                 <span className="text-gray-100">{opt.text}</span>
               )}
             </li>
@@ -186,7 +172,7 @@ export default function QuestionCardComponent({
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="overflow-hidden mt-3 text-sm"
+                className="overflow-hidden mt-3 text-sm break-keep"
               >
                 <div className="text-gray-300 whitespace-pre-wrap leading-relaxed break-words pt-3 border-t border-neutral-700">
                   <div className="mt-2">
@@ -200,7 +186,7 @@ export default function QuestionCardComponent({
                         <div className="flex items-center gap-2 text-gray-400">
                           <Lottie
                             animationData={Loading}
-                            style={{ width: 80, height: 80 }}
+                            style={{ width: 100, height: 100 }}
                           />
                         </div>
                       ) : error ? (

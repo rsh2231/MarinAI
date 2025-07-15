@@ -26,3 +26,12 @@
 ● 시험일정
 - iframe 활용
 - https://lems.seaman.or.kr/Lems/LAExamSchedule/selectLAExamScheduleView.do 연동 개선 필요
+
+
+2025.07.15.
+● 기출문제풀이
+- ScrollToTop 버튼 에러 및 UX 개선
+- 해설 API 개선
+- Omr시트 연동 개선
+- 유리보수를 위한 코드 리팩토링
+
