@@ -1,8 +1,7 @@
-"use client";
+"use client"
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { List, X } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useAtom } from "jotai";
@@ -10,18 +9,22 @@ import { useAtom } from "jotai";
 import { useIsClient } from "@/hooks/useIsClient";
 import { useWindowWidth } from "@/hooks/useWindowWidth";
 import { authAtom } from "@/atoms/authAtom";
-import HamburgerButton from "../ui/HamburgerButton";
+import { chatSidebarAtom } from "@/atoms/chatSidebarAtom"; // chatSidebarAtom import
 import MobileMenu from "./MobileMenu";
 import AuthModal from "../auth/AutModal";
+import HamburgerButton from "../ui/HamburgerButton";
+import { List, X } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
   const isSolvePage = pathname === "/solve";
+  const isChatPage = pathname === "/chat"; // /chat 페이지인지 확인
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const isClient = useIsClient();
   const isMobile = useWindowWidth(768);
   const [auth, setAuth] = useAtom(authAtom);
+  const [isChatSidebarOpen, setIsChatSidebarOpen] = useAtom(chatSidebarAtom); // chatSidebarAtom 사용
 
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -29,6 +32,10 @@ export default function Header() {
 
   const handleLogout = () => {
     setAuth({ isLoggedIn: false, user: null });
+  };
+
+  const toggleChatSidebar = () => {
+    setIsChatSidebarOpen(!isChatSidebarOpen);
   };
 
   const navItems = [
@@ -43,6 +50,12 @@ export default function Header() {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-3 sm:px-4 py-3 gap-2">
         {/* 왼쪽: 햄버거 + 로고 */}
         <div className="flex items-center gap-3 min-w-0">
+          {isChatPage && isMobile && (
+            <HamburgerButton
+              isOpen={isChatSidebarOpen}
+              toggle={toggleChatSidebar}
+              size="sm" />
+          )}
           {isSolvePage && <HamburgerButton className="md:hidden" size="sm" />}
           <h1 className="text-lg sm:text-xl font-bold tracking-wide truncate whitespace-nowrap">
             <Link
@@ -67,11 +80,10 @@ export default function Header() {
                   key={item.href}
                   href={item.href}
                   onClick={handleScrollTop}
-                  className={`px-2 sm:px-3 py-1 rounded-md font-medium transition-colors duration-200 ${
-                    isActive
-                      ? 'bg-primary text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
+                  className={`px-2 sm:px-3 py-1 rounded-md font-medium transition-colors duration-200 ${isActive
+                    ? 'bg-primary text-white'
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    }`}
                 >
                   {item.name}
                 </Link>
@@ -88,8 +100,8 @@ export default function Header() {
           </nav>
         )}
 
-        {/* 모바일 햄버거 버튼 */}
-        {isClient && isMobile && (
+        {/* 모바일 햄버거 버튼 (기존 모바일 메뉴용) */}
+        {isClient && isMobile && !isChatPage && (
           <button
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             className="w-8 h-8 flex items-center justify-center bg-black/40 border border-gray-600 rounded-lg"

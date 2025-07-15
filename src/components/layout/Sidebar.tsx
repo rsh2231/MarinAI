@@ -3,7 +3,6 @@
 import { useAtom } from "jotai";
 import { sidebarOpenAtom } from "@/atoms/sidebarAtom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
 import FilterSidebar from "./FilterSidebar";
 import { FilterState } from "@/types/FilterState";
 import { useEffect } from "react";
