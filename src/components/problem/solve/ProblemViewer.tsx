@@ -8,6 +8,7 @@ import { transformData } from "@/lib/problem-utils";
 import ViewerCore from "../UI/ViewerCore";
 import Button from "@/components/ui/Button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import SubjectTabs from "../UI/SubjectTabs";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
@@ -54,7 +55,6 @@ export default function ProblemViewer({
         setSubjectGroups(transformed);
         setAnswers({});
         setShowAnswer({});
-        // selectedSubject는 filteredSubjects 기반으로 아래 useEffect에서 설정
       } catch (err: any) {
         setError(err.message);
         setSubjectGroups([]);
@@ -103,7 +103,7 @@ export default function ProblemViewer({
       const selectedChoice = answers[question.id];
       if (selectedChoice && selectedChoice !== question.answer) {
         const savedNotes = loadWrongNotes();
-        if (!savedNotes.find((note) => note.id === question.id.toString())) {
+        if (!savedNotes.find((note) => note.id.toString() === question.id.toString())) {
           saveWrongNote({
             id: question.id.toString(),
             question: question.questionStr,
@@ -125,27 +125,38 @@ export default function ProblemViewer({
       error={error}
       filteredSubjects={filteredSubjects}
       selectedSubject={selectedSubject}
-      onSelectSubject={handleSelectSubject}
       footerContent={
         <>
           <Button
             variant="neutral"
             onClick={() => handleSelectSubject(subjectNames[selectedIndex - 1])}
             disabled={selectedIndex <= 0}
-            className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
+            className="w-full sm:w-auto"
           >
             <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
           </Button>
           <Button
             onClick={() => handleSelectSubject(subjectNames[selectedIndex + 1])}
             disabled={selectedIndex >= subjectNames.length - 1}
-            className="w-full sm:w-auto px-2 py-1 text-xs sm:text-sm"
+            className="w-full sm:w-auto"
           >
             다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
           </Button>
         </>
       }
     >
+      {/* ViewerCore의 children으로 SubjectTabs와 문제 목록을 함께 전달합니다. */}
+      {subjectNames.length > 0 && selectedSubject && (
+        <div className="mb-6">
+            <SubjectTabs
+              subjects={subjectNames}
+              selected={selectedSubject}
+              setSelected={handleSelectSubject}
+              // variant를 명시하지 않으면 'default'로 동작합니다.
+            />
+        </div>
+      )}
+
       {selectedBlock?.questions.map((q) => (
         <QuestionCard
           key={q.id}
