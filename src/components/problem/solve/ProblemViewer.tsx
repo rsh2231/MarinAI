@@ -85,7 +85,6 @@ export default function ProblemViewer({
     }
   }, [subjectNames, selectedSubject]);
   
-  // CHANGED: behavior를 'instant'로 통일하여 즉각적인 스크롤을 보장합니다.
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "instant" });
 
   const handleSelectSubject = useCallback((subj: string) => {

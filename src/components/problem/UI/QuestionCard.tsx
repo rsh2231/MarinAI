@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
 import { useSolveProblem } from "@/hooks/useSolveProblem";
@@ -30,9 +30,7 @@ export default function QuestionCardComponent({
   const { num, questionStr, choices, answer, explanation, imageUrl } = question;
   const isPracticeMode = !!onToggle;
 
-  const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(
-    null
-  );
+  const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(null);
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   const handleClickOption = (optLabel: string) => {
@@ -65,9 +63,7 @@ export default function QuestionCardComponent({
   ]);
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+    <article
       className={`relative bg-neutral-800/50 border ${
         showAnswer ? "border-neutral-700" : "border-neutral-600"
       } rounded-xl shadow-lg mb-6 p-5 transition-colors`}
@@ -78,14 +74,13 @@ export default function QuestionCardComponent({
             lottieRef={lottieRef}
             animationData={feedback === "correct" ? correctAnimation : incorrectAnimation}
             loop={false}
-            onDOMLoaded={() => {
-              lottieRef.current?.setSpeed(2.5);
-            }}
+            onDOMLoaded={() => lottieRef.current?.setSpeed(2.5)}
             onComplete={() => setFeedback(null)}
             style={{ width: 192, height: 192 }}
           />
         </div>
       )}
+
       <div className="flex flex-col gap-2 font-medium text-sm sm:text-base break-keep">
         <span className="text-gray-400">문제 {num}</span>
         {questionStr && (
@@ -114,8 +109,7 @@ export default function QuestionCardComponent({
           const isSelected = selected === opt.label;
           const isCorrect = opt.label === answer;
           const showCorrectStyle = isPracticeMode && showAnswer && isCorrect;
-          const isWrong =
-            isPracticeMode && isSelected && !isCorrect && showAnswer;
+          const isWrong = isPracticeMode && isSelected && !isCorrect && showAnswer;
 
           const base =
             "flex items-center gap-3 px-4 py-3 rounded-md border cursor-pointer transition-all text-sm sm:text-base";
@@ -164,6 +158,7 @@ export default function QuestionCardComponent({
           >
             {showAnswer ? "▲ 해설 숨기기" : "▼ 해설 보기"}
           </button>
+
           <AnimatePresence>
             {showAnswer && (
               <motion.div
@@ -208,6 +203,6 @@ export default function QuestionCardComponent({
           </AnimatePresence>
         </>
       )}
-    </motion.article>
+    </article>
   );
 }

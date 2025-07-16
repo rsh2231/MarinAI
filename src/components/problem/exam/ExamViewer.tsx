@@ -20,7 +20,14 @@ import { transformData } from "@/lib/problem-utils";
 import ViewerCore from "../UI/ViewerCore";
 import QuestionCard from "../UI/QuestionCard";
 import Button from "@/components/ui/Button";
-import { ChevronLeft, ChevronRight, List, Send, Timer } from "lucide-react";
+import {
+  BookCheck,
+  ChevronLeft,
+  ChevronRight,
+  List,
+  Send,
+  Timer,
+} from "lucide-react";
 import { OmrSheet } from "@/components/problem/exam/OmrSheet";
 import { ResultView } from "../UI/ResultView";
 import { SubmitModal } from "./SubmitModal";
@@ -38,6 +45,7 @@ interface Props {
 }
 
 const DURATION_PER_SUBJECT_SECONDS = 25 * 60;
+const HEADER_HEIGHT_PX = 80; // sticky header 높이 (필요시 조정)
 
 export default function ExamViewer({
   year,
@@ -137,36 +145,37 @@ export default function ExamViewer({
     return () => clearInterval(timerId);
   }, [timeLeft, isSubmitted, setTimeLeft]);
 
-  const navigateToQuestion = (
-    targetIndex: number,
-    options: { shouldScrollToTop?: boolean } = {}
-  ) => {
+  const navigateToQuestion = (targetIndex: number) => {
     if (targetIndex < 0 || targetIndex >= allQuestions.length) return;
     const question = allQuestions[targetIndex];
     if (!question) return;
-    setCurrentIdx(targetIndex);
-    setSelectedSubject(question.subjectName);
-    if (options.shouldScrollToTop) {
-      window.scrollTo({ top: 0, behavior: "instant" });
-    }
+    setSelectedSubject(question.subjectName); // 1. 과목 먼저 변경
+    setCurrentIdx(targetIndex); // 2. 문제 인덱스 변경
   };
 
+  // groupedQuestions 바뀔 때 refs 초기화
   useEffect(() => {
-    if (allQuestions.length === 0 || currentIdx >= allQuestions.length) return;
-    setTimeout(() => {
+    questionRefs.current = [];
+  }, [groupedQuestions]);
+
+  // currentIdx 혹은 selectedSubject 변경 시 scrollIntoView (50ms 딜레이)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (allQuestions.length === 0 || currentIdx >= allQuestions.length) return;
       questionRefs.current[currentIdx]?.scrollIntoView({
         behavior: "smooth",
-        block: "center",
+        block: "start",
       });
-    }, 100);
-  }, [currentIdx, allQuestions.length]);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [currentIdx, selectedSubject, allQuestions.length]);
 
   const handleSubjectChange = (subjectName: string) => {
     const firstQuestionIndex = allQuestions.findIndex(
       (q) => q.subjectName === subjectName
     );
     if (firstQuestionIndex !== -1) {
-      navigateToQuestion(firstQuestionIndex, { shouldScrollToTop: true });
+      navigateToQuestion(firstQuestionIndex);
     }
   };
 
@@ -247,11 +256,13 @@ export default function ExamViewer({
         filteredSubjects={groupedQuestions}
         selectedSubject={selectedSubject}
         headerContent={
-          <header className="sticky top-4 sm:top-20 z-30 bg-neutral-900/80 backdrop-blur-sm shadow-md">
+          <header className="sticky top-4 sm:top-5 z-30 bg-neutral-900/80 backdrop-blur-sm shadow-md">
             <div className="w-full max-w-3xl mx-auto px-3 pt-3 flex flex-col gap-3">
               <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
                 <div className="flex items-center gap-2 text-sm text-gray-200 order-1">
-                  <span className="text-lg hidden sm:inline">📘</span>
+                  <span className="text-lg hidden sm:inline">
+                    <BookCheck />
+                  </span>
                   <p className="font-bold text-base">
                     {selectedSubject}
                     <span className="text-gray-400 font-normal ml-1.5">
@@ -261,7 +272,7 @@ export default function ExamViewer({
                 </div>
                 <div className="flex items-center gap-3 order-2">
                   <div
-                    className={`flex items-center gap-2 font-mono text-base sm:text-lg font-bold rounded-md ${
+                    className={`flex items-center gap-2 font-mono text-base sm:text-lg font-bold rounded-md${
                       timeLeft < 300
                         ? "text-red-400 animate-pulse"
                         : "text-blue-300"
@@ -343,6 +354,7 @@ export default function ExamViewer({
                     if (globalIndex !== -1)
                       questionRefs.current[globalIndex] = el;
                   }}
+                  style={{ scrollMarginTop: HEADER_HEIGHT_PX }} // sticky header offset
                 >
                   <QuestionCard
                     question={q}

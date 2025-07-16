@@ -57,6 +57,7 @@ export default function CbtViewer() {
       }
 
       const responseData = (await res.json()) as Record<string, QnaItem[]>;
+
       const allQnas: QnaItem[] = Object.values(responseData).flat();
       const transformed = transformData(allQnas);
 

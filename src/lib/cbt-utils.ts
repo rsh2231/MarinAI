@@ -4,19 +4,22 @@ export const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
   if (!qnas || qnas.length === 0) return [];
 
   const subjectMap = new Map<string, Question[]>();
-  const isImageCode = (str: string) => str.trim().startsWith("@pic");
+
+  const extractImageCode = (str: string): string | null => {
+    const match = str.match(/@pic\d{4}/);
+    return match ? match[0] : null;
+  };
+
   const findImagePath = (code: string, paths: string[]): string | undefined => {
     const key = code.replace("@", "").trim();
     return paths.find((p) => p.includes(key));
   };
 
   qnas.forEach((item) => {
-    const questionImageCode = isImageCode(item.questionstr)
-      ? item.questionstr
-      : null;
+    const imageCode = extractImageCode(item.questionstr || "");
     const questionImagePath =
-      questionImageCode && item.imgPaths
-        ? findImagePath(questionImageCode, item.imgPaths)
+      imageCode && item.imgPaths
+        ? findImagePath(imageCode, item.imgPaths)
         : undefined;
 
     const choices: Choice[] = [
@@ -25,15 +28,16 @@ export const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
       { label: "사", text: item.ex3str },
       { label: "아", text: item.ex4str },
     ].map((choice) => {
-      const isImg = isImageCode(choice.text);
+      const imageCode = extractImageCode(choice.text);
       const imgPath =
-        isImg && item.imgPaths
-          ? findImagePath(choice.text, item.imgPaths)
+        imageCode && item.imgPaths
+          ? findImagePath(imageCode, item.imgPaths)
           : undefined;
+
       return {
         ...choice,
-        isImage: isImg,
-        text: isImg ? "" : choice.text,
+        isImage: !!imageCode,
+        text: imageCode ? "" : choice.text,
         imageUrl: imgPath ? `/api/solve/img/${imgPath}` : undefined,
       };
     });
@@ -41,12 +45,12 @@ export const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
     const question: Question = {
       id: item.id,
       num: item.qnum,
-      questionStr: questionImageCode ? "" : item.questionstr,
+      questionStr: imageCode ? "" : item.questionstr,
       choices,
       answer: item.answer,
       explanation: item.explanation,
       subjectName: item.subject,
-      isImageQuestion: !!item.imgPaths,
+      isImageQuestion: !!questionImagePath,
       imageUrl: questionImagePath
         ? `/api/solve/img/${questionImagePath}`
         : undefined,

@@ -1,4 +1,3 @@
-// src/components/cbt/CbtSettings.tsx
 "use client";
 
 import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
@@ -44,7 +43,7 @@ export function CbtSettings({
 
   useEffect(() => {
     setLevel("");
-    setSelectedSubjects([]);
+    setSelectedSubjects(SUBJECTS_BY_LICENSE[license] ?? []);
   }, [license]);
 
   const toggleSubject = useCallback((subject: string) => {

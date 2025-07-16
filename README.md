@@ -41,6 +41,7 @@
 
 ● CBT
 - CBTSetting UI/UX 개선
+- 이미지 안나오는 문제 개선
 
 
 
