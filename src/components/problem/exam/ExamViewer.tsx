@@ -75,23 +75,33 @@ export default function ExamViewer({
         const res = await fetch(`/api/solve?${params.toString()}`);
         if (!res.ok) {
           const errorData = await res.json();
-          throw new Error(errorData.message || `HTTP ${res.status}: 데이터를 불러오는데 실패했습니다.`);
+          throw new Error(
+            errorData.message ||
+              `HTTP ${res.status}: 데이터를 불러오는데 실패했습니다.`
+          );
         }
         const responseData: { qnas: QnaItem[] } = await res.json();
         const allSubjectGroups = transformData(responseData.qnas);
         if (allSubjectGroups.length === 0) {
           setError("선택하신 조건에 해당하는 문제 데이터가 없습니다.");
-          setGroupedQuestions([]); return;
+          setGroupedQuestions([]);
+          return;
         }
-        const filteredGroups = allSubjectGroups.filter((group) => selectedSubjects.includes(group.subjectName));
+        const filteredGroups = allSubjectGroups.filter((group) =>
+          selectedSubjects.includes(group.subjectName)
+        );
         if (filteredGroups.length === 0) {
-          setError("선택하신 과목에 해당하는 문제가 없습니다. 과목을 다시 선택해주세요.");
+          setError(
+            "선택하신 과목에 해당하는 문제가 없습니다. 과목을 다시 선택해주세요."
+          );
         }
         setGroupedQuestions(filteredGroups);
         setAnswers({});
         setCurrentIdx(0);
         setTimeLeft(totalDuration);
-        setSelectedSubject(filteredGroups.length > 0 ? filteredGroups[0].subjectName : null);
+        setSelectedSubject(
+          filteredGroups.length > 0 ? filteredGroups[0].subjectName : null
+        );
       } catch (err: any) {
         setError(err.message);
         setGroupedQuestions([]);
@@ -102,32 +112,59 @@ export default function ExamViewer({
     if (selectedSubjects.length > 0) {
       fetchData();
     }
-  }, [year, license, level, round, selectedSubjects, totalDuration, setIsLoading, setError, setGroupedQuestions, setAnswers, setCurrentIdx, setTimeLeft, setSelectedSubject]);
+  }, [
+    year,
+    license,
+    level,
+    round,
+    selectedSubjects,
+    totalDuration,
+    setIsLoading,
+    setError,
+    setGroupedQuestions,
+    setAnswers,
+    setCurrentIdx,
+    setTimeLeft,
+    setSelectedSubject,
+  ]);
 
   useEffect(() => {
     if (timeLeft <= 0 || isSubmitted) return;
-    const timerId = setInterval(() => setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0)), 1000);
+    const timerId = setInterval(
+      () => setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0)),
+      1000
+    );
     return () => clearInterval(timerId);
   }, [timeLeft, isSubmitted, setTimeLeft]);
 
-  const navigateToQuestion = (targetIndex: number, options: { shouldScrollToTop?: boolean } = {}) => {
+  const navigateToQuestion = (
+    targetIndex: number,
+    options: { shouldScrollToTop?: boolean } = {}
+  ) => {
     if (targetIndex < 0 || targetIndex >= allQuestions.length) return;
     const question = allQuestions[targetIndex];
     if (!question) return;
     setCurrentIdx(targetIndex);
     setSelectedSubject(question.subjectName);
     if (options.shouldScrollToTop) {
-      window.scrollTo({ top: 0, behavior: "auto" });
+      window.scrollTo({ top: 0, behavior: "instant" });
     }
   };
 
   useEffect(() => {
     if (allQuestions.length === 0 || currentIdx >= allQuestions.length) return;
-    setTimeout(() => { questionRefs.current[currentIdx]?.scrollIntoView({ behavior: "smooth", block: "center" }); }, 100);
+    setTimeout(() => {
+      questionRefs.current[currentIdx]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 100);
   }, [currentIdx, allQuestions.length]);
 
   const handleSubjectChange = (subjectName: string) => {
-    const firstQuestionIndex = allQuestions.findIndex((q) => q.subjectName === subjectName);
+    const firstQuestionIndex = allQuestions.findIndex(
+      (q) => q.subjectName === subjectName
+    );
     if (firstQuestionIndex !== -1) {
       navigateToQuestion(firstQuestionIndex, { shouldScrollToTop: true });
     }
@@ -138,12 +175,14 @@ export default function ExamViewer({
     setAnswers((prev) => ({ ...prev, [key]: choice }));
   };
 
-  const handleQuestionSelectFromOMR = (question: Question, index: number) => { navigateToQuestion(index); };
+  const handleQuestionSelectFromOMR = (question: Question, index: number) => {
+    navigateToQuestion(index);
+  };
 
   const handleConfirmSubmit = () => {
     setIsSubmitModalOpen(false);
     setIsSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "auto" });
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
 
   const handleRetry = () => {
@@ -157,7 +196,9 @@ export default function ExamViewer({
   };
 
   const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60).toString().padStart(2, "0");
+    const m = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
     const s = (seconds % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
@@ -167,11 +208,21 @@ export default function ExamViewer({
     const correctCount = allQuestions.filter(
       (q) => answers[`${q.subjectName}-${q.num}`] === q.answer
     ).length;
-    return <ResultView total={totalCount} correct={correctCount} onRetry={handleRetry} />;
+    return (
+      <ResultView
+        total={totalCount}
+        correct={correctCount}
+        onRetry={handleRetry}
+      />
+    );
   }
 
   if (selectedSubjects.length === 0 && !isLoading) {
-    return <div className="flex-1 flex items-center justify-center min-h-[300px]"><EmptyMessage message="선택한 과목에 해당하는 문제가 없습니다. 사이드바에서 과목을 선택해주세요." /></div>;
+    return (
+      <div className="flex-1 flex items-center justify-center min-h-[300px]">
+        <EmptyMessage message="선택한 과목에 해당하는 문제가 없습니다. 사이드바에서 과목을 선택해주세요." />
+      </div>
+    );
   }
 
   const subjectNames = groupedQuestions.map((g) => g.subjectName);
@@ -181,7 +232,14 @@ export default function ExamViewer({
   return (
     <>
       <OmrSheet onSelectQuestion={handleQuestionSelectFromOMR} />
-      {isSubmitModalOpen && <SubmitModal onConfirm={handleConfirmSubmit} onCancel={() => setIsSubmitModalOpen(false)} totalCount={allQuestions.length} answeredCount={Object.keys(answers).length} />}
+      {isSubmitModalOpen && (
+        <SubmitModal
+          onConfirm={handleConfirmSubmit}
+          onCancel={() => setIsSubmitModalOpen(false)}
+          totalCount={allQuestions.length}
+          answeredCount={Object.keys(answers).length}
+        />
+      )}
 
       <ViewerCore
         isLoading={isLoading}
@@ -189,38 +247,43 @@ export default function ExamViewer({
         filteredSubjects={groupedQuestions}
         selectedSubject={selectedSubject}
         headerContent={
-          <header className="sticky top-16 sm:top-20 z-30 bg-neutral-900/80 backdrop-blur-sm shadow-md">
+          <header className="sticky top-4 sm:top-20 z-30 bg-neutral-900/80 backdrop-blur-sm shadow-md">
             <div className="w-full max-w-3xl mx-auto px-3 pt-3 flex flex-col gap-3">
               <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
                 <div className="flex items-center gap-2 text-sm text-gray-200 order-1">
                   <span className="text-lg hidden sm:inline">📘</span>
                   <p className="font-bold text-base">
                     {selectedSubject}
-                    <span className="text-gray-400 font-normal ml-1.5">({selectedIndex + 1}/{subjectNames.length})</span>
+                    <span className="text-gray-400 font-normal ml-1.5">
+                      ({selectedIndex + 1}/{subjectNames.length})
+                    </span>
                   </p>
                 </div>
                 <div className="flex items-center gap-3 order-2">
-                  <div className={`flex items-center gap-2 font-mono text-base sm:text-lg font-bold rounded-md ${timeLeft < 300 ? "text-red-400 animate-pulse" : "text-blue-300"}`}>
+                  <div
+                    className={`flex items-center gap-2 font-mono text-base sm:text-lg font-bold rounded-md ${
+                      timeLeft < 300
+                        ? "text-red-400 animate-pulse"
+                        : "text-blue-300"
+                    }`}
+                  >
                     <Timer className="w-5 h-5" />
                     <span>{formatTime(timeLeft)}</span>
                   </div>
-                  <Button variant="neutral" size="sm" onClick={() => setIsOmrVisible(true)} className="bg-neutral-800/50 border-neutral-700 hover:bg-neutral-700">
+                  <Button
+                    variant="neutral"
+                    size="sm"
+                    onClick={() => setIsOmrVisible(true)}
+                    className="bg-neutral-800/50 border-neutral-700 hover:bg-neutral-700 sm:hidden"
+                  >
                     <List className="w-4 h-4 mr-2" />
                     답안지
                   </Button>
                 </div>
               </div>
-              <div className="hidden sm:block">
-                <div className="flex justify-between text-xs text-gray-400 mb-1">
-                  <span>과목 진행도</span>
-                </div>
-                <div className="w-full bg-gray-700/50 h-1.5 rounded-full overflow-hidden">
-                  <div className="h-full bg-blue-500 rounded-full transition-all duration-300 ease-in-out" style={{ width: `${((selectedIndex + 1) / subjectNames.length) * 100}%` }} />
-                </div>
-              </div>
             </div>
             {subjectNames.length > 0 && selectedSubject && (
-              <div className="w-full max-w-3xl mx-auto px-2 sm:px-0">
+              <div className="w-full max-w-3xl mx-auto">
                 <SubjectTabs
                   subjects={subjectNames}
                   selected={selectedSubject}
@@ -233,15 +296,31 @@ export default function ExamViewer({
         }
         footerContent={
           <>
-            <Button variant="neutral" onClick={() => handleSubjectChange(subjectNames[selectedIndex - 1])} disabled={selectedIndex <= 0} className="w-full sm:w-auto">
+            <Button
+              variant="neutral"
+              onClick={() =>
+                handleSubjectChange(subjectNames[selectedIndex - 1])
+              }
+              disabled={selectedIndex <= 0}
+              className="w-full sm:w-auto"
+            >
               <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
             </Button>
             {isLastSubject ? (
-              <Button onClick={() => setIsSubmitModalOpen(true)} variant="primary" className="w-full sm:w-auto">
+              <Button
+                onClick={() => setIsSubmitModalOpen(true)}
+                variant="primary"
+                className="w-full sm:w-auto"
+              >
                 제출하기 <Send className="ml-1 h-4 w-4" />
               </Button>
             ) : (
-              <Button onClick={() => handleSubjectChange(subjectNames[selectedIndex + 1])} className="w-full sm:w-auto">
+              <Button
+                onClick={() =>
+                  handleSubjectChange(subjectNames[selectedIndex + 1])
+                }
+                className="w-full sm:w-auto"
+              >
                 다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             )}
@@ -249,13 +328,30 @@ export default function ExamViewer({
         }
       >
         <div className="mt-6 sm:mt-8">
-            {groupedQuestions.find(g => g.subjectName === selectedSubject)?.questions.map((q) => {
-            const globalIndex = allQuestions.findIndex(item => `${item.subjectName}-${item.num}` === `${q.subjectName}-${q.num}`);
-            return (
-                <div key={`${q.subjectName}-${q.num}`} ref={(el) => { if (globalIndex !== -1) questionRefs.current[globalIndex] = el; }}>
-                <QuestionCard question={q} selected={answers[`${q.subjectName}-${q.num}`]} showAnswer={false} onSelect={(choice) => handleSelectAnswer(q, choice)} />
+          {groupedQuestions
+            .find((g) => g.subjectName === selectedSubject)
+            ?.questions.map((q) => {
+              const globalIndex = allQuestions.findIndex(
+                (item) =>
+                  `${item.subjectName}-${item.num}` ===
+                  `${q.subjectName}-${q.num}`
+              );
+              return (
+                <div
+                  key={`${q.subjectName}-${q.num}`}
+                  ref={(el) => {
+                    if (globalIndex !== -1)
+                      questionRefs.current[globalIndex] = el;
+                  }}
+                >
+                  <QuestionCard
+                    question={q}
+                    selected={answers[`${q.subjectName}-${q.num}`]}
+                    showAnswer={false}
+                    onSelect={(choice) => handleSelectAnswer(q, choice)}
+                  />
                 </div>
-            );
+              );
             })}
         </div>
       </ViewerCore>

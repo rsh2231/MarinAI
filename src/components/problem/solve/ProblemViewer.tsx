@@ -85,7 +85,8 @@ export default function ProblemViewer({
     }
   }, [subjectNames, selectedSubject]);
   
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "auto" });
+  // CHANGED: behavior를 'instant'로 통일하여 즉각적인 스크롤을 보장합니다.
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "instant" });
 
   const handleSelectSubject = useCallback((subj: string) => {
     setSelectedSubject(subj);
@@ -145,14 +146,12 @@ export default function ProblemViewer({
         </>
       }
     >
-      {/* ViewerCore의 children으로 SubjectTabs와 문제 목록을 함께 전달합니다. */}
       {subjectNames.length > 0 && selectedSubject && (
         <div className="mb-6">
             <SubjectTabs
               subjects={subjectNames}
               selected={selectedSubject}
               setSelected={handleSelectSubject}
-              // variant를 명시하지 않으면 'default'로 동작합니다.
             />
         </div>
       )}

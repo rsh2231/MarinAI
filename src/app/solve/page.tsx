@@ -173,7 +173,6 @@ export default function SolvePage() {
                   level={level}
                   round={round}
                   selectedSubjects={selectedSubjects}
-                  durationSeconds={25 * 60}
                 />
               </motion.div>
             ) : null}
