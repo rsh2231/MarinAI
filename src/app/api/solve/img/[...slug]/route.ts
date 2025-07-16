@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ slug: string[] }> } // Promise 타입으로 변경
+  { params }: { params: Promise<{ slug: string[] }> }
 ) {
   const baseUrl = process.env.EXTERNAL_API_BASE_URL;
   if (!baseUrl) {

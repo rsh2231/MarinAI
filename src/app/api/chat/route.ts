@@ -62,7 +62,7 @@ function wrapUserMessage(userMessage: string): string {
   return `
 해기사 시험 관련 질문: ${userMessage}
 
-위 질문이 해기사 시험과 관련이 있다면 상세히 답변해주세요.
+위 질문이 해기사 시험과 관련이 있다면 10줄 이내로 답변해주세요.
 해기사 시험과 관련이 없다면 정중히 거절해주세요.
 `;
 }

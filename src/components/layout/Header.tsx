@@ -39,6 +39,7 @@ export default function Header() {
   };
 
   const navItems = [
+    { name: "Q&A", href: "/chat" },
     { name: "기출문제풀이", href: "/solve" },
     { name: "오답노트", href: "/note" },
     { name: "CBT", href: "/cbt" },
@@ -101,7 +102,7 @@ export default function Header() {
         )}
 
         {/* 모바일 햄버거 버튼 (기존 모바일 메뉴용) */}
-        {isClient && isMobile && !isChatPage && (
+        {isClient && isMobile && (
           <button
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             className="w-8 h-8 flex items-center justify-center bg-black/40 border border-gray-600 rounded-lg"

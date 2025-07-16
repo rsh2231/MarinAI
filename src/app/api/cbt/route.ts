@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     }
   });
 
-  const targetUrl = `${baseUrl}/api/cbt?${targetParams.toString()}`;
+  const targetUrl = `${baseUrl}/cbt/?${targetParams.toString()}`;
   console.log("📡 Proxying CBT request to:", targetUrl);
 
   try {

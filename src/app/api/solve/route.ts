@@ -1,5 +1,3 @@
-// 파일 경로: src/app/api/solve/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {

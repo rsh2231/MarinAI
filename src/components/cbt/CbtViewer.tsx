@@ -9,7 +9,7 @@ import {
   selectedSubjectAtom,
 } from "@/atoms/examAtoms";
 import { transformData } from "@/lib/cbt-utils";
-import { CbtSettings } from "./CbtSetting";
+import { CbtSettings } from "./setting/CbtSetting";
 import { CbtInProgress } from "./CbtInProgress";
 import { ResultView } from "@/components/problem/UI/ResultView";
 import { useAtomValue } from "jotai";
