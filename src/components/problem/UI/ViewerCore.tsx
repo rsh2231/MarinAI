@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { SubjectGroup } from "@/types/ProblemViewer";
 import { EmptyMessage } from "../../ui/EmptyMessage";
 
@@ -54,32 +53,23 @@ export default function ViewerCore({
 
       {/* 실제 문제 콘텐츠 영역 */}
       <main className="w-full max-w-3xl mx-auto px-2 sm:px-4 pb-10">
-        <AnimatePresence mode="wait">
-          {selectedBlock ? (
-            <motion.section
-              key={selectedBlock.subjectName}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="space-y-5 sm:space-y-8"
-            >
-              {/* 자식 컴포넌트(문제카드, SubjectTabs 등)가 여기에 렌더링됩니다. */}
-              {children}
+        {selectedBlock ? (
+          <section className="space-y-5 sm:space-y-8">
+            {/* 자식 컴포넌트(문제카드, SubjectTabs 등)가 여기에 렌더링됩니다. */}
+            {children}
 
-              {/* 이전/다음 버튼과 같은 푸터 컨텐츠가 렌더링되는 공간 */}
-              <div className="flex flex-row justify-center items-center gap-3 mt-8">
-                {footerContent}
-              </div>
-            </motion.section>
-          ) : (
-            !isLoading && (
-              <div className="flex-1 flex items-center justify-center min-h-[300px]">
-                <EmptyMessage />
-              </div>
-            )
-          )}
-        </AnimatePresence>
+            {/* 이전/다음 버튼과 같은 푸터 컨텐츠가 렌더링되는 공간 */}
+            <div className="flex flex-row justify-center items-center gap-3 mt-8">
+              {footerContent}
+            </div>
+          </section>
+        ) : (
+          !isLoading && (
+            <div className="flex-1 flex items-center justify-center min-h-[300px]">
+              <EmptyMessage />
+            </div>
+          )
+        )}
       </main>
     </div>
   );
