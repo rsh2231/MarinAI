@@ -91,14 +91,13 @@ export default function SolvePage() {
         filterState={filterState}
         className="fixed top-0 left-0 z-20 hidden h-screen w-64 shrink-0 overflow-y-auto border-r border-gray-700 bg-[#1e293b] pt-20 md:block lg:w-72"
       />
-
       {mode === "exam" && (
         <OmrSheet onSelectQuestion={handleQuestionSelectFromOMR} />
       )}
 
       <main
         ref={mainContentRef}
-        className={`bg-[#0f172a] h-full sm:pt-20 md:pt-20 md:ml-64 lg:ml-72 transition-all duration-300 ${
+        className={`bg-[#0f172a] h-full md:ml-64 lg:ml-72 transition-all duration-300 ${
           isOmrVisible && mode === "exam" ? "lg:mr-72" : ""
         }`}
       >
@@ -110,28 +109,47 @@ export default function SolvePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="mx-auto flex max-w-lg flex-col items-center rounded-lg border border-gray-700 bg-[#1e293b] p-6 text-center shadow-lg sm:p-10"
+              className="h-full flex flex-col items-start" 
             >
-              <div className="m-8 flex flex-col items-center">
-                <Lottie animationData={question} className="h-15 w-15 sm:h-20 sm:w-20 " />
-                <p className="mb-6 break-keep text-base font-medium leading-relaxed text-gray-300">
-                  {isFilterReady
-                    ? "아래에서 모드를 선택하여 시험을 시작하세요!"
-                    : isMobile
-                    ? "햄버거 버튼을 눌러 시험 정보를 선택하세요."
-                    : "사이드바에서 시험 정보를 선택하세요."}
-                </p>
+              <div className="mt-20 mx-auto flex w-full max-w-lg flex-col items-center rounded-lg border border-gray-700 bg-[#1e293b] p-6 text-center shadow-lg sm:p-10">
+                <div className="m-8 flex flex-col items-center">
+                  <Lottie
+                    animationData={question}
+                    className="h-15 w-15 sm:h-20 sm:w-20 "
+                  />
+                  <p className="mb-6 break-keep text-base font-medium leading-relaxed text-gray-300">
+                    {isFilterReady
+                      ? "아래에서 모드를 선택하여 시험을 시작하세요!"
+                      : isMobile
+                      ? "햄버거 버튼을 눌러 시험 정보를 선택하세요."
+                      : "사이드바에서 시험 정보를 선택하세요."}
+                  </p>
+                </div>
+                {isFilterReady && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex justify-center gap-4"
+                  >
+                    <Button
+                      onClick={() => handleModeSelect("practice")}
+                      variant="neutral"
+                      size="md"
+                      selected={mode === "practice"}
+                    >
+                      연습 모드
+                    </Button>
+                    <Button
+                      onClick={() => handleModeSelect("exam")}
+                      variant="neutral"
+                      size="md"
+                      selected={mode === "exam"}
+                    >
+                      실전 모드
+                    </Button>
+                  </motion.div>
+                )}
               </div>
-              {isFilterReady && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex justify-center gap-4"
-                >
-                  <Button onClick={() => handleModeSelect("practice")} variant="neutral" size="md" selected={mode === "practice"}>연습 모드</Button>
-                  <Button onClick={() => handleModeSelect("exam")} variant="neutral" size="md" selected={mode === "exam"}>실전 모드</Button>
-                </motion.div>
-              )}
             </motion.div>
           ) : mode === "practice" ? (
             <motion.div
@@ -140,7 +158,13 @@ export default function SolvePage() {
               animate={{ opacity: 1 }}
               className="mx-auto h-full max-w-3xl overflow-y-auto p-6"
             >
-              <ProblemViewer year={year} license={license!} level={level} round={round} selectedSubjects={selectedSubjects} />
+              <ProblemViewer
+                year={year}
+                license={license!}
+                level={level}
+                round={round}
+                selectedSubjects={selectedSubjects}
+              />
             </motion.div>
           ) : mode === "exam" ? (
             <motion.div
@@ -149,7 +173,13 @@ export default function SolvePage() {
               animate={{ opacity: 1 }}
               className="h-full"
             >
-              <ExamViewer year={year} license={license!} level={level} round={round} selectedSubjects={selectedSubjects} />
+              <ExamViewer
+                year={year}
+                license={license!}
+                level={level}
+                round={round}
+                selectedSubjects={selectedSubjects}
+              />
             </motion.div>
           ) : null}
         </AnimatePresence>

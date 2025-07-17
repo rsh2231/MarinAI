@@ -267,7 +267,7 @@ export default function ExamViewer({
       </div>
 
       <div className="sticky bottom-0 z-20 w-full bg-[#1e293b]/80 backdrop-blur-sm border-t border-gray-700 p-4">
-        <div className="max-w-3xl mx-auto flex justify-between items-center gap-4">
+        <div className="max-w-3xl mx-auto flex justify-center items-center gap-4">
           <Button
             variant="neutral"
             onClick={() =>
