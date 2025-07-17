@@ -8,7 +8,7 @@ import {
   groupedQuestionsAtom,
   selectedSubjectAtom,
 } from "@/atoms/examAtoms";
-import { transformData } from "@/lib/cbt-utils";
+import { transformData } from "@/lib/problem-utils";
 import { CbtSettings } from "./setting/CbtSetting";
 import { CbtInProgress } from "./CbtInProgress";
 import { ResultView } from "@/components/problem/UI/ResultView";

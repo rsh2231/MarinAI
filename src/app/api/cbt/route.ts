@@ -14,16 +14,16 @@ export async function GET(request: NextRequest) {
   const originalParams = new URL(request.url).searchParams;
   const targetParams = new URLSearchParams();
 
-  // 1. 'license'는 그대로 전달
+
   const license = originalParams.get("license") || "";
   targetParams.set("license", license);
 
-  // 2. 'level' 값에서 숫자만 추출 ("1급" -> "1")
+  // 'level' 값에서 숫자만 추출 ("1급" -> "1")
   const levelStr = originalParams.get("level") || "";
   const levelNum = levelStr.match(/\d+/)?.[0] || "";
   targetParams.set("level", levelNum);
 
-  // 3. 'subjects'는 다중 전달 허용
+  // 'subjects'는 다중 전달 허용
   const subjects = originalParams.getAll("subjects");
   subjects.forEach((subject) => {
     if (subject) {

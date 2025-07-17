@@ -44,4 +44,9 @@
 - 이미지 안나오는 문제 개선
 
 
+2025.07.17.
+● 메인 페이지
+- 회원가입 백엔드 연동(username, indivname password)
+- ExamViewer U/UX 개선(타이머, omr 등)
+
 

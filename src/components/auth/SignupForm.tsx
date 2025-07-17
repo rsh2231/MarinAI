@@ -23,7 +23,7 @@ export default function SignupForm({ onSignupSuccess }: SignupFormProps) {
 
   const onSubmit = async (data: SignupFormData) => {
     try {
-      await signupViaNext(data.email, data.password, data.name);
+      await signupViaNext(data);
       setSuccess("회원가입이 완료되었습니다! 로그인 해주세요.");
       setTimeout(() => {
         onSignupSuccess(); // 1.5초 후 부모에게 성공을 알려 로그인 폼으로 전환
@@ -39,25 +39,25 @@ export default function SignupForm({ onSignupSuccess }: SignupFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
         <input
-          {...register("name")}
+          {...register("indivname")}
           type="text"
           placeholder="이름"
           className={`w-full bg-secondary/30 border px-4 py-3 rounded text-foreground-dark placeholder-secondary focus:outline-none focus:ring-2 transition-shadow ${
-            errors.name ? 'border-danger focus:ring-danger' : 'border-secondary/50 focus:ring-primary'
+            errors.indivname ? 'border-danger focus:ring-danger' : 'border-secondary/50 focus:ring-primary'
           }`}
         />
-        {errors.name && <p className="mt-1 text-sm text-danger">{errors.name.message}</p>}
+        {errors.indivname && <p className="mt-1 text-sm text-danger">{errors.indivname.message}</p>}
       </div>
       <div>
         <input
-          {...register("email")}
+          {...register("username")}
           type="email"
           placeholder="이메일"
           className={`w-full bg-secondary/30 border px-4 py-3 rounded text-foreground-dark placeholder-secondary focus:outline-none focus:ring-2 transition-shadow ${
-            errors.email ? 'border-danger focus:ring-danger' : 'border-secondary/50 focus:ring-primary'
+            errors.username ? 'border-danger focus:ring-danger' : 'border-secondary/50 focus:ring-primary'
           }`}
         />
-        {errors.email && <p className="mt-1 text-sm text-danger">{errors.email.message}</p>}
+        {errors.username && <p className="mt-1 text-sm text-danger">{errors.username.message}</p>}
       </div>
       <div>
         <input
