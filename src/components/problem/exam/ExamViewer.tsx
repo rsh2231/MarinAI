@@ -10,14 +10,12 @@ import {
   groupedQuestionsAtom,
   answersAtom,
   currentQuestionIndexAtom,
-  isOmrVisibleAtom,
   allQuestionsAtom,
 } from "@/atoms/examAtoms";
 
 import { QnaItem, Question } from "@/types/ProblemViewer";
 import { transformData } from "@/lib/problem-utils";
 
-import { OmrSheet } from "./OmrSheet";
 import { ResultView } from "../UI/ResultView";
 import { SubmitModal } from "./SubmitModal";
 import { EmptyMessage } from "../../ui/EmptyMessage";
@@ -27,6 +25,7 @@ import Button from "@/components/ui/Button";
 import QuestionCard from "../UI/QuestionCard";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
+
 interface Props {
   year: string;
   license: LicenseType;
@@ -36,7 +35,7 @@ interface Props {
 }
 
 const DURATION_PER_SUBJECT_SECONDS = 25 * 60;
-const HEADER_HEIGHT_PX = 120; // ExamHeader의 대략적인 높이
+const HEADER_HEIGHT_PX = 120;
 
 export default function ExamViewer({
   year,
@@ -52,7 +51,6 @@ export default function ExamViewer({
   const groupedQuestions = useAtomValue(groupedQuestionsAtom);
   const [answers, setAnswers] = useAtom(answersAtom);
   const [currentIdx, setCurrentIdx] = useAtom(currentQuestionIndexAtom);
-  const setIsOmrVisible = useSetAtom(isOmrVisibleAtom);
   const allQuestions = useAtomValue(allQuestionsAtom);
   const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
   const setIsLoading = useSetAtom(examLoadingAtom);
@@ -166,11 +164,6 @@ export default function ExamViewer({
     }));
   };
 
-  const handleQuestionSelectFromOMR = (question: Question, index: number) => {
-    setCurrentIdx(index);
-    setSelectedSubject(question.subjectName);
-  };
-
   const handleConfirmSubmit = () => {
     setIsSubmitModalOpen(false);
     setIsSubmitted(true);
@@ -225,7 +218,7 @@ export default function ExamViewer({
   }
 
   return (
-    <div className="w-full h-full flex bg-[#0f172a]">
+    <div className="w-full h-full flex flex-col">
       {isSubmitModalOpen && (
         <SubmitModal
           onConfirm={handleConfirmSubmit}
@@ -235,16 +228,15 @@ export default function ExamViewer({
         />
       )}
 
+      <ExamHeader
+        subjectNames={subjectNames}
+        onSubjectChange={handleSubjectChange}
+      />
+
       <div
         ref={mainScrollRef}
-        className="flex-1 flex flex-col h-screen overflow-y-auto"
+        className="flex-1 overflow-y-auto"
       >
-        <ExamHeader
-          subjectNames={subjectNames}
-          onSubjectChange={handleSubjectChange}
-          onToggleOmr={() => setIsOmrVisible((prev) => !prev)}
-        />
-
         <main className="max-w-3xl w-full mx-auto px-4 pb-10 flex-1">
           {currentQuestions.map((q) => {
             const globalIndex = allQuestions.findIndex(
@@ -272,39 +264,37 @@ export default function ExamViewer({
             );
           })}
         </main>
-
-        <div className="sticky bottom-0 z-20 w-full bg-[#1e293b]/80 backdrop-blur-sm border-t border-gray-700 p-4">
-          <div className="max-w-3xl mx-auto flex justify-between items-center gap-4">
-            <Button
-              variant="neutral"
-              onClick={() =>
-                handleSubjectChange(subjectNames[selectedIndex - 1])
-              }
-              disabled={selectedIndex <= 0}
-            >
-              <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
-            </Button>
-            {selectedIndex === subjectNames.length - 1 ? (
-              <Button
-                onClick={() => setIsSubmitModalOpen(true)}
-                variant="primary"
-              >
-                제출하기 <Send className="ml-1 h-4 w-4" />
-              </Button>
-            ) : (
-              <Button
-                onClick={() =>
-                  handleSubjectChange(subjectNames[selectedIndex + 1])
-                }
-              >
-                다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
-              </Button>
-            )}
-          </div>
-        </div>
       </div>
 
-      <OmrSheet onSelectQuestion={handleQuestionSelectFromOMR} />
+      <div className="sticky bottom-0 z-20 w-full bg-[#1e293b]/80 backdrop-blur-sm border-t border-gray-700 p-4">
+        <div className="max-w-3xl mx-auto flex justify-between items-center gap-4">
+          <Button
+            variant="neutral"
+            onClick={() =>
+              handleSubjectChange(subjectNames[selectedIndex - 1])
+            }
+            disabled={selectedIndex <= 0}
+          >
+            <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
+          </Button>
+          {selectedIndex === subjectNames.length - 1 ? (
+            <Button
+              onClick={() => setIsSubmitModalOpen(true)}
+              variant="primary"
+            >
+              제출하기 <Send className="ml-1 h-4 w-4" />
+            </Button>
+          ) : (
+            <Button
+              onClick={() =>
+                handleSubjectChange(subjectNames[selectedIndex + 1])
+              }
+            >
+              다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
+            </Button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

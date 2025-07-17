@@ -3,11 +3,20 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Lottie from "lottie-react";
+import { useSetAtom, useAtomValue } from "jotai";
+import {
+  isOmrVisibleAtom,
+  currentQuestionIndexAtom,
+  selectedSubjectAtom,
+} from "@/atoms/examAtoms";
+
 import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
+import { Question } from "@/types/ProblemViewer";
 
 import Sidebar from "@/components/layout/Sidebar";
 import ProblemViewer from "@/components/problem/solve/ProblemViewer";
 import ExamViewer from "@/components/problem/exam/ExamViewer";
+import { OmrSheet } from "@/components/problem/exam/OmrSheet";
 import Button from "@/components/ui/Button";
 import question from "@/assets/animations/question.json";
 
@@ -25,6 +34,10 @@ export default function SolvePage() {
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
   const mainContentRef = useRef<HTMLElement>(null);
   const isMobile = useWindowWidth(768);
+
+  const isOmrVisible = useAtomValue(isOmrVisibleAtom);
+  const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
+  const setSelectedSubject = useSetAtom(selectedSubjectAtom);
 
   useEffect(() => {
     if (license) {
@@ -67,15 +80,27 @@ export default function SolvePage() {
     }
   };
 
+  const handleQuestionSelectFromOMR = (question: Question, index: number) => {
+    setCurrentIdx(index);
+    setSelectedSubject(question.subjectName);
+  };
+
   return (
     <div className="w-full h-full">
       <Sidebar
         filterState={filterState}
         className="fixed top-0 left-0 z-20 hidden h-screen w-64 shrink-0 overflow-y-auto border-r border-gray-700 bg-[#1e293b] pt-20 md:block lg:w-72"
       />
+
+      {mode === "exam" && (
+        <OmrSheet onSelectQuestion={handleQuestionSelectFromOMR} />
+      )}
+
       <main
         ref={mainContentRef}
-        className="bg-[#0f172a] h-full overflow-y-auto sm:pt-20 md:pt-20 p-6 md:ml-64 lg:ml-72"
+        className={`bg-[#0f172a] h-full sm:pt-20 md:pt-20 md:ml-64 lg:ml-72 transition-all duration-300 ${
+          isOmrVisible && mode === "exam" ? "lg:mr-72" : ""
+        }`}
       >
         <AnimatePresence mode="wait">
           {!isFilterReady || !mode ? (
@@ -109,22 +134,20 @@ export default function SolvePage() {
               )}
             </motion.div>
           ) : mode === "practice" ? (
-            // ▼▼▼ [핵심 수정 2] mx-auto를 추가하여 스스로 중앙 정렬합니다. ▼▼▼
             <motion.div
               key={`practice-${year}-${license}-${level}-${round}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="mx-auto h-full max-w-3xl"
+              className="mx-auto h-full max-w-3xl overflow-y-auto p-6"
             >
               <ProblemViewer year={year} license={license!} level={level} round={round} selectedSubjects={selectedSubjects} />
             </motion.div>
           ) : mode === "exam" ? (
-            // ▼▼▼ [핵심 수정 2] mx-auto를 추가하여 스스로 중앙 정렬합니다. ▼▼▼
             <motion.div
               key={`exam-${year}-${license}-${level}-${round}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="mx-auto h-full max-w-3xl"
+              className="h-full"
             >
               <ExamViewer year={year} license={license!} level={level} round={round} selectedSubjects={selectedSubjects} />
             </motion.div>

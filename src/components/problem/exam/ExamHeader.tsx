@@ -1,15 +1,14 @@
 "use client";
 
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { BookCheck, Timer, List } from "lucide-react";
 import SubjectTabs from "../UI/SubjectTabs";
 import Button from "@/components/ui/Button";
-import { selectedSubjectAtom, timeLeftAtom } from "@/atoms/examAtoms";
+import { selectedSubjectAtom, timeLeftAtom, isOmrVisibleAtom } from "@/atoms/examAtoms";
 
 interface Props {
   subjectNames: string[];
   onSubjectChange: (subject: string) => void;
-  onToggleOmr: () => void;
 }
 
 const formatTime = (seconds: number) => {
@@ -18,12 +17,17 @@ const formatTime = (seconds: number) => {
   return `${m}:${s}`;
 };
 
-export function ExamHeader({ subjectNames, onSubjectChange, onToggleOmr }: Props) {
+export function ExamHeader({ subjectNames, onSubjectChange }: Props) {
   const selectedSubject = useAtomValue(selectedSubjectAtom);
   const timeLeft = useAtomValue(timeLeftAtom);
+  const setIsOmrVisible = useSetAtom(isOmrVisibleAtom);
   const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
 
   if (!selectedSubject) return null;
+
+  const handleToggleOmr = () => {
+    setIsOmrVisible((prev) => !prev);
+  };
 
   return (
     <header className="sticky top-0 z-30 bg-[#1e293b]/90 backdrop-blur-sm border-b border-gray-700">
@@ -39,13 +43,13 @@ export function ExamHeader({ subjectNames, onSubjectChange, onToggleOmr }: Props
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <div className={`flex items-center gap-2 font-mono text-base sm:text-lg font-bold ${ timeLeft < 300 ? "text-red-400 animate-pulse" : "text-blue-300" }`}>
+            <div className={`flex items-center gap-2 font-mono text-base sm:text-lg font-bold border-2 rounded-lg p-1 ${ timeLeft < 300 ? "text-red-400 animate-pulse" : "text-white" }`}>
               <Timer className="w-5 h-5" />
               <span>{formatTime(timeLeft)}</span>
             </div>
-            <Button variant="neutral" size="sm" onClick={onToggleOmr} className="lg:hidden">
+            <Button variant="neutral" size="sm" onClick={handleToggleOmr} className="lg:hidden">
               <List className="w-4 h-4 mr-1.5" />
-              답안지
+              OMR
             </Button>
           </div>
         </div>

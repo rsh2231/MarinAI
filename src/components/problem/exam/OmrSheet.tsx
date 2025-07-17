@@ -1,5 +1,3 @@
-// src/components/problem/exam/OmrSheet.tsx
-
 "use client";
 
 import React, { useEffect, useRef } from "react";
@@ -29,7 +27,9 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsVisible(window.innerWidth >= 1024);
+      if (window.innerWidth >= 1024) {
+        setIsVisible(true);
+      }
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -37,7 +37,7 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
   }, [setIsVisible]);
 
   useEffect(() => {
-    if (isVisible && currentIdx >= 0) {
+    if (isVisible && currentIdx >= 0 && omrItemRefs.current[currentIdx]) {
       setTimeout(() => {
         omrItemRefs.current[currentIdx]?.scrollIntoView({
           behavior: "smooth",
@@ -79,9 +79,9 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
 
       <motion.aside
         className="fixed top-0 right-0 h-screen w-[90vw] max-w-sm bg-[#1e293b] border-l border-gray-700 z-50 flex flex-col 
-                   lg:sticky lg:w-72 lg:shrink-0 lg:translate-x-0"
+                   lg:w-72 lg:shrink-0"
         initial={{ x: "100%" }}
-        animate={{ x: isVisible || window.innerWidth >= 1024 ? 0 : "100%" }}
+        animate={{ x: isVisible ? 0 : "100%" }}
         transition={{ type: "tween", ease: "easeInOut", duration: 0.3 }}
       >
         <div className="p-4 border-b border-gray-700 flex items-center justify-between shrink-0">
