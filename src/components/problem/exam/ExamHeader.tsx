@@ -4,11 +4,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { Timer, List } from "lucide-react";
 import SubjectTabs from "../UI/SubjectTabs";
 import Button from "@/components/ui/Button";
-import {
-  selectedSubjectAtom,
-  timeLeftAtom,
-  isOmrVisibleAtom,
-} from "@/atoms/examAtoms";
+import { selectedSubjectAtom, timeLeftAtom, isOmrVisibleAtom } from "@/atoms/examAtoms";
 
 interface Props {
   subjectNames: string[];
@@ -16,9 +12,7 @@ interface Props {
 }
 
 const formatTime = (seconds: number) => {
-  const m = Math.floor(seconds / 60)
-    .toString()
-    .padStart(2, "0");
+  const m = Math.floor(seconds / 60).toString().padStart(2, "0");
   const s = (seconds % 60).toString().padStart(2, "0");
   return `${m}:${s}`;
 };
@@ -40,32 +34,23 @@ export function ExamHeader({ subjectNames, onSubjectChange }: Props) {
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex items-center justify-center gap-4 pt-3 pb-2">
           <div className="flex items-center gap-4">
-            <div
-              className={`flex items-center gap-2 font-mono text-base sm:text-lg font-bold border-2 rounded-lg p-1 ${
-                timeLeft < 300 ? "text-red-400 animate-pulse" : "text-white"
-              }`}
-            >
+            <div className={`flex items-center gap-2 font-mono text-base sm:text-lg font-bold border-2 rounded-lg p-1 ${ timeLeft < 300 ? "text-red-400 animate-pulse" : "text-white" }`}>
               <Timer className="w-5 h-5" />
               <span>{formatTime(timeLeft)}</span>
             </div>
-            <Button
-              variant="neutral"
-              size="sm"
-              onClick={handleToggleOmr}
-              className="lg:hidden"
-            >
+            <Button variant="neutral" size="sm" onClick={handleToggleOmr} className="lg:hidden">
               <List className="w-4 h-4 mr-1.5" />
               OMR
             </Button>
           </div>
         </div>
         {subjectNames.length > 0 && (
-          <SubjectTabs
-            subjects={subjectNames}
-            selected={selectedSubject}
-            setSelected={onSubjectChange}
-            variant="header"
-          />
+            <SubjectTabs
+              subjects={subjectNames}
+              selected={selectedSubject}
+              setSelected={onSubjectChange}
+              variant="header"
+            />
         )}
       </div>
     </header>

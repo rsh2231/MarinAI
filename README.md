@@ -47,6 +47,10 @@
 2025.07.17.
 ● 메인 페이지
 - 회원가입 백엔드 연동(username, indivname password)
+- 회원 정보 가져오는 로직 필요
 - ExamViewer U/UX 개선(타이머, omr 등)
+
+● 기출문제풀이
+- Exam, CBT UI/UX 개선
 
 
