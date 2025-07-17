@@ -28,14 +28,15 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
       const result = await loginViaNext(data.username, data.password);
       const user = await fetchCurrentUser(result.access_token);
 
+      // 세션스토리지에 저장
+      sessionStorage.setItem("access_token", result.access_token);
+
+      // Jotai에 상태 저장
       setAuth({
         isLoggedIn: true,
         user,
         token: result.access_token,
       });
-
-      console.log("Result", result);
-      console.log("User", user);
 
       onLoginSuccess(); // 부모에게 성공을 알림 (모달 닫기)
     } catch (err: any) {

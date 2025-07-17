@@ -53,4 +53,16 @@
 ● 기출문제풀이
 - Exam, CBT UI/UX 개선
 
+● 마이페이지
+MyPage (최상위 페이지 컴포넌트)
+├─ WrongNoteView (해기사 시험 오답노트 리스트 & 요약)
+├─ PracticeResultView (기출문제 실전모드 결과 요약 및 상세)
+├─ CbtResultView (CBT 모의시험 결과 리스트 및 통계)
+├─ PerformanceRadarChart (과목별 성과를 시각화하는 레이더 차트)
+├─ (Optional) UserProfile (사용자 기본정보, 닉네임, 이메일 등)
+├─ (Optional) StudyTips (학습 팁, 공지사항 등)
+├─ (Optional) ProgressSummary (전체 학습 진행률, 목표 설정)
+└─ (Optional) QuickLinks (문제풀이, 오답노트 바로가기 링크)
+
+
 

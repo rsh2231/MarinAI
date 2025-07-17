@@ -18,20 +18,21 @@ import { List, X } from "lucide-react";
 export default function Header() {
   const pathname = usePathname();
   const isSolvePage = pathname === "/solve";
-  const isChatPage = pathname === "/chat"; // /chat 페이지인지 확인
+  const isChatPage = pathname === "/chat";
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const isClient = useIsClient();
   const isMobile = useWindowWidth(768);
   const [auth, setAuth] = useAtom(authAtom);
-  const [isChatSidebarOpen, setIsChatSidebarOpen] = useAtom(chatSidebarAtom); // chatSidebarAtom 사용
+  const [isChatSidebarOpen, setIsChatSidebarOpen] = useAtom(chatSidebarAtom);
 
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleLogout = () => {
-    setAuth({ isLoggedIn: false, user: null });
+    sessionStorage.removeItem("access_token");
+    setAuth({ isLoggedIn: false, user: null, token: null });
   };
 
   const toggleChatSidebar = () => {
@@ -91,13 +92,30 @@ export default function Header() {
               );
             })}
 
-            {/* 로그인/로그아웃 버튼 */}
-            <button
-              onClick={auth.isLoggedIn ? handleLogout : () => setIsAuthModalOpen(true)}
-              className="px-2 sm:px-3 py-1 rounded-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-            >
-              {auth.isLoggedIn ? "로그아웃" : "로그인"}
-            </button>
+            {auth.isLoggedIn ? (
+              <>
+                <Link
+                  href="/mypage"
+                  className="px-2 sm:px-3 py-1 rounded-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  마이페이지
+                </Link>
+                
+                <button
+                  onClick={handleLogout}
+                  className="px-2 sm:px-3 py-1 rounded-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  로그아웃
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => setIsAuthModalOpen(true)}
+                className="px-2 sm:px-3 py-1 rounded-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                로그인
+              </button>
+            )}
           </nav>
         )}
 

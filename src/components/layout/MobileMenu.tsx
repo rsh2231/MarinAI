@@ -64,7 +64,8 @@ export default function MobileMenu({
             <X className="w-6 h-6 text-gray-400 hover:text-white transition-colors" />
           </button>
         </div>
-
+        
+        {/* 네비게이션 */}
         <nav className="flex flex-col items-end space-y-2">
           {navItems.map((item, index) => (
             <motion.div
@@ -76,27 +77,45 @@ export default function MobileMenu({
               <Link
                 href={item.href}
                 onClick={onClose}
-                className={`text-lg px-4 py-3 rounded-lg transition-colors duration-200 ${
-                  pathname.startsWith(item.href)
-                    ? 'bg-primary text-white font-semibold'
-                    : 'text-gray-200 hover:bg-gray-700 hover:text-white'
-                }`}
+                className={`text-lg px-4 py-3 rounded-lg transition-colors duration-200 ${pathname.startsWith(item.href)
+                  ? 'bg-primary text-white font-semibold'
+                  : 'text-gray-200 hover:bg-gray-700 hover:text-white'
+                  }`}
               >
                 {item.name}
               </Link>
             </motion.div>
           ))}
+
+          {/* 마이페이지 */}
+          {isLoggedIn && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                delay: 0.05 * navItems.length,
+                ease: 'easeOut',
+              }}
+            >
+              <Link
+                href="/mypage"
+                onClick={onClose}
+                className="text-lg px-4 py-3 rounded-lg text-gray-200 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+              >
+                마이페이지
+              </Link>
+            </motion.div>
+          )}
         </nav>
 
         {/* 로그인/로그아웃 버튼 */}
         <div className="mt-6 border-t border-gray-700 pt-4 flex justify-end">
           <button
             onClick={handleAuthClick}
-            className={`px-4 py-3 rounded-lg text-lg transition-colors duration-200 ${
-              isLoggedIn
-                ? 'text-red-400 hover:bg-red-500/10'
-                : 'text-gray-200 hover:bg-gray-700'
-            }`}
+            className={`px-4 py-3 rounded-lg text-lg transition-colors duration-200 ${isLoggedIn
+              ? 'text-red-400 hover:bg-red-500/10'
+              : 'text-gray-200 hover:bg-gray-700'
+              }`}
           >
             {isLoggedIn ? '로그아웃' : '로그인'}
           </button>

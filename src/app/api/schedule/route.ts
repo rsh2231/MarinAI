@@ -1,5 +1,3 @@
-// /api/schedule/route.ts
-
 import { NextResponse } from "next/server";
 import * as cheerio from "cheerio";
 

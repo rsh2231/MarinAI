@@ -5,6 +5,7 @@ import Layout from "@/components/layout/Layout";
 import Providers from "@/components/Providers";
 import { usePathname } from "next/navigation";
 import { Inter } from "next/font/google";
+import AuthInit from "@/components/auth/AuthInit";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <Providers>
+          <AuthInit />
           <Layout>{children}</Layout>
         </Providers>
       </body>
