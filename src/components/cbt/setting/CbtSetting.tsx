@@ -69,7 +69,7 @@ export function CbtSettings({
     }
     onStartCbt({
       license,
-      level: isSmallShip ? "일반" : level,
+      level: isSmallShip ? "0" : level,
       subjects: selectedSubjects,
     });
   };
