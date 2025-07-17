@@ -94,10 +94,10 @@ export default function SolvePage() {
       {mode === "exam" && (
         <OmrSheet onSelectQuestion={handleQuestionSelectFromOMR} />
       )}
-
+      
       <main
         ref={mainContentRef}
-        className={`bg-[#0f172a] h-full md:ml-64 lg:ml-72 transition-all duration-300 ${
+        className={`bg-[#0f172a] h-full overflow-y-auto md:ml-64 lg:ml-72 transition-all duration-300 ${
           isOmrVisible && mode === "exam" ? "lg:mr-72" : ""
         }`}
       >
@@ -109,7 +109,7 @@ export default function SolvePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="h-full flex flex-col items-start" 
+              className="h-full flex flex-col items-start px-6" 
             >
               <div className="mt-20 mx-auto flex w-full max-w-lg flex-col items-center rounded-lg border border-gray-700 bg-[#1e293b] p-6 text-center shadow-lg sm:p-10">
                 <div className="m-8 flex flex-col items-center">
@@ -156,7 +156,7 @@ export default function SolvePage() {
               key={`practice-${year}-${license}-${level}-${round}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="mx-auto h-full max-w-3xl overflow-y-auto p-6"
+              className="mx-auto max-w-3xl p-6"
             >
               <ProblemViewer
                 year={year}

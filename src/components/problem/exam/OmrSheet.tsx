@@ -78,7 +78,7 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
       </AnimatePresence>
 
       <motion.aside
-        className="fixed top-0 right-0 h-screen w-[90vw] max-w-sm bg-[#1e293b] border-l border-gray-700 z-50 flex flex-col 
+        className="fixed top-0 right-0 h-screen w-[60vw] max-w-72 bg-[#1e293b] border-l border-gray-700 z-50 flex flex-col 
                    lg:w-72 lg:shrink-0"
         initial={{ x: "100%" }}
         animate={{ x: isVisible ? 0 : "100%" }}

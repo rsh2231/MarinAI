@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
+import { useState, useEffect, useCallback, ChangeEvent, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
@@ -38,6 +38,8 @@ export function CbtSettings({
   const [level, setLevel] = useState<string>("");
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
+  const subjectStepRef = useRef<HTMLDivElement>(null);
+
   const isSmallShip = license === "소형선박조종사";
   const availableSubjects = license ? SUBJECTS_BY_LICENSE[license] ?? [] : [];
 
@@ -45,6 +47,26 @@ export function CbtSettings({
     setLevel("");
     setSelectedSubjects(SUBJECTS_BY_LICENSE[license] ?? []);
   }, [license]);
+
+  const isLicenseStepComplete = license !== "";
+  const isLevelStepRequired = isLicenseStepComplete && !isSmallShip;
+  const isLevelStepComplete = level !== "" || isSmallShip;
+  
+  const isSubjectStepActive = isLicenseStepComplete && isLevelStepComplete;
+  
+  const isReadyToStart =
+    isLicenseStepComplete && isLevelStepComplete && selectedSubjects.length > 0;
+
+  useEffect(() => {
+    if (isSubjectStepActive && subjectStepRef.current) {
+        setTimeout(() => {
+            subjectStepRef.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center' 
+            });
+        }, 300); 
+    }
+  }, [isSubjectStepActive]); 
 
   const toggleSubject = useCallback((subject: string) => {
     setSelectedSubjects((prev) =>
@@ -73,13 +95,6 @@ export function CbtSettings({
       subjects: selectedSubjects,
     });
   };
-
-  const isLicenseStepComplete = license !== "";
-  const isLevelStepRequired = isLicenseStepComplete && !isSmallShip;
-  const isLevelStepComplete = level !== "" || isSmallShip;
-  const isSubjectStepActive = isLicenseStepComplete && isLevelStepComplete;
-  const isReadyToStart =
-    isLicenseStepComplete && isLevelStepComplete && selectedSubjects.length > 0;
 
   return (
     <div className="w-full max-w-xl mx-auto p-4 font-sans break-keep">
@@ -136,20 +151,22 @@ export function CbtSettings({
 
             <AnimatePresence>
               {isSubjectStepActive && (
-                <SettingsStep
-                  stepNumber={isLevelStepRequired ? 3 : 2}
-                  title="과목 선택"
-                  isComplete={selectedSubjects.length > 0}
-                  isActive={isSubjectStepActive}
-                >
-                  <SubjectSelector
-                    subjects={availableSubjects}
-                    selectedSubjects={selectedSubjects}
-                    onToggleSubject={toggleSubject}
-                    onSelectAll={handleSelectAllSubjects}
-                    onDeselectAll={handleDeselectAllSubjects}
-                  />
-                </SettingsStep>
+                <div ref={subjectStepRef}> 
+                    <SettingsStep
+                      stepNumber={isLevelStepRequired ? 3 : 2}
+                      title="과목 선택"
+                      isComplete={selectedSubjects.length > 0}
+                      isActive={isSubjectStepActive}
+                    >
+                      <SubjectSelector
+                        subjects={availableSubjects}
+                        selectedSubjects={selectedSubjects}
+                        onToggleSubject={toggleSubject}
+                        onSelectAll={handleSelectAllSubjects}
+                        onDeselectAll={handleDeselectAllSubjects}
+                      />
+                    </SettingsStep>
+                </div>
               )}
             </AnimatePresence>
           </div>

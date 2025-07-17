@@ -1,31 +1,37 @@
 "use client";
 
 import { useState } from "react";
-import { useSetAtom } from "jotai";
+import { useSetAtom, useAtomValue } from "jotai";
 import { QnaItem } from "@/types/ProblemViewer";
 import {
   answersAtom,
   groupedQuestionsAtom,
   selectedSubjectAtom,
+  allQuestionsAtom,
+  timeLeftAtom,
 } from "@/atoms/examAtoms";
 import { transformData } from "@/lib/problem-utils";
 import { CbtSettings } from "./setting/CbtSetting";
 import { CbtInProgress } from "./CbtInProgress";
 import { ResultView } from "@/components/problem/UI/ResultView";
-import { useAtomValue } from "jotai";
-import { allQuestionsAtom } from "@/atoms/examAtoms";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 type ExamStatus = "not-started" | "in-progress" | "finished";
+const DURATION_PER_SUBJECT_SECONDS = 25 * 60;
 
-export default function CbtViewer() {
-  const [status, setStatus] = useState<ExamStatus>("not-started");
+interface CbtViewerProps {
+    status: ExamStatus;
+    setStatus: (status: ExamStatus) => void;
+}
+
+export default function CbtViewer({ status, setStatus }: CbtViewerProps) {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const setAnswers = useSetAtom(answersAtom);
   const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
   const setSelectedSubject = useSetAtom(selectedSubjectAtom);
+  const setTimeLeft = useSetAtom(timeLeftAtom);
 
   const allQuestionsData = useAtomValue(allQuestionsAtom);
   const answers = useAtomValue(answersAtom);
@@ -57,7 +63,6 @@ export default function CbtViewer() {
       }
 
       const responseData = (await res.json()) as Record<string, QnaItem[]>;
-
       const allQnas: QnaItem[] = Object.values(responseData).flat();
       const transformed = transformData(allQnas);
 
@@ -67,8 +72,11 @@ export default function CbtViewer() {
       } else {
         setGroupedQuestions(transformed);
         setSelectedSubject(transformed[0].subjectName);
-        setAnswers({}); // 시험 시작 시 답변 초기화
-        setStatus("in-progress");
+        setAnswers({});
+        const totalDuration = transformed.length * DURATION_PER_SUBJECT_SECONDS;
+        setTimeLeft(totalDuration);
+
+        setStatus("in-progress"); 
       }
     } catch (err: any) {
       setError(err.message);
@@ -78,26 +86,25 @@ export default function CbtViewer() {
   };
 
   const handleSubmit = () => {
-    setStatus("finished");
+    setStatus("finished"); 
+    setTimeLeft(0);
   };
 
   const handleRetry = () => {
-    // 모든 관련 상태 초기화
     setAnswers({});
     setGroupedQuestions([]);
     setSelectedSubject(null);
     setError("");
-    setStatus("not-started");
+    setStatus("not-started"); 
   };
 
-  // 상태에 따라 적절한 컴포넌트 렌더링
   switch (status) {
     case "in-progress":
       return <CbtInProgress onSubmit={handleSubmit} />;
 
     case "finished":
       const correctAnswers = allQuestionsData.filter(
-        (q) => answers[q.id] === q.answer
+        (q) => answers[q.id.toString()] === q.answer
       ).length;
       return (
         <ResultView
@@ -110,11 +117,13 @@ export default function CbtViewer() {
     case "not-started":
     default:
       return (
-        <CbtSettings
-          onStartCbt={handleStartExam}
-          isLoading={isLoading}
-          error={error}
-        />
+        <div className="pt-15">
+          <CbtSettings
+            onStartCbt={handleStartExam}
+            isLoading={isLoading}
+            error={error}
+          />
+        </div>
       );
   }
 }

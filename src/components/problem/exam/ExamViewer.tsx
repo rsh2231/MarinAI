@@ -18,11 +18,12 @@ import { transformData } from "@/lib/problem-utils";
 
 import { ResultView } from "../UI/ResultView";
 import { SubmitModal } from "./SubmitModal";
-import { EmptyMessage } from "../../ui/EmptyMessage";
 import { ExamHeader } from "./ExamHeader";
 import { ChevronLeft, ChevronRight, Send } from "lucide-react";
 import Button from "@/components/ui/Button";
 import QuestionCard from "../UI/QuestionCard";
+import { EmptyMessage } from "../../ui/EmptyMessage";
+import ScrollToTopButton from "@/components/ui/ScrollToTopButton"; 
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
@@ -184,41 +185,60 @@ export default function ExamViewer({
     () => groupedQuestions.map((g) => g.subjectName),
     [groupedQuestions]
   );
+  
   const currentQuestions = useMemo(
     () =>
       groupedQuestions.find((g) => g.subjectName === selectedSubject)
         ?.questions || [],
     [groupedQuestions, selectedSubject]
   );
+    
   const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
+
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex items-center justify-center h-full bg-[#0f172a]">
         <p className="text-gray-400 animate-pulse">
           시험 문제를 불러오는 중입니다...
         </p>
       </div>
     );
   }
-  if (error) return <EmptyMessage message={error} />;
-  if (selectedSubjects.length === 0 && !isLoading)
-    return <EmptyMessage message="풀이할 과목을 선택해주세요." />;
+
+  if (error) {
+    return (
+        <div className="h-full bg-[#0f172a] flex items-center justify-center">
+            <EmptyMessage message={error} />
+        </div>
+    );
+  }
+  
+  if (selectedSubjects.length === 0 && !isLoading) {
+    return (
+        <div className="h-full bg-[#0f172a] flex items-center justify-center">
+            <EmptyMessage message="풀이할 과목을 선택해주세요." />
+        </div>
+    );
+  }
+
   if (isSubmitted) {
     const correctCount = allQuestions.filter(
       (q) => answers[`${q.subjectName}-${q.num}`] === q.answer
     ).length;
     return (
-      <ResultView
-        total={allQuestions.length}
-        correct={correctCount}
-        onRetry={handleRetry}
-      />
+      <div className="h-full bg-[#0f172a]">
+        <ResultView
+          total={allQuestions.length}
+          correct={correctCount}
+          onRetry={handleRetry}
+        />
+      </div>
     );
   }
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col bg-[#0f172a]">
       {isSubmitModalOpen && (
         <SubmitModal
           onConfirm={handleConfirmSubmit}
@@ -233,11 +253,8 @@ export default function ExamViewer({
         onSubjectChange={handleSubjectChange}
       />
 
-      <div
-        ref={mainScrollRef}
-        className="flex-1 overflow-y-auto"
-      >
-        <main className="max-w-3xl w-full mx-auto px-4 pb-10 flex-1">
+      <div ref={mainScrollRef} className="flex-1 overflow-y-auto">
+        <main className="max-w-3xl w-full mx-auto px-4 pb-10">
           {currentQuestions.map((q) => {
             const globalIndex = allQuestions.findIndex(
               (item) =>
@@ -263,38 +280,37 @@ export default function ExamViewer({
               </div>
             );
           })}
+          
+          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <Button
+              variant="neutral"
+              onClick={() => handleSubjectChange(subjectNames[selectedIndex - 1])}
+              disabled={selectedIndex <= 0}
+              className="w-full sm:w-auto"
+            >
+              <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
+            </Button>
+            {selectedIndex === subjectNames.length - 1 ? (
+              <Button
+                onClick={() => setIsSubmitModalOpen(true)}
+                variant="primary"
+                className="w-full sm:w-auto"
+              >
+                제출하기 <Send className="ml-1 h-4 w-4" />
+              </Button>
+            ) : (
+              <Button
+                onClick={() => handleSubjectChange(subjectNames[selectedIndex + 1])}
+                className="w-full sm:w-auto"
+              >
+                다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
+              </Button>
+            )}
+          </div>
         </main>
       </div>
 
-      <div className="sticky bottom-0 z-20 w-full bg-[#1e293b]/80 backdrop-blur-sm border-t border-gray-700 p-4">
-        <div className="max-w-3xl mx-auto flex justify-center items-center gap-4">
-          <Button
-            variant="neutral"
-            onClick={() =>
-              handleSubjectChange(subjectNames[selectedIndex - 1])
-            }
-            disabled={selectedIndex <= 0}
-          >
-            <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
-          </Button>
-          {selectedIndex === subjectNames.length - 1 ? (
-            <Button
-              onClick={() => setIsSubmitModalOpen(true)}
-              variant="primary"
-            >
-              제출하기 <Send className="ml-1 h-4 w-4" />
-            </Button>
-          ) : (
-            <Button
-              onClick={() =>
-                handleSubjectChange(subjectNames[selectedIndex + 1])
-              }
-            >
-              다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
-            </Button>
-          )}
-        </div>
-      </div>
+      <ScrollToTopButton scrollableRef={mainScrollRef} />
     </div>
   );
 }

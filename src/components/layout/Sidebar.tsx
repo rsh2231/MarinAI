@@ -30,7 +30,7 @@ export default function Sidebar({ filterState, className = "" }: SidebarProps) {
     }
   }, [sidebarOpen])
 
-  const sidebarBaseStyles = "w-64 bg-[#1f2937] text-white border-r border-gray-700";
+  const sidebarBaseStyles = "w-64 bg-[#1e293b] text-white border-r border-gray-700";
 
   return (
     <>

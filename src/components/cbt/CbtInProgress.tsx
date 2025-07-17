@@ -1,26 +1,31 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   answersAtom,
   groupedQuestionsAtom,
   selectedSubjectAtom,
   allQuestionsAtom,
+  currentQuestionIndexAtom,
+  timeLeftAtom,
 } from "@/atoms/examAtoms";
+import { Question } from "@/types/ProblemViewer";
 
 import Button from "@/components/ui/Button";
 import QuestionCard from "@/components/problem/UI/QuestionCard";
-import { OmrSheet } from "@/components/problem/exam/OmrSheet";
 import { SubmitModal } from "@/components/problem/exam/SubmitModal";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import SubjectTabs from "@/components/problem/UI/SubjectTabs";
+import { ExamHeader } from "@/components/problem/exam/ExamHeader";
+import { ChevronLeft, ChevronRight, Send } from "lucide-react";
 import { EmptyMessage } from "../ui/EmptyMessage";
+import ScrollToTopButton from "../ui/ScrollToTopButton";
 
 interface CbtInProgressProps {
   onSubmit: () => void;
 }
+
+const HEADER_HEIGHT_PX = 120;
 
 export function CbtInProgress({ onSubmit }: CbtInProgressProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,26 +33,67 @@ export function CbtInProgress({ onSubmit }: CbtInProgressProps) {
   const [selectedSubject, setSelectedSubject] = useAtom(selectedSubjectAtom);
   const groupedData = useAtomValue(groupedQuestionsAtom);
   const allQuestionsData = useAtomValue(allQuestionsAtom);
+  const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
+  const [timeLeft, setTimeLeft] = useAtom(timeLeftAtom);
+  
+  const currentIdx = useAtomValue(currentQuestionIndexAtom);
 
-  const handleSelectAnswer = (questionId: number, choice: string) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: choice }));
+  const mainScrollRef = useRef<HTMLDivElement>(null);
+  const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      return;
+    }
+    const timerId = setInterval(
+      () => setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0)),
+      1000
+    );
+    return () => clearInterval(timerId);
+  }, [timeLeft, setTimeLeft]);
+
+  useEffect(() => {
+    if (currentIdx < 0 || allQuestionsData.length === 0) return;
+    
+    const timer = setTimeout(() => {
+      if (questionRefs.current[currentIdx]) {
+        questionRefs.current[currentIdx]?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100); 
+    
+    return () => clearTimeout(timer);
+  }, [currentIdx, selectedSubject, allQuestionsData.length]); 
+
+
+  const handleSelectAnswer = (question: Question, choice: string) => {
+    setAnswers((prev) => ({ ...prev, [`${question.subjectName}-${question.num}`]: choice }));
   };
 
-  const onSelectSubject = useCallback(
-    (subj: string) => {
-      setSelectedSubject(subj);
-    },
-    [setSelectedSubject]
+  const onSelectSubject = useCallback((subjectName: string) => {
+    const firstQuestionIndex = allQuestionsData.findIndex(
+      (q) => q.subjectName === subjectName
+    );
+    if (firstQuestionIndex !== -1) {
+      setCurrentIdx(firstQuestionIndex);
+      setSelectedSubject(subjectName);
+    }
+  }, [allQuestionsData, setCurrentIdx, setSelectedSubject]);
+
+  const selectedBlock = useMemo(
+    () =>
+      groupedData.find((g) => g.subjectName === selectedSubject),
+    [groupedData, selectedSubject]
+  );
+  
+  const subjectNames = useMemo(
+    () => groupedData.map((g) => g.subjectName),
+    [groupedData]
   );
 
-  const selectedBlock = groupedData.find(
-    (group) => group.subjectName === selectedSubject
-  );
-  const selectedIndex = groupedData.findIndex(
-    (s) => s.subjectName === selectedSubject
-  );
-
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "auto" });
+  const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
 
   const handleConfirmSubmit = () => {
     setIsModalOpen(false);
@@ -55,86 +101,92 @@ export function CbtInProgress({ onSubmit }: CbtInProgressProps) {
   };
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto px-2 sm:px-4 pb-10 flex flex-col lg:flex-row gap-8">
-      <div className="flex-grow">
-        <div className="flex justify-center overflow-x-auto px-2 sm:px-6 no-scrollbar mb-4">
-          <SubjectTabs
-            subjects={groupedData.map((g) => g.subjectName)}
-            selected={selectedSubject}
-            setSelected={onSelectSubject}
-          />
-        </div>
-        <AnimatePresence mode="wait">
-          {selectedBlock ? (
-            <motion.section
-              key={selectedBlock.subjectName}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="mt-6 sm:mt-8 space-y-5 sm:space-y-8"
-            >
-              {selectedBlock.questions.map((q) => (
-                <QuestionCard
-                  key={q.id}
-                  question={q}
-                  selected={answers[q.id]}
-                  onSelect={(choice) => handleSelectAnswer(q.id, choice)}
-                  showAnswer={false}
-                />
-              ))}
-              <div className="flex justify-center items-center gap-3 mt-8">
-                <Button
-                  variant="neutral"
-                  onClick={() => {
-                    if (selectedIndex > 0) {
-                      setSelectedSubject(
-                        groupedData[selectedIndex - 1].subjectName
-                      );
-                      scrollToTop();
-                    }
-                  }}
-                  disabled={selectedIndex <= 0}
-                >
-                  <ChevronLeft className="mr-1 h-4 w-4" /> 이전
-                </Button>
-                <Button
-                  onClick={() => {
-                    if (selectedIndex < groupedData.length - 1) {
-                      setSelectedSubject(
-                        groupedData[selectedIndex + 1].subjectName
-                      );
-                      scrollToTop();
-                    }
-                  }}
-                  disabled={selectedIndex >= groupedData.length - 1}
-                >
-                  다음 <ChevronRight className="ml-1 h-4 w-4" />
-                </Button>
+    <div className="w-full h-full flex flex-col bg-[#0f172a]">
+      {isModalOpen && (
+        <SubmitModal
+          onConfirm={handleConfirmSubmit}
+          onCancel={() => setIsModalOpen(false)}
+          totalCount={allQuestionsData.length}
+          answeredCount={Object.keys(answers).length}
+        />
+      )}
+
+      <ExamHeader
+        subjectNames={subjectNames}
+        onSubjectChange={onSelectSubject}
+      />
+      
+      <div ref={mainScrollRef} className="flex-1 overflow-y-auto">
+        <main className="max-w-3xl w-full mx-auto px-4 pb-10">
+          <AnimatePresence mode="wait">
+            {selectedBlock ? (
+               <motion.div
+                  key={selectedBlock.subjectName} 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+               >
+                  {selectedBlock.questions.map((q) => {
+                    const globalIndex = allQuestionsData.findIndex(
+                      (item) => `${item.subjectName}-${item.num}` === `${q.subjectName}-${q.num}`
+                    );
+                    return (
+                      <div
+                        key={`${q.subjectName}-${q.num}`}
+                        ref={(el) => { if (questionRefs.current) questionRefs.current[globalIndex] = el; }}
+                        style={{ scrollMarginTop: HEADER_HEIGHT_PX }}
+                        className="py-4"
+                      >
+                        <QuestionCard
+                          question={q}
+                          selected={answers[`${q.subjectName}-${q.num}`]}
+                          onSelect={(choice) => handleSelectAnswer(q, choice)}
+                          showAnswer={false}
+                        />
+                      </div>
+                    );
+                  })}
+               </motion.div>
+            ) : (
+              <div className="flex-1 flex items-center justify-center min-h-[300px]">
+                <EmptyMessage />
               </div>
-            </motion.section>
-          ) : (
-            <div className="flex-1 flex items-center justify-center min-h-[300px]">
-              <EmptyMessage />
+            )}
+          </AnimatePresence>
+          
+          {selectedBlock && (
+            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <Button
+                variant="neutral"
+                onClick={() => onSelectSubject(subjectNames[selectedIndex - 1])}
+                disabled={selectedIndex <= 0}
+                className="w-full sm:w-auto"
+              >
+                <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
+              </Button>
+              {selectedIndex === subjectNames.length - 1 ? (
+                <Button
+                  onClick={() => setIsModalOpen(true)}
+                  variant="primary"
+                  className="w-full sm:w-auto"
+                >
+                  제출하기 <Send className="ml-1 h-4 w-4" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => onSelectSubject(subjectNames[selectedIndex + 1])}
+                  className="w-full sm:w-auto"
+                >
+                  다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
+                </Button>
+              )}
             </div>
           )}
-        </AnimatePresence>
+        </main>
       </div>
-
-      <aside className="lg:w-80 lg:sticky top-24 self-start">
-        <OmrSheet />
-      </aside>
-
-      <AnimatePresence>
-        {isModalOpen && (
-          <SubmitModal
-            onConfirm={handleConfirmSubmit}
-            onCancel={() => setIsModalOpen(false)}
-            totalCount={allQuestionsData.length}
-            answeredCount={Object.keys(answers).length}
-          />
-        )}
-      </AnimatePresence>
+      
+      <ScrollToTopButton scrollableRef={mainScrollRef} />
     </div>
   );
 }

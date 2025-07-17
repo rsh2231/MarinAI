@@ -43,7 +43,10 @@ export default function ProblemViewer({
         const res = await fetch(`/api/solve?${params.toString()}`);
         if (!res.ok) {
           const errorData = await res.json();
-          throw new Error(errorData.message || `HTTP ${res.status}: 데이터를 불러오는데 실패했습니다.`);
+          throw new Error(
+            errorData.message ||
+              `HTTP ${res.status}: 데이터를 불러오는데 실패했습니다.`
+          );
         }
         const responseData: { qnas: QnaItem[] } = await res.json();
         const transformed = transformData(responseData.qnas);
@@ -51,7 +54,7 @@ export default function ProblemViewer({
         if (transformed.length === 0) {
           setError("선택하신 조건에 해당하는 문제 데이터가 없습니다.");
         }
-        
+
         setSubjectGroups(transformed);
         setAnswers({});
         setShowAnswer({});
@@ -72,7 +75,10 @@ export default function ProblemViewer({
     );
   }, [subjectGroups, selectedSubjects]);
 
-  const subjectNames = useMemo(() => filteredSubjects.map((g) => g.subjectName), [filteredSubjects]);
+  const subjectNames = useMemo(
+    () => filteredSubjects.map((g) => g.subjectName),
+    [filteredSubjects]
+  );
   const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
 
   useEffect(() => {
@@ -84,8 +90,13 @@ export default function ProblemViewer({
       setSelectedSubject(null);
     }
   }, [subjectNames, selectedSubject]);
-  
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "instant" });
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+  };
 
   const handleSelectSubject = useCallback((subj: string) => {
     setSelectedSubject(subj);
@@ -103,11 +114,16 @@ export default function ProblemViewer({
       const selectedChoice = answers[question.id];
       if (selectedChoice && selectedChoice !== question.answer) {
         const savedNotes = loadWrongNotes();
-        if (!savedNotes.find((note) => note.id.toString() === question.id.toString())) {
+        if (
+          !savedNotes.find(
+            (note) => note.id.toString() === question.id.toString()
+          )
+        ) {
           saveWrongNote({
             id: question.id.toString(),
             question: question.questionStr,
-            explanation: question.explanation ?? "AI 해설을 생성하여 저장하세요.",
+            explanation:
+              question.explanation ?? "AI 해설을 생성하여 저장하세요.",
             createdAt: new Date().toISOString(),
           });
         }
@@ -147,11 +163,11 @@ export default function ProblemViewer({
     >
       {subjectNames.length > 0 && selectedSubject && (
         <div className="mb-6">
-            <SubjectTabs
-              subjects={subjectNames}
-              selected={selectedSubject}
-              setSelected={handleSelectSubject}
-            />
+          <SubjectTabs
+            subjects={subjectNames}
+            selected={selectedSubject}
+            setSelected={handleSelectSubject}
+          />
         </div>
       )}
 
