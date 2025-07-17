@@ -1,3 +1,5 @@
+// src/components/problem/exam/OmrSheet.tsx
+
 "use client";
 
 import React, { useEffect, useRef } from "react";
@@ -25,27 +27,23 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
 
   const omrItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  // 창 크기 변경 로직 (변경 없음)
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setIsVisible(true);
-      }
+      setIsVisible(window.innerWidth >= 1024);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [setIsVisible]);
 
-  // 스크롤 로직 (변경 없음)
   useEffect(() => {
-    if (isVisible) {
+    if (isVisible && currentIdx >= 0) {
       setTimeout(() => {
         omrItemRefs.current[currentIdx]?.scrollIntoView({
           behavior: "smooth",
-          block: "nearest",
+          block: "center",
         });
-      }, 100);
+      }, 150);
     }
   }, [currentIdx, isVisible]);
 
@@ -80,10 +78,11 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
       </AnimatePresence>
 
       <motion.aside
-        className="fixed top-0 right-0 h-screen w-[90vw] max-w-[280px] bg-[#1e293b] border-l border-gray-700 z-50 flex flex-col lg:w-64 lg:max-w-none lg:translate-x-0"
+        className="fixed top-0 right-0 h-screen w-[90vw] max-w-sm bg-[#1e293b] border-l border-gray-700 z-50 flex flex-col 
+                   lg:sticky lg:w-72 lg:shrink-0 lg:translate-x-0"
         initial={{ x: "100%" }}
-        animate={{ x: isVisible ? 0 : "100%" }}
-        transition={{ type: "tween", duration: 0.3 }}
+        animate={{ x: isVisible || window.innerWidth >= 1024 ? 0 : "100%" }}
+        transition={{ type: "tween", ease: "easeInOut", duration: 0.3 }}
       >
         <div className="p-4 border-b border-gray-700 flex items-center justify-between shrink-0">
           <h3 className="font-semibold text-sm">문제 목록</h3>
@@ -96,7 +95,7 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
         </div>
 
         <div className="flex-1 overflow-y-auto p-3 space-y-4 text-sm">
-          {Object.entries(groupedBySubject).map(([subjectName, questions]) => {
+          {Object.keys(groupedBySubject).length > 0 ? Object.entries(groupedBySubject).map(([subjectName, questions]) => {
             const groupStartIndex = questionIndexOffset;
             const renderedGroup = (
               <div key={subjectName}>
@@ -119,7 +118,7 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
                       <button
                         key={key}
                         ref={(el) => {
-                          omrItemRefs.current[globalIndex] = el;
+                          if (omrItemRefs.current) omrItemRefs.current[globalIndex] = el;
                         }}
                         onClick={() => handleItemClick(q, globalIndex)}
                         className={`h-8 w-8 text-xs font-mono rounded flex items-center justify-center transition-colors ${bgClass}`}
@@ -133,7 +132,7 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
             );
             questionIndexOffset += questions.length;
             return renderedGroup;
-          })}
+          }) : <p className="text-center text-xs text-gray-500 pt-4">문제 데이터가 없습니다.</p>}
         </div>
       </motion.aside>
     </>

@@ -1,41 +1,32 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
-  selectedSubjectAtom,
   examLoadingAtom,
   examErrorAtom,
+  timeLeftAtom,
+  selectedSubjectAtom,
   groupedQuestionsAtom,
-  allQuestionsAtom,
   answersAtom,
   currentQuestionIndexAtom,
-  timeLeftAtom,
   isOmrVisibleAtom,
+  allQuestionsAtom,
 } from "@/atoms/examAtoms";
 
 import { QnaItem, Question } from "@/types/ProblemViewer";
 import { transformData } from "@/lib/problem-utils";
 
-import ViewerCore from "../UI/ViewerCore";
-import QuestionCard from "../UI/QuestionCard";
-import Button from "@/components/ui/Button";
-import {
-  BookCheck,
-  ChevronLeft,
-  ChevronRight,
-  List,
-  Send,
-  Timer,
-} from "lucide-react";
-import { OmrSheet } from "@/components/problem/exam/OmrSheet";
+import { OmrSheet } from "./OmrSheet";
 import { ResultView } from "../UI/ResultView";
 import { SubmitModal } from "./SubmitModal";
 import { EmptyMessage } from "../../ui/EmptyMessage";
-import SubjectTabs from "../UI/SubjectTabs";
+import { ExamHeader } from "./ExamHeader";
+import { ChevronLeft, ChevronRight, Send } from "lucide-react";
+import Button from "@/components/ui/Button";
+import QuestionCard from "../UI/QuestionCard";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
-
 interface Props {
   year: string;
   license: LicenseType;
@@ -45,7 +36,7 @@ interface Props {
 }
 
 const DURATION_PER_SUBJECT_SECONDS = 25 * 60;
-const HEADER_HEIGHT_PX = 80; // sticky header 높이 (필요시 조정)
+const HEADER_HEIGHT_PX = 120; // ExamHeader의 대략적인 높이
 
 export default function ExamViewer({
   year,
@@ -54,19 +45,23 @@ export default function ExamViewer({
   round,
   selectedSubjects,
 }: Props) {
-  const [isLoading, setIsLoading] = useAtom(examLoadingAtom);
-  const [error, setError] = useAtom(examErrorAtom);
+  const isLoading = useAtomValue(examLoadingAtom);
+  const error = useAtomValue(examErrorAtom);
   const [timeLeft, setTimeLeft] = useAtom(timeLeftAtom);
   const [selectedSubject, setSelectedSubject] = useAtom(selectedSubjectAtom);
-  const [groupedQuestions, setGroupedQuestions] = useAtom(groupedQuestionsAtom);
+  const groupedQuestions = useAtomValue(groupedQuestionsAtom);
   const [answers, setAnswers] = useAtom(answersAtom);
   const [currentIdx, setCurrentIdx] = useAtom(currentQuestionIndexAtom);
-  const [, setIsOmrVisible] = useAtom(isOmrVisibleAtom);
+  const setIsOmrVisible = useSetAtom(isOmrVisibleAtom);
   const allQuestions = useAtomValue(allQuestionsAtom);
+  const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
+  const setIsLoading = useSetAtom(examLoadingAtom);
+  const setError = useSetAtom(examErrorAtom);
 
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const mainScrollRef = useRef<HTMLDivElement>(null);
 
   const totalDuration = useMemo(
     () => selectedSubjects.length * DURATION_PER_SUBJECT_SECONDS,
@@ -117,9 +112,7 @@ export default function ExamViewer({
         setIsLoading(false);
       }
     };
-    if (selectedSubjects.length > 0) {
-      fetchData();
-    }
+    if (selectedSubjects.length > 0) fetchData();
   }, [
     year,
     license,
@@ -145,53 +138,43 @@ export default function ExamViewer({
     return () => clearInterval(timerId);
   }, [timeLeft, isSubmitted, setTimeLeft]);
 
-  const navigateToQuestion = (targetIndex: number) => {
-    if (targetIndex < 0 || targetIndex >= allQuestions.length) return;
-    const question = allQuestions[targetIndex];
-    if (!question) return;
-    setSelectedSubject(question.subjectName); // 1. 과목 먼저 변경
-    setCurrentIdx(targetIndex); // 2. 문제 인덱스 변경
-  };
-
-  // groupedQuestions 바뀔 때 refs 초기화
   useEffect(() => {
-    questionRefs.current = [];
-  }, [groupedQuestions]);
-
-  // currentIdx 혹은 selectedSubject 변경 시 scrollIntoView (50ms 딜레이)
-  useEffect(() => {
+    if (currentIdx < 0 || allQuestions.length === 0) return;
     const timer = setTimeout(() => {
-      if (allQuestions.length === 0 || currentIdx >= allQuestions.length) return;
       questionRefs.current[currentIdx]?.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
     }, 50);
     return () => clearTimeout(timer);
-  }, [currentIdx, selectedSubject, allQuestions.length]);
+  }, [currentIdx, allQuestions.length]);
 
   const handleSubjectChange = (subjectName: string) => {
     const firstQuestionIndex = allQuestions.findIndex(
       (q) => q.subjectName === subjectName
     );
     if (firstQuestionIndex !== -1) {
-      navigateToQuestion(firstQuestionIndex);
+      setCurrentIdx(firstQuestionIndex);
+      setSelectedSubject(subjectName);
     }
   };
 
   const handleSelectAnswer = (question: Question, choice: string) => {
-    const key = `${question.subjectName}-${question.num}`;
-    setAnswers((prev) => ({ ...prev, [key]: choice }));
+    setAnswers((prev) => ({
+      ...prev,
+      [`${question.subjectName}-${question.num}`]: choice,
+    }));
   };
 
   const handleQuestionSelectFromOMR = (question: Question, index: number) => {
-    navigateToQuestion(index);
+    setCurrentIdx(index);
+    setSelectedSubject(question.subjectName);
   };
 
   const handleConfirmSubmit = () => {
     setIsSubmitModalOpen(false);
     setIsSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "instant" });
+    mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
   };
 
   const handleRetry = () => {
@@ -204,43 +187,45 @@ export default function ExamViewer({
     }
   };
 
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (seconds % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
-  };
+  const subjectNames = useMemo(
+    () => groupedQuestions.map((g) => g.subjectName),
+    [groupedQuestions]
+  );
+  const currentQuestions = useMemo(
+    () =>
+      groupedQuestions.find((g) => g.subjectName === selectedSubject)
+        ?.questions || [],
+    [groupedQuestions, selectedSubject]
+  );
+  const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-gray-400 animate-pulse">
+          시험 문제를 불러오는 중입니다...
+        </p>
+      </div>
+    );
+  }
+  if (error) return <EmptyMessage message={error} />;
+  if (selectedSubjects.length === 0 && !isLoading)
+    return <EmptyMessage message="풀이할 과목을 선택해주세요." />;
   if (isSubmitted) {
-    const totalCount = allQuestions.length;
     const correctCount = allQuestions.filter(
       (q) => answers[`${q.subjectName}-${q.num}`] === q.answer
     ).length;
     return (
       <ResultView
-        total={totalCount}
+        total={allQuestions.length}
         correct={correctCount}
         onRetry={handleRetry}
       />
     );
   }
 
-  if (selectedSubjects.length === 0 && !isLoading) {
-    return (
-      <div className="flex-1 flex items-center justify-center min-h-[300px]">
-        <EmptyMessage message="선택한 과목에 해당하는 문제가 없습니다. 사이드바에서 과목을 선택해주세요." />
-      </div>
-    );
-  }
-
-  const subjectNames = groupedQuestions.map((g) => g.subjectName);
-  const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
-  const isLastSubject = selectedIndex === subjectNames.length - 1;
-
   return (
-    <>
-      <OmrSheet onSelectQuestion={handleQuestionSelectFromOMR} />
+    <div className="w-full h-full flex bg-[#0f172a]">
       {isSubmitModalOpen && (
         <SubmitModal
           onConfirm={handleConfirmSubmit}
@@ -250,78 +235,59 @@ export default function ExamViewer({
         />
       )}
 
-      <ViewerCore
-        isLoading={isLoading}
-        error={error}
-        filteredSubjects={groupedQuestions}
-        selectedSubject={selectedSubject}
-        headerContent={
-          <header className="sticky top-4 sm:top-5 z-30 bg-neutral-900/80 backdrop-blur-sm shadow-md">
-            <div className="w-full max-w-3xl mx-auto px-3 pt-3 flex flex-col gap-3">
-              <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-                <div className="flex items-center gap-2 text-sm text-gray-200 order-1">
-                  <span className="text-lg hidden sm:inline">
-                    <BookCheck />
-                  </span>
-                  <p className="font-bold text-base">
-                    {selectedSubject}
-                    <span className="text-gray-400 font-normal ml-1.5">
-                      ({selectedIndex + 1}/{subjectNames.length})
-                    </span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-3 order-2">
-                  <div
-                    className={`flex items-center gap-2 font-mono text-base sm:text-lg font-bold rounded-md${
-                      timeLeft < 300
-                        ? "text-red-400 animate-pulse"
-                        : "text-blue-300"
-                    }`}
-                  >
-                    <Timer className="w-5 h-5" />
-                    <span>{formatTime(timeLeft)}</span>
-                  </div>
-                  <Button
-                    variant="neutral"
-                    size="sm"
-                    onClick={() => setIsOmrVisible(true)}
-                    className="bg-neutral-800/50 border-neutral-700 hover:bg-neutral-700 sm:hidden"
-                  >
-                    <List className="w-4 h-4 mr-2" />
-                    답안지
-                  </Button>
-                </div>
-              </div>
-            </div>
-            {subjectNames.length > 0 && selectedSubject && (
-              <div className="w-full max-w-3xl mx-auto">
-                <SubjectTabs
-                  subjects={subjectNames}
-                  selected={selectedSubject}
-                  setSelected={handleSubjectChange}
-                  variant="header"
+      <div
+        ref={mainScrollRef}
+        className="flex-1 flex flex-col h-screen overflow-y-auto"
+      >
+        <ExamHeader
+          subjectNames={subjectNames}
+          onSubjectChange={handleSubjectChange}
+          onToggleOmr={() => setIsOmrVisible((prev) => !prev)}
+        />
+
+        <main className="max-w-3xl w-full mx-auto px-4 pb-10 flex-1">
+          {currentQuestions.map((q) => {
+            const globalIndex = allQuestions.findIndex(
+              (item) =>
+                `${item.subjectName}-${item.num}` ===
+                `${q.subjectName}-${q.num}`
+            );
+            return (
+              <div
+                key={`${q.subjectName}-${q.num}`}
+                ref={(el) => {
+                  if (questionRefs.current)
+                    questionRefs.current[globalIndex] = el;
+                }}
+                style={{ scrollMarginTop: HEADER_HEIGHT_PX }}
+                className="py-4"
+              >
+                <QuestionCard
+                  question={q}
+                  selected={answers[`${q.subjectName}-${q.num}`]}
+                  showAnswer={false}
+                  onSelect={(choice) => handleSelectAnswer(q, choice)}
                 />
               </div>
-            )}
-          </header>
-        }
-        footerContent={
-          <>
+            );
+          })}
+        </main>
+
+        <div className="sticky bottom-0 z-20 w-full bg-[#1e293b]/80 backdrop-blur-sm border-t border-gray-700 p-4">
+          <div className="max-w-3xl mx-auto flex justify-between items-center gap-4">
             <Button
               variant="neutral"
               onClick={() =>
                 handleSubjectChange(subjectNames[selectedIndex - 1])
               }
               disabled={selectedIndex <= 0}
-              className="w-full sm:w-auto"
             >
               <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
             </Button>
-            {isLastSubject ? (
+            {selectedIndex === subjectNames.length - 1 ? (
               <Button
                 onClick={() => setIsSubmitModalOpen(true)}
                 variant="primary"
-                className="w-full sm:w-auto"
               >
                 제출하기 <Send className="ml-1 h-4 w-4" />
               </Button>
@@ -330,43 +296,15 @@ export default function ExamViewer({
                 onClick={() =>
                   handleSubjectChange(subjectNames[selectedIndex + 1])
                 }
-                className="w-full sm:w-auto"
               >
                 다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             )}
-          </>
-        }
-      >
-        <div className="mt-6 sm:mt-8">
-          {groupedQuestions
-            .find((g) => g.subjectName === selectedSubject)
-            ?.questions.map((q) => {
-              const globalIndex = allQuestions.findIndex(
-                (item) =>
-                  `${item.subjectName}-${item.num}` ===
-                  `${q.subjectName}-${q.num}`
-              );
-              return (
-                <div
-                  key={`${q.subjectName}-${q.num}`}
-                  ref={(el) => {
-                    if (globalIndex !== -1)
-                      questionRefs.current[globalIndex] = el;
-                  }}
-                  style={{ scrollMarginTop: HEADER_HEIGHT_PX }} // sticky header offset
-                >
-                  <QuestionCard
-                    question={q}
-                    selected={answers[`${q.subjectName}-${q.num}`]}
-                    showAnswer={false}
-                    onSelect={(choice) => handleSelectAnswer(q, choice)}
-                  />
-                </div>
-              );
-            })}
+          </div>
         </div>
-      </ViewerCore>
-    </>
+      </div>
+
+      <OmrSheet onSelectQuestion={handleQuestionSelectFromOMR} />
+    </div>
   );
 }
