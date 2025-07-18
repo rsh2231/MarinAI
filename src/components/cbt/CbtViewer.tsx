@@ -1,40 +1,42 @@
 "use client";
 
-import { useState } from "react";
-import { useSetAtom, useAtomValue } from "jotai";
+import { useState, RefObject } from "react";
+import { useSetAtom } from "jotai";
 import { QnaItem } from "@/types/ProblemViewer";
 import {
   answersAtom,
   groupedQuestionsAtom,
   selectedSubjectAtom,
-  allQuestionsAtom,
   timeLeftAtom,
 } from "@/atoms/examAtoms";
 import { transformData } from "@/lib/problem-utils";
 import { CbtSettings } from "./setting/CbtSetting";
 import { CbtInProgress } from "./CbtInProgress";
-import { ResultView } from "@/components/problem/UI/result/ResultView";
+import { ResultView } from "@/components/problem/result/ResultView";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 type ExamStatus = "not-started" | "in-progress" | "finished";
 const DURATION_PER_SUBJECT_SECONDS = 25 * 60;
 
 interface CbtViewerProps {
-    status: ExamStatus;
-    setStatus: (status: ExamStatus) => void;
+  status: ExamStatus;
+  setStatus: (status: ExamStatus) => void;
+  scrollRef: RefObject<HTMLDivElement | null>;
 }
 
-export default function CbtViewer({ status, setStatus }: CbtViewerProps) {
+export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerProps) {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const [currentLicense, setCurrentLicense] = useState<LicenseType | null>(
+    null
+  );
+  const [totalDuration, setTotalDuration] = useState(0);
 
   const setAnswers = useSetAtom(answersAtom);
   const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
   const setSelectedSubject = useSetAtom(selectedSubjectAtom);
   const setTimeLeft = useSetAtom(timeLeftAtom);
-
-  const allQuestionsData = useAtomValue(allQuestionsAtom);
-  const answers = useAtomValue(answersAtom);
 
   const handleStartExam = async (settings: {
     license: LicenseType;
@@ -73,10 +75,13 @@ export default function CbtViewer({ status, setStatus }: CbtViewerProps) {
         setGroupedQuestions(transformed);
         setSelectedSubject(transformed[0].subjectName);
         setAnswers({});
-        const totalDuration = transformed.length * DURATION_PER_SUBJECT_SECONDS;
-        setTimeLeft(totalDuration);
 
-        setStatus("in-progress"); 
+        const duration = transformed.length * DURATION_PER_SUBJECT_SECONDS;
+        setTimeLeft(duration);
+        setTotalDuration(duration); // 전체 시간 저장
+        setCurrentLicense(settings.license); // 라이선스 종류 저장
+
+        setStatus("in-progress");
       }
     } catch (err: any) {
       setError(err.message);
@@ -86,8 +91,7 @@ export default function CbtViewer({ status, setStatus }: CbtViewerProps) {
   };
 
   const handleSubmit = () => {
-    setStatus("finished"); 
-    setTimeLeft(0);
+    setStatus("finished");
   };
 
   const handleRetry = () => {
@@ -95,22 +99,30 @@ export default function CbtViewer({ status, setStatus }: CbtViewerProps) {
     setGroupedQuestions([]);
     setSelectedSubject(null);
     setError("");
-    setStatus("not-started"); 
+
+    // 재시도 시 상태 초기화
+    setCurrentLicense(null);
+    setTotalDuration(0);
+
+    setStatus("not-started");
   };
 
   switch (status) {
     case "in-progress":
-      return <CbtInProgress onSubmit={handleSubmit} />;
+      return <CbtInProgress onSubmit={handleSubmit} scrollRef={scrollRef} />;
 
     case "finished":
-      const correctAnswers = allQuestionsData.filter(
-        (q) => answers[q.id.toString()] === q.answer
-      ).length;
+      if (!currentLicense) {
+        return (
+          <div>결과를 표시하는 중 오류가 발생했습니다. 다시 시도해주세요.</div>
+        );
+      }
       return (
         <ResultView
-          total={allQuestionsData.length}
-          correct={correctAnswers}
+          license={currentLicense}
+          totalDuration={totalDuration}
           onRetry={handleRetry}
+          scrollRef={scrollRef}
         />
       );
 

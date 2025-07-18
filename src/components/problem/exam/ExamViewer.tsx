@@ -17,7 +17,7 @@ import {
 import { QnaItem, Question } from "@/types/ProblemViewer";
 import { transformData } from "@/lib/problem-utils";
 
-import { ResultView } from "../UI/result/ResultView";
+import { ResultView } from "../result/ResultView";
 import { SubmitModal } from "./SubmitModal";
 import { ExamHeader } from "./ExamHeader";
 import { ChevronLeft, ChevronRight, Send } from "lucide-react";

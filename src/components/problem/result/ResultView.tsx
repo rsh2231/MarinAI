@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { RefObject, useMemo, useState } from "react";
 import { useAtomValue } from "jotai";
 import {
   groupedQuestionsAtom,
@@ -17,12 +17,15 @@ import { ProblemReviewHeader } from "./ProblemReviewHeader";
 import { QuestionResultCard } from "./QuestionResultCard";
 import { EmptyMessage } from "@/components/ui/EmptyMessage";
 
+import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
+
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
 interface ResultViewProps {
   onRetry: () => void;
   license: LicenseType;
   totalDuration: number;
+  scrollRef: RefObject<HTMLDivElement | null>;
 }
 
 export interface SubjectResult {
@@ -37,6 +40,7 @@ export const ResultView = ({
   onRetry,
   license,
   totalDuration,
+  scrollRef,
 }: ResultViewProps) => {
   const groupedQuestions = useAtomValue(groupedQuestionsAtom);
   const allQuestions = useAtomValue(allQuestionsAtom);
@@ -179,6 +183,8 @@ export const ResultView = ({
           </div>
         </motion.div>
       </div>
+
+      <ScrollToTopButton scrollableRef={scrollRef} />
     </div>
   );
 };

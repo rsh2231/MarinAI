@@ -1,6 +1,13 @@
 "use client";
 
-import { useState, useCallback, useRef, useMemo, useEffect } from "react";
+import {
+  useState,
+  useCallback,
+  useRef,
+  useMemo,
+  useEffect,
+  RefObject,
+} from "react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   answersAtom,
@@ -22,11 +29,12 @@ import ScrollToTopButton from "../ui/ScrollToTopButton";
 
 interface CbtInProgressProps {
   onSubmit: () => void;
+  scrollRef: RefObject<HTMLDivElement | null>;
 }
 
 const HEADER_HEIGHT_PX = 120;
 
-export function CbtInProgress({ onSubmit }: CbtInProgressProps) {
+export function CbtInProgress({ onSubmit, scrollRef }: CbtInProgressProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [answers, setAnswers] = useAtom(answersAtom);
   const [selectedSubject, setSelectedSubject] = useAtom(selectedSubjectAtom);
@@ -36,7 +44,6 @@ export function CbtInProgress({ onSubmit }: CbtInProgressProps) {
   const [timeLeft, setTimeLeft] = useAtom(timeLeftAtom);
   const currentIdx = useAtomValue(currentQuestionIndexAtom);
 
-  const mainScrollRef = useRef<HTMLDivElement>(null);
   const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -72,6 +79,7 @@ export function CbtInProgress({ onSubmit }: CbtInProgressProps) {
 
   const onSelectSubject = useCallback(
     (subjectName: string) => {
+      if (!subjectName) return;
       const firstQuestionIndex = allQuestionsData.findIndex(
         (q) => q.subjectName === subjectName
       );
@@ -87,6 +95,15 @@ export function CbtInProgress({ onSubmit }: CbtInProgressProps) {
     () => groupedData.map((g) => g.subjectName),
     [groupedData]
   );
+
+  const currentQuestions = useMemo(() => {
+    if (!selectedSubject) return [];
+    return (
+      groupedData.find((group) => group.subjectName === selectedSubject)
+        ?.questions || []
+    );
+  }, [groupedData, selectedSubject]);
+
   const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
 
   const handleConfirmSubmit = () => {
@@ -110,47 +127,37 @@ export function CbtInProgress({ onSubmit }: CbtInProgressProps) {
         onSubjectChange={onSelectSubject}
       />
 
-      <div ref={mainScrollRef} className="flex-1 overflow-y-auto">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto">
         <main className="max-w-3xl w-full mx-auto px-4 pb-10">
-          {/* 모든 과목 그룹을 렌더링하고, 선택된 과목만 보여줍니다. */}
-          {groupedData.map((group) => (
-            <div
-              key={group.subjectName}
-              className={
-                group.subjectName === selectedSubject ? "block" : "hidden"
-              }
-            >
-              {group.questions.map((q) => {
-                const globalIndex = allQuestionsData.findIndex(
-                  (item) =>
-                    `${item.subjectName}-${item.num}` ===
-                    `${q.subjectName}-${q.num}`
-                );
-                return (
-                  <div
-                    key={`${q.subjectName}-${q.num}`}
-                    ref={(el) => {
-                      if (questionRefs.current)
-                        questionRefs.current[globalIndex] = el;
-                    }}
-                    style={{ scrollMarginTop: HEADER_HEIGHT_PX }}
-                    className="py-4"
-                  >
-                    <QuestionCard
-                      question={q}
-                      selected={answers[`${q.subjectName}-${q.num}`]}
-                      onSelect={(choice) => handleSelectAnswer(q, choice)}
-                      showAnswer={false}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          ))}
+          {currentQuestions.map((q) => {
+            const globalIndex = allQuestionsData.findIndex(
+              (item) =>
+                `${item.subjectName}-${item.num}` ===
+                `${q.subjectName}-${q.num}`
+            );
+            return (
+              <div
+                key={`${q.subjectName}-${q.num}`}
+                ref={(el) => {
+                  if (questionRefs.current)
+                    questionRefs.current[globalIndex] = el;
+                }}
+                style={{ scrollMarginTop: HEADER_HEIGHT_PX }}
+                className="py-4"
+              >
+                <QuestionCard
+                  question={q}
+                  selected={answers[`${q.subjectName}-${q.num}`]}
+                  onSelect={(choice) => handleSelectAnswer(q, choice)}
+                  showAnswer={false}
+                />
+              </div>
+            );
+          })}
 
-          {groupedData.length === 0 && (
+          {currentQuestions.length === 0 && (
             <div className="flex-1 flex items-center justify-center min-h-[300px]">
-              <EmptyMessage />
+              <EmptyMessage message="문제를 불러오는 중이거나, 선택된 과목에 문제가 없습니다." />
             </div>
           )}
 
@@ -187,7 +194,7 @@ export function CbtInProgress({ onSubmit }: CbtInProgressProps) {
         </main>
       </div>
 
-      <ScrollToTopButton scrollableRef={mainScrollRef} />
+      <ScrollToTopButton scrollableRef={scrollRef} />
     </div>
   );
 }
