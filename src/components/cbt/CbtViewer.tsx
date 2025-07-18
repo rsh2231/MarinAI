@@ -13,7 +13,7 @@ import {
 import { transformData } from "@/lib/problem-utils";
 import { CbtSettings } from "./setting/CbtSetting";
 import { CbtInProgress } from "./CbtInProgress";
-import { ResultView } from "@/components/problem/UI/ResultView";
+import { ResultView } from "@/components/problem/UI/result/ResultView";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 type ExamStatus = "not-started" | "in-progress" | "finished";

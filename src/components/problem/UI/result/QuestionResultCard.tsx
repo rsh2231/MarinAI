@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Question, Choice } from "@/types/ProblemViewer";
-import { Check, X, ChevronsUpDown } from "lucide-react";
+import { Check, X, ChevronsUpDown, HelpCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -29,13 +29,33 @@ const getChoiceStyle = (
   return "bg-neutral-700/50 border-neutral-600 text-neutral-300";
 };
 
+type StatusType = "correct" | "incorrect" | "unanswered";
+
+const getStatus = (
+  userAnswer: string | undefined,
+  correctAnswer: string
+): { status: StatusType; isCorrect: boolean } => {
+  if (userAnswer === undefined || userAnswer === null) {
+    return { status: "unanswered", isCorrect: false };
+  }
+  const isCorrect = userAnswer === correctAnswer;
+  return { status: isCorrect ? "correct" : "incorrect", isCorrect };
+};
+
 export const QuestionResultCard = ({
   question,
   userAnswer,
   index,
 }: QuestionResultCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const isCorrect = userAnswer === question.answer;
+
+  const { status, isCorrect } = getStatus(userAnswer, question.answer);
+
+  const badgeStyles: Record<StatusType, string> = {
+    correct: "bg-green-500/20 text-green-300",
+    incorrect: "bg-red-500/20 text-red-300",
+    unanswered: "bg-neutral-600/50 text-neutral-400",
+  };
 
   return (
     <motion.div
@@ -43,7 +63,7 @@ export const QuestionResultCard = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
-      className="bg-neutral-800 rounded-lg p-5 "
+      className="bg-neutral-800 rounded-lg p-5"
     >
       <div className="flex justify-between items-start gap-4">
         <div className="flex-1 flex flex-col gap-2 font-medium text-sm sm:text-base break-keep">
@@ -58,14 +78,18 @@ export const QuestionResultCard = ({
         </div>
 
         <div
-          className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap ${
-            isCorrect
-              ? "bg-green-500/20 text-green-300"
-              : "bg-red-500/20 text-red-300"
-          }`}
+          className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap ${badgeStyles[status]}`}
         >
-          {isCorrect ? <Check size={16} /> : <X size={16} />}
-          <span>{isCorrect ? "정답" : "오답"}</span>
+          {status === "correct" && <Check size={16} />}
+          {status === "incorrect" && <X size={16} />}
+          {status === "unanswered" && <HelpCircle size={16} />}
+          <span>
+            {status === "correct"
+              ? "정답"
+              : status === "incorrect"
+              ? "오답"
+              : "미답"}
+          </span>
         </div>
       </div>
 
@@ -83,48 +107,53 @@ export const QuestionResultCard = ({
       )}
 
       <ul className="space-y-3 mt-4 break-keep">
-        {question.choices.map((choice: Choice) => (
-          <div
-            key={choice.label}
-            className={`flex justify-between items-center gap-3 px-4 py-3 rounded-md border text-sm sm:text-base ${getChoiceStyle(
-              choice.label,
-              userAnswer,
-              question.answer
-            )}`}
-          >
-            <div className="flex items-start gap-3">
-              <span className="font-semibold min-w-[24px]">
-                {choice.label}.
-              </span>
-              <div className="w-full flex justify-start">
-                {choice.isImage && choice.imageUrl ? (
-                  <Image
-                    src={choice.imageUrl}
-                    alt={`보기 ${choice.label}`}
-                    width={400}
-                    height={200}
-                    sizes="(min-width: 768px) 448px, 100vw"
-                    className="h-auto w-auto max-w-md max-h-[250px] object-contain rounded bg-white"
-                  />
-                ) : (
-                  <span className="text-gray-100">{choice.text}</span>
+        {question.choices.map((choice: Choice) => {
+          const isSelected = userAnswer === choice.label;
+          const isActualAnswer = question.answer === choice.label;
+
+          return (
+            <div
+              key={choice.label}
+              className={`flex justify-between items-center gap-3 px-4 py-3 rounded-md border text-sm sm:text-base ${getChoiceStyle(
+                choice.label,
+                userAnswer,
+                question.answer
+              )}`}
+            >
+              <div className="flex items-start gap-3">
+                <span className="font-semibold min-w-[24px]">
+                  {choice.label}.
+                </span>
+                <div className="w-full flex justify-start">
+                  {choice.isImage && choice.imageUrl ? (
+                    <Image
+                      src={choice.imageUrl}
+                      alt={`보기 ${choice.label}`}
+                      width={400}
+                      height={200}
+                      sizes="(min-width: 768px) 448px, 100vw"
+                      className="h-auto w-auto max-w-md max-h-[250px] object-contain rounded bg-white"
+                    />
+                  ) : (
+                    <span className="text-gray-100">{choice.text}</span>
+                  )}
+                </div>
+              </div>
+              <div className="flex-shrink-0 text-xs font-semibold">
+                {isSelected && !isActualAnswer && (
+                  <span className="px-2 py-1 rounded-md bg-red-500/20 text-red-300">
+                    내 답안
+                  </span>
+                )}
+                {status !== "unanswered" && isActualAnswer && (
+                  <span className="px-2 py-1 rounded-md bg-green-500/20 text-green-300">
+                    정답
+                  </span>
                 )}
               </div>
             </div>
-            <div className="flex-shrink-0 text-xs font-semibold">
-              {userAnswer === choice.label && !isCorrect && (
-                <span className="px-2 py-1 rounded-md bg-red-500/20 text-red-300">
-                  내 답안
-                </span>
-              )}
-              {question.answer === choice.label && (
-                <span className="px-2 py-1 rounded-md bg-green-500/20 text-green-300">
-                  정답
-                </span>
-              )}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </ul>
 
       <div className="mt-4 border-t border-neutral-700 pt-4">

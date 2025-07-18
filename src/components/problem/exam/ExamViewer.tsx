@@ -17,7 +17,7 @@ import {
 import { QnaItem, Question } from "@/types/ProblemViewer";
 import { transformData } from "@/lib/problem-utils";
 
-import { ResultView } from "../UI/ResultView";
+import { ResultView } from "../UI/result/ResultView";
 import { SubmitModal } from "./SubmitModal";
 import { ExamHeader } from "./ExamHeader";
 import { ChevronLeft, ChevronRight, Send } from "lucide-react";
@@ -230,6 +230,7 @@ export default function ExamViewer({
         <ResultView
           onRetry={handleRetry}
           license={license}
+          totalDuration={totalDuration}
         />
       </div>
     );
