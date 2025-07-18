@@ -165,7 +165,6 @@ export default function ExamViewer({
       ...prev,
       [`${question.subjectName}-${question.num}`]: choice,
     }));
-    console.log("choice", choice)
   };
 
   const handleConfirmSubmit = () => {
@@ -226,15 +225,11 @@ export default function ExamViewer({
   }
 
   if (showResult) {
-    const correctCount = allQuestions.filter(
-      (q) => answers[`${q.subjectName}-${q.num}`] === q.answer
-    ).length;
     return (
       <div className="h-full bg-[#0f172a]">
         <ResultView
-          total={allQuestions.length}
-          correct={correctCount}
           onRetry={handleRetry}
+          license={license}
         />
       </div>
     );

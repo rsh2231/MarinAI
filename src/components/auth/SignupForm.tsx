@@ -30,7 +30,7 @@ export default function SignupForm({ onSignupSuccess }: SignupFormProps) {
       }, 1500);
     } catch (err: any) {
       setError("root", {
-        message: err.message || "회원가입에 실패했습니다. 다시 시도해주세요.",
+        message: "회원가입에 실패했습니다. 다시 시도해주세요.",
       });
     }
   };
@@ -43,10 +43,14 @@ export default function SignupForm({ onSignupSuccess }: SignupFormProps) {
           type="text"
           placeholder="이름"
           className={`w-full bg-secondary/30 border px-4 py-3 rounded text-foreground-dark placeholder-secondary focus:outline-none focus:ring-2 transition-shadow ${
-            errors.indivname ? 'border-danger focus:ring-danger' : 'border-secondary/50 focus:ring-primary'
+            errors.indivname
+              ? "border-danger focus:ring-danger"
+              : "border-secondary/50 focus:ring-primary"
           }`}
         />
-        {errors.indivname && <p className="mt-1 text-sm text-danger">{errors.indivname.message}</p>}
+        {errors.indivname && (
+          <p className="mt-1 text-sm text-danger">{errors.indivname.message}</p>
+        )}
       </div>
       <div>
         <input
@@ -54,10 +58,14 @@ export default function SignupForm({ onSignupSuccess }: SignupFormProps) {
           type="email"
           placeholder="이메일"
           className={`w-full bg-secondary/30 border px-4 py-3 rounded text-foreground-dark placeholder-secondary focus:outline-none focus:ring-2 transition-shadow ${
-            errors.username ? 'border-danger focus:ring-danger' : 'border-secondary/50 focus:ring-primary'
+            errors.username
+              ? "border-danger focus:ring-danger"
+              : "border-secondary/50 focus:ring-primary"
           }`}
         />
-        {errors.username && <p className="mt-1 text-sm text-danger">{errors.username.message}</p>}
+        {errors.username && (
+          <p className="mt-1 text-sm text-danger">{errors.username.message}</p>
+        )}
       </div>
       <div>
         <input
@@ -65,13 +73,19 @@ export default function SignupForm({ onSignupSuccess }: SignupFormProps) {
           type="password"
           placeholder="비밀번호 (8자 이상)"
           className={`w-full bg-secondary/30 border px-4 py-3 rounded text-foreground-dark placeholder-secondary focus:outline-none focus:ring-2 transition-shadow ${
-            errors.password ? 'border-danger focus:ring-danger' : 'border-secondary/50 focus:ring-primary'
+            errors.password
+              ? "border-danger focus:ring-danger"
+              : "border-secondary/50 focus:ring-primary"
           }`}
         />
-        {errors.password && <p className="mt-1 text-sm text-danger">{errors.password.message}</p>}
+        {errors.password && (
+          <p className="mt-1 text-sm text-danger">{errors.password.message}</p>
+        )}
       </div>
-      
-      {errors.root && <p className="text-sm text-danger">{errors.root.message}</p>}
+
+      {errors.root && (
+        <p className="text-sm text-danger">{errors.root.message}</p>
+      )}
       {success && <p className="text-sm text-success">{success}</p>}
 
       <button

@@ -1,3 +1,5 @@
+// components/ui/Button.tsx
+
 import React from "react";
 
 type ButtonProps = {
@@ -51,9 +53,11 @@ export default function Button({
   };
 
   const selectedStyles = {
-    primary: "",
-    secondary: "",
-    neutral: "",
+    primary: "ring-2 ring-offset-2 ring-offset-neutral-900 ring-blue-500", 
+    secondary: "ring-2 ring-offset-2 ring-offset-neutral-100 ring-gray-500", 
+    neutral: `
+      !bg-blue-600 !text-white !border-transparent
+    `,
   };
 
   return (
