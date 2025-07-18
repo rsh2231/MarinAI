@@ -11,6 +11,7 @@ import {
   answersAtom,
   currentQuestionIndexAtom,
   allQuestionsAtom,
+  showResultAtom
 } from "@/atoms/examAtoms";
 
 import { QnaItem, Question } from "@/types/ProblemViewer";
@@ -56,9 +57,9 @@ export default function ExamViewer({
   const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
   const setIsLoading = useSetAtom(examLoadingAtom);
   const setError = useSetAtom(examErrorAtom);
-
+  
+  const [showResult, setShowResult] = useAtom(showResultAtom);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mainScrollRef = useRef<HTMLDivElement>(null);
 
@@ -71,7 +72,7 @@ export default function ExamViewer({
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
-      setIsSubmitted(false);
+      setShowResult(false);
       try {
         const params = new URLSearchParams({ year, license, level, round });
         const res = await fetch(`/api/solve?${params.toString()}`);
@@ -126,16 +127,17 @@ export default function ExamViewer({
     setCurrentIdx,
     setTimeLeft,
     setSelectedSubject,
+    setShowResult
   ]);
 
   useEffect(() => {
-    if (timeLeft <= 0 || isSubmitted) return;
+    if (timeLeft <= 0 || showResult) return;
     const timerId = setInterval(
       () => setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0)),
       1000
     );
     return () => clearInterval(timerId);
-  }, [timeLeft, isSubmitted, setTimeLeft]);
+  }, [timeLeft, showResult, setTimeLeft]);
 
   useEffect(() => {
     if (currentIdx < 0 || allQuestions.length === 0) return;
@@ -163,16 +165,17 @@ export default function ExamViewer({
       ...prev,
       [`${question.subjectName}-${question.num}`]: choice,
     }));
+    console.log("choice", choice)
   };
 
   const handleConfirmSubmit = () => {
     setIsSubmitModalOpen(false);
-    setIsSubmitted(true);
+    setShowResult(true);
     mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
   };
 
   const handleRetry = () => {
-    setIsSubmitted(false);
+    setShowResult(false);
     setCurrentIdx(0);
     setTimeLeft(totalDuration);
     setAnswers({});
@@ -222,7 +225,7 @@ export default function ExamViewer({
     );
   }
 
-  if (isSubmitted) {
+  if (showResult) {
     const correctCount = allQuestions.filter(
       (q) => answers[`${q.subjectName}-${q.num}`] === q.answer
     ).length;

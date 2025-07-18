@@ -48,8 +48,6 @@ export default function QuestionCardComponent({
       const choicesText = choices
         .map((c) => `${c.label}. ${c.isImage ? "(이미지 보기)" : c.text}`)
         .join("\n");
-
-      console.log(choicesText);
       const prompt = `문제 ${num}\n${questionStr}\n\n보기:\n${choicesText}\n\n정답: ${answer}`;
       solve(prompt);
     }

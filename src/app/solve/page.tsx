@@ -8,6 +8,7 @@ import {
   isOmrVisibleAtom,
   currentQuestionIndexAtom,
   selectedSubjectAtom,
+  showResultAtom,
 } from "@/atoms/examAtoms";
 
 import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
@@ -36,6 +37,7 @@ export default function SolvePage() {
   const isMobile = useWindowWidth(768);
 
   const isOmrVisible = useAtomValue(isOmrVisibleAtom);
+  const showResult = useAtomValue(showResultAtom);
   const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
   const setSelectedSubject = useSetAtom(selectedSubjectAtom);
 
@@ -87,19 +89,24 @@ export default function SolvePage() {
 
   return (
     <div className="w-full h-full">
-      <Sidebar
-        filterState={filterState}
-        className="fixed top-0 left-0 z-20 hidden h-screen w-64 shrink-0 overflow-y-auto border-r border-gray-700 bg-[#1e293b] pt-20 md:block lg:w-72"
-      />
-      {mode === "exam" && (
-        <OmrSheet onSelectQuestion={handleQuestionSelectFromOMR} />
+      {!showResult && (
+        <>
+          <Sidebar
+            filterState={filterState}
+            className="fixed top-0 left-0 z-20 hidden h-screen w-64 shrink-0 overflow-y-auto border-r border-gray-700 bg-[#1e293b] pt-20 md:block lg:w-72"
+          />
+          {mode === "exam" && (
+            <OmrSheet onSelectQuestion={handleQuestionSelectFromOMR} />
+          )}
+        </>
       )}
-      
+
       <main
         ref={mainContentRef}
-        className={`bg-[#0f172a] h-full overflow-y-auto md:ml-64 lg:ml-72 transition-all duration-300 ${
-          isOmrVisible && mode === "exam" ? "lg:mr-72" : ""
-        }`}
+        className={`bg-[#0f172a] h-full overflow-y-auto transition-all duration-300 
+          ${""}
+          ${!showResult ? "md:ml-64 lg:ml-72" : ""}
+          ${isOmrVisible && mode === "exam" && !showResult ? "lg:mr-72" : ""}`}
       >
         <AnimatePresence mode="wait">
           {!isFilterReady || !mode ? (
@@ -109,7 +116,7 @@ export default function SolvePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="h-full flex flex-col items-start px-6" 
+              className="h-full flex flex-col items-start px-6"
             >
               <div className="mt-20 mx-auto flex w-full max-w-lg flex-col items-center rounded-lg border border-gray-700 bg-[#1e293b] p-6 text-center shadow-lg sm:p-10">
                 <div className="m-8 flex flex-col items-center">
@@ -184,7 +191,7 @@ export default function SolvePage() {
           ) : null}
         </AnimatePresence>
       </main>
-      <ScrollToTopButton scrollableRef={mainContentRef} />
+      {!showResult && <ScrollToTopButton scrollableRef={mainContentRef} />}
     </div>
   );
 }
