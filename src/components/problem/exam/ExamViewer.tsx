@@ -232,6 +232,7 @@ export default function ExamViewer({
           onRetry={handleRetry}
           license={license}
           totalDuration={totalDuration}
+          scrollRef={mainScrollRef}
         />
       </div>
     );
