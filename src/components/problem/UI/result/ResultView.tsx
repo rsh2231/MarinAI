@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 import { OverallSummary } from "./OverallSummary";
 import { ExamSummaryCard } from "./ExamSummaryCard";
 import { SubjectBreakdownCard } from "./SubjectBreakdownCard";
-import { ProblemReviewHeader } from "./ProblemReiviewHeader";
+import { ProblemReviewHeader } from "./ProblemReviewHeader";
 import { QuestionResultCard } from "./QuestionResultCard";
 import { EmptyMessage } from "@/components/ui/EmptyMessage";
 
@@ -159,9 +159,9 @@ export const ResultView = ({
             subjectNames={subjectResults.map((r) => r.subjectName)}
           />
 
-          {filteredQuestions.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredQuestions.map((question, index) => (
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {filteredQuestions.length > 0 ? (
+              filteredQuestions.map((question, index) => (
                 <QuestionResultCard
                   key={`${question.subjectName}-${question.num}`}
                   question={question}
@@ -170,11 +170,13 @@ export const ResultView = ({
                   }
                   index={index}
                 />
-              ))}
-            </div>
-          ) : (
-            <EmptyMessage message="해당 조건에 맞는 문제가 없습니다." />
-          )}
+              ))
+            ) : (
+              <div className="flex md:col-span-2 justify-center items-center ">
+                <EmptyMessage message="해당 조건에 맞는 문제가 없습니다." />
+              </div>
+            )}
+          </div>
         </motion.div>
       </div>
     </div>

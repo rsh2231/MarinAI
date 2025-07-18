@@ -64,3 +64,6 @@ MyPage (최상위 페이지 컴포넌트)
 ├─ (Optional) StudyTips (학습 팁, 공지사항 등)
 ├─ (Optional) ProgressSummary (전체 학습 진행률, 목표 설정)
 └─ (Optional) QuickLinks (문제풀이, 오답노트 바로가기 링크)
+
+● 기출문제풀이, CBT
+- 이미지 데이터에 \n@PIC1113와 형식이 있어서 렌더링 안되는 문제 해결

@@ -5,11 +5,12 @@ export const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
 
   const subjectMap = new Map<string, Question[]>();
   
-  // 1. 첫 번째 함수의 유연한 정규식을 사용합니다.
-  const imageCodeRegex = /(@pic[\w_-]+)/; 
+  // 이미지 코드와 앞뒤 공백/개행을 함께 찾는 정규식
+  const imageCodeWithWhitespaceRegex = /\s*(@pic[\w_-]+)\s*/i;  
+  // 이미지 코드만 정확히 추출하기 위한 기존 정규식
+  const imageCodeRegex = /(@pic[\w_-]+)/;
 
   const findImagePath = (code: string, paths: string[]): string | undefined => {
-    // toLowerCase()를 추가하여 대소문자 구분 없이 매칭되도록 안정성을 높입니다.
     const key = code.replace("@", "").trim().toLowerCase();
     return paths.find((p) => p.toLowerCase().includes(key));
   };
@@ -18,16 +19,16 @@ export const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
     let questionStr = item.questionstr;
     let questionImagePath: string | undefined;
 
-    // 2. 첫 번째 함수의 정확한 텍스트 처리 방식을 사용합니다.
-    const questionImageMatch = item.questionstr.match(imageCodeRegex);
+    const questionImageMatch = item.questionstr.match(imageCodeWithWhitespaceRegex);
 
     if (questionImageMatch && item.imgPaths) {
-      const code = questionImageMatch[0];
+      const matchedString = questionImageMatch[0]; // ex: "\n@PIC1113"
+      const code = questionImageMatch[1];          // ex: "@PIC1113"
+
       const foundPath = findImagePath(code, item.imgPaths);
       if (foundPath) {
         questionImagePath = foundPath;
-        // 이미지 코드만 제거하고 나머지 텍스트는 유지합니다.
-        questionStr = questionStr.replace(code, "").trim();
+        questionStr = questionStr.replace(matchedString, "").trim();
       }
     }
 
@@ -40,15 +41,15 @@ export const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
       let choiceText = choice.text;
       let choiceImagePath: string | undefined;
 
-      const choiceImageMatch = choice.text.match(imageCodeRegex);
+      const choiceImageMatch = choice.text.match(imageCodeWithWhitespaceRegex);
       if (choiceImageMatch && item.imgPaths) {
-        const code = choiceImageMatch[0];
+        const matchedString = choiceImageMatch[0];
+        const code = choiceImageMatch[1];
+        
         const foundPath = findImagePath(code, item.imgPaths);
         if (foundPath) {
           choiceImagePath = foundPath;
-          // 선택지에서도 이미지 코드만 제거합니다.
-          // 이미지가 선택지의 전부라면 텍스트는 비워집니다.
-          choiceText = choiceText.replace(code, "").trim();
+          choiceText = choiceText.replace(matchedString, "").trim();
         }
       }
       
@@ -70,7 +71,7 @@ export const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
       answer: item.answer,
       explanation: item.explanation,
       subjectName: item.subject,
-      isImageQuestion: !!questionImagePath, // questionImagePath 유무로 판단하는 것이 더 정확합니다.
+      isImageQuestion: !!questionImagePath,
       imageUrl: questionImagePath
         ? `/api/solve/img/${questionImagePath}`
         : undefined,
@@ -82,7 +83,6 @@ export const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
     subjectMap.get(item.subject)!.push(question);
   });
   
-  // 3. 두 번째 함수의 필수적인 문제 정렬 기능을 추가합니다.
   return Array.from(subjectMap.entries()).map(([subjectName, questions]) => ({
     subjectName,
     questions: questions.sort((a, b) => a.num - b.num),

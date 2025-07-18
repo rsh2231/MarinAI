@@ -84,6 +84,7 @@ export default function ExamViewer({
           );
         }
         const responseData: { qnas: QnaItem[] } = await res.json();
+        console.log("Res" ,responseData)
         const allSubjectGroups = transformData(responseData.qnas);
         if (allSubjectGroups.length === 0) {
           setError("선택하신 조건에 해당하는 문제 데이터가 없습니다.");
