@@ -1,4 +1,3 @@
-import { error } from "console";
 import type { SignupFormData } from "./schemas";
 
 export async function signupViaNext(data: SignupFormData) {
@@ -28,7 +27,7 @@ export async function loginViaNext(username: string, password: string) {
 }
 
 export async function fetchCurrentUser(token: string) {
-  const res = await fetch("api/auth/me", {
+  const res = await fetch("/api/auth/me", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

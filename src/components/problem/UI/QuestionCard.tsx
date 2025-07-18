@@ -30,7 +30,9 @@ export default function QuestionCardComponent({
   const { num, questionStr, choices, answer, explanation, imageUrl } = question;
   const isPracticeMode = !!onToggle;
 
-  const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(null);
+  const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(
+    null
+  );
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   const handleClickOption = (optLabel: string) => {
@@ -46,6 +48,8 @@ export default function QuestionCardComponent({
       const choicesText = choices
         .map((c) => `${c.label}. ${c.isImage ? "(이미지 보기)" : c.text}`)
         .join("\n");
+
+      console.log(choicesText);
       const prompt = `문제 ${num}\n${questionStr}\n\n보기:\n${choicesText}\n\n정답: ${answer}`;
       solve(prompt);
     }
@@ -72,7 +76,9 @@ export default function QuestionCardComponent({
         <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none rounded-xl">
           <Lottie
             lottieRef={lottieRef}
-            animationData={feedback === "correct" ? correctAnimation : incorrectAnimation}
+            animationData={
+              feedback === "correct" ? correctAnimation : incorrectAnimation
+            }
             loop={false}
             onDOMLoaded={() => lottieRef.current?.setSpeed(2.5)}
             onComplete={() => setFeedback(null)}
@@ -109,7 +115,8 @@ export default function QuestionCardComponent({
           const isSelected = selected === opt.label;
           const isCorrect = opt.label === answer;
           const showCorrectStyle = isPracticeMode && showAnswer && isCorrect;
-          const isWrong = isPracticeMode && isSelected && !isCorrect && showAnswer;
+          const isWrong =
+            isPracticeMode && isSelected && !isCorrect && showAnswer;
 
           const base =
             "flex items-center gap-3 px-4 py-3 rounded-md border cursor-pointer transition-all text-sm sm:text-base";

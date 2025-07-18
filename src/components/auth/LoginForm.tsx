@@ -28,6 +28,9 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
       const result = await loginViaNext(data.username, data.password);
       const user = await fetchCurrentUser(result.access_token);
 
+      console.log("Result", result)
+      console.log("User", user)
+
       // 세션스토리지에 저장
       sessionStorage.setItem("access_token", result.access_token);
 
@@ -36,6 +39,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
         isLoggedIn: true,
         user,
         token: result.access_token,
+        hydrated: true
       });
 
       onLoginSuccess(); // 부모에게 성공을 알림 (모달 닫기)

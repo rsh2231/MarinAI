@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const res = await fetch(`${baseUrl}/auth/me`, {
+  const res = await fetch(`${baseUrl}/auth/sign/me`, {
     method: "GET",
     headers: {
       Authorization: authHeader,

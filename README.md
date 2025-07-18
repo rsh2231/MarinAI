@@ -53,6 +53,7 @@
 ● 기출문제풀이
 - Exam, CBT UI/UX 개선
 
+2025.07.18.
 ● 마이페이지
 MyPage (최상위 페이지 컴포넌트)
 ├─ WrongNoteView (해기사 시험 오답노트 리스트 & 요약)
@@ -63,6 +64,3 @@ MyPage (최상위 페이지 컴포넌트)
 ├─ (Optional) StudyTips (학습 팁, 공지사항 등)
 ├─ (Optional) ProgressSummary (전체 학습 진행률, 목표 설정)
 └─ (Optional) QuickLinks (문제풀이, 오답노트 바로가기 링크)
-
-
-

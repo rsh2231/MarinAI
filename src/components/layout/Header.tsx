@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -42,7 +42,6 @@ export default function Header() {
   const navItems = [
     { name: "Q&A", href: "/chat" },
     { name: "기출문제풀이", href: "/solve" },
-    { name: "오답노트", href: "/note" },
     { name: "CBT", href: "/cbt" },
     { name: "시험일정", href: "/schedule" },
   ];
@@ -56,7 +55,8 @@ export default function Header() {
             <HamburgerButton
               isOpen={isChatSidebarOpen}
               toggle={toggleChatSidebar}
-              size="sm" />
+              size="sm"
+            />
           )}
           {isSolvePage && <HamburgerButton className="md:hidden" size="sm" />}
           <h1 className="text-lg sm:text-xl font-bold tracking-wide truncate whitespace-nowrap">
@@ -82,10 +82,11 @@ export default function Header() {
                   key={item.href}
                   href={item.href}
                   onClick={handleScrollTop}
-                  className={`px-2 sm:px-3 py-1 rounded-md font-medium transition-colors duration-200 ${isActive
-                    ? 'bg-primary text-white'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                    }`}
+                  className={`px-2 sm:px-3 py-1 rounded-md font-medium transition-colors duration-200 ${
+                    isActive
+                      ? "bg-primary text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                  }`}
                 >
                   {item.name}
                 </Link>
@@ -100,7 +101,7 @@ export default function Header() {
                 >
                   마이페이지
                 </Link>
-                
+
                 <button
                   onClick={handleLogout}
                   className="px-2 sm:px-3 py-1 rounded-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
@@ -146,7 +147,10 @@ export default function Header() {
       </AnimatePresence>
 
       {/* 로그인/회원가입 모달 */}
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
     </header>
   );
 }

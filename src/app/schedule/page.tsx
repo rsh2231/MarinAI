@@ -3,8 +3,9 @@ import React from 'react'
 
 export default function SchedulePage() {
   return (
-    <div>
+    <div className='bg-neutral-900 min-h-full'> 
       <ScheduleComponent />
     </div>
   )
 }
+ 
