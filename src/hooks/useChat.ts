@@ -47,61 +47,31 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
     const signal = abortControllerRef.current.signal;
 
     try {
-      let res;
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append("message", messageContent.trim());
-        formData.append("image", imageFile);
-        res = await fetch("/api/chat", {
-          method: "POST",
-          body: formData,
-          signal,
-        });
-      } else {
-        let absoluteImageUrl = imageUrl;
-        if (imageUrl && imageUrl.startsWith("/")) {
-          absoluteImageUrl = new URL(imageUrl, window.location.origin).href;
-        }
+      // 항상 FormData 사용
+      const formData = new FormData();
+      formData.append("question", messageContent.trim());
+      if (imageFile) formData.append("image", imageFile);
 
-        res = await fetch("/api/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: messageContent.trim(),
-            imageUrl: absoluteImageUrl,
-          }),
-          signal,
-        });
-      }
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        body: formData,
+        signal,
+      });
 
-      if (!res.ok || !res.body) {
+      if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.error || "API 요청에 실패했습니다.");
       }
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let accumulatedContent = "";
-
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-
-        accumulatedContent += decoder.decode(value, { stream: true });
-        setMessages((prev) =>
-          prev.map((msg) =>
-            msg.id === assistantMessageId
-              ? { ...msg, content: accumulatedContent }
-              : msg
-          )
-        );
-      }
-
-      // ✅ 스트리밍이 정상적으로 끝난 경우에만 로딩 해제
+      const data = await res.json();
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === assistantMessageId
+            ? { ...msg, content: data.answer }
+            : msg
+        )
+      );
       setIsLoading(false);
-
     } catch (error: any) {
       if (error.name === "AbortError") {
         console.log("답변 생성이 중단되었습니다.");
@@ -122,11 +92,8 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
             : msg
         )
       );
-
-      // ✅ 예외 상황에서만 로딩 해제
       setIsLoading(false);
     } finally {
-      // ✅ finally에서는 오직 cleanup (URL revoke 등)만
       if (userMessage.image && imageFile) {
         URL.revokeObjectURL(userMessage.image);
       }

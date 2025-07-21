@@ -240,15 +240,15 @@ export const ResultView = ({
               filteredQuestions
                 .slice(0, renderCount)
                 .map((question, index) => (
-                  <QuestionResultCard
-                    key={`${question.subjectName}-${question.num}`}
-                    question={question}
-                    userAnswer={
-                      answers[`${question.subjectName}-${question.num}`]
-                    }
-                    index={index}
-                  />
-                ))
+                <QuestionResultCard
+                  key={`${question.subjectName}-${question.num}`}
+                  question={question}
+                  userAnswer={
+                    answers[`${question.subjectName}-${question.num}`]
+                  }
+                  index={index}
+                />
+              ))
             ) : (
               <div className="flex md:col-span-2 justify-center items-center ">
                 <EmptyMessage message="해당 조건에 맞는 문제가 없습니다." />

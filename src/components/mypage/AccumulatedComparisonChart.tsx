@@ -87,3 +87,4 @@ export default function AccumulatedComparisonChart() {
     </div>
   );
 }
+ 
