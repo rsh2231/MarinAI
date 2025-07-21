@@ -15,7 +15,7 @@ import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
 import { Question } from "@/types/ProblemViewer";
 
 import Sidebar from "@/components/layout/Sidebar";
-import ProblemViewer from "@/components/problem/solve/ProblemViewer";
+import ProblemViewer from "@/components/problem/practice/ProblemViewer";
 import ExamViewer from "@/components/problem/exam/ExamViewer";
 import { OmrSheet } from "@/components/problem/exam/OmrSheet";
 import Button from "@/components/ui/Button";

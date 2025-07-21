@@ -29,7 +29,7 @@ function GoogleIcon() {
 
 export default function OAuthButton() {
   const redirectToOAuth = () => {
-    window.location.href = "/api/auth/oauth"; // Next.js 서버 → FastAPI로 리다이렉트
+    window.location.href = "/api/auth/oauth";
   };
 
   return (

@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
 interface SubjectFilterTabsProps {
@@ -18,13 +19,31 @@ export const SubjectFilterTabs = ({
     ...subjectNames.map((name) => ({ label: name, value: name })),
   ];
 
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const idx = tabs.findIndex((tab) => tab.value === selectedSubject);
+    if (idx !== -1 && tabRefs.current[idx]) {
+      tabRefs.current[idx]?.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  }, [selectedSubject, tabs]);
+
   return (
-    <div className="flex space-x-6 border-b border-neutral-700">
-      {tabs.map((tab) => (
+    <div className="flex overflow-x-auto no-scrollbar space-x-2 sm:space-x-6 border-b border-neutral-700 pb-1">
+      {tabs.map((tab, i) => (
         <button
           key={tab.value}
+          ref={(el) => {
+            tabRefs.current[i] = el;
+          }}
           onClick={() => setSelectedSubject(tab.value)}
-          className={`relative py-2 px-1 text-sm font-medium transition-colors
+          className={`
+            relative py-2 px-3 text-sm font-medium transition-colors
+            min-w-[80px] max-w-[120px] truncate
             ${
               selectedSubject === tab.value
                 ? "text-white"
@@ -32,10 +51,7 @@ export const SubjectFilterTabs = ({
             }
           `}
         >
-          {/* 탭 텍스트 */}
           {tab.label}
-
-          {/* 선택된 탭 아래에만 밑줄 렌더링 및 애니메이션 */}
           {selectedSubject === tab.value && (
             <motion.div
               className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-blue-500"
