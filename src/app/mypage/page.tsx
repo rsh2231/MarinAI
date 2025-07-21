@@ -10,6 +10,7 @@ import PerformanceRadarChart from "@/components/mypage/PerformanceRadarChart";
 import WrongNoteView from "@/components/mypage/WrongNoteView";
 import ExamResultView from "@/components/mypage/ExamResultView";
 import CbtResultView from "@/components/mypage/CbtResultView";
+import AccumulatedComparisonChart from "@/components/mypage/AccumulatedComparisonChart";
 
 export default function MyPage() {
   const router = useRouter();
@@ -26,28 +27,36 @@ export default function MyPage() {
   return (
     <div className="bg-neutral-900 text-white min-h-screen p-4 sm:p-6 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <header className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold">마이페이지</h1>
-          <p className="text-neutral-400 mt-2">
-            나의 학습 현황을 한눈에 확인하세요.
-          </p>
+        <header className="mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0 min-h-24">
+          <div className="flex flex-col justify-center h-full text-center sm:text-left">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">마이페이지</h1>
+            <p className="text-neutral-400 mt-1 sm:mt-2 text-sm sm:text-base">
+              나의 학습 현황을 한눈에 확인하세요.
+            </p>
+          </div>
+          <div className="flex justify-center sm:block">
+            <UserProfile />
+          </div>
         </header>
 
-        {/* 반응형 그리드 레이아웃 */}
-        <main className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* 주요 컨텐츠 영역 (왼쪽) */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            <WrongNoteView />
-            <ExamResultView />
-            <CbtResultView />
+        {/* 상단 2단 그리드 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-6 mb-6 sm:mb-8">
+          {/* 왼쪽: 누적 비교 그래프 */}
+          <div className="bg-neutral-800 rounded-xl p-4 md:p-6 mb-4 md:mb-0">
+            <AccumulatedComparisonChart />
           </div>
-
-          {/* 사이드바 영역 (오른쪽) */}
-          <div className="lg:col-span-1 flex flex-col gap-6">
-            <UserProfile />
+          {/* 오른쪽: 성취도 그래프 */}
+          <div className="bg-neutral-800 rounded-xl p-4 md:p-6">
             <PerformanceRadarChart />
           </div>
-        </main>
+        </div>
+
+        {/* 하단 1단 그리드 */}
+        <div className="flex flex-col gap-6">
+          <WrongNoteView />
+          <ExamResultView />
+          <CbtResultView />
+        </div>
       </div>
     </div>
   );

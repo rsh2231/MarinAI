@@ -4,11 +4,11 @@
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 const data = [
-  { subject: '항해학', A: 85, fullMark: 100 },
-  { subject: '운용술', A: 90, fullMark: 100 },
-  { subject: '법규', A: 75, fullMark: 100 },
-  { subject: '기관술', A: 65, fullMark: 100 },
-  { subject: '선박일반', A: 95, fullMark: 100 },
+  { subject: '기관1', A: 85, fullMark: 100 },
+  { subject: '기관2', A: 93, fullMark: 100 },
+  { subject: '기관3', A: 78, fullMark: 100 },
+  { subject: '직무일반', A: 70, fullMark: 100 },
+  { subject: '영어', A: 65, fullMark: 100 },
 ];
 
 export default function PerformanceRadarChart() {

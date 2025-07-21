@@ -76,7 +76,7 @@ export const OverallSummary = ({ score, isPass }: OverallSummaryProps) => {
           }`}
       >
         {isPass ? <BadgeCheck size={22} /> : <XCircle size={22} />}
-        <span>{isPass ? "합격입니다!" : "아쉽지만, 불합격입니다."}</span>
+        <span>{isPass ? "합격입니다." : "불합격입니다."}</span>
       </motion.div>
     </div>
   );

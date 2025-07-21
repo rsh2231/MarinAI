@@ -1,22 +1,115 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ClipboardList } from "lucide-react";
-import Link from 'next/link';
+import {
+  ClipboardList,
+  ChevronRight,
+  ChevronDown,
+  ChevronUp,
+  ArrowUpRight,
+} from "lucide-react";
+import Link from "next/link";
+import MiniBarChart from "./MiniBarChart";
 
 const dummyResults = [
-  { id: 1, title: '2024년 2회차 5급 해기사 기출', score: '88점', date: '2025-07-16' },
-  { id: 2, title: '2024년 1회차 5급 해기사 기출', score: '82점', date: '2025-07-11' },
+  {
+    id: 1,
+    title: "기관사 5급 CBT",
+    score: "91점",
+    date: "2025-07-18",
+    subjectScores: [
+      { subject: "기관1", score: 85 },
+      { subject: "기관2", score: 90 },
+      { subject: "기관3", score: 78 },
+      { subject: "직무일반", score: 70 },
+      { subject: "영어", score: 65 },
+    ],
+  },
+  {
+    id: 2,
+    title: "기관사 5급 CBT",
+    score: "85점",
+    date: "2025-07-12",
+    subjectScores: [
+      { subject: "기관1", score: 80 },
+      { subject: "기관2", score: 85 },
+      { subject: "기관3", score: 72 },
+      { subject: "직무일반", score: 68 },
+      { subject: "영어", score: 60 },
+    ],
+  },
+  {
+    id: 3,
+    title: "기관사 5급 CBT",
+    score: "89점",
+    date: "2024-07-18",
+    subjectScores: [
+      { subject: "기관1", score: 88 },
+      { subject: "기관2", score: 92 },
+      { subject: "기관3", score: 80 },
+      { subject: "직무일반", score: 75 },
+      { subject: "영어", score: 70 },
+    ],
+  },
+  {
+    id: 4,
+    title: "기관사 5급 CBT",
+    score: "83점",
+    date: "2024-07-12",
+    subjectScores: [
+      { subject: "기관1", score: 82 },
+      { subject: "기관2", score: 87 },
+      { subject: "기관3", score: 76 },
+      { subject: "직무일반", score: 70 },
+      { subject: "영어", score: 65 },
+    ],
+  },
+  {
+    id: 5,
+    title: "기관사 5급 CBT",
+    score: "86점",
+    date: "2023-07-18",
+    subjectScores: [
+      { subject: "기관1", score: 84 },
+      { subject: "기관2", score: 89 },
+      { subject: "기관3", score: 74 },
+      { subject: "직무일반", score: 68 },
+      { subject: "영어", score: 62 },
+    ],
+  },
+  {
+    id: 6,
+    title: "해기사 5급 CBT",
+    score: "79점",
+    date: "2023-07-12",
+    subjectScores: [
+      { subject: "기관1", score: 78 },
+      { subject: "기관2", score: 83 },
+      { subject: "기관3", score: 70 },
+      { subject: "직무일반", score: 65 },
+      { subject: "영어", score: 60 },
+    ],
+  },
 ];
 
 export default function CbtResultView() {
   const [results, setResults] = useState(dummyResults);
+  const [showAll, setShowAll] = useState(false);
+  const [openIds, setOpenIds] = useState<number[]>([]);
+  const visibleResults = showAll ? results : results.slice(0, 5);
+
+  const toggleOpen = (id: number) => {
+    setOpenIds((ids) =>
+      ids.includes(id) ? ids.filter((i) => i !== id) : [...ids, id]
+    );
+  };
+
   useEffect(() => {
     const fetchResults = async () => {
       const token = sessionStorage.getItem("access_token");
       if (!token) return;
       try {
         const res = await fetch("/api/mypage/cbt-results", {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {
           const data = await res.json();
@@ -32,26 +125,122 @@ export default function CbtResultView() {
   return (
     <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
       <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-        <ClipboardList size={22} />CBT 풀이 결과
+        <ClipboardList size={22} />
+        CBT 풀이 결과
       </h3>
-      <ul className="space-y-3">
-        {results.map(result => (
-          <li key={result.id}>
-            <Link href={`/mypage/cbt-result/${result.id}`} className="flex justify-between items-center p-3 bg-neutral-700/50 rounded-md hover:bg-neutral-700 transition-colors">
-              <div>
-                <p className="font-semibold">{result.title}</p>
-                <p className="text-xs text-neutral-400">{result.date}</p>
-              </div>
-              <span className="font-bold text-blue-400">{result.score}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <div className="text-right mt-4">
-        <Link href="/cbt/results" className="text-sm text-blue-400 hover:text-blue-300">
-          전체 결과 보기 →
-        </Link>
-      </div>
+      {visibleResults.length === 0 ? (
+        <p className="text-neutral-400">저장된 결과가 없습니다.</p>
+      ) : (
+        <div className="relative">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {results.slice(0, 4).map((result) => {
+              const open = openIds.includes(result.id);
+              return (
+                <li key={result.id} className="flex flex-col">
+                  <button
+                    className="flex justify-between items-center w-full p-2 sm:p-3 rounded-md font-semibold bg-neutral-700/50 focus:bg-blue-900/60 transition-colors outline-none ring-2 ring-transparent focus:ring-blue-400 text-xs sm:text-base"
+                    aria-expanded={open}
+                    aria-controls={`accordion-content-${result.id}`}
+                    onClick={() => toggleOpen(result.id)}
+                  >
+                    <div className="min-w-0">
+                      <p className="font-semibold truncate max-w-[180px] sm:max-w-xs md:max-w-sm">{result.title}</p>
+                      <p className="text-xs text-neutral-400">{result.date}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-blue-400 text-xs sm:text-base">{result.score}</span>
+                      <ChevronRight
+                        size={20}
+                        className={`transition-transform duration-300 ${open ? 'rotate-90 text-blue-400' : 'text-neutral-500'}`}
+                      />
+                    </div>
+                  </button>
+                  <div
+                    id={`accordion-content-${result.id}`}
+                    className={`transition-all duration-500 bg-neutral-900/90 rounded-b-md shadow-inner will-change-[max-height,opacity,transform] ${open ? 'max-h-60 opacity-100 scale-100 py-2 sm:py-3 px-2 sm:px-4 mt-1' : 'max-h-0 opacity-0 scale-95 py-0 px-2 sm:px-4'}`}
+                    aria-hidden={!open}
+                  >
+                    {open && (
+                      <>
+                        <MiniBarChart data={result.subjectScores} />
+                        <div className="flex justify-end mt-2">
+                          <Link
+                            href={`/mypage/cbt-result/${result.id}`}
+                            className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 px-2 py-1 rounded"
+                          >
+                            상세보기 <ArrowUpRight size={16} />
+                          </Link>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+            <div
+              className={`col-span-full transition-all duration-700 overflow-hidden ${showAll ? "max-h-96 opacity-100 scale-100" : "max-h-0 opacity-0 scale-95"}`}
+            >
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {results.slice(4).map((result) => {
+                  const open = openIds.includes(result.id);
+                  return (
+                    <li key={result.id} className="flex flex-col">
+                      <button
+                        className="flex justify-between items-center w-full p-2 sm:p-3 rounded-md font-semibold bg-neutral-700/50 focus:bg-blue-900/60 transition-colors outline-none ring-2 ring-transparent focus:ring-blue-400 text-xs sm:text-base"
+                        aria-expanded={open}
+                        aria-controls={`accordion-content-${result.id}`}
+                        onClick={() => toggleOpen(result.id)}
+                      >
+                        <div className="min-w-0">
+                          <p className="font-semibold truncate max-w-[180px] sm:max-w-xs md:max-w-sm">{result.title}</p>
+                          <p className="text-xs text-neutral-400">{result.date}</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-blue-400 text-xs sm:text-base">{result.score}</span>
+                          <ChevronRight
+                            size={20}
+                            className={`transition-transform duration-300 ${open ? 'rotate-90 text-blue-400' : 'text-neutral-500'}`}
+                          />
+                        </div>
+                      </button>
+                      <div
+                        id={`accordion-content-${result.id}`}
+                        className={`transition-all duration-500 bg-neutral-900/90 rounded-b-md shadow-inner will-change-[max-height,opacity,transform] ${open ? 'max-h-60 opacity-100 scale-100 py-2 sm:py-3 px-2 sm:px-4 mt-1' : 'max-h-0 opacity-0 scale-95 py-0 px-2 sm:px-4'}`}
+                        aria-hidden={!open}
+                      >
+                        {open && (
+                          <>
+                            <MiniBarChart data={result.subjectScores} />
+                            <div className="flex justify-end mt-2">
+                              <Link
+                                href={`/mypage/cbt-result/${result.id}`}
+                                className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 px-2 py-1 rounded"
+                              >
+                                상세보기 <ArrowUpRight size={16} />
+                              </Link>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </ul>
+          {results.length > 5 && (
+            <div className="flex justify-end mt-2">
+              <button
+                className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 px-3 py-2 rounded transition-all"
+                onClick={() => setShowAll((v) => !v)}
+              >
+                {showAll ? "닫기" : "전체 결과 보기"}
+                {showAll ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
