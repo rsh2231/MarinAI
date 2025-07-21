@@ -108,7 +108,7 @@ export default function SolvePage() {
 
       <main
         ref={mainContentRef}
-        className={`bg-[#0f172a] h-full overflow-y-auto transition-all duration-300
+        className={`bg-[#0f172a] h-full transition-all duration-300
           ${!showResult ? "md:ml-64 lg:ml-72" : ""}
           ${isOmrVisible && mode === "exam" && !showResult ? "lg:mr-72" : ""}`}
       >

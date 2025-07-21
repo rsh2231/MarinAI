@@ -25,7 +25,7 @@ interface ResultViewProps {
   onRetry: () => void;
   license: LicenseType;
   totalDuration: number;
-  scrollRef: RefObject<HTMLDivElement | null>;
+  scrollRef: RefObject<HTMLElement | null>;
 }
 
 export interface SubjectResult {

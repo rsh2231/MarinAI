@@ -35,7 +35,7 @@ interface Props {
   level: string;
   round: string;
   selectedSubjects: string[];
-  scrollRef?: React.RefObject<HTMLElement>;
+  scrollRef?: React.RefObject<HTMLElement | null>;
 }
 
 const DURATION_PER_SUBJECT_SECONDS = 25 * 60;
@@ -57,13 +57,13 @@ export default function ExamViewer({
   const [answers, setAnswers] = useAtom(answersAtom);
   const [currentIdx, setCurrentIdx] = useAtom(currentQuestionIndexAtom);
   const allQuestions = useAtomValue(allQuestionsAtom);
-    const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
+  const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
   const setIsLoading = useSetAtom(examLoadingAtom);
   const setError = useSetAtom(examErrorAtom);
-  
+
   // 인증 상태 가져오기
   const auth = useAtomValue(authAtom);
-  
+
   const [showResult, setShowResult] = useAtom(showResultAtom);
   const setGlobalShowResult = useSetAtom(showResultAtom);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
@@ -102,7 +102,7 @@ export default function ExamViewer({
         const headers: HeadersInit = {
           "Content-Type": "application/json",
         };
-        
+
         // 로그인한 사용자만 인증 헤더 추가
         if (auth.token && auth.isLoggedIn) {
           headers.Authorization = `Bearer ${auth.token}`;
@@ -110,7 +110,7 @@ export default function ExamViewer({
         } else {
           console.log("비로그인 사용자로 시험 시작");
         }
-        
+
         const res = await fetch(`/api/solve?${params.toString()}`, {
           method: "GET",
           headers,
@@ -119,7 +119,7 @@ export default function ExamViewer({
           const errorData = await res.json();
           throw new Error(
             errorData.message ||
-              `HTTP ${res.status}: 데이터를 불러오는데 실패했습니다.`
+            `HTTP ${res.status}: 데이터를 불러오는데 실패했습니다.`
           );
         }
         const responseData: { qnas: QnaItem[] } = await res.json();
@@ -252,7 +252,7 @@ export default function ExamViewer({
       // 비로그인 사용자는 로컬에만 임시 저장
       saveToLocalStorage(resultData);
       console.log("비로그인 사용자: 결과가 로컬에 임시 저장되었습니다.");
-      
+
       // 사용자에게 로그인 유도 메시지
       if (typeof window !== "undefined" && "Notification" in window) {
         if (Notification.permission === "granted") {
