@@ -35,6 +35,7 @@ interface Props {
   level: string;
   round: string;
   selectedSubjects: string[];
+  scrollRef?: React.RefObject<HTMLElement>;
 }
 
 const DURATION_PER_SUBJECT_SECONDS = 25 * 60;
@@ -46,6 +47,7 @@ export default function ExamViewer({
   level,
   round,
   selectedSubjects,
+  scrollRef,
 }: Props) {
   const isLoading = useAtomValue(examLoadingAtom);
   const error = useAtomValue(examErrorAtom);
@@ -264,7 +266,11 @@ export default function ExamViewer({
 
     setShowResult(true);
     setGlobalShowResult(true); // 전역 상태도 설정
-    mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
+    if (scrollRef && scrollRef.current) {
+      scrollRef.current.scrollTo({ top: 0, behavior: "instant" });
+    } else {
+      mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
+    }
   }, [
     setShowResult,
     setGlobalShowResult,
@@ -277,6 +283,7 @@ export default function ExamViewer({
     level,
     round,
     selectedSubjects,
+    scrollRef,
   ]);
 
   useEffect(() => {
@@ -330,8 +337,12 @@ export default function ExamViewer({
     setIsSubmitModalOpen(false);
     setShowResult(true);
     setGlobalShowResult(true); // 전역 상태도 설정
-    mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
-  }, [setIsSubmitModalOpen, setShowResult, setGlobalShowResult]);
+    if (scrollRef && scrollRef.current) {
+      scrollRef.current.scrollTo({ top: 0, behavior: "instant" });
+    } else {
+      mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [setIsSubmitModalOpen, setShowResult, setGlobalShowResult, scrollRef]);
 
   const handleRetry = () => {
     setShowResult(false);
@@ -390,7 +401,7 @@ export default function ExamViewer({
         onRetry={handleRetry}
         license={license}
         totalDuration={totalDuration}
-        scrollRef={mainScrollRef}
+        scrollRef={scrollRef ?? mainScrollRef}
       />
     );
   }

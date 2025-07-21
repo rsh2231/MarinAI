@@ -38,10 +38,23 @@ export interface SubjectResult {
 
 const CHUNK_SIZE = 30; // 점진적 렌더링 시 한 번에 추가할 문제 개수
 
+// 모바일 환경 감지 훅
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
 export const ResultView = ({
   onRetry,
   license,
   totalDuration,
+  scrollRef,
 }: ResultViewProps) => {
   // jotai atom에서 문제/답안/시간 등 상태 가져오기
   const groupedQuestions = useAtomValue(groupedQuestionsAtom);
@@ -77,27 +90,47 @@ export const ResultView = ({
     }
   }, [allQuestions, answers, showOnlyWrong, selectedSubject, groupedQuestions]);
 
-  // 점진적 렌더링: 한 번에 CHUNK_SIZE개씩 추가 렌더링
-  const [renderCount, setRenderCount] = useState(CHUNK_SIZE);
+  const isMobile = useIsMobile();
 
-  // filteredQuestions가 늘어날 때마다 일정 간격으로 renderCount 증가
+  // 마운트 시 모든 주요 컨테이너에 대해 3회 반복 스크롤 최상단 이동
   useEffect(() => {
+    const scrollToTop = () => {
+      if (scrollRef && scrollRef.current) {
+        scrollRef.current.scrollTo({ top: 0, behavior: "instant" });
+      }
+      window.scrollTo({ top: 0, behavior: "instant" });
+      if (document.body) document.body.scrollTop = 0;
+      if (document.documentElement) document.documentElement.scrollTop = 0;
+      document.querySelectorAll('div,main,section').forEach(el => {
+        el.scrollTop = 0;
+      });
+    };
+    scrollToTop();
+    setTimeout(scrollToTop, 100);
+    setTimeout(scrollToTop, 300);
+  }, []);
+
+  // 점진적 렌더링: 모바일은 전체, 데스크탑은 CHUNK_SIZE씩
+  const [renderCount, setRenderCount] = useState(isMobile ? filteredQuestions.length : CHUNK_SIZE);
+
+  useEffect(() => {
+    if (isMobile) {
+      setRenderCount(filteredQuestions.length);
+      return;
+    }
     if (renderCount < filteredQuestions.length) {
       const id = setTimeout(
-        () =>
-          setRenderCount((c) =>
-            Math.min(c + CHUNK_SIZE, filteredQuestions.length)
-          ),
-        16 // 약 1프레임(60fps)마다 추가 렌더링
+        () => setRenderCount((c) => Math.min(c + CHUNK_SIZE, filteredQuestions.length)),
+        16
       );
       return () => clearTimeout(id);
     }
-  }, [renderCount, filteredQuestions.length, selectedSubject, showOnlyWrong]);
+  }, [renderCount, filteredQuestions.length, selectedSubject, showOnlyWrong, isMobile]);
 
   // 탭/옵션 변경 시 renderCount 초기화
   useEffect(() => {
-    setRenderCount(CHUNK_SIZE);
-  }, [selectedSubject, showOnlyWrong]);
+    setRenderCount(isMobile ? filteredQuestions.length : CHUNK_SIZE);
+  }, [selectedSubject, showOnlyWrong, filteredQuestions.length, isMobile]);
 
   // 시험 요약/통계 계산 (점수, 통과 여부, 과목별 결과 등)
   const { isPass, overallScore, subjectResults } = useMemo(() => {
@@ -173,7 +206,7 @@ export const ResultView = ({
           className="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: isMobile ? 0.2 : 0.5 }}
         >
           <div className="md:col-span-1 lg:col-span-1">
             <OverallSummary score={overallScore} isPass={isPass} />

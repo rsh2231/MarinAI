@@ -190,6 +190,7 @@ export default function SolvePage() {
                 level={level}
                 round={round}
                 selectedSubjects={selectedSubjects}
+                scrollRef={mainContentRef}
               />
             </motion.div>
           ) : null}

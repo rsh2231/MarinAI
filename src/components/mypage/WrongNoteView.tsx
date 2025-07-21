@@ -38,7 +38,7 @@ export default function WrongNoteView() {
       setError(null);
 
       const serverNotes = await getWrongNotesFromServer(auth.token);
-      setNotes(serverNotes.slice(0, 5)); // 최근 5개만 표시
+      setNotes(serverNotes);
     } catch (err) {
       console.error("오답노트 로딩 실패:", err);
       setError("오답노트를 불러오는데 실패했습니다.");
@@ -49,6 +49,7 @@ export default function WrongNoteView() {
 
   useEffect(() => {
     fetchWrongNotes();
+    console.log("Notes", notes);
   }, [fetchWrongNotes]);
 
   if (loading) {
