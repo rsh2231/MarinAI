@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useState } from "react";
 import { Question, Choice } from "@/types/ProblemViewer";
 import { Check, X, ChevronsUpDown, HelpCircle } from "lucide-react";
@@ -42,7 +43,7 @@ const getStatus = (
   return { status: isCorrect ? "correct" : "incorrect", isCorrect };
 };
 
-export const QuestionResultCard = ({
+const QuestionResultCardInner = ({
   question,
   userAnswer,
   index,
@@ -187,3 +188,5 @@ export const QuestionResultCard = ({
     </motion.div>
   );
 };
+
+export const QuestionResultCard = React.memo(QuestionResultCardInner);

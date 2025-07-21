@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, RefObject } from "react";
-import { useSetAtom } from "jotai";
-import { QnaItem } from "@/types/ProblemViewer";
+import { useSetAtom, useAtomValue } from "jotai";
+import { QnaItem, CbtData} from "@/types/ProblemViewer";
+import { authAtom } from "@/atoms/authAtom";
 import {
   answersAtom,
   groupedQuestionsAtom,
@@ -31,12 +32,16 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
   const [currentLicense, setCurrentLicense] = useState<LicenseType | null>(
     null
   );
+  const [currentLevel, setCurrentLevel] = useState<string>("");
   const [totalDuration, setTotalDuration] = useState(0);
 
   const setAnswers = useSetAtom(answersAtom);
   const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
   const setSelectedSubject = useSetAtom(selectedSubjectAtom);
   const setTimeLeft = useSetAtom(timeLeftAtom);
+  
+  // 인증 상태 가져오기
+  const auth = useAtomValue(authAtom);
 
   const handleStartExam = async (settings: {
     license: LicenseType;
@@ -55,7 +60,23 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
         params.append("subjects", subject)
       );
 
-      const res = await fetch(`/api/cbt?${params.toString()}`);
+      // 인증 헤더 추가 (선택적)
+      const headers: HeadersInit = {
+        "Content-Type": "application/json",
+      };
+      
+      // 로그인한 사용자만 인증 헤더 추가
+      if (auth.token && auth.isLoggedIn) {
+        headers.Authorization = `Bearer ${auth.token}`;
+        console.log("로그인한 사용자로 CBT 시작", auth);
+      } else {
+        console.log("비로그인 사용자로 CBT 시작");
+      }
+      
+      const res = await fetch(`/api/cbt?${params.toString()}`, {
+        method: "GET",
+        headers,
+      });
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -64,9 +85,23 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
         );
       }
 
-      const responseData = (await res.json()) as Record<string, QnaItem[]>;
-      const allQnas: QnaItem[] = Object.values(responseData).flat();
+      const responseData = await res.json() as CbtData;
+      console.log("CBT API Response:", responseData);
+      
+      // 새로운 응답 구조 처리
+      let allQnas: QnaItem[] = [];
+      if (responseData.subjects) {
+        // subjects 객체의 모든 값들을 배열로 변환
+        allQnas = Object.values(responseData.subjects).flat();
+        console.log("Extracted QnAs from subjects:", allQnas.length);
+      } else {
+        // 기존 구조와의 호환성을 위해 fallback
+        allQnas = Object.values(responseData).flat() as QnaItem[];
+        console.log("Using fallback structure, QnAs:", allQnas.length);
+      }
+      
       const transformed = transformData(allQnas);
+      console.log("Transformed data:", transformed.length, "subject groups");
 
       if (transformed.length === 0) {
         setError("선택하신 조건에 해당하는 문제 데이터가 없습니다.");
@@ -80,6 +115,7 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
         setTimeLeft(duration);
         setTotalDuration(duration); // 전체 시간 저장
         setCurrentLicense(settings.license); // 라이선스 종류 저장
+        setCurrentLevel(settings.level); // 레벨 저장
 
         setStatus("in-progress");
       }
@@ -102,6 +138,7 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
 
     // 재시도 시 상태 초기화
     setCurrentLicense(null);
+    setCurrentLevel("");
     setTotalDuration(0);
 
     setStatus("not-started");
@@ -109,7 +146,14 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
 
   switch (status) {
     case "in-progress":
-      return <CbtInProgress onSubmit={handleSubmit} scrollRef={scrollRef} />;
+      return (
+        <CbtInProgress 
+          onSubmit={handleSubmit} 
+          scrollRef={scrollRef}
+          license={currentLicense}
+          level={currentLevel}
+        />
+      );
 
     case "finished":
       if (!currentLicense) {
@@ -129,7 +173,7 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
     case "not-started":
     default:
       return (
-        <div className="pt-15">
+        <div className="flex justify-center items-center h-full">
           <CbtSettings
             onStartCbt={handleStartExam}
             isLoading={isLoading}

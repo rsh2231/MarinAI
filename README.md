@@ -60,10 +60,15 @@ MyPage (최상위 페이지 컴포넌트)
 ├─ PracticeResultView (기출문제 실전모드 결과 요약 및 상세)
 ├─ CbtResultView (CBT 모의시험 결과 리스트 및 통계)
 ├─ PerformanceRadarChart (과목별 성과를 시각화하는 레이더 차트)
-├─ (Optional) UserProfile (사용자 기본정보, 닉네임, 이메일 등)
-├─ (Optional) StudyTips (학습 팁, 공지사항 등)
-├─ (Optional) ProgressSummary (전체 학습 진행률, 목표 설정)
-└─ (Optional) QuickLinks (문제풀이, 오답노트 바로가기 링크)
+├─ UserProfile (사용자 기본정보, 닉네임, 이메일 등)
+
 
 ● 기출문제풀이, CBT
 - 이미지 데이터에 \n@PIC1113와 형식이 있어서 렌더링 안되는 문제 해결
+
+
+2025.07.21.
+● 마이페이지
+- 백엔드 연동(오답노트, 기출문제 및 CBT 풀이 결과)
+
+

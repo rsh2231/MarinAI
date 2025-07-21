@@ -9,6 +9,7 @@ import {
   RefObject,
 } from "react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { authAtom } from "@/atoms/authAtom";
 import {
   answersAtom,
   groupedQuestionsAtom,
@@ -30,11 +31,13 @@ import ScrollToTopButton from "../ui/ScrollToTopButton";
 interface CbtInProgressProps {
   onSubmit: () => void;
   scrollRef: RefObject<HTMLDivElement | null>;
+  license: "기관사" | "항해사" | "소형선박조종사" | null;
+  level: string;
 }
 
 const HEADER_HEIGHT_PX = 120;
 
-export function CbtInProgress({ onSubmit, scrollRef }: CbtInProgressProps) {
+export function CbtInProgress({ onSubmit, scrollRef, license, level }: CbtInProgressProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [answers, setAnswers] = useAtom(answersAtom);
   const [selectedSubject, setSelectedSubject] = useAtom(selectedSubjectAtom);
@@ -43,6 +46,9 @@ export function CbtInProgress({ onSubmit, scrollRef }: CbtInProgressProps) {
   const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
   const [timeLeft, setTimeLeft] = useAtom(timeLeftAtom);
   const currentIdx = useAtomValue(currentQuestionIndexAtom);
+  
+  // 인증 상태 가져오기
+  const auth = useAtomValue(authAtom);
 
   const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -106,10 +112,98 @@ export function CbtInProgress({ onSubmit, scrollRef }: CbtInProgressProps) {
 
   const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
 
-  const handleConfirmSubmit = () => {
+  // 로컬 저장 함수
+  const saveToLocalStorage = useCallback((resultData: any) => {
+    try {
+      const existingResults = JSON.parse(
+        localStorage.getItem("cbtResults") || "[]"
+      );
+      existingResults.push(resultData);
+      localStorage.setItem("cbtResults", JSON.stringify(existingResults));
+    } catch (error) {
+      console.error("로컬 저장 실패:", error);
+    }
+  }, []);
+
+  // 서버 저장 함수
+  const saveCbtResultToServer = useCallback(async (resultData: any, token: string) => {
+    try {
+      const response = await fetch("/api/cbt/result", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(resultData),
+      });
+
+      if (!response.ok) {
+        throw new Error("서버 저장 실패");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("서버 저장 오류:", error);
+      throw error;
+    }
+  }, []);
+
+  const handleConfirmSubmit = useCallback(async () => {
     setIsModalOpen(false);
+    
+    // 결과 데이터 생성
+    const resultData = {
+      answers,
+      totalQuestions: allQuestionsData.length,
+      timeTaken: 0, // CBT는 시간 제한이 없으므로 0
+      submittedAt: new Date().toISOString(),
+      isAutoSubmitted: false,
+      cbtInfo: {
+        license: license || "항해사",
+        level: level,
+        subjects: subjectNames,
+      },
+    };
+
+    // 로그인한 사용자만 결과 저장
+    if (auth.token && auth.isLoggedIn) {
+      try {
+        // 서버에 결과 저장 (로그인한 사용자)
+        await saveCbtResultToServer(resultData, auth.token);
+        console.log("CBT 결과가 서버에 저장되었습니다.");
+      } catch (error) {
+        console.error("서버 저장 실패:", error);
+        // 서버 저장 실패 시 로컬에 임시 저장
+        saveToLocalStorage(resultData);
+      }
+    } else {
+      // 비로그인 사용자는 로컬에만 임시 저장
+      saveToLocalStorage(resultData);
+      console.log("비로그인 사용자: CBT 결과가 로컬에 임시 저장되었습니다.");
+      
+      // 사용자에게 로그인 유도 메시지
+      if (typeof window !== "undefined" && "Notification" in window) {
+        if (Notification.permission === "granted") {
+          new Notification("로그인 권장", {
+            body: "로그인하면 CBT 결과를 마이페이지에서 확인할 수 있습니다.",
+            icon: "/favicon.ico",
+          });
+        }
+      }
+    }
+
     onSubmit();
-  };
+  }, [
+    setIsModalOpen,
+    answers,
+    allQuestionsData.length,
+    subjectNames,
+    auth.token,
+    auth.isLoggedIn,
+    saveCbtResultToServer,
+    saveToLocalStorage,
+    onSubmit,
+  ]);
 
   return (
     <div className="w-full h-full flex flex-col bg-[#0f172a]">

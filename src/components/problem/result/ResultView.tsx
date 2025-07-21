@@ -1,6 +1,6 @@
 "use client";
 
-import React, { RefObject, useMemo, useState, useRef } from "react";
+import React, { RefObject, useMemo, useState, useEffect } from "react";
 import { useAtomValue } from "jotai";
 import {
   groupedQuestionsAtom,
@@ -17,8 +17,8 @@ import { ProblemReviewHeader } from "./ProblemReviewHeader";
 import { QuestionResultCard } from "./QuestionResultCard";
 import { EmptyMessage } from "@/components/ui/EmptyMessage";
 
-import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
-
+// 라이선스 타입 정의
+// (props로 전달받음)
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
 interface ResultViewProps {
@@ -36,20 +36,70 @@ export interface SubjectResult {
   totalCount: number;
 }
 
+const CHUNK_SIZE = 30; // 점진적 렌더링 시 한 번에 추가할 문제 개수
+
 export const ResultView = ({
   onRetry,
   license,
   totalDuration,
-  scrollRef,
 }: ResultViewProps) => {
+  // jotai atom에서 문제/답안/시간 등 상태 가져오기
   const groupedQuestions = useAtomValue(groupedQuestionsAtom);
   const allQuestions = useAtomValue(allQuestionsAtom);
   const answers = useAtomValue(answersAtom);
   const timeLeft = useAtomValue(timeLeftAtom);
 
+  // 틀린 문제만 보기, 과목 탭 상태
   const [showOnlyWrong, setShowOnlyWrong] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState<string>("all");
 
+  // 문제 리스트 필터링 (전체/과목별, 틀린 문제만 등)
+  const filteredQuestions = useMemo(() => {
+    if (selectedSubject === "all") {
+      // 전체 탭: 과목별 순서대로 모든 문제 펼치기
+      let questions = groupedQuestions.map((group) => group.questions).flat();
+      if (showOnlyWrong) {
+        questions = questions.filter(
+          (q) => answers[`${q.subjectName}-${q.num}`] !== q.answer
+        );
+      }
+      return questions;
+    } else {
+      // 과목 탭: 해당 과목만 필터링
+      let questions = allQuestions;
+      if (showOnlyWrong) {
+        questions = questions.filter(
+          (q) => answers[`${q.subjectName}-${q.num}`] !== q.answer
+        );
+      }
+      questions = questions.filter((q) => q.subjectName === selectedSubject);
+      return questions;
+    }
+  }, [allQuestions, answers, showOnlyWrong, selectedSubject, groupedQuestions]);
+
+  // 점진적 렌더링: 한 번에 CHUNK_SIZE개씩 추가 렌더링
+  const [renderCount, setRenderCount] = useState(CHUNK_SIZE);
+
+  // filteredQuestions가 늘어날 때마다 일정 간격으로 renderCount 증가
+  useEffect(() => {
+    if (renderCount < filteredQuestions.length) {
+      const id = setTimeout(
+        () =>
+          setRenderCount((c) =>
+            Math.min(c + CHUNK_SIZE, filteredQuestions.length)
+          ),
+        16 // 약 1프레임(60fps)마다 추가 렌더링
+      );
+      return () => clearTimeout(id);
+    }
+  }, [renderCount, filteredQuestions.length, selectedSubject, showOnlyWrong]);
+
+  // 탭/옵션 변경 시 renderCount 초기화
+  useEffect(() => {
+    setRenderCount(CHUNK_SIZE);
+  }, [selectedSubject, showOnlyWrong]);
+
+  // 시험 요약/통계 계산 (점수, 통과 여부, 과목별 결과 등)
   const { isPass, overallScore, subjectResults } = useMemo(() => {
     if (groupedQuestions.length === 0) {
       return { isPass: false, overallScore: 0, subjectResults: [] };
@@ -84,20 +134,7 @@ export const ResultView = ({
     return { isPass: finalIsPass, overallScore, subjectResults: results };
   }, [groupedQuestions, answers, license]);
 
-  const filteredQuestions = useMemo(() => {
-    let questions = allQuestions;
-    if (showOnlyWrong) {
-      questions = questions.filter(
-        (q) => answers[`${q.subjectName}-${q.num}`] !== q.answer
-      );
-    }
-    if (selectedSubject !== "all") {
-      questions = questions.filter((q) => q.subjectName === selectedSubject);
-    }
-    return questions;
-  }, [allQuestions, answers, showOnlyWrong, selectedSubject]);
-
-  // 시험 요약 카드에 필요한 데이터 계산
+  // 시험 통계(정답/오답/미답/소요시간 등)
   const summaryStats = useMemo(() => {
     const timeTaken = totalDuration - timeLeft;
     const correctCount = allQuestions.filter(
@@ -107,7 +144,7 @@ export const ResultView = ({
     const incorrectCount = answeredCount - correctCount;
     const unansweredCount = allQuestions.length - answeredCount;
     const weakestSubject =
-      [...subjectResults].sort((a, b) => a.score - b.score)[0] || null; // 점수가 가장 낮은 과목 계산
+      [...subjectResults].sort((a, b) => a.score - b.score)[0] || null;
 
     return {
       timeTaken,
@@ -121,6 +158,7 @@ export const ResultView = ({
   return (
     <div className="min-h-screen bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        {/* 상단: 결과 요약/통계 */}
         <header className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
             시험 결과 분석
@@ -130,7 +168,7 @@ export const ResultView = ({
           </p>
         </header>
 
-        {/* 대시보드 그리드 */}
+        {/* 대시보드 그리드 (점수, 통계, 과목별 결과) */}
         <motion.div
           className="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
           initial={{ opacity: 0, y: -20 }}
@@ -148,6 +186,7 @@ export const ResultView = ({
           </div>
         </motion.div>
 
+        {/* 문제 다시보기 영역 */}
         <motion.div
           className="space-y-6"
           initial={{ opacity: 0, y: 20 }}
@@ -165,16 +204,18 @@ export const ResultView = ({
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredQuestions.length > 0 ? (
-              filteredQuestions.map((question, index) => (
-                <QuestionResultCard
-                  key={`${question.subjectName}-${question.num}`}
-                  question={question}
-                  userAnswer={
-                    answers[`${question.subjectName}-${question.num}`]
-                  }
-                  index={index}
-                />
-              ))
+              filteredQuestions
+                .slice(0, renderCount)
+                .map((question, index) => (
+                  <QuestionResultCard
+                    key={`${question.subjectName}-${question.num}`}
+                    question={question}
+                    userAnswer={
+                      answers[`${question.subjectName}-${question.num}`]
+                    }
+                    index={index}
+                  />
+                ))
             ) : (
               <div className="flex md:col-span-2 justify-center items-center ">
                 <EmptyMessage message="해당 조건에 맞는 문제가 없습니다." />
@@ -183,8 +224,7 @@ export const ResultView = ({
           </div>
         </motion.div>
       </div>
-
-      {/* ScrollToTop 버튼을 위한 하단 여백 */}
+      {/* 하단 여백 (ScrollToTop 버튼 등) */}
       <div className="h-20"></div>
     </div>
   );

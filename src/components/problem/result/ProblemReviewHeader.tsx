@@ -25,7 +25,11 @@ export const ProblemReviewHeader = ({
     <div>
       {/* 상단: 제목과 다시보기 옵션 버튼 */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-        <h2 className="text-2xl font-bold">전체 문제 다시보기</h2>
+        <h2 className="text-2xl font-bold">
+          {selectedSubject === "all"
+            ? "전체 문제 다시보기"
+            : `${selectedSubject} 문제 다시보기`}
+        </h2>
         <div className="flex gap-2">
           <Button
             variant="neutral"
@@ -44,7 +48,6 @@ export const ProblemReviewHeader = ({
         </div>
       </div>
 
-      {/* ✅ [수정] 하단: 새로 만든 과목 필터 탭 컴포넌트 호출 */}
       <SubjectFilterTabs
         subjectNames={subjectNames}
         selectedSubject={selectedSubject}

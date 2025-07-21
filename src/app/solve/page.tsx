@@ -38,6 +38,7 @@ export default function SolvePage() {
 
   const isOmrVisible = useAtomValue(isOmrVisibleAtom);
   const showResult = useAtomValue(showResultAtom);
+  const setShowResult = useSetAtom(showResultAtom);
   const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
   const setSelectedSubject = useSetAtom(selectedSubjectAtom);
 
@@ -52,7 +53,8 @@ export default function SolvePage() {
 
   useEffect(() => {
     setMode(null);
-  }, [year, license, level, round]);
+    setShowResult(false); // 필터 변경 시 결과 상태 초기화
+  }, [year, license, level, round, setShowResult]);
 
   const filterState = {
     year,
@@ -72,6 +74,7 @@ export default function SolvePage() {
 
   const handleModeSelect = (selectedMode: "practice" | "exam") => {
     setMode(selectedMode);
+    setShowResult(false); // 모드 선택 시 결과 상태 초기화
     if (isMobile) {
       setTimeout(() => {
         mainContentRef.current?.scrollIntoView({
@@ -105,8 +108,7 @@ export default function SolvePage() {
 
       <main
         ref={mainContentRef}
-        className={`bg-[#0f172a] overflow-y-auto transition-all duration-300
-          ${isModeSelection ? "min-h-screen" : "h-full"}
+        className={`bg-[#0f172a] h-full overflow-y-auto transition-all duration-300
           ${!showResult ? "md:ml-64 lg:ml-72" : ""}
           ${isOmrVisible && mode === "exam" && !showResult ? "lg:mr-72" : ""}`}
       >
@@ -118,10 +120,10 @@ export default function SolvePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="flex flex-col items-start px-6 min-h-screen"
+              className="flex flex-col items-center justify-center px-6 h-full"
             >
-              <div className="mt-20 mx-auto flex w-full max-w-lg flex-col items-center rounded-lg border border-gray-700 bg-[#1e293b] p-6 text-center shadow-lg sm:p-10">
-                <div className="m-8 flex flex-col items-center">
+              <div className="mx-auto flex w-full max-w-lg flex-col items-center rounded-lg border border-gray-700 bg-[#1e293b] p-6 text-center shadow-lg sm:p-10">
+                <div className="m-4 flex flex-col items-center">
                   <Lottie
                     animationData={question}
                     className="h-15 w-15 sm:h-20 sm:w-20 "

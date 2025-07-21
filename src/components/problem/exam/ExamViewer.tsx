@@ -63,6 +63,7 @@ export default function ExamViewer({
   const auth = useAtomValue(authAtom);
   
   const [showResult, setShowResult] = useAtom(showResultAtom);
+  const setGlobalShowResult = useSetAtom(showResultAtom);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mainScrollRef = useRef<HTMLDivElement>(null);
@@ -86,6 +87,7 @@ export default function ExamViewer({
       setIsLoading(true);
       setError(null);
       setShowResult(false);
+      setGlobalShowResult(false); // 전역 상태도 초기화
       try {
         const params = new URLSearchParams({
           examtype: "exam", // 시험 모드
@@ -102,7 +104,7 @@ export default function ExamViewer({
         // 로그인한 사용자만 인증 헤더 추가
         if (auth.token && auth.isLoggedIn) {
           headers.Authorization = `Bearer ${auth.token}`;
-          console.log("로그인한 사용자로 시험 시작");
+          console.log("로그인한 사용자로 시험 시작", auth);
         } else {
           console.log("비로그인 사용자로 시험 시작");
         }
@@ -164,6 +166,7 @@ export default function ExamViewer({
     setTimeLeft,
     setSelectedSubject,
     setShowResult,
+    setGlobalShowResult,
   ]);
 
   // 로컬 저장 함수
@@ -260,9 +263,11 @@ export default function ExamViewer({
     }
 
     setShowResult(true);
+    setGlobalShowResult(true); // 전역 상태도 설정
     mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
   }, [
     setShowResult,
+    setGlobalShowResult,
     answers,
     allQuestions.length,
     totalDuration,
@@ -324,11 +329,13 @@ export default function ExamViewer({
   const handleConfirmSubmit = useCallback(() => {
     setIsSubmitModalOpen(false);
     setShowResult(true);
+    setGlobalShowResult(true); // 전역 상태도 설정
     mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
-  }, [setIsSubmitModalOpen, setShowResult]);
+  }, [setIsSubmitModalOpen, setShowResult, setGlobalShowResult]);
 
   const handleRetry = () => {
     setShowResult(false);
+    setGlobalShowResult(false); // 전역 상태도 초기화
     setCurrentIdx(0);
     setTimeLeft(totalDuration);
     setAnswers({});

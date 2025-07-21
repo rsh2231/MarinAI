@@ -34,12 +34,22 @@ export async function GET(request: NextRequest) {
   const targetUrl = `${baseUrl}/cbt/?${targetParams.toString()}`;
   console.log("📡 Proxying CBT request to:", targetUrl);
 
+  // 인증 헤더 추가 (선택적)
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+  };
+  
+  // Authorization 헤더가 있으면 전달
+  const authHeader = request.headers.get("authorization");
+  if (authHeader) {
+    headers.Authorization = authHeader;
+    console.log("🔐 Forwarding authorization header to CBT API");
+  }
+
   try {
     const apiResponse = await fetch(targetUrl, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       cache: "no-store",
     });
 
