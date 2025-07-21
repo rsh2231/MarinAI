@@ -193,7 +193,7 @@ export default function SolvePage() {
           ) : null}
         </AnimatePresence>
       </main>
-      {!showResult && <ScrollToTopButton scrollableRef={mainContentRef} />}
+      <ScrollToTopButton scrollableRef={mainContentRef} />
     </div>
   );
 }

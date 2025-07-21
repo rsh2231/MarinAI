@@ -7,8 +7,6 @@ import { useEffect } from "react";
 import React from "react";
 import UserProfile from "@/components/mypage/UserProfile";
 import PerformanceRadarChart from "@/components/mypage/PerformanceRadarChart";
-import ProgressSummary from "@/components/mypage/ProgressSummary";
-import QuickLinks from "@/components/mypage/QuickLinks";
 import WrongNoteView from "@/components/mypage/WrongNoteView";
 import ExamResultView from "@/components/mypage/ExamResultView";
 import CbtResultView from "@/components/mypage/CbtResultView";
@@ -48,8 +46,6 @@ export default function MyPage() {
           <div className="lg:col-span-1 flex flex-col gap-6">
             <UserProfile />
             <PerformanceRadarChart />
-            <ProgressSummary />
-            <QuickLinks />
           </div>
         </main>
       </div>

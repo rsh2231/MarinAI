@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
   const originalParams = request.nextUrl.searchParams;
   const targetParams = new URLSearchParams();
 
+  const examtype = originalParams.get('examtype') || 'practice'; // 기본값은 practice
   const year = originalParams.get('year') || '';
   const license = originalParams.get('license') || '';
   const levelStr = originalParams.get('level') || '';
@@ -27,6 +28,7 @@ export async function GET(request: NextRequest) {
 
   const finalRound = roundStr.match(/\d+/)?.[0] || '';
 
+  targetParams.set('examtype', examtype);
   targetParams.set('year', year);
   targetParams.set('license', license);
   targetParams.set('level', finalLevel); // 정제된 level 값 사용
@@ -34,14 +36,27 @@ export async function GET(request: NextRequest) {
 
   const targetUrl = `${baseUrl}/solve/?${targetParams.toString()}`;
 
+  console.log("Examtype:", examtype);
   console.log("Proxying question list request to:", targetUrl);
+
+  // 인증 헤더 가져오기 (선택적)
+  const authHeader = request.headers.get("authorization");
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+  };
+  
+  // 인증 헤더가 있으면 백엔드로 전달 (로그인한 사용자)
+  if (authHeader) {
+    headers.Authorization = authHeader;
+    console.log("인증된 사용자로 문제 요청");
+  } else {
+    console.log("비로그인 사용자로 문제 요청");
+  }
 
   try {
     const apiResponse = await fetch(targetUrl, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       cache: 'no-store',
     });
 

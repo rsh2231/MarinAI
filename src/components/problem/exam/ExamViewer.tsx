@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { authAtom } from "@/atoms/authAtom";
 import {
   examLoadingAtom,
   examErrorAtom,
@@ -11,7 +12,7 @@ import {
   answersAtom,
   currentQuestionIndexAtom,
   allQuestionsAtom,
-  showResultAtom
+  showResultAtom,
 } from "@/atoms/examAtoms";
 
 import { QnaItem, Question } from "@/types/ProblemViewer";
@@ -24,7 +25,7 @@ import { ChevronLeft, ChevronRight, Send } from "lucide-react";
 import Button from "@/components/ui/Button";
 import QuestionCard from "../UI/QuestionCard";
 import { EmptyMessage } from "../../ui/EmptyMessage";
-import ScrollToTopButton from "@/components/ui/ScrollToTopButton"; 
+import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
@@ -54,9 +55,12 @@ export default function ExamViewer({
   const [answers, setAnswers] = useAtom(answersAtom);
   const [currentIdx, setCurrentIdx] = useAtom(currentQuestionIndexAtom);
   const allQuestions = useAtomValue(allQuestionsAtom);
-  const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
+    const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
   const setIsLoading = useSetAtom(examLoadingAtom);
   const setError = useSetAtom(examErrorAtom);
+  
+  // 인증 상태 가져오기
+  const auth = useAtomValue(authAtom);
   
   const [showResult, setShowResult] = useAtom(showResultAtom);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
@@ -68,14 +72,45 @@ export default function ExamViewer({
     [selectedSubjects.length]
   );
 
+  // 알림 권한 요청
+  useEffect(() => {
+    if (typeof window !== "undefined" && "Notification" in window) {
+      if (Notification.permission === "default") {
+        Notification.requestPermission();
+      }
+    }
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
       setShowResult(false);
       try {
-        const params = new URLSearchParams({ year, license, level, round });
-        const res = await fetch(`/api/solve?${params.toString()}`);
+        const params = new URLSearchParams({
+          examtype: "exam", // 시험 모드
+          year,
+          license,
+          level,
+          round,
+        });
+        // 인증 헤더 추가 (선택적)
+        const headers: HeadersInit = {
+          "Content-Type": "application/json",
+        };
+        
+        // 로그인한 사용자만 인증 헤더 추가
+        if (auth.token && auth.isLoggedIn) {
+          headers.Authorization = `Bearer ${auth.token}`;
+          console.log("로그인한 사용자로 시험 시작");
+        } else {
+          console.log("비로그인 사용자로 시험 시작");
+        }
+        
+        const res = await fetch(`/api/solve?${params.toString()}`, {
+          method: "GET",
+          headers,
+        });
         if (!res.ok) {
           const errorData = await res.json();
           throw new Error(
@@ -84,7 +119,7 @@ export default function ExamViewer({
           );
         }
         const responseData: { qnas: QnaItem[] } = await res.json();
-        console.log("Res" ,responseData)
+        console.log("Res", responseData);
         const allSubjectGroups = transformData(responseData.qnas);
         if (allSubjectGroups.length === 0) {
           setError("선택하신 조건에 해당하는 문제 데이터가 없습니다.");
@@ -128,17 +163,135 @@ export default function ExamViewer({
     setCurrentIdx,
     setTimeLeft,
     setSelectedSubject,
-    setShowResult
+    setShowResult,
+  ]);
+
+  // 로컬 저장 함수
+  const saveToLocalStorage = useCallback((resultData: any) => {
+    try {
+      const existingResults = JSON.parse(
+        localStorage.getItem("examResults") || "[]"
+      );
+      existingResults.push(resultData);
+      localStorage.setItem("examResults", JSON.stringify(existingResults));
+    } catch (error) {
+      console.error("로컬 저장 실패:", error);
+    }
+  }, []);
+
+  // 서버 저장 함수
+  const saveExamResultToServer = useCallback(async (resultData: any, token: string) => {
+    try {
+      const response = await fetch("/api/exam/result", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(resultData),
+      });
+
+      if (!response.ok) {
+        throw new Error("서버 저장 실패");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("서버 저장 오류:", error);
+      throw error;
+    }
+  }, []);
+
+  // 자동 제출 함수 추가
+  const handleAutoSubmit = useCallback(async () => {
+    console.log("시간 만료로 자동 제출됩니다.");
+
+    // 사용자에게 알림
+    if (typeof window !== "undefined" && "Notification" in window) {
+      if (Notification.permission === "granted") {
+        new Notification("시험 시간 만료", {
+          body: "시간이 만료되어 답안이 자동으로 제출됩니다.",
+          icon: "/favicon.ico",
+        });
+      }
+    }
+
+    // 결과 데이터 생성
+    const resultData = {
+      answers,
+      totalQuestions: allQuestions.length,
+      timeTaken: totalDuration - timeLeft,
+      submittedAt: new Date().toISOString(),
+      isAutoSubmitted: true,
+      examInfo: {
+        year,
+        license,
+        level,
+        round,
+        selectedSubjects,
+      },
+    };
+
+    // 로그인한 사용자만 결과 저장
+    if (auth.token && auth.isLoggedIn) {
+      try {
+        // 서버에 결과 저장 (로그인한 사용자)
+        await saveExamResultToServer(resultData, auth.token);
+        console.log("시험 결과가 서버에 저장되었습니다.");
+      } catch (error) {
+        console.error("서버 저장 실패:", error);
+        // 서버 저장 실패 시 로컬에 임시 저장
+        saveToLocalStorage(resultData);
+      }
+    } else {
+      // 비로그인 사용자는 로컬에만 임시 저장
+      saveToLocalStorage(resultData);
+      console.log("비로그인 사용자: 결과가 로컬에 임시 저장되었습니다.");
+      
+      // 사용자에게 로그인 유도 메시지
+      if (typeof window !== "undefined" && "Notification" in window) {
+        if (Notification.permission === "granted") {
+          new Notification("로그인 권장", {
+            body: "로그인하면 시험 결과를 마이페이지에서 확인할 수 있습니다.",
+            icon: "/favicon.ico",
+          });
+        }
+      }
+    }
+
+    setShowResult(true);
+    mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
+  }, [
+    setShowResult,
+    answers,
+    allQuestions.length,
+    totalDuration,
+    timeLeft,
+    year,
+    license,
+    level,
+    round,
+    selectedSubjects,
   ]);
 
   useEffect(() => {
     if (timeLeft <= 0 || showResult) return;
-    const timerId = setInterval(
-      () => setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0)),
-      1000
-    );
+
+    const timerId = setInterval(() => {
+      setTimeLeft((prev) => {
+        const newTime = prev > 0 ? prev - 1 : 0;
+
+        // 시간이 만료되면 자동 제출
+        if (newTime === 0) {
+          handleAutoSubmit();
+        }
+
+        return newTime;
+      });
+    }, 1000);
+
     return () => clearInterval(timerId);
-  }, [timeLeft, showResult, setTimeLeft]);
+  }, [timeLeft, showResult, setTimeLeft, handleAutoSubmit]);
 
   useEffect(() => {
     if (currentIdx < 0 || allQuestions.length === 0) return;
@@ -168,11 +321,11 @@ export default function ExamViewer({
     }));
   };
 
-  const handleConfirmSubmit = () => {
+  const handleConfirmSubmit = useCallback(() => {
     setIsSubmitModalOpen(false);
     setShowResult(true);
     mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
-  };
+  }, [setIsSubmitModalOpen, setShowResult]);
 
   const handleRetry = () => {
     setShowResult(false);
@@ -188,16 +341,15 @@ export default function ExamViewer({
     () => groupedQuestions.map((g) => g.subjectName),
     [groupedQuestions]
   );
-  
+
   const currentQuestions = useMemo(
     () =>
       groupedQuestions.find((g) => g.subjectName === selectedSubject)
         ?.questions || [],
     [groupedQuestions, selectedSubject]
   );
-    
-  const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
 
+  const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
 
   if (isLoading) {
     return (
@@ -211,30 +363,28 @@ export default function ExamViewer({
 
   if (error) {
     return (
-        <div className="h-full bg-[#0f172a] flex items-center justify-center">
-            <EmptyMessage message={error} />
-        </div>
+      <div className="h-full bg-[#0f172a] flex items-center justify-center">
+        <EmptyMessage message={error} />
+      </div>
     );
   }
-  
+
   if (selectedSubjects.length === 0 && !isLoading) {
     return (
-        <div className="h-full bg-[#0f172a] flex items-center justify-center">
-            <EmptyMessage message="풀이할 과목을 선택해주세요." />
-        </div>
+      <div className="h-full bg-[#0f172a] flex items-center justify-center">
+        <EmptyMessage message="풀이할 과목을 선택해주세요." />
+      </div>
     );
   }
 
   if (showResult) {
     return (
-      <div className="h-full bg-[#0f172a]">
-        <ResultView
-          onRetry={handleRetry}
-          license={license}
-          totalDuration={totalDuration}
-          scrollRef={mainScrollRef}
-        />
-      </div>
+      <ResultView
+        onRetry={handleRetry}
+        license={license}
+        totalDuration={totalDuration}
+        scrollRef={mainScrollRef}
+      />
     );
   }
 
@@ -281,11 +431,13 @@ export default function ExamViewer({
               </div>
             );
           })}
-          
+
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Button
               variant="neutral"
-              onClick={() => handleSubjectChange(subjectNames[selectedIndex - 1])}
+              onClick={() =>
+                handleSubjectChange(subjectNames[selectedIndex - 1])
+              }
               disabled={selectedIndex <= 0}
               className="w-full sm:w-auto"
             >
@@ -301,7 +453,9 @@ export default function ExamViewer({
               </Button>
             ) : (
               <Button
-                onClick={() => handleSubjectChange(subjectNames[selectedIndex + 1])}
+                onClick={() =>
+                  handleSubjectChange(subjectNames[selectedIndex + 1])
+                }
                 className="w-full sm:w-auto"
               >
                 다음 과목 <ChevronRight className="ml-1 h-4 w-4" />

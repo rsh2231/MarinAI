@@ -1,6 +1,6 @@
 "use client";
 
-import React, { RefObject, useMemo, useState } from "react";
+import React, { RefObject, useMemo, useState, useRef } from "react";
 import { useAtomValue } from "jotai";
 import {
   groupedQuestionsAtom,
@@ -119,8 +119,8 @@ export const ResultView = ({
   }, [totalDuration, timeLeft, allQuestions, answers, subjectResults]);
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-white p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-neutral-900 text-white">
+      <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
         <header className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
             시험 결과 분석
@@ -184,7 +184,8 @@ export const ResultView = ({
         </motion.div>
       </div>
 
-      <ScrollToTopButton scrollableRef={scrollRef} />
+      {/* ScrollToTop 버튼을 위한 하단 여백 */}
+      <div className="h-20"></div>
     </div>
   );
 };
