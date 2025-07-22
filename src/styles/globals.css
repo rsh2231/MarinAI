@@ -110,7 +110,3 @@ body {
   /* 다크 모드에서 썸 색상 */
   border: 2px solid var(--background-dark);
 }
-
-html {
-  scrollbar-gutter: stable;
-}

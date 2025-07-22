@@ -18,7 +18,7 @@ const initialState: AuthState = {
   isLoggedIn: false,
   user: null,
   token: null,
-  hydrated: false,
+  hydrated: false,  // 인증 상태가 확정/동기화 되었는지
 };
 
 export const authAtom = atom<AuthState>(initialState);

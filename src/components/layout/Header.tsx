@@ -32,7 +32,7 @@ export default function Header() {
 
   const handleLogout = () => {
     sessionStorage.removeItem("access_token");
-    setAuth({ isLoggedIn: false, user: null, token: null });
+    setAuth({ isLoggedIn: false, user: null, token: null, hydrated: true });
   };
 
   const toggleChatSidebar = () => {
@@ -47,8 +47,8 @@ export default function Header() {
   ];
 
   return (
-    <header className="bg-[#121212] sticky top-0 z-50 border-b border-gray-700 w-full">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-3 sm:px-4 py-3 gap-2">
+    <header className="bg-[#121212] sticky top-0 z-50 border-b border-gray-700 w-full min-h-[56px] h-[56px] flex items-center">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-3 sm:px-4 w-full">
         {/* 왼쪽: 햄버거 + 로고 */}
         <div className="flex items-center gap-3 min-w-0">
           {isChatPage && isMobile && (

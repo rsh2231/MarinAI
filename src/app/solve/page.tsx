@@ -15,7 +15,7 @@ import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
 import { Question } from "@/types/ProblemViewer";
 
 import Sidebar from "@/components/layout/Sidebar";
-import ProblemViewer from "@/components/problem/practice/ProblemViewer";
+import ProblemViewer from "@/components/problem/practice/PracticeViewer";
 import ExamViewer from "@/components/problem/exam/ExamViewer";
 import { OmrSheet } from "@/components/problem/exam/OmrSheet";
 import Button from "@/components/ui/Button";
@@ -106,9 +106,10 @@ export default function SolvePage() {
         </>
       )}
 
-      <main
+<main
         ref={mainContentRef}
         className={`bg-[#0f172a] h-full transition-all duration-300
+          ${mode === 'practice' ? 'overflow-y-auto' : ''} 
           ${!showResult ? "md:ml-64 lg:ml-72" : ""}
           ${isOmrVisible && mode === "exam" && !showResult ? "lg:mr-72" : ""}`}
       >
