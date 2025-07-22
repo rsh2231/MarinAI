@@ -169,7 +169,7 @@ export default function ChatInput({
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            className="w-full resize-none bg-transparent py-2.5 text-sm text-neutral-200 placeholder-neutral-500 focus:outline-none sm:text-md"
+            className="w-full resize-none bg-transparent py-2.5 text-base text-neutral-200 placeholder-neutral-500 focus:outline-none"
             rows={1}
             maxRows={8}
             disabled={disabled}

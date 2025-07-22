@@ -58,7 +58,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
           {...register("username")}
           type="email"
           placeholder="이메일"
-          className={`w-full bg-secondary/30 border px-4 py-3 rounded text-foreground-dark placeholder-secondary focus:outline-none focus:ring-2 transition-shadow ${
+          className={`w-full bg-secondary/30 border px-4 py-3 rounded text-base text-foreground-dark placeholder-secondary focus:outline-none focus:ring-2 transition-shadow ${
             errors.username
               ? "border-danger focus:ring-danger"
               : "border-secondary/50 focus:ring-primary"
@@ -73,7 +73,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
           {...register("password")}
           type="password"
           placeholder="비밀번호"
-          className={`w-full bg-secondary/30 border px-4 py-3 rounded text-foreground-dark placeholder-secondary focus:outline-none focus:ring-2 transition-shadow ${
+          className={`w-full bg-secondary/30 border px-4 py-3 rounded text-base text-foreground-dark placeholder-secondary focus:outline-none focus:ring-2 transition-shadow ${
             errors.password
               ? "border-danger focus:ring-danger"
               : "border-secondary/50 focus:ring-primary"

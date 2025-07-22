@@ -58,8 +58,7 @@ export default function MobileMenu({
         exit={{ y: '100%' }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       >
-        <div className="flex justify-between items-center mb-6">
-          <span className="text-sm font-medium text-gray-400">메뉴</span>
+        <div className="flex justify-end  items-center mb-6">
           <button onClick={onClose} aria-label="Close menu" className="p-1">
             <X className="w-6 h-6 text-gray-400 hover:text-white transition-colors" />
           </button>
