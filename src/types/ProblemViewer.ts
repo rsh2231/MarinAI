@@ -47,7 +47,6 @@ export interface ProblemData {
   };
 }
 
-// 새로운 CBT API 응답 구조
 export interface CbtData {
   odapset_id: number | null;
   subjects: {

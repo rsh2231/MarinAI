@@ -27,17 +27,25 @@ import { ExamHeader } from "@/components/problem/exam/ExamHeader";
 import { ChevronLeft, ChevronRight, Send } from "lucide-react";
 import { EmptyMessage } from "../ui/EmptyMessage";
 import ScrollToTopButton from "../ui/ScrollToTopButton";
+import { OneOdap, saveManyUserAnswers } from "@/lib/wrongNoteApi";
 
 interface CbtInProgressProps {
   onSubmit: () => void;
   scrollRef: RefObject<HTMLDivElement | null>;
   license: "기관사" | "항해사" | "소형선박조종사" | null;
   level: string;
+  odapsetId: number | null;
 }
 
 const HEADER_HEIGHT_PX = 120;
 
-export function CbtInProgress({ onSubmit, scrollRef, license, level }: CbtInProgressProps) {
+export function CbtInProgress({
+  onSubmit,
+  scrollRef,
+  license,
+  level,
+  odapsetId,
+}: CbtInProgressProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [answers, setAnswers] = useAtom(answersAtom);
   const [selectedSubject, setSelectedSubject] = useAtom(selectedSubjectAtom);
@@ -46,7 +54,7 @@ export function CbtInProgress({ onSubmit, scrollRef, license, level }: CbtInProg
   const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
   const [timeLeft, setTimeLeft] = useAtom(timeLeftAtom);
   const currentIdx = useAtomValue(currentQuestionIndexAtom);
-  
+
   // 인증 상태 가져오기
   const auth = useAtomValue(authAtom);
 
@@ -126,31 +134,34 @@ export function CbtInProgress({ onSubmit, scrollRef, license, level }: CbtInProg
   }, []);
 
   // 서버 저장 함수
-  const saveCbtResultToServer = useCallback(async (resultData: any, token: string) => {
-    try {
-      const response = await fetch("/api/cbt/result", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(resultData),
-      });
+  const saveCbtResultToServer = useCallback(
+    async (resultData: any, token: string) => {
+      try {
+        const response = await fetch("/api/cbt/result", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(resultData),
+        });
 
-      if (!response.ok) {
-        throw new Error("서버 저장 실패");
+        if (!response.ok) {
+          throw new Error("서버 저장 실패");
+        }
+
+        return await response.json();
+      } catch (error) {
+        console.error("서버 저장 오류:", error);
+        throw error;
       }
-
-      return await response.json();
-    } catch (error) {
-      console.error("서버 저장 오류:", error);
-      throw error;
-    }
-  }, []);
+    },
+    []
+  );
 
   const handleConfirmSubmit = useCallback(async () => {
     setIsModalOpen(false);
-    
+
     // 결과 데이터 생성
     const resultData = {
       answers,
@@ -165,22 +176,43 @@ export function CbtInProgress({ onSubmit, scrollRef, license, level }: CbtInProg
       },
     };
 
-    // 로그인한 사용자만 결과 저장
+    // 오답만 추출
+    const wrongNotes: OneOdap[] = allQuestionsData
+      .map((q) => {
+        const key = `${q.subjectName}-${q.num}`;
+        const userChoice = answers[key];
+        if (userChoice && userChoice !== q.answer) {
+          return {
+            choice: userChoice as "가" | "나" | "사" | "아",
+            gichulqna_id: q.id,
+          };
+        }
+        return null;
+      })
+      .filter((note): note is OneOdap => note !== null);
+
+    // 결과 저장 (실패해도 오답노트 저장은 항상 시도)
     if (auth.token && auth.isLoggedIn) {
       try {
-        // 서버에 결과 저장 (로그인한 사용자)
         await saveCbtResultToServer(resultData, auth.token);
-        console.log("CBT 결과가 서버에 저장되었습니다.");
       } catch (error) {
         console.error("서버 저장 실패:", error);
-        // 서버 저장 실패 시 로컬에 임시 저장
         saveToLocalStorage(resultData);
       }
+      // 오답노트 저장은 항상 시도
+      if (odapsetId && wrongNotes.length > 0) {
+        try {
+          await saveManyUserAnswers(wrongNotes, odapsetId, auth.token);
+          console.log("오답노트가 서버에 저장되었습니다.");
+        } catch (error) {
+          console.error("오답노트 저장 실패:", error);
+        }
+      }
+      console.log("CBT 결과 저장 시도 완료");
     } else {
       // 비로그인 사용자는 로컬에만 임시 저장
       saveToLocalStorage(resultData);
       console.log("비로그인 사용자: CBT 결과가 로컬에 임시 저장되었습니다.");
-      
       // 사용자에게 로그인 유도 메시지
       if (typeof window !== "undefined" && "Notification" in window) {
         if (Notification.permission === "granted") {
@@ -194,12 +226,14 @@ export function CbtInProgress({ onSubmit, scrollRef, license, level }: CbtInProg
 
     onSubmit();
   }, [
-    setIsModalOpen,
     answers,
-    allQuestionsData.length,
+    allQuestionsData,
+    license,
+    level,
     subjectNames,
     auth.token,
     auth.isLoggedIn,
+    odapsetId,
     saveCbtResultToServer,
     saveToLocalStorage,
     onSubmit,

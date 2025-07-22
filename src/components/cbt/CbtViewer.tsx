@@ -41,7 +41,7 @@ export default function CbtViewer({
   );
   const [currentLevel, setCurrentLevel] = useState<string>("");
   const [totalDuration, setTotalDuration] = useState(0);
-
+  const [currentOdapsetId, setCurrentOdapsetId] = useState<number | null>(null);
   const setAnswers = useSetAtom(answersAtom);
   const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
   const setSelectedSubject = useSetAtom(selectedSubjectAtom);
@@ -95,6 +95,12 @@ export default function CbtViewer({
       const responseData = (await res.json()) as CbtData;
       console.log("CBT API Response:", responseData);
 
+      if (responseData.odapset_id) {
+        setCurrentOdapsetId(responseData.odapset_id);
+      } else {
+        setCurrentOdapsetId(null);
+      }
+
       // 새로운 응답 구조 처리
       let allQnas: QnaItem[] = [];
       if (responseData.subjects) {
@@ -146,6 +152,7 @@ export default function CbtViewer({
     setCurrentLicense(null);
     setCurrentLevel("");
     setTotalDuration(0);
+    setCurrentOdapsetId(null);
 
     setStatus("not-started");
   };
@@ -158,6 +165,7 @@ export default function CbtViewer({
           scrollRef={scrollRef}
           license={currentLicense}
           level={currentLevel}
+          odapsetId={currentOdapsetId}
         />
       );
 

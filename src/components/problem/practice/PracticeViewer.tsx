@@ -36,37 +36,31 @@ export default function ProblemViewer({
   const [error, setError] = useState<string | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [odapsetId, setOdapsetId] = useState<number | null>(null); // odapsetId 상태로 관리
+
   // 인증 상태와 토큰 가져오기
   const auth = useAtomValue(authAtom);
-  const token = auth.token;
-  
+
   // 디바운싱을 위한 타이머 ref
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
-  // 시험 세트 ID (실제로는 시험 시작 시 고유 ID 생성 필요)
-  const odapsetId = useMemo(() => {
-    // 현재 시험 조건을 기반으로 고유한 세트 ID 생성
-    return Date.now(); // 임시로 타임스탬프 사용
-  }, [year, license, level, round]);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const params = new URLSearchParams({ 
-          examtype: 'practice', // 연습 모드
-          year, 
-          license, 
-          level, 
-          round 
+        const params = new URLSearchParams({
+          examtype: "practice", // 연습 모드
+          year,
+          license,
+          level,
+          round,
         });
         // 인증 헤더 추가 (선택적)
         const headers: HeadersInit = {
           "Content-Type": "application/json",
         };
-        
+
         // 로그인한 사용자만 인증 헤더 추가
         if (auth.token && auth.isLoggedIn) {
           headers.Authorization = `Bearer ${auth.token}`;
@@ -74,7 +68,7 @@ export default function ProblemViewer({
         } else {
           console.log("비로그인 사용자로 연습 시작");
         }
-        
+
         const res = await fetch(`/api/solve?${params.toString()}`, {
           method: "GET",
           headers,
@@ -86,9 +80,20 @@ export default function ProblemViewer({
               `HTTP ${res.status}: 데이터를 불러오는데 실패했습니다.`
           );
         }
-        const responseData: { qnas: QnaItem[] } = await res.json();
+        const responseData: { qnas: QnaItem[]; odapset_id?: number } =
+          await res.json();
 
-        console.log("Res" ,responseData)
+        console.log("responseData", responseData);
+
+        // odapset_id 응답에서 받아서 저장
+        if (responseData.odapset_id) {
+          setOdapsetId(responseData.odapset_id);
+
+          console.log("odapset_id", responseData.odapset_id);
+        } else {
+          setOdapsetId(null); // fallback
+        }
+
         const transformed = transformData(responseData.qnas);
 
         if (transformed.length === 0) {
@@ -101,6 +106,7 @@ export default function ProblemViewer({
       } catch (err: any) {
         setError(err.message);
         setSubjectGroups([]);
+        setOdapsetId(null);
       } finally {
         setIsLoading(false);
       }
@@ -153,34 +159,59 @@ export default function ProblemViewer({
   }, []);
 
   // 디바운싱된 답안 저장 함수
-  const debouncedSaveAnswer = useCallback(async (questionId: number, choice: string) => {
-    // 로그인한 사용자만 서버에 저장
-    if (auth.token && auth.isLoggedIn) {
-      try {
-        await saveUserAnswer(questionId, choice, odapsetId, auth.token);
-        console.log('답안이 서버에 저장되었습니다.');
-      } catch (error) {
-        console.error('서버 저장 실패:', error);
-        // 서버 저장 실패 시에도 로컬 저장은 계속 진행
+  const debouncedSaveAnswer = useCallback(
+    async (questionId: number, choice: string) => {
+      // 로그인한 사용자만 서버에 저장
+      if (auth.token && auth.isLoggedIn && odapsetId !== null) {
+        try {
+          await saveUserAnswer(questionId, choice, odapsetId, auth.token);
+          console.log("답안이 서버에 저장되었습니다.");
+        } catch (error) {
+          console.error("서버 저장 실패:", error);
+          // 서버 저장 실패 시에도 로컬 저장은 계속 진행
+        }
+      } else {
+        console.log(
+          "비로그인 사용자 또는 odapsetId 없음: 답안이 로컬에만 저장됩니다."
+        );
       }
-    } else {
-      console.log('비로그인 사용자: 답안이 로컬에만 저장됩니다.');
-    }
-  }, [auth.token, auth.isLoggedIn, odapsetId]);
+    },
+    [auth.token, auth.isLoggedIn, odapsetId]
+  );
 
-  const handleSelectAnswer = useCallback((questionId: number, choice: string) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: choice }));
-    
-    // 이전 타이머가 있다면 취소
-    if (saveTimeoutRef.current) {
-      clearTimeout(saveTimeoutRef.current);
-    }
-    
-    // 1초 후에 서버에 저장 (디바운싱)
-    saveTimeoutRef.current = setTimeout(() => {
-      debouncedSaveAnswer(questionId, choice);
-    }, 1000);
-  }, [debouncedSaveAnswer]);
+  const handleSelectAnswer = useCallback(
+    (questionId: number, choice: string) => {
+      setAnswers((prev) => ({ ...prev, [questionId]: choice }));
+
+      // question 객체 찾기
+      let foundQuestion: Question | undefined;
+      for (const group of subjectGroups) {
+        const q = group.questions.find((q) => q.id === questionId);
+        if (q) {
+          foundQuestion = q;
+          break;
+        }
+      }
+
+      // 오답일 때만 서버 저장 로직 실행
+      if (foundQuestion && choice !== foundQuestion.answer) {
+        // 이전 타이머가 있다면 취소
+        if (saveTimeoutRef.current) {
+          clearTimeout(saveTimeoutRef.current);
+        }
+        // 1초 후에 서버에 저장 (디바운싱)
+        saveTimeoutRef.current = setTimeout(() => {
+          debouncedSaveAnswer(questionId, choice);
+        }, 1000);
+
+        // 즉시 저장(중복 방지용)
+        if (auth.token && auth.isLoggedIn && odapsetId !== null) {
+          saveUserAnswer(questionId, choice, odapsetId, auth.token);
+        }
+      }
+    },
+    [debouncedSaveAnswer, auth.token, auth.isLoggedIn, odapsetId, subjectGroups]
+  );
 
   const toggleAnswer = (question: Question) => {
     const isNowShowing = !showAnswer[question.id];

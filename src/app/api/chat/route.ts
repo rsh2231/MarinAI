@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const targetUrl = baseUrl.replace(/\/$/, "") + "/rag/query";
+    const targetUrl = `${baseUrl}/rag/query`;
     console.log("📡 Proxying RAG request to:", targetUrl);
 
     // 인증 헤더 추가 (선택적)
@@ -54,7 +54,10 @@ export async function POST(req: NextRequest) {
     const data = await fastapiRes.json();
 
     if (!fastapiRes.ok) {
-      console.error(`❌ Error from external RAG API (${fastapiRes.status}):`, data);
+      console.error(
+        `❌ Error from external RAG API (${fastapiRes.status}):`,
+        data
+      );
       return NextResponse.json(data, { status: fastapiRes.status });
     }
 

@@ -7,8 +7,6 @@ export const transformData = (qnas: QnaItem[]): SubjectGroup[] => {
   
   // 이미지 코드와 앞뒤 공백/개행을 함께 찾는 정규식
   const imageCodeWithWhitespaceRegex = /\s*(@pic[\w_-]+)\s*/i;  
-  // 이미지 코드만 정확히 추출하기 위한 기존 정규식
-  const imageCodeRegex = /(@pic[\w_-]+)/;
 
   const findImagePath = (code: string, paths: string[]): string | undefined => {
     const key = code.replace("@", "").trim().toLowerCase();

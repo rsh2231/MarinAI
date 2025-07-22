@@ -17,6 +17,7 @@ import {
 
 import { QnaItem, Question } from "@/types/ProblemViewer";
 import { transformData } from "@/lib/problem-utils";
+import { saveManyUserAnswers, OneOdap } from "@/lib/wrongNoteApi";
 
 import { ResultView } from "../result/ResultView";
 import { SubmitModal } from "./SubmitModal";
@@ -61,21 +62,19 @@ export default function ExamViewer({
   const setIsLoading = useSetAtom(examLoadingAtom);
   const setError = useSetAtom(examErrorAtom);
 
-  // 인증 상태 가져오기
   const auth = useAtomValue(authAtom);
-
   const [showResult, setShowResult] = useAtom(showResultAtom);
   const setGlobalShowResult = useSetAtom(showResultAtom);
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mainScrollRef = useRef<HTMLDivElement>(null);
+  const [odapsetId, setOdapsetId] = useState<number | null>(null);
 
   const totalDuration = useMemo(
     () => selectedSubjects.length * DURATION_PER_SUBJECT_SECONDS,
     [selectedSubjects.length]
   );
 
-  // 알림 권한 요청
   useEffect(() => {
     if (typeof window !== "undefined" && "Notification" in window) {
       if (Notification.permission === "default") {
@@ -89,26 +88,21 @@ export default function ExamViewer({
       setIsLoading(true);
       setError(null);
       setShowResult(false);
-      setGlobalShowResult(false); // 전역 상태도 초기화
+      setGlobalShowResult(false);
       try {
         const params = new URLSearchParams({
-          examtype: "exam", // 시험 모드
+          examtype: "exam",
           year,
           license,
           level,
           round,
         });
-        // 인증 헤더 추가 (선택적)
         const headers: HeadersInit = {
           "Content-Type": "application/json",
         };
 
-        // 로그인한 사용자만 인증 헤더 추가
         if (auth.token && auth.isLoggedIn) {
           headers.Authorization = `Bearer ${auth.token}`;
-          console.log("로그인한 사용자로 시험 시작", auth);
-        } else {
-          console.log("비로그인 사용자로 시험 시작");
         }
 
         const res = await fetch(`/api/solve?${params.toString()}`, {
@@ -119,11 +113,16 @@ export default function ExamViewer({
           const errorData = await res.json();
           throw new Error(
             errorData.message ||
-            `HTTP ${res.status}: 데이터를 불러오는데 실패했습니다.`
+              `HTTP ${res.status}: 데이터를 불러오는데 실패했습니다.`
           );
         }
-        const responseData: { qnas: QnaItem[] } = await res.json();
-        console.log("Res", responseData);
+        const responseData: { qnas: QnaItem[]; odapset_id?: number } =
+          await res.json();
+        if (responseData.odapset_id) {
+          setOdapsetId(responseData.odapset_id);
+        } else {
+          setOdapsetId(null);
+        }
         const allSubjectGroups = transformData(responseData.qnas);
         if (allSubjectGroups.length === 0) {
           setError("선택하신 조건에 해당하는 문제 데이터가 없습니다.");
@@ -160,6 +159,8 @@ export default function ExamViewer({
     round,
     selectedSubjects,
     totalDuration,
+    auth.token,
+    auth.isLoggedIn,
     setIsLoading,
     setError,
     setGroupedQuestions,
@@ -171,7 +172,6 @@ export default function ExamViewer({
     setGlobalShowResult,
   ]);
 
-  // 로컬 저장 함수
   const saveToLocalStorage = useCallback((resultData: any) => {
     try {
       const existingResults = JSON.parse(
@@ -184,34 +184,34 @@ export default function ExamViewer({
     }
   }, []);
 
-  // 서버 저장 함수
-  const saveExamResultToServer = useCallback(async (resultData: any, token: string) => {
-    try {
-      const response = await fetch("/api/exam/result", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(resultData),
-      });
+  const saveExamResultToServer = useCallback(
+    async (resultData: any, token: string) => {
+      try {
+        const response = await fetch("/api/exam/result", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(resultData),
+        });
 
-      if (!response.ok) {
-        throw new Error("서버 저장 실패");
+        if (!response.ok) {
+          throw new Error("서버 저장 실패");
+        }
+
+        return await response.json();
+      } catch (error) {
+        console.error("서버 저장 오류:", error);
+        throw error;
       }
+    },
+    []
+  );
 
-      return await response.json();
-    } catch (error) {
-      console.error("서버 저장 오류:", error);
-      throw error;
-    }
-  }, []);
-
-  // 자동 제출 함수 추가
   const handleAutoSubmit = useCallback(async () => {
     console.log("시간 만료로 자동 제출됩니다.");
 
-    // 사용자에게 알림
     if (typeof window !== "undefined" && "Notification" in window) {
       if (Notification.permission === "granted") {
         new Notification("시험 시간 만료", {
@@ -221,7 +221,6 @@ export default function ExamViewer({
       }
     }
 
-    // 결과 데이터 생성
     const resultData = {
       answers,
       totalQuestions: allQuestions.length,
@@ -237,45 +236,50 @@ export default function ExamViewer({
       },
     };
 
-    // 로그인한 사용자만 결과 저장
+    const wrongNotes: OneOdap[] = allQuestions
+      .map((q) => {
+        const key = `${q.subjectName}-${q.num}`;
+        const userChoice = answers[key];
+        if (userChoice && userChoice !== q.answer) {
+          return {
+            choice: userChoice as "가" | "나" | "사" | "아",
+            gichulqna_id: q.id,
+          };
+        }
+        return null;
+      })
+      .filter((note): note is OneOdap => note !== null);
+
     if (auth.token && auth.isLoggedIn) {
       try {
-        // 서버에 결과 저장 (로그인한 사용자)
         await saveExamResultToServer(resultData, auth.token);
-        console.log("시험 결과가 서버에 저장되었습니다.");
       } catch (error) {
         console.error("서버 저장 실패:", error);
-        // 서버 저장 실패 시 로컬에 임시 저장
         saveToLocalStorage(resultData);
       }
-    } else {
-      // 비로그인 사용자는 로컬에만 임시 저장
-      saveToLocalStorage(resultData);
-      console.log("비로그인 사용자: 결과가 로컬에 임시 저장되었습니다.");
-
-      // 사용자에게 로그인 유도 메시지
-      if (typeof window !== "undefined" && "Notification" in window) {
-        if (Notification.permission === "granted") {
-          new Notification("로그인 권장", {
-            body: "로그인하면 시험 결과를 마이페이지에서 확인할 수 있습니다.",
-            icon: "/favicon.ico",
-          });
+      if (odapsetId && wrongNotes.length > 0) {
+        try {
+          await saveManyUserAnswers(wrongNotes, odapsetId, auth.token);
+          console.log("오답노트가 서버에 저장되었습니다.");
+        } catch (error) {
+          console.error("오답노트 저장 실패:", error);
         }
       }
+    } else {
+      saveToLocalStorage(resultData);
+      console.log("비로그인 사용자: 결과가 로컬에 임시 저장되었습니다.");
     }
 
     setShowResult(true);
-    setGlobalShowResult(true); // 전역 상태도 설정
+    setGlobalShowResult(true);
     if (scrollRef && scrollRef.current) {
       scrollRef.current.scrollTo({ top: 0, behavior: "instant" });
     } else {
       mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
     }
   }, [
-    setShowResult,
-    setGlobalShowResult,
     answers,
-    allQuestions.length,
+    allQuestions,
     totalDuration,
     timeLeft,
     year,
@@ -283,6 +287,13 @@ export default function ExamViewer({
     level,
     round,
     selectedSubjects,
+    auth.token,
+    auth.isLoggedIn,
+    odapsetId,
+    saveExamResultToServer,
+    saveToLocalStorage,
+    setShowResult,
+    setGlobalShowResult,
     scrollRef,
   ]);
 
@@ -292,12 +303,9 @@ export default function ExamViewer({
     const timerId = setInterval(() => {
       setTimeLeft((prev) => {
         const newTime = prev > 0 ? prev - 1 : 0;
-
-        // 시간이 만료되면 자동 제출
         if (newTime === 0) {
           handleAutoSubmit();
         }
-
         return newTime;
       });
     }, 1000);
@@ -335,18 +343,12 @@ export default function ExamViewer({
 
   const handleConfirmSubmit = useCallback(() => {
     setIsSubmitModalOpen(false);
-    setShowResult(true);
-    setGlobalShowResult(true); // 전역 상태도 설정
-    if (scrollRef && scrollRef.current) {
-      scrollRef.current.scrollTo({ top: 0, behavior: "instant" });
-    } else {
-      mainScrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
-    }
-  }, [setIsSubmitModalOpen, setShowResult, setGlobalShowResult, scrollRef]);
+    handleAutoSubmit();
+  }, [handleAutoSubmit]);
 
   const handleRetry = () => {
     setShowResult(false);
-    setGlobalShowResult(false); // 전역 상태도 초기화
+    setGlobalShowResult(false);
     setCurrentIdx(0);
     setTimeLeft(totalDuration);
     setAnswers({});
@@ -428,7 +430,7 @@ export default function ExamViewer({
 
       <div ref={mainScrollRef} className="flex-1 overflow-y-auto">
         <main className="max-w-3xl w-full mx-auto px-4 pb-10">
-          {currentQuestions.map((q) => {
+          {currentQuestions.map((q, index) => {
             const globalIndex = allQuestions.findIndex(
               (item) =>
                 `${item.subjectName}-${item.num}` ===
