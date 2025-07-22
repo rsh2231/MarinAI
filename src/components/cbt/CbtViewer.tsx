@@ -15,6 +15,7 @@ import { transformData } from "@/lib/problem-utils";
 import { CbtSettings } from "./setting/CbtSetting";
 import { CbtInProgress } from "./CbtInProgress";
 import { ResultView } from "@/components/problem/result/ResultView";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 type ExamStatus = "not-started" | "in-progress" | "finished";
@@ -156,6 +157,10 @@ export default function CbtViewer({
 
     setStatus("not-started");
   };
+
+  if (isLoading) {
+    return <LoadingSpinner text="CBT 문제를 불러오는 중입니다..." />;
+  }
 
   switch (status) {
     case "in-progress":

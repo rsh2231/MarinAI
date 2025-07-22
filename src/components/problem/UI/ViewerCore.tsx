@@ -2,6 +2,7 @@
 
 import { SubjectGroup } from "@/types/ProblemViewer";
 import { EmptyMessage } from "../../ui/EmptyMessage";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
 interface ViewerCoreProps {
   isLoading: boolean;
@@ -27,11 +28,7 @@ export default function ViewerCore({
   );
 
   if (isLoading) {
-    return (
-      <p className="text-gray-400 text-center mt-6 text-sm">
-        문제를 불러오는 중입니다...
-      </p>
-    );
+    return <LoadingSpinner text="문제를 불러오는 중입니다..." />;
   }
 
   if (error) {

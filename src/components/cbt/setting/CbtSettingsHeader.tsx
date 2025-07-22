@@ -16,7 +16,7 @@ export function CbtSettingsHeader() {
       >
         <Lottie animationData={suffle} loop autoplay />
       </motion.div>
-      <p className="text-sm sm:text-base text-gray-400 text-center leading-relaxed">
+      <p className="text-sm sm:text-base text-gray-300 text-center leading-relaxed">
         선택한 자격증과 급수에 따라 <br className="sm:hidden" />
         기출문제 중 무작위로 문제가 출제됩니다. <br />
         하나 이상의 과목을 선택해주세요. <br />

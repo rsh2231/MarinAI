@@ -12,6 +12,7 @@ import {
   currentQuestionIndexAtom,
 } from "@/atoms/examAtoms";
 import { Question } from "@/types/ProblemViewer";
+import { useWindowWidth } from "@/hooks/useWindowWidth";
 
 interface OmrSheetProps {
   onSelectQuestion: (question: Question, index: number) => void;
@@ -22,6 +23,7 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
   const answers = useAtomValue(answersAtom);
   const currentIdx = useAtomValue(currentQuestionIndexAtom);
   const [isVisible, setIsVisible] = useAtom(isOmrVisibleAtom);
+  const isMobile = useWindowWidth(1024);
 
   const omrItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -51,7 +53,7 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
 
   const handleItemClick = (question: Question, index: number) => {
     onSelectQuestion(question, index);
-    if (window.innerWidth < 1024) {
+    if (isMobile) {
       onClose();
     }
   };

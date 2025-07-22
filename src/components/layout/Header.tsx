@@ -27,7 +27,9 @@ export default function Header() {
   const [isChatSidebarOpen, setIsChatSidebarOpen] = useAtom(chatSidebarAtom);
 
   const handleScrollTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (isClient) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const handleLogout = () => {

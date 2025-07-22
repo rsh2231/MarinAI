@@ -51,22 +51,22 @@ export function CbtSettings({
   const isLicenseStepComplete = license !== "";
   const isLevelStepRequired = isLicenseStepComplete && !isSmallShip;
   const isLevelStepComplete = level !== "" || isSmallShip;
-  
+
   const isSubjectStepActive = isLicenseStepComplete && isLevelStepComplete;
-  
+
   const isReadyToStart =
     isLicenseStepComplete && isLevelStepComplete && selectedSubjects.length > 0;
 
   useEffect(() => {
     if (isSubjectStepActive && subjectStepRef.current) {
-        setTimeout(() => {
-            subjectStepRef.current?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center' 
-            });
-        }, 300); 
+      setTimeout(() => {
+        subjectStepRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }, 300);
     }
-  }, [isSubjectStepActive]); 
+  }, [isSubjectStepActive]);
 
   const toggleSubject = useCallback((subject: string) => {
     setSelectedSubjects((prev) =>
@@ -102,7 +102,7 @@ export function CbtSettings({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-gray-800 border border-gray-700 pt-4 px-6 pb-6 rounded-2xl shadow-md overflow-hidden"
+        className="bg-gray-800 border border-gray-700 pt-10 px-6 pb-6 rounded-2xl shadow-md overflow-hidden relative"
       >
         <CbtSettingsHeader />
 
@@ -120,7 +120,7 @@ export function CbtSettings({
                 onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                   setLicense(e.target.value as LicenseType)
                 }
-                options={["", "항해사", "기관사", "소형선박조종사"]}
+                options={["항해사", "기관사", "소형선박조종사"]}
               />
             </SettingsStep>
 
@@ -139,9 +139,8 @@ export function CbtSettings({
                       setLevel(e.target.value)
                     }
                     options={[
-                      "",
                       ...LICENSE_LEVELS[
-                        license as Exclude<LicenseType, "소형선박조종사">
+                      license as Exclude<LicenseType, "소형선박조종사">
                       ],
                     ]}
                   />
@@ -151,21 +150,21 @@ export function CbtSettings({
 
             <AnimatePresence>
               {isSubjectStepActive && (
-                <div ref={subjectStepRef}> 
-                    <SettingsStep
-                      stepNumber={isLevelStepRequired ? 3 : 2}
-                      title="과목 선택"
-                      isComplete={selectedSubjects.length > 0}
-                      isActive={isSubjectStepActive}
-                    >
-                      <SubjectSelector
-                        subjects={availableSubjects}
-                        selectedSubjects={selectedSubjects}
-                        onToggleSubject={toggleSubject}
-                        onSelectAll={handleSelectAllSubjects}
-                        onDeselectAll={handleDeselectAllSubjects}
-                      />
-                    </SettingsStep>
+                <div ref={subjectStepRef}>
+                  <SettingsStep
+                    stepNumber={isLevelStepRequired ? 3 : 2}
+                    title="과목 선택"
+                    isComplete={selectedSubjects.length > 0}
+                    isActive={isSubjectStepActive}
+                  >
+                    <SubjectSelector
+                      subjects={availableSubjects}
+                      selectedSubjects={selectedSubjects}
+                      onToggleSubject={toggleSubject}
+                      onSelectAll={handleSelectAllSubjects}
+                      onDeselectAll={handleDeselectAllSubjects}
+                    />
+                  </SettingsStep>
                 </div>
               )}
             </AnimatePresence>

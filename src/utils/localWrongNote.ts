@@ -4,6 +4,7 @@ const STORAGE_KEY = "wrongNotes";
 
 // 저장
 export const saveWrongNote = (note: WrongNote) => {
+  if (typeof window === "undefined") return;
   const notes = loadWrongNotes();
   notes.push(note);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));

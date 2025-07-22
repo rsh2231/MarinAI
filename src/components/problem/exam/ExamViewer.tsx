@@ -27,6 +27,7 @@ import Button from "@/components/ui/Button";
 import QuestionCard from "../UI/QuestionCard";
 import { EmptyMessage } from "../../ui/EmptyMessage";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
@@ -372,13 +373,7 @@ export default function ExamViewer({
   const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-full bg-[#0f172a]">
-        <p className="text-gray-400 animate-pulse">
-          시험 문제를 불러오는 중입니다...
-        </p>
-      </div>
-    );
+    return <LoadingSpinner text="시험 문제를 불러오는 중입니다..." />;
   }
 
   if (error) {

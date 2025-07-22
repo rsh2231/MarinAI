@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import FilterSidebar from "./FilterSidebar";
 import { FilterState } from "@/types/FilterState";
 import { useEffect } from "react";
+import { useWindowWidth } from "@/hooks/useWindowWidth";
 
 type SidebarProps = {
   filterState: FilterState;
@@ -14,21 +15,21 @@ type SidebarProps = {
 
 export default function Sidebar({ filterState, className = "" }: SidebarProps) {
   const [sidebarOpen, setSidebarOpen] = useAtom(sidebarOpenAtom);
+  const isMobile = useWindowWidth(768);
 
   const handleClose = () => setSidebarOpen(false);
 
   // body 스크롤 잠금/해제 로직
   useEffect(() => {
-    if (sidebarOpen && window.innerWidth < 768) {
+    if (sidebarOpen && isMobile) {
       const originalStyle = window.getComputedStyle(document.body).overflow;
       document.body.style.overflow = 'hidden';
-
       // 컴포넌트가 언마운트되거나 sidebarOpen이 false가 될 때 원래 스타일로 복구
       return () => {
         document.body.style.overflow = originalStyle;
       };
     }
-  }, [sidebarOpen])
+  }, [sidebarOpen, isMobile]);
 
   const sidebarBaseStyles = "w-64 bg-[#1e293b] text-white border-r border-gray-700";
 

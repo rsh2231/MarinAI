@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HistoryItem from "./HistoryItem";
 import { SquarePen } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -19,28 +19,32 @@ interface SidebarProps {
   onClose: () => void;
 }
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
-  // 예시 데이터
-  const chatHistory = [
-    { id: 1, title: "오늘의 대화", date: "2025-07-15" },
-    { id: 2, title: "어제의 아이디어", date: "2025-07-14" },
-    { id: 3, title: "프로젝트 회의", date: "2025-07-14" },
-    { id: 4, title: "주간 보고서 초안", date: "2025-07-11" },
-  ];
+// 컴포넌트 바깥에 선언
+const chatHistory = [
+  { id: 1, title: "오늘의 대화", date: "2025-07-15" },
+  { id: 2, title: "어제의 아이디어", date: "2025-07-14" },
+  { id: 3, title: "프로젝트 회의", date: "2025-07-14" },
+  { id: 4, title: "주간 보고서 초안", date: "2025-07-11" },
+];
 
-  // 날짜별 그룹화
-  const groupedHistory = chatHistory.reduce<GroupedHistory>((acc, item) => {
-    const date = new Date(item.date).toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    if (!acc[date]) {
-      acc[date] = [];
-    }
-    acc[date].push(item);
-    return acc;
-  }, {})
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+  const [groupedHistory, setGroupedHistory] = useState<GroupedHistory>({});
+
+  useEffect(() => {
+    const grouped = chatHistory.reduce<GroupedHistory>((acc, item) => {
+      const date = new Date(item.date).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(item);
+      return acc;
+    }, {});
+    setGroupedHistory(grouped);
+  }, []); // chatHistory가 변하지 않으므로 안전
 
   return (
     <aside
