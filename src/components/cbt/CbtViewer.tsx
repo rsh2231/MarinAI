@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, RefObject } from "react";
-import { useSetAtom, useAtomValue } from "jotai";
-import { QnaItem, CbtData} from "@/types/ProblemViewer";
+import { useSetAtom, useAtomValue, useAtom } from "jotai";
+import { QnaItem, CbtData } from "@/types/ProblemViewer";
 import { authAtom } from "@/atoms/authAtom";
 import {
   answersAtom,
+  currentQuestionIndexAtom,
   groupedQuestionsAtom,
   selectedSubjectAtom,
   timeLeftAtom,
@@ -25,7 +26,13 @@ interface CbtViewerProps {
   scrollRef: RefObject<HTMLDivElement | null>;
 }
 
-export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerProps) {
+export default function CbtViewer({
+  status,
+  setStatus,
+  scrollRef,
+}: CbtViewerProps) {
+  const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
+
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,7 +46,7 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
   const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
   const setSelectedSubject = useSetAtom(selectedSubjectAtom);
   const setTimeLeft = useSetAtom(timeLeftAtom);
-  
+
   // 인증 상태 가져오기
   const auth = useAtomValue(authAtom);
 
@@ -64,7 +71,7 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
       const headers: HeadersInit = {
         "Content-Type": "application/json",
       };
-      
+
       // 로그인한 사용자만 인증 헤더 추가
       if (auth.token && auth.isLoggedIn) {
         headers.Authorization = `Bearer ${auth.token}`;
@@ -72,7 +79,7 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
       } else {
         console.log("비로그인 사용자로 CBT 시작");
       }
-      
+
       const res = await fetch(`/api/cbt?${params.toString()}`, {
         method: "GET",
         headers,
@@ -85,9 +92,9 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
         );
       }
 
-      const responseData = await res.json() as CbtData;
+      const responseData = (await res.json()) as CbtData;
       console.log("CBT API Response:", responseData);
-      
+
       // 새로운 응답 구조 처리
       let allQnas: QnaItem[] = [];
       if (responseData.subjects) {
@@ -99,7 +106,7 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
         allQnas = Object.values(responseData).flat() as QnaItem[];
         console.log("Using fallback structure, QnAs:", allQnas.length);
       }
-      
+
       const transformed = transformData(allQnas);
       console.log("Transformed data:", transformed.length, "subject groups");
 
@@ -110,13 +117,12 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
         setGroupedQuestions(transformed);
         setSelectedSubject(transformed[0].subjectName);
         setAnswers({});
-
+        setCurrentIdx(0); // CBT 시작 시 반드시 첫 문항으로 초기화
         const duration = transformed.length * DURATION_PER_SUBJECT_SECONDS;
         setTimeLeft(duration);
         setTotalDuration(duration); // 전체 시간 저장
         setCurrentLicense(settings.license); // 라이선스 종류 저장
         setCurrentLevel(settings.level); // 레벨 저장
-
         setStatus("in-progress");
       }
     } catch (err: any) {
@@ -147,8 +153,8 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
   switch (status) {
     case "in-progress":
       return (
-        <CbtInProgress 
-          onSubmit={handleSubmit} 
+        <CbtInProgress
+          onSubmit={handleSubmit}
           scrollRef={scrollRef}
           license={currentLicense}
           level={currentLevel}
@@ -167,6 +173,7 @@ export default function CbtViewer({ status, setStatus, scrollRef }: CbtViewerPro
           totalDuration={totalDuration}
           onRetry={handleRetry}
           scrollRef={scrollRef}
+          level={currentLicense !== "소형선박조종사" ? currentLevel : undefined}
         />
       );
 

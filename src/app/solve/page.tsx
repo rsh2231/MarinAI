@@ -33,7 +33,7 @@ export default function SolvePage() {
   const [round, setRound] = useState("");
   const [mode, setMode] = useState<"practice" | "exam" | null>(null);
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
-  const mainContentRef = useRef<HTMLElement>(null);
+  const mainContentRef = useRef<HTMLDivElement>(null);
   const isMobile = useWindowWidth(768);
 
   const isOmrVisible = useAtomValue(isOmrVisibleAtom);

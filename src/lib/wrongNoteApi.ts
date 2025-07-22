@@ -1,5 +1,3 @@
-// FastAPI 백엔드와 연동하는 오답노트 API 함수들
-
 export interface UserSolvedQna {
   choice: "가" | "나" | "사" | "아";
   gichulqna_id: number;

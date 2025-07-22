@@ -35,7 +35,7 @@ interface Props {
   level: string;
   round: string;
   selectedSubjects: string[];
-  scrollRef?: React.RefObject<HTMLElement | null>;
+  scrollRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 const DURATION_PER_SUBJECT_SECONDS = 25 * 60;
@@ -402,6 +402,10 @@ export default function ExamViewer({
         license={license}
         totalDuration={totalDuration}
         scrollRef={scrollRef ?? mainScrollRef}
+        forceScreenHeight={true}
+        year={year}
+        round={round}
+        level={license !== "소형선박조종사" ? level : undefined}
       />
     );
   }
