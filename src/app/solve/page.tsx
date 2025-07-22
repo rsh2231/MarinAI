@@ -93,7 +93,7 @@ export default function SolvePage() {
   const isModeSelection = !isFilterReady || !mode;
 
   return (
-    <div className="w-full h-full">
+    <div className={`w-full ${showResult ? "min-h-screen" : "h-full"}`}>
       {!showResult && (
         <>
           <Sidebar
@@ -108,10 +108,11 @@ export default function SolvePage() {
 
 <main
         ref={mainContentRef}
-        className={`bg-[#0f172a] h-full transition-all duration-300
-          ${mode === 'practice' ? 'overflow-y-auto' : ''} 
-          ${!showResult ? "md:ml-64 lg:ml-72" : ""}
-          ${isOmrVisible && mode === "exam" && !showResult ? "lg:mr-72" : ""}`}
+        className={`bg-[#0f172a] transition-all duration-300
+           ${showResult ? "min-h-screen" : "h-full"}
+           ${mode === 'practice' ? 'overflow-y-auto' : ''} 
+           ${!showResult ? "md:ml-64 lg:ml-72" : ""}
+           ${isOmrVisible && mode === "exam" && !showResult ? "lg:mr-72" : ""}`}
       >
         <AnimatePresence mode="wait">
           {isModeSelection ? (
@@ -183,7 +184,7 @@ export default function SolvePage() {
               key={`exam-${year}-${license}-${level}-${round}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="h-full"
+              className={showResult ? "min-h-screen" : "h-full"}
             >
               <ExamViewer
                 year={year}

@@ -16,16 +16,15 @@ import { SubjectBreakdownCard } from "./SubjectBreakdownCard";
 import { ProblemReviewHeader } from "./ProblemReviewHeader";
 import { QuestionResultCard } from "./QuestionResultCard";
 import { EmptyMessage } from "@/components/ui/EmptyMessage";
+import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 
-// 라이선스 타입 정의
-// (props로 전달받음)
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
 interface ResultViewProps {
   onRetry: () => void;
   license: LicenseType;
   totalDuration: number;
-  scrollRef: RefObject<HTMLElement | null>;
+  scrollRef: RefObject<HTMLDivElement | null>;
 }
 
 export interface SubjectResult {
@@ -101,7 +100,7 @@ export const ResultView = ({
       window.scrollTo({ top: 0, behavior: "instant" });
       if (document.body) document.body.scrollTop = 0;
       if (document.documentElement) document.documentElement.scrollTop = 0;
-      document.querySelectorAll('div,main,section').forEach(el => {
+      document.querySelectorAll("div,main,section").forEach((el) => {
         el.scrollTop = 0;
       });
     };
@@ -111,7 +110,9 @@ export const ResultView = ({
   }, []);
 
   // 점진적 렌더링: 모바일은 전체, 데스크탑은 CHUNK_SIZE씩
-  const [renderCount, setRenderCount] = useState(isMobile ? filteredQuestions.length : CHUNK_SIZE);
+  const [renderCount, setRenderCount] = useState(
+    isMobile ? filteredQuestions.length : CHUNK_SIZE
+  );
 
   useEffect(() => {
     if (isMobile) {
@@ -120,12 +121,21 @@ export const ResultView = ({
     }
     if (renderCount < filteredQuestions.length) {
       const id = setTimeout(
-        () => setRenderCount((c) => Math.min(c + CHUNK_SIZE, filteredQuestions.length)),
+        () =>
+          setRenderCount((c) =>
+            Math.min(c + CHUNK_SIZE, filteredQuestions.length)
+          ),
         16
       );
       return () => clearTimeout(id);
     }
-  }, [renderCount, filteredQuestions.length, selectedSubject, showOnlyWrong, isMobile]);
+  }, [
+    renderCount,
+    filteredQuestions.length,
+    selectedSubject,
+    showOnlyWrong,
+    isMobile,
+  ]);
 
   // 탭/옵션 변경 시 renderCount 초기화
   useEffect(() => {
@@ -189,76 +199,78 @@ export const ResultView = ({
   }, [totalDuration, timeLeft, allQuestions, answers, subjectResults]);
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-white">
-      <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-        {/* 상단: 결과 요약/통계 */}
-        <header className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-            시험 결과 분석
-          </h1>
-          <p className="text-neutral-400 mt-2 border-b-2 border-neutral-700 pb-3">
-            나의 취약점을 확인하고 다음 시험을 준비하세요.
-          </p>
-        </header>
+    <div className="h-full bg-neutral-900 text-white">
+      <div ref={scrollRef} className="h-full overflow-y-auto">
+        <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+          {/* 상단: 결과 요약/통계 */}
+          <header className="mb-8">
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              시험 결과 분석
+            </h1>
+            <p className="text-neutral-400 mt-2 border-b-2 border-neutral-700 pb-3">
+              나의 취약점을 확인하고 다음 시험을 준비하세요.
+            </p>
+          </header>
 
-        {/* 대시보드 그리드 (점수, 통계, 과목별 결과) */}
-        <motion.div
-          className="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: isMobile ? 0.2 : 0.5 }}
-        >
-          <div className="md:col-span-1 lg:col-span-1">
-            <OverallSummary score={overallScore} isPass={isPass} />
-          </div>
-          <div className="md:col-span-1 lg:col-span-1">
-            <ExamSummaryCard {...summaryStats} />
-          </div>
-          <div className="md:col-span-2 lg:col-span-1">
-            <SubjectBreakdownCard subjectResults={subjectResults} />
-          </div>
-        </motion.div>
+          {/* 대시보드 그리드 (점수, 통계, 과목별 결과) */}
+          <motion.div
+            className="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: isMobile ? 0.2 : 0.5 }}
+          >
+            <div className="md:col-span-1 lg:col-span-1">
+              <OverallSummary score={overallScore} isPass={isPass} />
+            </div>
+            <div className="md:col-span-1 lg:col-span-1">
+              <ExamSummaryCard {...summaryStats} />
+            </div>
+            <div className="md:col-span-2 lg:col-span-1">
+              <SubjectBreakdownCard subjectResults={subjectResults} />
+            </div>
+          </motion.div>
 
-        {/* 문제 다시보기 영역 */}
-        <motion.div
-          className="space-y-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <ProblemReviewHeader
-            selectedSubject={selectedSubject}
-            setSelectedSubject={setSelectedSubject}
-            showOnlyWrong={showOnlyWrong}
-            setShowOnlyWrong={setShowOnlyWrong}
-            onRetry={onRetry}
-            subjectNames={subjectResults.map((r) => r.subjectName)}
-          />
+          {/* 문제 다시보기 영역 */}
+          <motion.div
+            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <ProblemReviewHeader
+              selectedSubject={selectedSubject}
+              setSelectedSubject={setSelectedSubject}
+              showOnlyWrong={showOnlyWrong}
+              setShowOnlyWrong={setShowOnlyWrong}
+              onRetry={onRetry}
+              subjectNames={subjectResults.map((r) => r.subjectName)}
+            />
 
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredQuestions.length > 0 ? (
-              filteredQuestions
-                .slice(0, renderCount)
-                .map((question, index) => (
-                <QuestionResultCard
-                  key={`${question.subjectName}-${question.num}`}
-                  question={question}
-                  userAnswer={
-                    answers[`${question.subjectName}-${question.num}`]
-                  }
-                  index={index}
-                />
-              ))
-            ) : (
-              <div className="flex md:col-span-2 justify-center items-center ">
-                <EmptyMessage message="해당 조건에 맞는 문제가 없습니다." />
-              </div>
-            )}
-          </div>
-        </motion.div>
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {filteredQuestions.length > 0 ? (
+                filteredQuestions
+                  .slice(0, renderCount)
+                  .map((question, index) => (
+                    <QuestionResultCard
+                      key={`${question.subjectName}-${question.num}`}
+                      question={question}
+                      userAnswer={
+                        answers[`${question.subjectName}-${question.num}`]
+                      }
+                      index={index}
+                    />
+                  ))
+              ) : (
+                <div className="flex md:col-span-2 justify-center items-center ">
+                  <EmptyMessage message="해당 조건에 맞는 문제가 없습니다." />
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </div>
+        <div className="h-20"></div>
+        <ScrollToTopButton scrollableRef={scrollRef} />
       </div>
-      {/* 하단 여백 (ScrollToTop 버튼 등) */}
-      <div className="h-20"></div>
     </div>
   );
 };
