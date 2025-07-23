@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, RefObject } from "react";
+import { useState, RefObject, useEffect } from "react";
 import { useSetAtom, useAtomValue, useAtom } from "jotai";
 import { QnaItem, CbtData } from "@/types/ProblemViewer";
 import { authAtom } from "@/atoms/authAtom";
@@ -33,6 +33,8 @@ export default function CbtViewer({
   scrollRef,
 }: CbtViewerProps) {
   const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
+  const groupedQuestions = useAtomValue(groupedQuestionsAtom);
+  const setSelectedSubject = useSetAtom(selectedSubjectAtom);
 
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -45,11 +47,18 @@ export default function CbtViewer({
   const [currentOdapsetId, setCurrentOdapsetId] = useState<number | null>(null);
   const setAnswers = useSetAtom(answersAtom);
   const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
-  const setSelectedSubject = useSetAtom(selectedSubjectAtom);
+  const setSelectedSubjectAtom = useSetAtom(selectedSubjectAtom);
   const setTimeLeft = useSetAtom(timeLeftAtom);
 
   // 인증 상태 가져오기
   const auth = useAtomValue(authAtom);
+
+  useEffect(() => {
+    if (groupedQuestions.length > 0) {
+      setCurrentIdx(0);
+      setSelectedSubjectAtom(groupedQuestions[0].subjectName);
+    }
+  }, [groupedQuestions, setCurrentIdx, setSelectedSubjectAtom]);
 
   const handleStartExam = async (settings: {
     license: LicenseType;
@@ -122,9 +131,9 @@ export default function CbtViewer({
         setGroupedQuestions([]);
       } else {
         setGroupedQuestions(transformed);
-        setSelectedSubject(transformed[0].subjectName);
         setAnswers({});
-        setCurrentIdx(0); // CBT 시작 시 반드시 첫 문항으로 초기화
+        setCurrentIdx(0);
+        setSelectedSubjectAtom(transformed[0].subjectName);
         const duration = transformed.length * DURATION_PER_SUBJECT_SECONDS;
         setTimeLeft(duration);
         setTotalDuration(duration); // 전체 시간 저장
@@ -146,15 +155,13 @@ export default function CbtViewer({
   const handleRetry = () => {
     setAnswers({});
     setGroupedQuestions([]);
-    setSelectedSubject(null);
+    setSelectedSubjectAtom(null);
     setError("");
-
-    // 재시도 시 상태 초기화
     setCurrentLicense(null);
     setCurrentLevel("");
     setTotalDuration(0);
     setCurrentOdapsetId(null);
-
+    setCurrentIdx(0);
     setStatus("not-started");
   };
 

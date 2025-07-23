@@ -102,5 +102,10 @@ MyPage (최상위 페이지 컴포넌트)
 ● 시험일정
 - ScrollToTop 오류 개선
 
+● Chat
+- ChaInput 복사/붙여넣기 로직 추가
+- 유지보수를 위한 코드 분리 및 리펙터링
 
+● ResultView
+- 다시 풀기 로직 개선 필요
 

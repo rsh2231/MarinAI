@@ -13,7 +13,7 @@ interface TypingMarkdownProps {
 export default function TypingMarkdown({
   content,
   isStreaming,
-  speed = 20,
+  speed = 10,
 }: TypingMarkdownProps) {
   const [displayedText, setDisplayedText] = useState("");
   const currentIndexRef = useRef(0);

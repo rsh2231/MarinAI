@@ -20,7 +20,7 @@ import { transformData } from "@/lib/problem-utils";
 import { saveManyUserAnswers, OneOdap } from "@/lib/wrongNoteApi";
 
 import { ResultView } from "../result/ResultView";
-import { SubmitModal } from "./SubmitModal";
+import { SubmitModal } from "../UI/SubmitModal";
 import { ExamHeader } from "./ExamHeader";
 import { ChevronLeft, ChevronRight, Send } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -141,10 +141,8 @@ export default function ExamViewer({
         setGroupedQuestions(filteredGroups);
         setAnswers({});
         setCurrentIdx(0);
+        setSelectedSubject(filteredGroups[0].subjectName);
         setTimeLeft(totalDuration);
-        setSelectedSubject(
-          filteredGroups.length > 0 ? filteredGroups[0].subjectName : null
-        );
       } catch (err: any) {
         setError(err.message);
         setGroupedQuestions([]);
@@ -172,6 +170,13 @@ export default function ExamViewer({
     setShowResult,
     setGlobalShowResult,
   ]);
+
+  useEffect(() => {
+    if (groupedQuestions.length > 0) {
+      setCurrentIdx(0);
+      setSelectedSubject(groupedQuestions[0].subjectName);
+    }
+  }, [groupedQuestions, setCurrentIdx, setSelectedSubject]);
 
   const saveToLocalStorage = useCallback((resultData: any) => {
     try {
@@ -351,11 +356,11 @@ export default function ExamViewer({
     setShowResult(false);
     setGlobalShowResult(false);
     setCurrentIdx(0);
-    setTimeLeft(totalDuration);
-    setAnswers({});
     if (groupedQuestions.length > 0) {
       setSelectedSubject(groupedQuestions[0].subjectName);
     }
+    setTimeLeft(totalDuration);
+    setAnswers({});
   };
 
   const subjectNames = useMemo(

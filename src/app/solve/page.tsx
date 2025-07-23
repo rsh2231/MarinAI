@@ -17,12 +17,13 @@ import { Question } from "@/types/ProblemViewer";
 import Sidebar from "@/components/layout/Sidebar";
 import ProblemViewer from "@/components/problem/practice/PracticeViewer";
 import ExamViewer from "@/components/problem/exam/ExamViewer";
-import { OmrSheet } from "@/components/problem/exam/OmrSheet";
+import { OmrSheet } from "@/components/problem/UI/OmrSheet";
 import Button from "@/components/ui/Button";
 import question from "@/assets/animations/question.json";
 
 import { useWindowWidth } from "@/hooks/useWindowWidth";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
+import { useSearchParams } from "next/navigation";
 
 export default function SolvePage() {
   const [year, setYear] = useState("");
@@ -41,6 +42,23 @@ export default function SolvePage() {
   const setShowResult = useSetAtom(showResultAtom);
   const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
   const setSelectedSubject = useSetAtom(selectedSubjectAtom);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const yearParam = searchParams.get("year");
+    const roundParam = searchParams.get("round");
+    const licenseParam = searchParams.get("license");
+    const levelParam = searchParams.get("level");
+    if (yearParam && roundParam && licenseParam && (licenseParam === "소형선박조종사" || levelParam)) {
+      setYear(yearParam);
+      setRound(roundParam);
+      setLicense(licenseParam as any);
+      setLevel(levelParam || "");
+      setMode("exam");
+      setShowResult(false);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (license) {

@@ -1,14 +1,17 @@
 "use client";
 
 import React, { RefObject, useMemo, useState, useEffect } from "react";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import {
   groupedQuestionsAtom,
   answersAtom,
   allQuestionsAtom,
   timeLeftAtom,
+  currentQuestionIndexAtom,
+  selectedSubjectAtom,
 } from "@/atoms/examAtoms";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 import { OverallSummary } from "./OverallSummary";
 import { ExamSummaryCard } from "./ExamSummaryCard";
@@ -55,7 +58,7 @@ function useIsMobile() {
 }
 
 export const ResultView = ({
-  onRetry,
+  onRetry: _onRetry, // 기존 onRetry 무시
   license,
   totalDuration,
   scrollRef,
@@ -64,6 +67,9 @@ export const ResultView = ({
   round,
   level,
 }: ResultViewProps) => {
+  const router = useRouter();
+  const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
+  const setSelectedSubjectAtom = useSetAtom(selectedSubjectAtom);
   // jotai atom에서 문제/답안/시간 등 상태 가져오기
   const groupedQuestions = useAtomValue(groupedQuestionsAtom);
   const allQuestions = useAtomValue(allQuestionsAtom);
@@ -227,6 +233,27 @@ export const ResultView = ({
     );
   };
 
+  // 다시 풀기 핸들러 (Exam/CBT 구분)
+  const handleRetry = () => {
+    setCurrentIdx(0);
+    setSelectedSubjectAtom(null); // 문제 데이터 세팅 후 useEffect에서 첫 과목으로 덮어씀
+    if (year && round) {
+      // Exam 모드: /solve로 이동
+      const params = new URLSearchParams();
+      params.set("year", year);
+      params.set("round", round);
+      params.set("license", license);
+      if (level) params.set("level", level);
+      router.push(`/solve?${params.toString()}`);
+    } else {
+      // CBT 모드: /cbt로 이동
+      const params = new URLSearchParams();
+      params.set("license", license);
+      if (level) params.set("level", level);
+      router.push(`/cbt?${params.toString()}`);
+    }
+  };
+
   return (
     <div className="h-full bg-neutral-900 text-white">
       <div
@@ -279,7 +306,7 @@ export const ResultView = ({
               setSelectedSubject={setSelectedSubject}
               showOnlyWrong={showOnlyWrong}
               setShowOnlyWrong={setShowOnlyWrong}
-              onRetry={onRetry}
+              onRetry={handleRetry}
               subjectNames={subjectResults.map((r) => r.subjectName)}
             />
 

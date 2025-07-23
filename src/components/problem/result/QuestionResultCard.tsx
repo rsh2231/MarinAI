@@ -94,15 +94,15 @@ const QuestionResultCardInner = ({
       </div>
 
       {question.imageUrl && (
-        <div className="my-4 flex justify-center">
+        <div className="my-4 flex justify-center w-full overflow-hidden">
           <Image
             src={question.imageUrl}
             alt={`문제 ${question.num} 이미지`}
-            width={500}
-            height={300}
-            sizes="(min-width: 768px) 512px, 100vw"
+            width={400}
+            height={250}
+            sizes="(max-width: 640px) 90vw, 400px"
+            className="rounded object-contain max-w-[90vw] max-h-[40vw] sm:max-w-[400px] sm:max-h-[250px]"
             priority
-            className="rounded border border-gray-600 w-full max-w-lg h-auto object-contain"
           />
         </div>
       )}
@@ -132,14 +132,14 @@ const QuestionResultCardInner = ({
             >
               <span className="font-semibold min-w-[24px]">{choice.label}.</span>
               {choice.isImage && choice.imageUrl ? (
-                <div className="w-full flex justify-start">
+                <div className="flex justify-center overflow-hidden">
                   <Image
                     src={choice.imageUrl}
                     alt={`보기 ${choice.label}`}
-                    width={400}
-                    height={200}
-                    sizes="(min-width: 768px) 448px, 100vw"
-                    className="h-auto w-auto max-w-md max-h-[250px] object-contain rounded"
+                    width={240}
+                    height={150}
+                    sizes="(max-width: 640px) 70vw, 240px"
+                    className="rounded object-contain max-w-[70vw] sm:max-w-[240px] max-h-[30vw] sm:max-h-[120px] h-auto"
                   />
                 </div>
               ) : (
@@ -175,11 +175,11 @@ const QuestionResultCardInner = ({
         <AnimatePresence>
           {isExpanded && (
             <motion.div
-              layout
+              layout="size"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
               className="overflow-hidden mt-3 text-sm break-keep"
             >
               <div className="text-gray-300 whitespace-pre-wrap leading-relaxed break-words pt-3 border-t border-neutral-700">

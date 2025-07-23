@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import CbtViewer from "@/components/cbt/CbtViewer";
-import { OmrSheet } from "@/components/problem/exam/OmrSheet";
+import { OmrSheet } from "@/components/problem/UI/OmrSheet";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
   isOmrVisibleAtom,
@@ -10,6 +10,8 @@ import {
   selectedSubjectAtom,
 } from "@/atoms/examAtoms";
 import { Question } from "@/types/ProblemViewer";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 type ExamStatus = "not-started" | "in-progress" | "finished";
 
@@ -19,6 +21,25 @@ export default function CbtPage() {
   const isOmrVisible = useAtomValue(isOmrVisibleAtom);
   const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
   const setSelectedSubject = useSetAtom(selectedSubjectAtom);
+
+  // 쿼리 파라미터로 세팅값 자동 적용
+  const searchParams = useSearchParams();
+  const [license, setLicense] = useState<string | null>(null);
+  const [level, setLevel] = useState<string>("");
+  const [subjects, setSubjects] = useState<string[]>([]);
+
+  useEffect(() => {
+    const licenseParam = searchParams.get("license");
+    const levelParam = searchParams.get("level");
+    const subjectsParam = searchParams.getAll("subjects");
+    if (licenseParam) setLicense(licenseParam);
+    if (levelParam) setLevel(levelParam);
+    if (subjectsParam && subjectsParam.length > 0) setSubjects(subjectsParam);
+    // license와 (level 또는 소형선박조종사)이 있으면 자동 시작
+    if (licenseParam && (licenseParam === "소형선박조종사" || levelParam)) {
+      setStatus("in-progress");
+    }
+  }, [searchParams]);
 
   const handleQuestionSelectFromOMR = (question: Question, index: number) => {
     setCurrentIdx(index);

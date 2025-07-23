@@ -22,7 +22,7 @@ import { Question } from "@/types/ProblemViewer";
 
 import Button from "@/components/ui/Button";
 import QuestionCard from "@/components/problem/UI/QuestionCard";
-import { SubmitModal } from "@/components/problem/exam/SubmitModal";
+import { SubmitModal } from "@/components/problem/UI/SubmitModal";
 import { ExamHeader } from "@/components/problem/exam/ExamHeader";
 import { ChevronLeft, ChevronRight, Send } from "lucide-react";
 import { EmptyMessage } from "../ui/EmptyMessage";

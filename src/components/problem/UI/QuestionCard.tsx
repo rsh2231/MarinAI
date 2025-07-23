@@ -69,15 +69,15 @@ export default function QuestionCardComponent({
       </div>
 
       {imageUrl && (
-        <div className="my-4 flex justify-center">
+        <div className="my-4 flex justify-center w-full overflow-hidden">
           <Image
             src={imageUrl}
             alt={`문제 ${num} 이미지`}
-            width={500}
-            height={300}
-            sizes="(min-width: 768px) 512px, 100vw"
+            width={400}
+            height={250}
+            sizes="(max-width: 640px) 90vw, 400px"
+            className="rounded object-contain w-full h-auto max-w-full max-h-[40vw] sm:max-w-[400px] sm:max-h-[250px]"
             priority
-            className="rounded border border-gray-600 w-full max-w-lg h-auto object-contain"
           />
         </div>
       )}
@@ -110,14 +110,14 @@ export default function QuestionCardComponent({
             >
               <span className="font-semibold min-w-[24px]">{opt.label}.</span>
               {opt.isImage && opt.imageUrl ? (
-                <div className="w-full flex justify-start">
+                <div className="flex justify-center overflow-hidden">
                   <Image
                     src={opt.imageUrl}
                     alt={`보기 ${opt.label}`}
-                    width={400}
-                    height={200}
-                    sizes="(min-width: 768px) 448px, 100vw"
-                    className="h-auto w-auto max-w-md max-h-[250px] object-contain rounded"
+                    width={240}
+                    height={150}
+                    sizes="(max-width: 640px) 70vw, 240px"
+                    className="rounded object-contain max-w-[70vw] sm:max-w-[240px] max-h-[30vw] sm:max-h-[120px] h-auto"
                   />
                 </div>
               ) : (
@@ -154,10 +154,11 @@ export default function QuestionCardComponent({
                       <strong>💡 해설</strong>
                     </div>
                     <div className="pl-6 border-l-2 border-neutral-600 text-gray-200">
-                      {explanation
-                        ? <p>{explanation}</p>
-                        : <p>해설 정보가 없습니다.</p>
-                      }
+                      {explanation ? (
+                        <p>{explanation}</p>
+                      ) : (
+                        <p>해설 정보가 없습니다.</p>
+                      )}
                     </div>
                   </div>
                 </div>
