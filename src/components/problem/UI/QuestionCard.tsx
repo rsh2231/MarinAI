@@ -5,12 +5,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
-import { useSolveProblem } from "@/hooks/useSolveProblem";
 import { Question } from "@/types/ProblemViewer";
 import correctAnimation from "@/assets/animations/correct.json";
 import incorrectAnimation from "@/assets/animations/incorrect.json";
-import Loading from "@/assets/animations/loading.json";
-import Fail from "@/assets/animations/fail.json";
 
 interface Props {
   question: Question;
@@ -40,29 +37,6 @@ export default function QuestionCardComponent({
     onSelect(optLabel);
     setFeedback(optLabel === answer ? "correct" : "incorrect");
   };
-
-  const { result, loading, error, solve } = useSolveProblem();
-
-  useEffect(() => {
-    if (isPracticeMode && showAnswer && !explanation && !result && !loading) {
-      const choicesText = choices
-        .map((c) => `${c.label}. ${c.isImage ? "(이미지 보기)" : c.text}`)
-        .join("\n");
-      const prompt = `문제 ${num}\n${questionStr}\n\n보기:\n${choicesText}\n\n정답: ${answer}`;
-      solve(prompt);
-    }
-  }, [
-    num,
-    showAnswer,
-    result,
-    loading,
-    isPracticeMode,
-    explanation,
-    questionStr,
-    choices,
-    answer,
-    solve,
-  ]);
 
   return (
     <article
@@ -180,26 +154,10 @@ export default function QuestionCardComponent({
                       <strong>💡 해설</strong>
                     </div>
                     <div className="pl-6 border-l-2 border-neutral-600 text-gray-200">
-                      {explanation ? (
-                        <p>{explanation}</p>
-                      ) : loading ? (
-                        <div className="flex items-center gap-2 text-gray-400">
-                          <Lottie
-                            animationData={Loading}
-                            style={{ width: 100, height: 100 }}
-                          />
-                        </div>
-                      ) : error ? (
-                        <div className="flex items-center gap-2 text-red-500">
-                          <span>해설을 가져오는 데 실패했습니다.</span>
-                          <Lottie
-                            animationData={Fail}
-                            style={{ width: 20, height: 20 }}
-                          />
-                        </div>
-                      ) : (
-                        <p>{result}</p>
-                      )}
+                      {explanation
+                        ? <p>{explanation}</p>
+                        : <p>해설 정보가 없습니다.</p>
+                      }
                     </div>
                   </div>
                 </div>
