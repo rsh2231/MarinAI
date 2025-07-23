@@ -228,11 +228,16 @@ export const ResultView = ({
 
   return (
     <div className="h-full bg-neutral-900 text-white">
-      <div ref={scrollRef} className={`${forceScreenHeight ? "h-screen" : "h-full"} overflow-y-auto`}>
+      <div
+        ref={scrollRef}
+        className={`${
+          forceScreenHeight ? "h-screen" : "h-full"
+        } overflow-y-auto`}
+      >
         <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
           {/* 상단: 결과 요약/통계 */}
           <header className="mb-8">
-            <div className="flex items-center gap-2 text-sm text-neutral-400 mb-2">
+            <div className="flex items-center gap-2 text-lg font-semibold mb-2">
               {renderPath()}
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
@@ -300,7 +305,10 @@ export const ResultView = ({
           </motion.div>
         </div>
         <div className="h-20"></div>
-        <ScrollToTopButton scrollableRef={scrollRef} />
+        <ScrollToTopButton
+          className="fixed bottom-6 right-6 lg:right-15 p-3 bg-blue-600 text-white rounded-full shadow-xl hover:bg-blue-700 hover:shadow-2xl transition-all duration-200 z-40 backdrop-blur-sm bg-opacity-90"
+          scrollableRef={scrollRef}
+        />
       </div>
     </div>
   );

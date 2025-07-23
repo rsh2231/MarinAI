@@ -106,11 +106,11 @@ export default function SolvePage() {
         </>
       )}
 
-<main
+      <main
         ref={mainContentRef}
         className={`bg-[#0f172a] transition-all duration-300
            ${showResult ? "min-h-screen" : "h-full"}
-           ${mode === 'practice' ? 'overflow-y-auto' : ''} 
+           ${mode === "practice" ? "overflow-y-auto" : ""} 
            ${!showResult ? "md:ml-64 lg:ml-72" : ""}
            ${isOmrVisible && mode === "exam" && !showResult ? "lg:mr-72" : ""}`}
       >
@@ -198,7 +198,10 @@ export default function SolvePage() {
           ) : null}
         </AnimatePresence>
       </main>
-      <ScrollToTopButton scrollableRef={mainContentRef} />
+      <ScrollToTopButton
+        className="fixed bottom-6 right-6 lg:right-15 p-3 bg-blue-600 text-white rounded-full shadow-xl hover:bg-blue-700 hover:shadow-2xl transition-all duration-200 z-40 backdrop-blur-sm bg-opacity-90"
+        scrollableRef={mainContentRef}
+      />
     </div>
   );
 }
