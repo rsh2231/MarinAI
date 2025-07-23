@@ -173,11 +173,11 @@ export function CbtSettings({
           <AnimatePresence>
             {isReadyToStart && (
               <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="mt-8"
+                initial={{ opacity: 0, scaleY: 0 }}
+                animate={{ opacity: 1, scaleY: 1 }}
+                exit={{ opacity: 0, scaleY: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="mt-8 origin-top"
               >
                 <CbtStartAction
                   onStartClick={handleStartClick}

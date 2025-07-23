@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useRef, useInsertionEffect } from "react";
 import { Message } from "@/types/Message";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
@@ -15,6 +16,22 @@ export default function ChatMessage({
   message: Message;
   isStreaming?: boolean;
 }) {
+  // 메시지 컨테이너 요소를 참조하기 위한 ref
+  const messageContainerRef = useRef<HTMLDivElement>(null);
+
+  // useInsertionEffect : 레이아웃 계산 전에 DOM 변경을 삽입하여 레이아웃 변경을 최소화
+  useInsertionEffect(() => {
+    if (message.image) {
+      const img = new Image();
+      img.onload = () => {
+        if (messageContainerRef.current) {
+          messageContainerRef.current.style.height = `${img.height}px`;
+        }
+      };
+      img.src = message.image;
+    }
+  }, [message.image]);
+
   const isUser = message.role === "user";
 
   return (

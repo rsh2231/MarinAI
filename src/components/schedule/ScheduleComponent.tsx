@@ -1,6 +1,5 @@
 "use client";
 
-// ✅ framer-motion에서 Variants 타입을 함께 import 합니다.
 import { motion, Variants } from "framer-motion";
 import { useSchedules } from "@/hooks/useSchedules";
 import { ScheduleSection } from "./ScheduleSection";
@@ -11,6 +10,12 @@ import {
   WRITTEN_COLUMNS,
 } from "@/types/Schedule";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import ScrollToTopButton from "../ui/ScrollToTopButton";
+import { RefObject } from "react";
+
+interface ScheduleComponentProps {
+  scrollableRef: RefObject<HTMLDivElement | null>;
+}
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -34,7 +39,9 @@ const itemVariants: Variants = {
   },
 };
 
-export default function SchedulePage() {
+export default function ScheduleComponent({
+  scrollableRef,
+}: ScheduleComponentProps) {
   const { schedules, isLoading, error } = useSchedules();
 
   const groupBySection = (section: Schedule["section"]) =>
@@ -53,7 +60,10 @@ export default function SchedulePage() {
   }
 
   return (
-    <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 break-keep">
+    <main
+      className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 break-keep relative"
+      style={{ minHeight: 600 }}
+    >
       <motion.header
         variants={itemVariants}
         initial="hidden"
@@ -101,6 +111,10 @@ export default function SchedulePage() {
           />
         </motion.div>
       </motion.div>
+      <ScrollToTopButton
+        className="fixed bottom-6 right-6 lg:right-15 p-3 bg-blue-600 text-white rounded-full shadow-xl hover:bg-blue-700 hover:shadow-2xl transition-all duration-200 z-40 backdrop-blur-sm bg-opacity-90"
+        scrollableRef={scrollableRef}
+      />
     </main>
   );
 }

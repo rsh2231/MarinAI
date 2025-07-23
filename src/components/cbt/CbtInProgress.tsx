@@ -290,12 +290,12 @@ export function CbtInProgress({
           )}
 
           {groupedData.length > 0 && (
-            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <div className="mt-8 flex flex-row justify-center items-center gap-4 sm:flex-row sm:justify-center">
               <Button
                 variant="neutral"
                 onClick={() => onSelectSubject(subjectNames[selectedIndex - 1])}
                 disabled={selectedIndex <= 0}
-                className="w-full sm:w-auto"
+                className="w-auto sm:w-auto"
               >
                 <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
               </Button>
@@ -303,7 +303,7 @@ export function CbtInProgress({
                 <Button
                   onClick={() => setIsModalOpen(true)}
                   variant="primary"
-                  className="w-full sm:w-auto"
+                  className="w-auto sm:w-auto"
                 >
                   제출하기 <Send className="ml-1 h-4 w-4" />
                 </Button>
@@ -312,7 +312,7 @@ export function CbtInProgress({
                   onClick={() =>
                     onSelectSubject(subjectNames[selectedIndex + 1])
                   }
-                  className="w-full sm:w-auto"
+                  className="w-auto sm:w-auto"
                 >
                   다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>

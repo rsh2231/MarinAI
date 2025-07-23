@@ -59,17 +59,17 @@ const QuestionResultCardInner = ({
   };
 
   return (
-    <motion.div
+    <motion.article
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
-      className="bg-neutral-800 rounded-lg p-5"
+      className={`relative bg-neutral-800/50 border border-neutral-700 rounded-xl shadow-lg mb-6 p-5 transition-colors`}
     >
       <div className="flex justify-between items-start gap-4">
         <div className="flex-1 flex flex-col gap-2 font-medium text-sm sm:text-base break-keep">
           <span className="text-gray-400">
-            {question.subjectName} - 문제 {question.num}
+            {question.subjectName ? `${question.subjectName} - ` : ''}문제 {question.num}
           </span>
           {question.questionStr && (
             <p className="whitespace-pre-wrap leading-relaxed text-gray-100">
@@ -77,7 +77,6 @@ const QuestionResultCardInner = ({
             </p>
           )}
         </div>
-
         <div
           className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap ${badgeStyles[status]}`}
         >
@@ -102,7 +101,8 @@ const QuestionResultCardInner = ({
             width={500}
             height={300}
             sizes="(min-width: 768px) 512px, 100vw"
-            className="rounded border border-gray-600 w-full max-w-lg h-auto object-contain bg-white"
+            priority
+            className="rounded border border-gray-600 w-full max-w-lg h-auto object-contain"
           />
         </div>
       )}
@@ -112,35 +112,41 @@ const QuestionResultCardInner = ({
           const isSelected = userAnswer === choice.label;
           const isActualAnswer = question.answer === choice.label;
 
+          // QuestionCard 스타일과 최대한 맞춤
+          const base =
+            "flex items-center gap-3 px-4 py-3 rounded-md border transition-all text-sm sm:text-base";
+          const selectedCls = isSelected
+            ? "border-blue-500 bg-blue-900/30"
+            : "border-neutral-700 hover:bg-neutral-700/50";
+          const correctCls = isActualAnswer
+            ? "!border-green-500 !bg-green-900/30 !text-green-300"
+            : "";
+          const wrongCls = isSelected && !isActualAnswer
+            ? "!border-red-500 !bg-red-900/30 !text-red-300"
+            : "";
+
           return (
-            <div
+            <li
               key={choice.label}
-              className={`flex justify-between items-center gap-3 px-4 py-3 rounded-md border text-sm sm:text-base ${getChoiceStyle(
-                choice.label,
-                userAnswer,
-                question.answer
-              )}`}
+              className={`${base} ${selectedCls} ${correctCls} ${wrongCls}`}
             >
-              <div className="flex items-start gap-3">
-                <span className="font-semibold min-w-[24px]">
-                  {choice.label}.
-                </span>
+              <span className="font-semibold min-w-[24px]">{choice.label}.</span>
+              {choice.isImage && choice.imageUrl ? (
                 <div className="w-full flex justify-start">
-                  {choice.isImage && choice.imageUrl ? (
-                    <Image
-                      src={choice.imageUrl}
-                      alt={`보기 ${choice.label}`}
-                      width={400}
-                      height={200}
-                      sizes="(min-width: 768px) 448px, 100vw"
-                      className="h-auto w-auto max-w-md max-h-[250px] object-contain rounded bg-white"
-                    />
-                  ) : (
-                    <span className="text-gray-100">{choice.text}</span>
-                  )}
+                  <Image
+                    src={choice.imageUrl}
+                    alt={`보기 ${choice.label}`}
+                    width={400}
+                    height={200}
+                    sizes="(min-width: 768px) 448px, 100vw"
+                    className="h-auto w-auto max-w-md max-h-[250px] object-contain rounded"
+                  />
                 </div>
-              </div>
-              <div className="flex-shrink-0 text-xs font-semibold">
+              ) : (
+                <span className="text-gray-100">{choice.text}</span>
+              )}
+              {/* 상태 뱃지 */}
+              <div className="flex-shrink-0 text-xs font-semibold ml-auto flex gap-1">
                 {isSelected && !isActualAnswer && (
                   <span className="px-2 py-1 rounded-md bg-red-500/20 text-red-300">
                     내 답안
@@ -152,40 +158,49 @@ const QuestionResultCardInner = ({
                   </span>
                 )}
               </div>
-            </div>
+            </li>
           );
         })}
       </ul>
 
-      <div className="mt-4 border-t border-neutral-700 pt-4">
+      {/* 해설 토글 UI도 QuestionCard와 통일 */}
+      <>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="flex justify-between items-center w-full text-left text-neutral-300 hover:text-white"
+          className="mt-5 text-sm text-blue-400 hover:underline"
+          type="button"
         >
-          <span className="font-semibold">해설 보기</span>
-          <ChevronsUpDown
-            size={18}
-            className={`transition-transform ${isExpanded ? "rotate-180" : ""}`}
-          />
+          {isExpanded ? "▲ 해설 숨기기" : "▼ 해설 보기"}
         </button>
         <AnimatePresence>
           {isExpanded && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              layout
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden mt-3 text-sm break-keep"
             >
-              <div className="pl-6 border-l-2 border-neutral-600 text-gray-200">
-                <div className="whitespace-pre-wrap leading-relaxed break-words text-gray-300">
-                  {question.explanation || "이 문제에 대한 해설이 없습니다."}
+              <div className="text-gray-300 whitespace-pre-wrap leading-relaxed break-words pt-3 border-t border-neutral-700">
+                <div className="mt-2">
+                  <div className="flex items-center gap-2 mb-2 text-gray-300">
+                    <strong>💡 해설</strong>
+                  </div>
+                  <div className="pl-6 border-l-2 border-neutral-600 text-gray-200">
+                    {question.explanation ? (
+                      <p>{question.explanation}</p>
+                    ) : (
+                      <p>해설 정보가 없습니다.</p>
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </motion.div>
+      </>
+    </motion.article>
   );
 };
 

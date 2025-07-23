@@ -99,6 +99,8 @@ MyPage (최상위 페이지 컴포넌트)
 - next/image 사용으로 CORS 해결하여 외부 이미지 가져오기
 - next.config 도메인 추가
 
+● 시험일정
+- ScrollToTop 오류 개선
 
 
 

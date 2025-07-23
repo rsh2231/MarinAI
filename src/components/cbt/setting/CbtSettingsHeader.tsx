@@ -7,7 +7,7 @@ import suffle from "@/assets/animations/suffle.json";
 export function CbtSettingsHeader() {
   return (
     // ✨ 개선 사항: mb-10을 mb-8로 줄여 상단 여백을 최적화했습니다.
-    <div className="flex flex-col justify-center items-center mb-10">
+    <div className="flex flex-col justify-center items-center mb-10 min-h-[160px]">
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
