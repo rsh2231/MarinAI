@@ -4,7 +4,7 @@ interface User {
   id: string;
   username: string;
   indivname: string; // 표시될 이름
-  avatarUrl?: string;
+  profile_img_url?: string;
 }
 
 export interface AuthState {

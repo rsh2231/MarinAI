@@ -3,7 +3,6 @@ export interface OneOdap {
   gichulqna_id: number;
 }
 
-// 이 타입은 개별 오답 저장(saveWrongNoteToServer)에서만 사용됩니다.
 export interface UserSolvedQna {
   choice: "가" | "나" | "사" | "아";
   gichulqna_id: number;

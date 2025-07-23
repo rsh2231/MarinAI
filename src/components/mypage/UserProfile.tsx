@@ -2,8 +2,9 @@
 
 import { useAtomValue } from "jotai";
 import { authAtom } from "@/atoms/authAtom";
-import { User, Mail, Edit, LogIn } from "lucide-react";
+import { User, Mail, LogIn } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function UserProfile() {
   // Jotai Atom에서 인증 상태를 읽어옴
@@ -23,7 +24,7 @@ export default function UserProfile() {
     );
   }
 
-  // 2. 비로그인 상태일 때
+  // 비로그인 상태일 때
   if (!auth.isLoggedIn || !auth.user) {
     return (
       <div className="bg-neutral-800 p-6 rounded-lg shadow-lg text-center">
@@ -38,18 +39,26 @@ export default function UserProfile() {
     );
   }
 
-  // 3. 로그인된 상태일 때
+  // 로그인된 상태일 때
   return (
     <div className="bg-neutral-800 p-3 sm:p-6 rounded-lg shadow-lg flex flex-row items-center gap-2 sm:gap-4">
-      <img
-        // API 응답에 avatarUrl이 있으면 그것을 사용하고, 없으면 DiceBear에서 생성
-        src={
-          auth.user.avatarUrl ||
-          `https://api.dicebear.com/8.x/adventurer/svg?seed=${auth.user.id}`
-        }
-        alt="User Avatar"
-        className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 border-blue-500"
-      />
+      {auth.user.profile_img_url && auth.user.profile_img_url.includes("googleusercontent.com") ? (
+        <Image
+          src={auth.user.profile_img_url}
+          alt="User Avatar"
+          width={64}
+          height={64}
+          className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 border-blue-500"
+        />
+      ) : (
+        <img
+          src={`https://api.dicebear.com/8.x/adventurer/svg?seed=${auth.user.indivname}`}
+          alt="User Avatar"
+          width={64}
+          height={64}
+          className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 border-blue-500"
+        />
+      )}
       <div className="flex-1 text-left">
         <h3 className="text-base sm:text-xl font-bold flex items-center gap-1 sm:gap-2">
           <User size={16} className="sm:w-5 sm:h-5" />

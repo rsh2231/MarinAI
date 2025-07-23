@@ -91,6 +91,14 @@ MyPage (최상위 페이지 컴포넌트)
 - Practice / Exam / CBT 오답노트 저장 로직 백엔드 연동
 - 미답도 오답으로 간주로하는 로직 백엔드와 논의 필요
 
+2025.07.22.
+- LoadingSpinner 분리 및 재사용
+- CbtSetting 튀는 현상 개선
+
+● 로그인
+- next/image 사용으로 CORS 해결하여 외부 이미지 가져오기
+- next.config 도메인 추가
+
 
 
 
