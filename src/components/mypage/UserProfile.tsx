@@ -41,7 +41,7 @@ export default function UserProfile() {
 
   // 로그인된 상태일 때
   return (
-    <div className="bg-neutral-800 p-3 sm:p-6 rounded-lg shadow-lg flex flex-row items-center gap-2 sm:gap-4">
+    <div className="bg-neutral-800 p-3 sm:p-6 rounded-lg shadow-lg flex flex-row items-center justify-center gap-2 sm:gap-4 w-full">
       {auth.user.profile_img_url && auth.user.profile_img_url.includes("googleusercontent.com") ? (
         <Image
           src={auth.user.profile_img_url}
@@ -59,7 +59,7 @@ export default function UserProfile() {
           className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 border-blue-500"
         />
       )}
-      <div className="flex-1 text-left">
+      <div className="text-center">
         <h3 className="text-base sm:text-xl font-bold flex items-center gap-1 sm:gap-2">
           <User size={16} className="sm:w-5 sm:h-5" />
           {auth.user.indivname}

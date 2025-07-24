@@ -32,34 +32,36 @@ export default function CbtViewer({
   setStatus,
   scrollRef,
 }: CbtViewerProps) {
+  // 상태 설정(set)을 위한 Atom Setter들
+  const setAnswers = useSetAtom(answersAtom);
   const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
-  const groupedQuestions = useAtomValue(groupedQuestionsAtom);
   const setSelectedSubject = useSetAtom(selectedSubjectAtom);
+  const setTimeLeft = useSetAtom(timeLeftAtom);
+  
+  // 그룹화된 문제 데이터는 '다시 풀기'를 위해 계속 상태를 유지해야 함
+  const [groupedQuestions, setGroupedQuestions] = useAtom(groupedQuestionsAtom);
 
+  // 이 컴포넌트에서 직접 관리해야 할 상태들
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const [currentLicense, setCurrentLicense] = useState<LicenseType | null>(
-    null
-  );
+  
+  // '다시 풀기'를 위해 시험 정보를 상태로 유지
+  const [currentLicense, setCurrentLicense] = useState<LicenseType | null>(null);
   const [currentLevel, setCurrentLevel] = useState<string>("");
   const [totalDuration, setTotalDuration] = useState(0);
   const [currentOdapsetId, setCurrentOdapsetId] = useState<number | null>(null);
-  const setAnswers = useSetAtom(answersAtom);
-  const setGroupedQuestions = useSetAtom(groupedQuestionsAtom);
-  const setSelectedSubjectAtom = useSetAtom(selectedSubjectAtom);
-  const setTimeLeft = useSetAtom(timeLeftAtom);
 
-  // 인증 상태 가져오기
   const auth = useAtomValue(authAtom);
 
+  // 시험 시작 또는 재시작 시 첫 과목/문제 설정
   useEffect(() => {
-    if (groupedQuestions.length > 0) {
+    if (status === "in-progress" && groupedQuestions.length > 0) {
       setCurrentIdx(0);
-      setSelectedSubjectAtom(groupedQuestions[0].subjectName);
+      setSelectedSubject(groupedQuestions[0].subjectName);
     }
-  }, [groupedQuestions, setCurrentIdx, setSelectedSubjectAtom]);
+  }, [status, groupedQuestions, setCurrentIdx, setSelectedSubject]);
 
+  // CbtSettings에서 시험을 처음 시작할 때 호출
   const handleStartExam = async (settings: {
     license: LicenseType;
     level: string;
@@ -68,77 +70,47 @@ export default function CbtViewer({
     setIsLoading(true);
     setError("");
 
+    // '다시 풀기'를 위해 시험 설정 저장
+    setCurrentLicense(settings.license);
+    setCurrentLevel(settings.level);
+
     try {
       const params = new URLSearchParams({
         license: settings.license,
         level: settings.level,
       });
-      settings.subjects.forEach((subject) =>
-        params.append("subjects", subject)
-      );
+      settings.subjects.forEach((subject) => params.append("subjects", subject));
 
-      // 인증 헤더 추가 (선택적)
-      const headers: HeadersInit = {
-        "Content-Type": "application/json",
-      };
-
-      // 로그인한 사용자만 인증 헤더 추가
+      const headers: HeadersInit = { "Content-Type": "application/json" };
       if (auth.token && auth.isLoggedIn) {
         headers.Authorization = `Bearer ${auth.token}`;
-        console.log("로그인한 사용자로 CBT 시작", auth);
-      } else {
-        console.log("비로그인 사용자로 CBT 시작");
       }
 
-      const res = await fetch(`/api/cbt?${params.toString()}`, {
-        method: "GET",
-        headers,
-      });
+      const res = await fetch(`/api/cbt?${params.toString()}`, { method: "GET", headers });
 
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(
-          errorData.message || "데이터를 불러오는데 실패했습니다."
-        );
+        throw new Error(errorData.message || "데이터를 불러오는데 실패했습니다.");
       }
 
       const responseData = (await res.json()) as CbtData;
-      console.log("CBT API Response:", responseData);
+      
+      setCurrentOdapsetId(responseData.odapset_id ?? null);
 
-      if (responseData.odapset_id) {
-        setCurrentOdapsetId(responseData.odapset_id);
-      } else {
-        setCurrentOdapsetId(null);
-      }
-
-      // 새로운 응답 구조 처리
-      let allQnas: QnaItem[] = [];
-      if (responseData.subjects) {
-        // subjects 객체의 모든 값들을 배열로 변환
-        allQnas = Object.values(responseData.subjects).flat();
-        console.log("Extracted QnAs from subjects:", allQnas.length);
-      } else {
-        // 기존 구조와의 호환성을 위해 fallback
-        allQnas = Object.values(responseData).flat() as QnaItem[];
-        console.log("Using fallback structure, QnAs:", allQnas.length);
-      }
+      const allQnas: QnaItem[] = responseData.subjects ? Object.values(responseData.subjects).flat() : [];
 
       const transformed = transformData(allQnas);
-      console.log("Transformed data:", transformed.length, "subject groups");
-
       if (transformed.length === 0) {
         setError("선택하신 조건에 해당하는 문제 데이터가 없습니다.");
         setGroupedQuestions([]);
       } else {
+        // 전역 상태 설정
         setGroupedQuestions(transformed);
         setAnswers({});
-        setCurrentIdx(0);
-        setSelectedSubjectAtom(transformed[0].subjectName);
         const duration = transformed.length * DURATION_PER_SUBJECT_SECONDS;
         setTimeLeft(duration);
-        setTotalDuration(duration); // 전체 시간 저장
-        setCurrentLicense(settings.license); // 라이선스 종류 저장
-        setCurrentLevel(settings.level); // 레벨 저장
+        setTotalDuration(duration);
+        
         setStatus("in-progress");
       }
     } catch (err: any) {
@@ -148,21 +120,31 @@ export default function CbtViewer({
     }
   };
 
+  // CbtInProgress에서 '제출하기'를 눌렀을 때 호출
   const handleSubmit = () => {
     setStatus("finished");
+    if (scrollRef.current) {
+        scrollRef.current.scrollTo({ top: 0, behavior: 'instant' });
+    }
   };
 
-  const handleRetry = () => {
+  // ResultView에서 "다시 풀기"를 눌렀을 때의 동작
+  const handleRetrySameExam = () => {
+    if (groupedQuestions.length === 0 || !currentLicense) {
+        setStatus("not-started");
+        return;
+    }
+    
     setAnswers({});
-    setGroupedQuestions([]);
-    setSelectedSubjectAtom(null);
-    setError("");
-    setCurrentLicense(null);
-    setCurrentLevel("");
-    setTotalDuration(0);
-    setCurrentOdapsetId(null);
+    setTimeLeft(totalDuration);
     setCurrentIdx(0);
-    setStatus("not-started");
+    setSelectedSubject(groupedQuestions[0].subjectName);
+
+    setStatus("in-progress");
+    
+    if (scrollRef.current) {
+        scrollRef.current.scrollTo({ top: 0, behavior: 'instant' });
+    }
   };
 
   if (isLoading) {
@@ -184,16 +166,19 @@ export default function CbtViewer({
     case "finished":
       if (!currentLicense) {
         return (
-          <div>결과를 표시하는 중 오류가 발생했습니다. 다시 시도해주세요.</div>
+          <div className="flex items-center justify-center h-full">
+            <p>결과를 표시하는 중 오류가 발생했습니다. 다시 시도해주세요.</p>
+          </div>
         );
       }
       return (
         <ResultView
           license={currentLicense}
           totalDuration={totalDuration}
-          onRetry={handleRetry}
+          onRetry={handleRetrySameExam}
           scrollRef={scrollRef}
           level={currentLicense !== "소형선박조종사" ? currentLevel : undefined}
+          forceScreenHeight={true}
         />
       );
 

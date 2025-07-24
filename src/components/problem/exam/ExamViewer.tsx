@@ -110,6 +110,7 @@ export default function ExamViewer({
           method: "GET",
           headers,
         });
+
         if (!res.ok) {
           const errorData = await res.json();
           throw new Error(
@@ -119,6 +120,9 @@ export default function ExamViewer({
         }
         const responseData: { qnas: QnaItem[]; odapset_id?: number } =
           await res.json();
+          
+        console.log("실전모드 문제 불러오기", responseData);
+
         if (responseData.odapset_id) {
           setOdapsetId(responseData.odapset_id);
         } else {

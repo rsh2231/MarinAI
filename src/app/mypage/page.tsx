@@ -11,6 +11,7 @@ import WrongNoteView from "@/components/mypage/WrongNoteView";
 import ExamResultView from "@/components/mypage/ExamResultView";
 import CbtResultView from "@/components/mypage/CbtResultView";
 import AccumulatedComparisonChart from "@/components/mypage/AccumulatedComparisonChart";
+import AILearningDiagnosis from "@/components/mypage/AILearningDiagnosis";
 
 export default function MyPage() {
   const router = useRouter();
@@ -29,7 +30,9 @@ export default function MyPage() {
       <div className="max-w-7xl mx-auto">
         <header className="mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0 min-h-24">
           <div className="flex flex-col justify-center h-full text-center sm:text-left">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">마이페이지</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+              마이페이지
+            </h1>
             <p className="text-neutral-400 mt-1 sm:mt-2 text-sm sm:text-base">
               나의 학습 현황을 한눈에 확인하세요.
             </p>
@@ -49,6 +52,11 @@ export default function MyPage() {
           <div className="bg-neutral-800 rounded-xl p-4 md:p-6">
             <PerformanceRadarChart />
           </div>
+        </div>
+
+        {/* AI 학습진단 카드 */}
+        <div className="mb-8">
+          <AILearningDiagnosis />
         </div>
 
         {/* 하단 1단 그리드 */}

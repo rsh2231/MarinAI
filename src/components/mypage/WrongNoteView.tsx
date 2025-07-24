@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import { useAtomValue } from "jotai";
-import { BookX, ChevronRight, ChevronUp, ChevronDown } from "lucide-react";
+import { BookX, ChevronRight, ChevronUp, ChevronDown, Flame } from "lucide-react";
 import Link from "next/link";
 import { getWrongNotesFromServer } from "@/lib/wrongNoteApi";
 import { authAtom } from "@/atoms/authAtom";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/ui/Button";
+import { QuestionResultCard } from "@/components/problem/result/QuestionResultCard";
 
 interface ServerWrongNote {
   id: number;
@@ -209,15 +210,16 @@ export default function WrongNoteView() {
       <div className="flex items-center gap-2 mb-4 justify-end">
         <Button
           variant="primary"
-          className="px-4 py-1.5 font-semibold text-sm"
+          className="px-4 py-2 text-sm font-semibold"
           onClick={handleStartWrongNoteQuiz}
         >
           오답 다시 풀기
         </Button>
         <select
-          className="bg-neutral-700 text-white rounded px-3 py-1"
+          className="bg-neutral-700 text-white rounded px-4 py-2 text-sm border border-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold"
           value={selectedSubject}
           onChange={e => setSelectedSubject(e.target.value)}
+          style={{ height: '40px' }}
         >
           <option value="all">전체 과목</option>
           {subjects.map(subject => (
@@ -232,7 +234,7 @@ export default function WrongNoteView() {
           {displayNotes.map((note) => (
             <li
               key={note.id}
-              className="flex flex-col bg-neutral-700/50 rounded-md p-0"
+              className="flex flex-col bg-neutral-700/70 rounded-md p-0"
             >
               <button
                 className="w-full flex justify-between items-center p-3 text-left focus:outline-none"
@@ -242,7 +244,10 @@ export default function WrongNoteView() {
                   <p className="font-semibold">
                     {note.subject} - 문제 #{note.gichulqna_id}
                     {(note.count ?? 1) > 1 && (
-                      <span className="ml-2 text-xs text-blue-400 font-bold">{note.count ?? 1}회</span>
+                      <span className="ml-2 inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded bg-orange-600/20 text-orange-500 border border-orange-400">
+                        <Flame size={14} className="inline-block" />
+                        {note.count ?? 1}회
+                      </span>
                     )}
                   </p>
                   <p className="text-xs text-neutral-400">
@@ -260,23 +265,36 @@ export default function WrongNoteView() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden px-4 pb-3"
                   >
-                    {/* 상세 카드 내용: 실제 note에 문제 정보가 있다고 가정 */}
-                    <div className="mt-2 text-sm text-gray-200">
-                      <div className="mb-2 font-semibold">{note.question || "문제 내용 예시"}</div>
-                      {note.choices && Array.isArray(note.choices) && (
-                        <ul className="mb-2 space-y-1">
-                          {note.choices.map((choice: any, idx: number) => (
-                            <li key={idx} className={`px-3 py-1 rounded ${note.answer === choice.label ? "bg-green-900/30 text-green-300" : note.choice === choice.label ? "bg-red-900/30 text-red-300" : "bg-neutral-800/50 text-gray-100"}`}>{choice.label}. {choice.text}</li>
-                          ))}
-                        </ul>
-                      )}
-                      <div className="text-xs text-gray-400 mb-1">정답: <span className="font-bold text-green-400">{note.answer || "?"}</span></div>
-                      <div className="text-xs text-gray-400">내 답: <span className="font-bold text-red-400">{note.choice || "?"}</span></div>
-                      <div className="mt-2 border-t border-neutral-600 pt-2">
-                        <span className="font-semibold">해설</span>
-                        <div className="pl-2 mt-1 text-gray-300 whitespace-pre-wrap">{note.explanation || "해설 정보가 없습니다."}</div>
+                    {/* QuestionCard로 대체 */}
+                    <QuestionResultCard
+                      question={{
+                        id: note.id,
+                        num: note.gichulqna_id,
+                        questionStr: note.question || "",
+                        choices: (note.choices || []).map((c) => ({
+                          ...c,
+                          isImage: false,
+                        })),
+                        answer: note.answer || "",
+                        explanation: note.explanation || "",
+                        subjectName: note.subject,
+                        isImageQuestion: false,
+                        imageUrl: undefined,
+                      }}
+                      userAnswer={note.choice}
+                      index={displayNotes.findIndex((n) => n.id === note.id)}
+                    />
+                    {/* 여러번 오답시 강조 뱃지 */}
+                    {(note.count ?? 1) > 1 && (
+                      <div className="mt-2 flex items-center gap-2">
+                        <span className="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded bg-orange-600/20 text-orange-500 border border-orange-400">
+                          <Flame size={14} className="inline-block" />
+                          {note.count ?? 1}회 오답
+                        </span>
+                        <span className="text-xs text-orange-400">이 문제는 여러 번 오답노트에 등록되었습니다!</span>
                       </div>
-                    </div>
+                    )}
+                    {/* 내 답/정답/횟수 등 부가 정보는 아래에 추가로 표시 가능 */}
                   </motion.div>
                 )}
               </AnimatePresence>

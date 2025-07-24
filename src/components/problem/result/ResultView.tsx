@@ -1,17 +1,14 @@
 "use client";
 
 import React, { RefObject, useMemo, useState, useEffect } from "react";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import {
   groupedQuestionsAtom,
   answersAtom,
   allQuestionsAtom,
   timeLeftAtom,
-  currentQuestionIndexAtom,
-  selectedSubjectAtom,
 } from "@/atoms/examAtoms";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 
 import { OverallSummary } from "./OverallSummary";
 import { ExamSummaryCard } from "./ExamSummaryCard";
@@ -58,7 +55,7 @@ function useIsMobile() {
 }
 
 export const ResultView = ({
-  onRetry: _onRetry, // 기존 onRetry 무시
+  onRetry, // 부모로부터 받은 onRetry 함수를 그대로 사용합니다.
   license,
   totalDuration,
   scrollRef,
@@ -67,9 +64,6 @@ export const ResultView = ({
   round,
   level,
 }: ResultViewProps) => {
-  const router = useRouter();
-  const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
-  const setSelectedSubjectAtom = useSetAtom(selectedSubjectAtom);
   // jotai atom에서 문제/답안/시간 등 상태 가져오기
   const groupedQuestions = useAtomValue(groupedQuestionsAtom);
   const allQuestions = useAtomValue(allQuestionsAtom);
@@ -105,24 +99,6 @@ export const ResultView = ({
   }, [allQuestions, answers, showOnlyWrong, selectedSubject, groupedQuestions]);
 
   const isMobile = useIsMobile();
-
-  // 마운트 시 모든 주요 컨테이너에 대해 3회 반복 스크롤 최상단 이동
-  useEffect(() => {
-    const scrollToTop = () => {
-      if (scrollRef && scrollRef.current) {
-        scrollRef.current.scrollTo({ top: 0, behavior: "instant" });
-      }
-      window.scrollTo({ top: 0, behavior: "instant" });
-      if (document.body) document.body.scrollTop = 0;
-      if (document.documentElement) document.documentElement.scrollTop = 0;
-      document.querySelectorAll("div,main,section").forEach((el) => {
-        el.scrollTop = 0;
-      });
-    };
-    scrollToTop();
-    setTimeout(scrollToTop, 100);
-    setTimeout(scrollToTop, 300);
-  }, []);
 
   // 점진적 렌더링: 모바일은 전체, 데스크탑은 CHUNK_SIZE씩
   const [renderCount, setRenderCount] = useState(
@@ -233,26 +209,7 @@ export const ResultView = ({
     );
   };
 
-  // 다시 풀기 핸들러 (Exam/CBT 구분)
-  const handleRetry = () => {
-    setCurrentIdx(0);
-    setSelectedSubjectAtom(null); // 문제 데이터 세팅 후 useEffect에서 첫 과목으로 덮어씀
-    if (year && round) {
-      // Exam 모드: /solve로 이동
-      const params = new URLSearchParams();
-      params.set("year", year);
-      params.set("round", round);
-      params.set("license", license);
-      if (level) params.set("level", level);
-      router.push(`/solve?${params.toString()}`);
-    } else {
-      // CBT 모드: /cbt로 이동
-      const params = new URLSearchParams();
-      params.set("license", license);
-      if (level) params.set("level", level);
-      router.push(`/cbt?${params.toString()}`);
-    }
-  };
+  // 자체 handleRetry 함수는 제거되었습니다.
 
   return (
     <div className="h-full bg-neutral-900 text-white">
@@ -306,7 +263,7 @@ export const ResultView = ({
               setSelectedSubject={setSelectedSubject}
               showOnlyWrong={showOnlyWrong}
               setShowOnlyWrong={setShowOnlyWrong}
-              onRetry={handleRetry}
+              onRetry={onRetry} // 부모로부터 받은 onRetry 함수를 그대로 전달
               subjectNames={subjectResults.map((r) => r.subjectName)}
             />
 
@@ -318,7 +275,9 @@ export const ResultView = ({
                     .slice(0, renderCount)
                     .map((question, index) => {
                       const showDivider =
-                        selectedSubject === "all" && (lastSubject === null || lastSubject !== question.subjectName);
+                        selectedSubject === "all" &&
+                        (lastSubject === null ||
+                          lastSubject !== question.subjectName);
                       const card = (
                         <QuestionResultCard
                           key={`${question.subjectName}-${question.num}`}
@@ -342,7 +301,9 @@ export const ResultView = ({
                       ) : null;
                       lastSubject = question.subjectName;
                       return (
-                        <React.Fragment key={`${question.subjectName}-${question.num}`}>
+                        <React.Fragment
+                          key={`${question.subjectName}-${question.num}`}
+                        >
                           {divider}
                           {card}
                         </React.Fragment>
