@@ -1,11 +1,13 @@
 // 오답노트
 "use client";
-import { useEffect, useState, useCallback } from "react";
-import { useAtomValue } from "jotai";
-import { BookX, ChevronRight, ChevronUp, ChevronDown, Flame } from "lucide-react";
-import Link from "next/link";
-import { getWrongNotesFromServer } from "@/lib/wrongNoteApi";
-import { authAtom } from "@/atoms/authAtom";
+import { useState } from "react";
+import {
+  BookX,
+  ChevronRight,
+  ChevronUp,
+  ChevronDown,
+  Flame,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/ui/Button";
 import { QuestionResultCard } from "@/components/problem/result/QuestionResultCard";
@@ -103,9 +105,12 @@ const dummyNotes: ServerWrongNote[] = [
 ];
 
 // 오답노트 추가/업데이트 함수 (중복시 최신으로 올리고 count 증가)
-function addOrUpdateWrongNote(newNote: ServerWrongNote, setNotes: React.Dispatch<React.SetStateAction<ServerWrongNote[]>>) {
-  setNotes(prev => {
-    const idx = prev.findIndex(n => n.gichulqna_id === newNote.gichulqna_id);
+function addOrUpdateWrongNote(
+  newNote: ServerWrongNote,
+  setNotes: React.Dispatch<React.SetStateAction<ServerWrongNote[]>>
+) {
+  setNotes((prev) => {
+    const idx = prev.findIndex((n) => n.gichulqna_id === newNote.gichulqna_id);
     if (idx !== -1) {
       // 이미 있으면 count 증가, created_at 갱신
       const updated = [...prev];
@@ -115,7 +120,10 @@ function addOrUpdateWrongNote(newNote: ServerWrongNote, setNotes: React.Dispatch
         count: (updated[idx].count || 1) + 1,
       };
       // 최신순 정렬
-      return updated.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      return updated.sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
     } else {
       // 없으면 새로 추가
       return [{ ...newNote, count: 1 }, ...prev];
@@ -169,11 +177,14 @@ export default function WrongNoteView() {
   // }, [fetchWrongNotes]);
 
   // 과목 목록 추출 (중복 제거)
-  const subjects = Array.from(new Set(notes.map(note => note.subject))).filter(Boolean);
+  const subjects = Array.from(
+    new Set(notes.map((note) => note.subject))
+  ).filter(Boolean);
   // 필터링된 오답노트
-  const filteredNotes = selectedSubject === "all"
-    ? notes
-    : notes.filter(note => note.subject === selectedSubject);
+  const filteredNotes =
+    selectedSubject === "all"
+      ? notes
+      : notes.filter((note) => note.subject === selectedSubject);
   // recent, rest 분리 대신
   const displayNotes = showAll ? filteredNotes : filteredNotes.slice(0, 4);
 
@@ -203,30 +214,33 @@ export default function WrongNoteView() {
 
   return (
     <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
-      <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-        <BookX size={22} />
-        최근 오답노트
-      </h3>
-      {/* 과목 필터 드롭박스 위쪽 div를 아래처럼 수정 */}
-      <div className="flex items-center gap-2 mb-4 justify-end">
-        <Button
-          variant="primary"
-          className="px-4 py-2 text-sm font-semibold"
-          onClick={handleStartWrongNoteQuiz}
-        >
-          오답 다시 풀기
-        </Button>
-        <select
-          className="bg-neutral-700 text-white rounded px-4 py-2 text-sm border border-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold"
-          value={selectedSubject}
-          onChange={e => setSelectedSubject(e.target.value)}
-          style={{ height: '40px' }}
-        >
-          <option value="all">전체 과목</option>
-          {subjects.map(subject => (
-            <option key={subject} value={subject}>{subject}</option>
-          ))}
-        </select>
+      <div className="flex items-center justify-between mb-4 w-full">
+        <h3 className="text-xl font-bold flex items-center gap-2">
+          <BookX size={22} />
+          최근 오답노트
+        </h3>
+        <div className="flex items-center gap-3">
+          <Button
+            variant="primary"
+            className="px-4 py-2 text-sm font-semibold"
+            onClick={handleStartWrongNoteQuiz}
+          >
+            오답 다시 풀기
+          </Button>
+          <select
+            className="bg-neutral-700 text-white rounded px-4 py-2 text-sm border border-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold w-auto min-w-[110px]"
+            value={selectedSubject}
+            onChange={(e) => setSelectedSubject(e.target.value)}
+            style={{ height: "40px" }}
+          >
+            <option value="all">전체 과목</option>
+            {subjects.map((subject) => (
+              <option key={subject} value={subject}>
+                {subject}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       {filteredNotes.length === 0 ? (
         <p className="text-neutral-400">해당 과목의 오답노트가 없습니다.</p>
@@ -239,7 +253,13 @@ export default function WrongNoteView() {
             >
               <button
                 className="w-full flex justify-between items-center p-3 text-left focus:outline-none"
-                onClick={() => setOpenNoteIds((prev) => prev.includes(note.id) ? prev.filter((nid) => nid !== note.id) : [...prev, note.id])}
+                onClick={() =>
+                  setOpenNoteIds((prev) =>
+                    prev.includes(note.id)
+                      ? prev.filter((nid) => nid !== note.id)
+                      : [...prev, note.id]
+                  )
+                }
               >
                 <div>
                   <p className="font-semibold">
@@ -255,7 +275,12 @@ export default function WrongNoteView() {
                     {new Date(note.created_at).toLocaleDateString()}
                   </p>
                 </div>
-                <ChevronRight size={20} className={`text-neutral-500 transition-transform ${openNoteIds.includes(note.id) ? "rotate-90" : ""}`} />
+                <ChevronRight
+                  size={20}
+                  className={`text-neutral-500 transition-transform ${
+                    openNoteIds.includes(note.id) ? "rotate-90" : ""
+                  }`}
+                />
               </button>
               <AnimatePresence initial={false}>
                 {openNoteIds.includes(note.id) && (
@@ -292,7 +317,9 @@ export default function WrongNoteView() {
                           <Flame size={14} className="inline-block" />
                           {note.count ?? 1}회 오답
                         </span>
-                        <span className="text-xs text-orange-400">이 문제는 여러 번 오답노트에 등록되었습니다!</span>
+                        <span className="text-xs text-orange-400">
+                          이 문제는 여러 번 오답노트에 등록되었습니다!
+                        </span>
                       </div>
                     )}
                     {/* 내 답/정답/횟수 등 부가 정보는 아래에 추가로 표시 가능 */}

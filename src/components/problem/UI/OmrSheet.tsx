@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useSetAtom, useAtomValue } from "jotai";
 import { X } from "lucide-react";
 
 import {
@@ -10,19 +10,21 @@ import {
   allQuestionsAtom,
   answersAtom,
   currentQuestionIndexAtom,
+  selectedQuestionFromOmrAtom,
+  selectedSubjectAtom, // 추가
 } from "@/atoms/examAtoms";
 import { Question } from "@/types/ProblemViewer";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
-interface OmrSheetProps {
-  onSelectQuestion: (question: Question, index: number) => void;
-}
-
-export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
+export const OmrSheet: React.FC = () => {
   const allQuestions = useAtomValue(allQuestionsAtom);
   const answers = useAtomValue(answersAtom);
   const currentIdx = useAtomValue(currentQuestionIndexAtom);
   const [isVisible, setIsVisible] = useAtom(isOmrVisibleAtom);
+  const setQuestionFromOmr = useSetAtom(selectedQuestionFromOmrAtom);
+  const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
+  const setSelectedSubject = useSetAtom(selectedSubjectAtom); // 추가
+
   const isMobile = useIsMobile(1024);
 
   const omrItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -51,8 +53,14 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
 
   const onClose = () => setIsVisible(false);
 
-  const handleItemClick = (question: Question, index: number) => {
-    onSelectQuestion(question, index);
+  const handleItemClick = (index: number) => {
+    setQuestionFromOmr(index);
+    setCurrentIdx(index);
+    // 인덱스에 해당하는 문제의 과목명으로 subjectAtom도 변경
+    const question = allQuestions[index];
+    if (question) {
+      setSelectedSubject(question.subjectName);
+    }
     if (isMobile) {
       onClose();
     }
@@ -131,7 +139,8 @@ export const OmrSheet: React.FC<OmrSheetProps> = ({ onSelectQuestion }) => {
                             if (omrItemRefs.current)
                               omrItemRefs.current[globalIndex] = el;
                           }}
-                          onClick={() => handleItemClick(q, globalIndex)}
+                          // handleItemClick에 question 객체 대신 globalIndex만 전달
+                          onClick={() => handleItemClick(globalIndex)}
                           className={`h-8 w-8 text-xs font-mono rounded flex items-center justify-center transition-colors ${bgClass}`}
                         >
                           {q.num}

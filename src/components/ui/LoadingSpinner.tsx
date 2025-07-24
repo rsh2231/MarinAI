@@ -1,8 +1,11 @@
 import React from "react";
 
-export default function LoadingSpinner({ text = "로딩 중입니다..." }: { text?: string }) {
+export default function LoadingSpinner({ text = "로딩 중입니다...", minHeight = "60vh" }: { text?: string; minHeight?: string }) {
   return (
-    <div className="flex justify-center items-center min-h-[60vh] text-foreground/70">
+    <div
+      className="flex justify-center items-center text-foreground/70"
+      style={{ minHeight }}
+    >
       <svg
         className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500"
         xmlns="http://www.w3.org/2000/svg"

@@ -1,22 +1,16 @@
-// CBT 풀이 결과
+// 기출문제 풀이 결과
 "use client";
 import { useEffect, useState } from "react";
-import {
-  ClipboardList,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
-  ArrowUpRight,
-} from "lucide-react";
+import { ClipboardList, ChevronRight, ChevronDown, ChevronUp, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import MiniBarChart from "./MiniBarChart";
+import MiniBarChart from "@/components/mypage/charts/MiniBarChart";
 
 const dummyResults = [
   {
     id: 1,
-    title: "기관사 5급 CBT",
-    score: "91점",
-    date: "2025-07-18",
+    title: "2023년 기관사 5급 2회 기출",
+    score: "88점",
+    date: "2025-07-16",
     subjectScores: [
       { subject: "기관1", score: 85 },
       { subject: "기관2", score: 90 },
@@ -27,9 +21,9 @@ const dummyResults = [
   },
   {
     id: 2,
-    title: "기관사 5급 CBT",
-    score: "85점",
-    date: "2025-07-12",
+    title: "2023년 기관사 5급 1회 기출",
+    score: "82점",
+    date: "2025-07-11",
     subjectScores: [
       { subject: "기관1", score: 80 },
       { subject: "기관2", score: 85 },
@@ -40,9 +34,9 @@ const dummyResults = [
   },
   {
     id: 3,
-    title: "기관사 5급 CBT",
-    score: "89점",
-    date: "2024-07-18",
+    title: "20222년 기관사 5급 2회 기출",
+    score: "90점",
+    date: "2024-07-16",
     subjectScores: [
       { subject: "기관1", score: 88 },
       { subject: "기관2", score: 92 },
@@ -53,9 +47,9 @@ const dummyResults = [
   },
   {
     id: 4,
-    title: "기관사 5급 CBT",
-    score: "83점",
-    date: "2024-07-12",
+    title: "2022년 기관사 5급 1회 기출",
+    score: "85점",
+    date: "2024-07-11",
     subjectScores: [
       { subject: "기관1", score: 82 },
       { subject: "기관2", score: 87 },
@@ -66,9 +60,9 @@ const dummyResults = [
   },
   {
     id: 5,
-    title: "기관사 5급 CBT",
-    score: "86점",
-    date: "2023-07-18",
+    title: "2021년 기관사 5급 2회 기출",
+    score: "87점",
+    date: "2023-07-16",
     subjectScores: [
       { subject: "기관1", score: 84 },
       { subject: "기관2", score: 89 },
@@ -79,9 +73,9 @@ const dummyResults = [
   },
   {
     id: 6,
-    title: "해기사 5급 CBT",
-    score: "79점",
-    date: "2023-07-12",
+    title: "2021년 기관사 5급 1회 기출",
+    score: "80점",
+    date: "2023-07-11",
     subjectScores: [
       { subject: "기관1", score: 78 },
       { subject: "기관2", score: 83 },
@@ -92,7 +86,7 @@ const dummyResults = [
   },
 ];
 
-export default function CbtResultView() {
+export default function ExamResultView() {
   const [results, setResults] = useState(dummyResults);
   const [showAll, setShowAll] = useState(false);
   const [openIds, setOpenIds] = useState<number[]>([]);
@@ -109,7 +103,7 @@ export default function CbtResultView() {
       const token = sessionStorage.getItem("access_token");
       if (!token) return;
       try {
-        const res = await fetch("/api/mypage/cbt-results", {
+        const res = await fetch("/api/mypage/exam-results", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {
@@ -127,7 +121,7 @@ export default function CbtResultView() {
     <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
       <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
         <ClipboardList size={22} />
-        CBT 풀이 결과
+        기출문제 풀이 결과
       </h3>
       {visibleResults.length === 0 ? (
         <p className="text-neutral-400">저장된 결과가 없습니다.</p>
@@ -166,7 +160,7 @@ export default function CbtResultView() {
                         <MiniBarChart data={result.subjectScores} />
                         <div className="flex justify-end mt-2">
                           <Link
-                            href={`/mypage/cbt-result/${result.id}`}
+                            href={`/mypage/result/${result.id}`}
                             className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 px-2 py-1 rounded"
                           >
                             상세보기 <ArrowUpRight size={16} />
@@ -214,7 +208,7 @@ export default function CbtResultView() {
                             <MiniBarChart data={result.subjectScores} />
                             <div className="flex justify-end mt-2">
                               <Link
-                                href={`/mypage/cbt-result/${result.id}`}
+                                href={`/mypage/result/${result.id}`}
                                 className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 px-2 py-1 rounded"
                               >
                                 상세보기 <ArrowUpRight size={16} />

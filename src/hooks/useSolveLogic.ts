@@ -62,11 +62,6 @@ export function useSolveLogic() {
     setShowResult(false);
   };
 
-  const handleQuestionSelectFromOMR = (question: any, index: number) => {
-    setCurrentIdx(index);
-    setSelectedSubject(question.subjectName);
-  };
-
   const isFilterReady = !!(year && license && round && (license === "소형선박조종사" || level));
 
   return {
@@ -83,6 +78,5 @@ export function useSolveLogic() {
       selectedSubjects, setSelectedSubjects
     },
     handleModeSelect,
-    handleQuestionSelectFromOMR,
   };
 }

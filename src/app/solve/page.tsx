@@ -10,7 +10,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 
 import Sidebar from "@/components/layout/Sidebar";
 import ProblemViewer from "@/components/problem/practice/PracticeViewer";
-import ExamViewer from "@/components/problem/exam/ExamViewer";
+import ExamContainer from "@/components/problem/exam/ExamContainer";
 import ModeSelectionPrompt from "@/components/solve/ModeSelectionPrompt";
 import { OmrSheet } from "@/components/problem/UI/OmrSheet";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
@@ -22,7 +22,7 @@ export default function SolvePage() {
   // 커스텀 훅에서 모든 로직과 상태를 가져옴
   const {
     year, license, level, round, mode, selectedSubjects,
-    isFilterReady, filterState, handleModeSelect, handleQuestionSelectFromOMR,
+    isFilterReady, filterState, handleModeSelect,
   } = useSolveLogic();
 
   const isOmrVisible = useAtomValue(isOmrVisibleAtom);
@@ -64,7 +64,7 @@ export default function SolvePage() {
             animate={{ opacity: 1 }}
             className={showResult ? "min-h-screen" : "h-full"}
           >
-            <ExamViewer {...{ year, license: license!, level, round, selectedSubjects, scrollRef: mainContentRef }} />
+            <ExamContainer {...{ year, license: license!, level, round, selectedSubjects, scrollRef: mainContentRef }} />
           </motion.div>
         );
       default:
@@ -80,7 +80,7 @@ export default function SolvePage() {
             filterState={filterState}
             className="fixed top-0 left-0 z-20 hidden h-screen w-64 shrink-0 overflow-y-auto border-r border-gray-700 bg-[#1e293b] pt-20 md:block lg:w-72"
           />
-          {mode === "exam" && <OmrSheet onSelectQuestion={handleQuestionSelectFromOMR} />}
+          {mode === "exam" && <OmrSheet />}
         </>
       )}
 

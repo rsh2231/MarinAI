@@ -118,8 +118,14 @@ MyPage (최상위 페이지 컴포넌트)
 ● ResultView
 - 다시 풀기 로직 개선 완료
 - Exam, Cbt에서 rerty관련 함수를 ResultView로 props로 전달
+- 이중 스크롤 개선 필요
 
 ● 마이페이지
 - AI 학습진단 UI 추가
 - 오답노트 UI QuestionResultCard와 통일
 - 해설 보기 클릭 시 튐 현상 개선
+- 코드 리펙터링을 통한 유지보수성 향상
+
+● ExamView
+- 코드 리펙터링을 통한 유지보수성 향상
+

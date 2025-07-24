@@ -35,3 +35,5 @@ export const isOmrVisibleAtom = atom(false);
 
 /** 시험 종료 후 결과 화면 표시 여부 */
 export const showResultAtom = atom(false);
+
+export const selectedQuestionFromOmrAtom = atom<number | null>(null);
