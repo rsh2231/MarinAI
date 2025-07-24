@@ -10,7 +10,7 @@ import PerformanceRadarChart from "@/components/mypage/PerformanceRadarChart";
 import WrongNoteView from "@/components/mypage/WrongNoteView";
 import ExamResultView from "@/components/mypage/ExamResultView";
 import CbtResultView from "@/components/mypage/CbtResultView";
-import AccumulatedComparisonChart from "@/components/mypage/AccumulatedComparisonChart";
+import AccumulatedComparisonChart from "@/components/mypage/ScoreTrendChart";
 import AILearningDiagnosis from "@/components/mypage/AILearningDiagnosis";
 
 export default function MyPage() {
@@ -42,25 +42,21 @@ export default function MyPage() {
           </div>
         </header>
 
-        {/* 상단 2단 그리드 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-6 mb-6 sm:mb-8">
-          {/* 왼쪽: 누적 비교 그래프 */}
-          <div className="bg-neutral-800 rounded-xl p-4 md:p-6 mb-4 md:mb-0">
-            <AccumulatedComparisonChart />
-          </div>
-          {/* 오른쪽: 성취도 그래프 */}
-          <div className="bg-neutral-800 rounded-xl p-4 md:p-6">
-            <PerformanceRadarChart />
-          </div>
-        </div>
-
-        {/* AI 학습진단 카드 */}
-        <div className="mb-8">
-          <AILearningDiagnosis />
-        </div>
-
-        {/* 하단 1단 그리드 */}
         <div className="flex flex-col gap-6">
+          {/* 상단 2단 그리드 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-6">
+            <div className="bg-neutral-800 rounded-xl p-4 md:p-6">
+              <AccumulatedComparisonChart />
+            </div>
+            <div className="bg-neutral-800 rounded-xl p-4 md:p-6">
+              <PerformanceRadarChart />
+            </div>
+          </div>
+
+          {/* AI 학습진단 카드 */}
+          <AILearningDiagnosis />
+
+          {/* 하단 1단 그리드 */}
           <WrongNoteView />
           <ExamResultView />
           <CbtResultView />

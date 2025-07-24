@@ -1,5 +1,5 @@
+// 과목별 성취도
 "use client";
-
 import {
   Radar,
   RadarChart,
@@ -22,8 +22,8 @@ const data = [
 
 export default function PerformanceRadarChart() {
   return (
-    <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
-      <h3 className="flex items-center gap-2 text-xl font-bold mb-4">
+    <div className="bg-neutral-800 p-6 rounded-lg">
+      <h3 className="flex items-center gap-2 text-xl font-bold mb-2 min-h-[40px]">
         <Pentagon size={22} className="text-primary" />
         과목별 성취도
       </h3>

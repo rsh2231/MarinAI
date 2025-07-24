@@ -1,3 +1,4 @@
+// 기출문제 풀이 결과
 "use client";
 import { useEffect, useState } from "react";
 import { ClipboardList, ChevronRight, ChevronDown, ChevronUp, ArrowUpRight } from "lucide-react";

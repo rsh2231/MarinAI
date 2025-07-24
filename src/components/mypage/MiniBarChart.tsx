@@ -1,3 +1,4 @@
+// 과목별 점수 차트
 "use client";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import {

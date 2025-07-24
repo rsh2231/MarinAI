@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 
 export async function POST(req: NextRequest) {
-  const baseUrl = process.env.EXTERNAL_API_BASE_URL;
+  const baseUrl = process.env.MODEL_API_KEY;
 
   if (!baseUrl) {
-    console.error("Error: EXTERNAL_API_BASE_URL is not set in .env.local");
+    console.error("Error: MODEL_API_KEY is not set in .env.local");
     return NextResponse.json(
       { message: "서버 구성 오류: API 기본 주소가 설정되지 않았습니다." },
       { status: 500 }

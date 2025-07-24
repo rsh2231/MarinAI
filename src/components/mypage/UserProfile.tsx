@@ -1,3 +1,4 @@
+// 사용자 프로필
 "use client";
 
 import { useAtomValue } from "jotai";

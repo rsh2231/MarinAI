@@ -1,3 +1,4 @@
+// CBT 풀이 결과
 "use client";
 import { useEffect, useState } from "react";
 import {
