@@ -8,16 +8,11 @@ import {
   allQuestionsAtom,
   timeLeftAtom,
 } from "@/atoms/examAtoms";
-import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
-import { OverallSummary } from "./OverallSummary";
-import { ExamSummaryCard } from "./ExamSummaryCard";
-import { SubjectBreakdownCard } from "./SubjectBreakdownCard";
-import { ProblemReviewHeader } from "./ProblemReviewHeader";
-import { QuestionResultCard } from "./QuestionResultCard";
-import { EmptyMessage } from "@/components/ui/EmptyMessage";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
-import { BookOpen } from "lucide-react";
+import ResultDashboard from "./ResultDashboard";
+import ResultProblemList from "./ResultProblemList";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
@@ -41,18 +36,6 @@ export interface SubjectResult {
 }
 
 const CHUNK_SIZE = 30; // 점진적 렌더링 시 한 번에 추가할 문제 개수
-
-// 모바일 환경 감지 훅
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
 
 export const ResultView = ({
   onRetry, // 부모로부터 받은 onRetry 함수를 그대로 사용합니다.
@@ -233,90 +216,27 @@ export const ResultView = ({
             </p>
           </header>
 
-          {/* 대시보드 그리드 (점수, 통계, 과목별 결과) */}
-          <motion.div
-            className="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: isMobile ? 0.2 : 0.5 }}
-          >
-            <div className="md:col-span-1 lg:col-span-1">
-              <OverallSummary score={overallScore} isPass={isPass} />
-            </div>
-            <div className="md:col-span-1 lg:col-span-1">
-              <ExamSummaryCard {...summaryStats} />
-            </div>
-            <div className="md:col-span-2 lg:col-span-1">
-              <SubjectBreakdownCard subjectResults={subjectResults} />
-            </div>
-          </motion.div>
+          {/* 대시보드 영역 분리 */}
+          <ResultDashboard
+            overallScore={overallScore}
+            isPass={isPass}
+            summaryStats={summaryStats}
+            subjectResults={subjectResults}
+            isMobile={isMobile}
+          />
 
-          {/* 문제 다시보기 영역 */}
-          <motion.div
-            className="space-y-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <ProblemReviewHeader
-              selectedSubject={selectedSubject}
-              setSelectedSubject={setSelectedSubject}
-              showOnlyWrong={showOnlyWrong}
-              setShowOnlyWrong={setShowOnlyWrong}
-              onRetry={onRetry} // 부모로부터 받은 onRetry 함수를 그대로 전달
-              subjectNames={subjectResults.map((r) => r.subjectName)}
-            />
-
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredQuestions.length > 0 ? (
-                (() => {
-                  let lastSubject: string | null = null;
-                  return filteredQuestions
-                    .slice(0, renderCount)
-                    .map((question, index) => {
-                      const showDivider =
-                        selectedSubject === "all" &&
-                        (lastSubject === null ||
-                          lastSubject !== question.subjectName);
-                      const card = (
-                        <QuestionResultCard
-                          key={`${question.subjectName}-${question.num}`}
-                          question={question}
-                          userAnswer={
-                            answers[`${question.subjectName}-${question.num}`]
-                          }
-                          index={index}
-                        />
-                      );
-                      const divider = showDivider ? (
-                        <div
-                          key={`divider-${question.subjectName}-${question.num}`}
-                          className="col-span-full border-t border-neutral-700/70 my-12 flex items-center gap-3"
-                        >
-                          <span className="inline-flex items-center gap-2 text-base md:text-lg font-semibold tracking-tight px-4 py-1 rounded-full text-white shadow-none backdrop-blur-sm">
-                            <BookOpen size={18} />
-                            {question.subjectName}
-                          </span>
-                        </div>
-                      ) : null;
-                      lastSubject = question.subjectName;
-                      return (
-                        <React.Fragment
-                          key={`${question.subjectName}-${question.num}`}
-                        >
-                          {divider}
-                          {card}
-                        </React.Fragment>
-                      );
-                    });
-                })()
-              ) : (
-                <div className="flex md:col-span-2 justify-center items-center ">
-                  <EmptyMessage message="해당 조건에 맞는 문제가 없습니다." />
-                </div>
-              )}
-            </div>
-          </motion.div>
+          {/* 문제 리스트 영역 분리 */}
+          <ResultProblemList
+            filteredQuestions={filteredQuestions}
+            renderCount={renderCount}
+            selectedSubject={selectedSubject}
+            subjectResults={subjectResults}
+            showOnlyWrong={showOnlyWrong}
+            setShowOnlyWrong={setShowOnlyWrong}
+            setSelectedSubject={setSelectedSubject}
+            onRetry={onRetry}
+            answers={answers}
+          />
         </div>
         <div className="h-20"></div>
         <ScrollToTopButton

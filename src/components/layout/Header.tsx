@@ -7,7 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import { useAtom } from "jotai";
 
 import { useIsClient } from "@/hooks/useIsClient";
-import { useWindowWidth } from "@/hooks/useWindowWidth";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { authAtom } from "@/atoms/authAtom";
 import { chatSidebarAtom } from "@/atoms/chatSidebarAtom"; // chatSidebarAtom import
 import MobileMenu from "./MobileMenu";
@@ -22,7 +22,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const isClient = useIsClient();
-  const isMobile = useWindowWidth(768);
+  const isMobile = useIsMobile(768);
   const [auth, setAuth] = useAtom(authAtom);
   const [isChatSidebarOpen, setIsChatSidebarOpen] = useAtom(chatSidebarAtom);
 

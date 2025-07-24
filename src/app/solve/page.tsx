@@ -21,7 +21,7 @@ import { OmrSheet } from "@/components/problem/UI/OmrSheet";
 import Button from "@/components/ui/Button";
 import question from "@/assets/animations/question.json";
 
-import { useWindowWidth } from "@/hooks/useWindowWidth";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 import { useSearchParams } from "next/navigation";
 
@@ -35,7 +35,7 @@ export default function SolvePage() {
   const [mode, setMode] = useState<"practice" | "exam" | null>(null);
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
   const mainContentRef = useRef<HTMLDivElement>(null);
-  const isMobile = useWindowWidth(768);
+  const isMobile = useIsMobile(768);
 
   const isOmrVisible = useAtomValue(isOmrVisibleAtom);
   const showResult = useAtomValue(showResultAtom);

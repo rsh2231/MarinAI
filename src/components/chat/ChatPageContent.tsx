@@ -3,11 +3,11 @@ import ChatBox from "./ChatBox";
 import Sidebar from "./Sidebar/ChatSidebar";
 import { useAtom } from "jotai";
 import { chatSidebarAtom } from "@/atoms/chatSidebarAtom";
-import { useWindowWidth } from "@/hooks/useWindowWidth";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function ChatPageContent() {
   const [isSidebarOpen, setIsSidebarOpen] = useAtom(chatSidebarAtom);
-  const isMobile = useWindowWidth(768);
+  const isMobile = useIsMobile(768);
 
   // 모바일에서 사이드바 열릴 때 body 스크롤 막기
   React.useEffect(() => {

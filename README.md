@@ -109,3 +109,17 @@ MyPage (최상위 페이지 컴포넌트)
 ● ResultView
 - 다시 풀기 로직 개선 필요
 
+2025.07.24.
+● 시험일정
+- 테이블 형에서 카드형으로 디자인 변경
+- 마감, 예정 등 일정에 따른 배지 생성
+- 안내 문구 추가
+
+● ResultView
+- 다시 풀기 로직 개선 완료
+- Exam, Cbt에서 rerty관련 함수를 ResultView로 props로 전달
+
+● 마이페이지
+- AI 학습진단 UI 추가
+- 오답노트 UI QuestionResultCard와 통일
+- 해설 보기 클릭 시 튐 현상 개선

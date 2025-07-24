@@ -8,6 +8,7 @@ import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import { Question } from "@/types/ProblemViewer";
 import correctAnimation from "@/assets/animations/correct.json";
 import incorrectAnimation from "@/assets/animations/incorrect.json";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface Props {
   question: Question;

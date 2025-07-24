@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import FilterSidebar from "./FilterSidebar";
 import { FilterState } from "@/types/FilterState";
 import { useEffect } from "react";
-import { useWindowWidth } from "@/hooks/useWindowWidth";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 type SidebarProps = {
   filterState: FilterState;
@@ -15,7 +15,7 @@ type SidebarProps = {
 
 export default function Sidebar({ filterState, className = "" }: SidebarProps) {
   const [sidebarOpen, setSidebarOpen] = useAtom(sidebarOpenAtom);
-  const isMobile = useWindowWidth(768);
+  const isMobile = useIsMobile(768);
 
   const handleClose = () => setSidebarOpen(false);
 

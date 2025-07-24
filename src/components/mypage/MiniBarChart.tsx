@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import {
   BarChart,
   Bar,
@@ -9,23 +9,12 @@ import {
   Tooltip,
 } from "recharts";
 
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 400);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-}
-
 export default function MiniBarChart({
   data,
 }: {
   data: { subject: string; score: number }[];
 }) {
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(400);
   const barSize = isMobile ? 18 : 20;
   const barCategoryGap = isMobile ? "10%" : "8%";
   const fontSize = isMobile ? 10 : 14;

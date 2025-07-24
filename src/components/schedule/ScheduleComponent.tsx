@@ -1,17 +1,14 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { useSchedules } from "@/hooks/useSchedules";
-import { ScheduleSection } from "./ScheduleSection";
-import {
-  Schedule,
-  REGULAR_COLUMNS,
-  INTERVIEW_COLUMNS,
-  WRITTEN_COLUMNS,
-} from "@/types/Schedule";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import ScrollToTopButton from "../ui/ScrollToTopButton";
 import { RefObject } from "react";
+import { useSchedules } from "@/hooks/useSchedules";
+import { Schedule } from "@/types/Schedule";
+import { ScheduleSection } from "./ScheduleSection";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
+import Lottie from "lottie-react";
+import calenderAnimation from "@/assets/animations/calender.json";
 
 interface ScheduleComponentProps {
   scrollableRef: RefObject<HTMLDivElement | null>;
@@ -21,9 +18,7 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
+    transition: { staggerChildren: 0.2 },
   },
 };
 
@@ -32,10 +27,7 @@ const itemVariants: Variants = {
   visible: {
     y: 0,
     opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: "easeInOut",
-    },
+    transition: { duration: 0.6, ease: "easeInOut" },
   },
 };
 
@@ -44,8 +36,28 @@ export default function ScheduleComponent({
 }: ScheduleComponentProps) {
   const { schedules, isLoading, error } = useSchedules();
 
-  const groupBySection = (section: Schedule["section"]) =>
-    schedules.filter((s) => s.section === section);
+  const groupBySection = (
+    data: Schedule[],
+    section: Schedule["section"]
+  ): Schedule[] => {
+    return data.filter((s) => s.section === section);
+  };
+
+  // 각 섹션별 안내 문구
+  const descriptions = {
+    regular: [
+      "회별 시행지역, 지역별 시행 직종 및 등급을 공고문에서 꼭 확인하시기 바랍니다. (시험일 기준 1개월 전 게시)",
+      "접수시간: 접수시작일 10:00 ~ 접수마감일 18:00",
+    ],
+    interview: [
+      "해기사 시험 일정은 사정에 따라 변경될 수 있으므로 매회 공고문을 확인하시기 바랍니다. (시험일 기준 15일 전 게시)",
+      "접수시간: 접수시작일 10:00 ~ 접수마감일 18:00",
+    ],
+    written: [
+      "회별 시행 지역, 직종 및 등급 등 세부사항은 월별 상시시험 공고문을 반드시 확인하시기 바랍니다. (시험일 기준 15일 전 게시)",
+      "접수시간: 접수시작일 10:00 ~ 접수마감일 18:00 (정원이 마감된 경우 접수시간이 남아 있더라도 접수 불가)",
+    ],
+  };
 
   if (isLoading) {
     return <LoadingSpinner text="시험 일정을 불러오는 중입니다..." />;
@@ -53,7 +65,7 @@ export default function ScheduleComponent({
 
   if (error) {
     return (
-      <div className="max-w-4xl mx-auto mt-20 p-6 bg-danger/10 text-danger rounded-lg text-center">
+      <div className="max-w-4xl mx-auto mt-20 p-6 bg-red-500/10 text-red-400 rounded-lg text-center">
         <strong>⚠️ {error}</strong>
       </div>
     );
@@ -61,23 +73,9 @@ export default function ScheduleComponent({
 
   return (
     <main
-      className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 break-keep relative"
-      style={{ minHeight: 600 }}
+      className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20"
+      style={{ minHeight: "calc(100vh - 200px)" }}
     >
-      <motion.header
-        variants={itemVariants}
-        initial="hidden"
-        animate="visible"
-        className="mb-12 md:mb-20 text-center"
-      >
-        <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-          해기사 시험 일정
-        </h1>
-        <p className="mt-4 max-w-2xl mx-auto text-lg text-foreground/70">
-          2025년도 정기 및 상시 시험 일정을 확인하세요.
-        </p>
-      </motion.header>
-
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -87,27 +85,24 @@ export default function ScheduleComponent({
         <motion.div variants={itemVariants}>
           <ScheduleSection
             title="정기시험"
-            accentColor="primary"
-            schedules={groupBySection("정기시험")}
-            columns={REGULAR_COLUMNS}
+            schedules={groupBySection(schedules, "정기시험")}
+            description={descriptions.regular}
           />
         </motion.div>
 
         <motion.div variants={itemVariants}>
           <ScheduleSection
             title="상시시험 (면접)"
-            accentColor="success"
-            schedules={groupBySection("상시시험(면접)")}
-            columns={INTERVIEW_COLUMNS}
+            schedules={groupBySection(schedules, "상시시험(면접)")}
+            description={descriptions.interview}
           />
         </motion.div>
 
         <motion.div variants={itemVariants}>
           <ScheduleSection
             title="상시시험 (필기)"
-            accentColor="secondary"
-            schedules={groupBySection("상시시험(필기)")}
-            columns={WRITTEN_COLUMNS}
+            schedules={groupBySection(schedules, "상시시험(필기)")}
+            description={descriptions.written}
           />
         </motion.div>
       </motion.div>
