@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const targetUrl = `${baseUrl}/odap/list`;
+    const targetUrl = `${baseUrl}/mypage/odaps`;
 
     console.log("Fetching wrong notes from:", targetUrl);
 

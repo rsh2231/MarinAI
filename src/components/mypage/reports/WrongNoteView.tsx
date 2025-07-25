@@ -11,180 +11,63 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "@/components/ui/Button";
 import { QuestionResultCard } from "@/components/problem/result/QuestionResultCard";
+import { WrongNoteSet, WrongNote } from "@/types/wrongNote";
+import { getWrongNotesFromServer } from "@/lib/wrongNoteApi";
+import { useAtomValue } from "jotai";
+import { authAtom } from "@/atoms/authAtom";
+import { useEffect, useCallback } from "react";
 
-interface ServerWrongNote {
-  id: number;
-  choice: string;
-  gichulqna_id: number;
-  odapset_id: number;
-  created_at: string;
-  // 추가 필드들은 백엔드 응답에 따라 확장
-  subject: string; // 과목명 필드 추가
-  question?: string; // 문제 텍스트
-  choices?: { label: string; text: string }[]; // 선택지
-  answer?: string; // 정답
-  explanation?: string; // 해설
-  count?: number; // 오답 횟수 필드 추가
-  memo?: string; // 오답 원인 메모 필드 추가
-}
-
-// 더미 오답노트 데이터 (count 필드 추가)
-const dummyNotes: ServerWrongNote[] = [
-  {
-    id: 1,
-    subject: "기관1",
-    gichulqna_id: 101,
-    odapset_id: 1,
-    created_at: "2024-07-05T14:00:00Z",
-    choice: "나",
-    question: "기관1의 주요 역할은 무엇인가?",
-    choices: [
-      { label: "가", text: "항해" },
-      { label: "나", text: "기관 관리" },
-      { label: "다", text: "통신" },
-      { label: "라", text: "구조" },
-    ],
-    answer: "가",
-    explanation: "기관1은 선박의 기관을 관리하는 역할을 합니다.",
-    count: 3,
-  },
-  {
-    id: 2,
-    subject: "기관2",
-    gichulqna_id: 102,
-    odapset_id: 1,
-    created_at: "2024-07-02T11:00:00Z",
-    choice: "다",
-    question: "기관2에서 사용하는 연료는?",
-    choices: [
-      { label: "가", text: "경유" },
-      { label: "나", text: "휘발유" },
-      { label: "다", text: "중유" },
-      { label: "라", text: "LPG" },
-    ],
-    answer: "가",
-    explanation: "기관2는 주로 경유를 사용합니다.",
-    count: 1,
-  },
-  {
-    id: 3,
-    subject: "직무일반",
-    gichulqna_id: 103,
-    odapset_id: 1,
-    created_at: "2024-07-03T12:00:00Z",
-    choice: "라",
-    question: "직무일반에서 중요한 역량은?",
-    choices: [
-      { label: "가", text: "체력" },
-      { label: "나", text: "지식" },
-      { label: "다", text: "경험" },
-      { label: "라", text: "책임감" },
-    ],
-    answer: "나",
-    explanation: "직무일반에서는 지식이 중요합니다.",
-    count: 2,
-  },
-  {
-    id: 4,
-    subject: "영어",
-    gichulqna_id: 104,
-    odapset_id: 1,
-    created_at: "2024-07-04T13:00:00Z",
-    choice: "가",
-    question: "다음 중 영어로 올바른 표현은?",
-    choices: [
-      { label: "가", text: "How are you?" },
-      { label: "나", text: "How is you?" },
-      { label: "다", text: "How be you?" },
-      { label: "라", text: "How are she?" },
-    ],
-    answer: "가",
-    explanation: "How are you?가 올바른 표현입니다.",
-    count: 1,
-  },
-];
-
-// 오답노트 추가/업데이트 함수 (중복시 최신으로 올리고 count 증가)
-function addOrUpdateWrongNote(
-  newNote: ServerWrongNote,
-  setNotes: React.Dispatch<React.SetStateAction<ServerWrongNote[]>>
-) {
-  setNotes((prev) => {
-    const idx = prev.findIndex((n) => n.gichulqna_id === newNote.gichulqna_id);
-    if (idx !== -1) {
-      // 이미 있으면 count 증가, created_at 갱신
-      const updated = [...prev];
-      updated[idx] = {
-        ...updated[idx],
-        created_at: newNote.created_at,
-        count: (updated[idx].count || 1) + 1,
-      };
-      // 최신순 정렬
-      return updated.sort(
-        (a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      );
-    } else {
-      // 없으면 새로 추가
-      return [{ ...newNote, count: 1 }, ...prev];
-    }
-  });
-}
-
-export default function WrongNoteView() {
-  // 서버 연동 대신 더미 데이터 사용
-  const [notes, setNotes] = useState<ServerWrongNote[]>(dummyNotes);
-  const [loading] = useState(false);
-  const [error] = useState<string | null>(null);
+export default function WrongNoteView({ setWrongNotes }: { setWrongNotes?: (notes: any) => void }) {
+  const auth = useAtomValue(authAtom);
+  const [noteSets, setNoteSets] = useState<WrongNoteSet[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
-  // 과목 필터 상태 추가
   const [selectedSubject, setSelectedSubject] = useState<string>("all");
   const [openNoteIds, setOpenNoteIds] = useState<number[]>([]);
 
-  // 오답 다시 풀기(퀴즈 모드) 핸들러
-  const handleStartWrongNoteQuiz = () => {
-    // 현재 필터링된 오답 리스트를 퀴즈 모드로 전달 (여기선 alert)
-    alert(`오답 퀴즈 모드 시작! (총 ${displayNotes.length}문제)`);
-    // 실제 구현: 라우터 이동, 모달 오픈, 상태 변경 등
-  };
+  const fetchWrongNotes = useCallback(async () => {
+    if (!auth.token || !auth.isLoggedIn) {
+      setError("로그인이 필요합니다.");
+      setLoading(false);
+      return;
+    }
+    try {
+      setLoading(true);
+      setError(null);
+      // 실제 API에서 WrongNoteSet[]을 받아온다고 가정
+      const serverNoteSets: WrongNoteSet[] = await getWrongNotesFromServer(auth.token);
+      setNoteSets(serverNoteSets);
+    } catch (err) {
+      console.error("오답노트 로딩 실패:", err);
+      setError("오답노트를 불러오는데 실패했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  }, [auth.token, auth.isLoggedIn]);
 
-  // 아래 서버 연동 코드는 주석 처리
-  // const auth = useAtomValue(authAtom);
-  // const fetchWrongNotes = useCallback(async () => {
-  //   if (!auth.token || !auth.isLoggedIn) {
-  //     setError("로그인이 필요합니다.");
-  //     setLoading(false);
-  //     return;
-  //   }
+  useEffect(() => {
+    fetchWrongNotes();
+  }, [fetchWrongNotes]);
 
-  //   try {
-  //     setLoading(true);
-  //     setError(null);
+  useEffect(() => {
+    if (setWrongNotes) {
+      setWrongNotes(noteSets);
+    }
+  }, [noteSets, setWrongNotes]);
 
-  //     const serverNotes = await getWrongNotesFromServer(auth.token);
-  //     setNotes(serverNotes);
-  //   } catch (err) {
-  //     console.error("오답노트 로딩 실패:", err);
-  //     setError("오답노트를 불러오는데 실패했습니다.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, [auth.token, auth.isLoggedIn]);
-
-  // useEffect(() => {
-  //   fetchWrongNotes();
-  //   console.log("Notes", notes);
-  // }, [fetchWrongNotes]);
+  // 모든 odaps를 flat하게 합침
+  const notes: WrongNote[] = noteSets.flatMap(set => set.odaps);
 
   // 과목 목록 추출 (중복 제거)
   const subjects = Array.from(
-    new Set(notes.map((note) => note.subject))
+    new Set(notes.map((note) => note.gichul_qna.subject))
   ).filter(Boolean);
   // 필터링된 오답노트
   const filteredNotes =
     selectedSubject === "all"
       ? notes
-      : notes.filter((note) => note.subject === selectedSubject);
+      : notes.filter((note) => note.gichul_qna.subject === selectedSubject);
   // recent, rest 분리 대신
   const displayNotes = showAll ? filteredNotes : filteredNotes.slice(0, 4);
 
@@ -222,8 +105,10 @@ export default function WrongNoteView() {
         <div className="flex items-center justify-center sm:justify-start gap-3 w-full sm:w-auto">
           <Button
             variant="primary"
-            className="px-4 py-2 text-sm font-semibold whitespace-nowrap" // 글자 줄바꿈 방지
-            onClick={handleStartWrongNoteQuiz}
+            className="px-4 py-2 text-sm font-semibold whitespace-nowrap"
+            onClick={() => {
+              alert(`오답 퀴즈 모드 시작! (총 ${displayNotes.length}문제)`);
+            }}
           >
             오답 다시 풀기
           </Button>
@@ -246,88 +131,71 @@ export default function WrongNoteView() {
         <p className="text-neutral-400">해당 과목의 오답노트가 없습니다.</p>
       ) : (
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
-          {displayNotes.map((note) => (
-            <li
-              key={note.id}
-              className="flex flex-col bg-neutral-700/70 rounded-md p-0"
-            >
-              <button
-                className="w-full flex justify-between items-center p-3 text-left focus:outline-none"
-                onClick={() =>
-                  setOpenNoteIds((prev) =>
-                    prev.includes(note.id)
-                      ? prev.filter((nid) => nid !== note.id)
-                      : [...prev, note.id]
-                  )
-                }
+          {displayNotes.map((note) => {
+            return (
+              <li
+                key={note.id}
+                className="flex flex-col bg-neutral-700/70 rounded-md p-0"
               >
-                <div>
-                  <p className="font-semibold">
-                    {note.subject} - 문제 #{note.gichulqna_id}
-                    {(note.count ?? 1) > 1 && (
-                      <span className="ml-2 inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded bg-orange-600/20 text-orange-500 border border-orange-400">
-                        <Flame size={14} className="inline-block" />
-                        {note.count ?? 1}회
-                      </span>
-                    )}
-                  </p>
-                  <p className="text-xs text-neutral-400">
-                    {new Date(note.created_at).toLocaleDateString()}
-                  </p>
-                </div>
-                <ChevronRight
-                  size={20}
-                  className={`text-neutral-500 transition-transform ${
-                    openNoteIds.includes(note.id) ? "rotate-90" : ""
-                  }`}
-                />
-              </button>
-              <AnimatePresence initial={false}>
-                {openNoteIds.includes(note.id) && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden px-4 pb-3"
-                  >
-                    {/* QuestionCard로 대체 */}
-                    <QuestionResultCard
-                      question={{
-                        id: note.id,
-                        num: note.gichulqna_id,
-                        questionStr: note.question || "",
-                        choices: (note.choices || []).map((c) => ({
-                          ...c,
-                          isImage: false,
-                        })),
-                        answer: note.answer || "",
-                        explanation: note.explanation || "",
-                        subjectName: note.subject,
-                        isImageQuestion: false,
-                        imageUrl: undefined,
-                      }}
-                      userAnswer={note.choice}
-                      index={displayNotes.findIndex((n) => n.id === note.id)}
-                    />
-                    {/* 여러번 오답시 강조 뱃지 */}
-                    {(note.count ?? 1) > 1 && (
-                      <div className="mt-2 flex items-center gap-2">
-                        <span className="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded bg-orange-600/20 text-orange-500 border border-orange-400">
-                          <Flame size={14} className="inline-block" />
-                          {note.count ?? 1}회 오답
-                        </span>
-                        <span className="text-xs text-orange-400">
-                          이 문제는 여러 번 오답노트에 등록되었습니다!
-                        </span>
-                      </div>
-                    )}
-                    {/* 내 답/정답/횟수 등 부가 정보는 아래에 추가로 표시 가능 */}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </li>
-          ))}
+                <button
+                  className="w-full flex justify-between items-center p-3 text-left focus:outline-none"
+                  onClick={() =>
+                    setOpenNoteIds((prev) =>
+                      prev.includes(note.id)
+                        ? prev.filter((nid) => nid !== note.id)
+                        : [...prev, note.id]
+                    )
+                  }
+                >
+                  <div>
+                    <p className="font-semibold">
+                      {note.gichul_qna.subject} - {note.gichul_qna.qnum}번 문제
+                    </p>
+                    <p className="text-xs text-neutral-400">
+                    </p>
+                  </div>
+                  <ChevronRight
+                    size={20}
+                    className={`text-neutral-500 transition-transform ${
+                      openNoteIds.includes(note.id) ? "rotate-90" : ""
+                    }`}
+                  />
+                </button>
+                <AnimatePresence initial={false}>
+                  {openNoteIds.includes(note.id) && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden px-4 pb-3"
+                    >
+                      <QuestionResultCard
+                        question={{
+                          id: note.gichul_qna.id,
+                          num: note.gichul_qna.qnum,
+                          questionStr: note.gichul_qna.questionstr,
+                          choices: [
+                            { label: "가", text: note.gichul_qna.ex1str, isImage: false },
+                            { label: "나", text: note.gichul_qna.ex2str, isImage: false },
+                            { label: "사", text: note.gichul_qna.ex3str, isImage: false },
+                            { label: "아", text: note.gichul_qna.ex4str, isImage: false },
+                          ],
+                          answer: note.gichul_qna.answer,
+                          explanation: note.gichul_qna.explanation || "",
+                          subjectName: note.gichul_qna.subject,
+                          isImageQuestion: false,
+                          imageUrl: undefined,
+                        }}
+                        userAnswer={note.choice}
+                        index={displayNotes.findIndex((n) => n.id === note.id)}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </li>
+            );
+          })}
         </ul>
       )}
       {filteredNotes.length > 4 && (

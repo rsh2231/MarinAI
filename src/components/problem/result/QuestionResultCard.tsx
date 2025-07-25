@@ -162,7 +162,6 @@ const QuestionResultCardInner = ({
         })}
       </ul>
 
-      {/* 해설 토글 UI도 QuestionCard와 통일 */}
       <>
         <button
           onClick={() => setIsExpanded(!isExpanded)}

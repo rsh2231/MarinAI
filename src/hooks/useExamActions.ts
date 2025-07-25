@@ -10,8 +10,7 @@ import {
   groupedQuestionsAtom,
 } from '@/atoms/examAtoms';
 import { authAtom } from '@/atoms/authAtom';
-import { saveExamResultToServer, saveWrongNotes, saveExamResultToLocal } from '@/lib/examApi';
-import { OneOdap } from "@/lib/wrongNoteApi";
+import { OneOdap, saveManyUserAnswers } from "@/lib/wrongNoteApi";
 
 interface ExamInfo {
   year: string;
@@ -39,6 +38,7 @@ export function useExamActions(
   const setTimeLeft = useSetAtom(timeLeftAtom);
 
   const handleSubmit = useCallback(async ({ isAutoSubmitted = false } = {}) => {
+    // 시간이 만료되어 자동 제출될 경우 브라우저 알림을 보냄
     if (isAutoSubmitted && typeof window !== "undefined" && "Notification" in window) {
       if (Notification.permission === "default") await Notification.requestPermission();
       if (Notification.permission === "granted") {
@@ -49,53 +49,61 @@ export function useExamActions(
       }
     }
     
-    const resultData = {
-      answers,
-      totalQuestions: allQuestions.length,
-      timeTaken: totalDuration - timeLeft,
-      submittedAt: new Date().toISOString(),
-      isAutoSubmitted,
-      examInfo,
-    };
-    
+    // 서버에 저장할 오답 노트 목록을 생성
     const wrongNotes: OneOdap[] = allQuestions
       .map((q) => {
         const userChoice = answers[`${q.subjectName}-${q.num}`];
+        // 사용자가 선택했고, 그 선택이 정답이 아닌 경우에만 오답으로 간주
         if (userChoice && userChoice !== q.answer) {
-          return { choice: userChoice as "가" | "나" | "사" | "아", gichulqna_id: q.id };
+          return { 
+            choice: userChoice as "가" | "나" | "사" | "아", 
+            gichulqna_id: q.id 
+          };
         }
         return null;
       })
-      .filter((note): note is OneOdap => note !== null);
+      .filter((note): note is OneOdap => note !== null); // null 값을 걸러냄
 
-    if (isLoggedIn && token) {
+    // 로그인 상태이고, 유효한 토큰과 odapsetId가 있으며, 저장할 오답이 1개 이상일 경우에만 서버에 요청
+    if (isLoggedIn && token && odapsetId && wrongNotes.length > 0) {
       try {
-        await saveExamResultToServer(resultData, token);
-        if (odapsetId && wrongNotes.length > 0) {
-          await saveWrongNotes(wrongNotes, odapsetId, token);
-        }
-      } catch (error) {
-        console.error("서버 저장 실패, 로컬에 저장합니다:", error);
-        saveExamResultToLocal(resultData);
+        console.log(`[Exam Action] 오답노트 ${wrongNotes.length}개를 서버에 저장합니다... (odapsetId: ${odapsetId})`);
+        await saveManyUserAnswers(wrongNotes, odapsetId, token);
+        console.log("[Exam Action] 오답노트 저장 성공!");
+      } catch (e) {
+        console.error("[Exam Action] 오답노트 저장 중 서버 에러 발생:", e);
       }
-    } else {
-      saveExamResultToLocal(resultData);
     }
 
     setShowResult(true);
+    
     scrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
+    
   }, [
-    answers, allQuestions, totalDuration, timeLeft, examInfo, 
-    isLoggedIn, token, odapsetId, setShowResult, scrollRef
+    answers, 
+    allQuestions, 
+    totalDuration, 
+    timeLeft, 
+    examInfo, 
+    isLoggedIn, 
+    token, 
+    odapsetId, 
+    setShowResult, 
+    scrollRef
   ]);
 
   const handleRetry = useCallback(() => {
+    // 결과 화면 표시 상태를 false로 변경
     setShowResult(false);
+    // 현재 문제 인덱스를 처음으로 리셋
     setCurrentIdx(0);
+    // 그룹화된 문제가 있을 경우, 첫 번째 과목을 선택된 과목으로 설정
     if (groupedQuestions.length > 0) {
       setSelectedSubject(groupedQuestions[0].subjectName);
     }
+    // 남은 시간을 총 시험 시간으로 리셋
     setTimeLeft(totalDuration);
+    // 사용자가 선택한 답안들을 모두 초기화
     setAnswers({});
   }, [groupedQuestions, totalDuration, setShowResult, setCurrentIdx, setSelectedSubject, setTimeLeft, setAnswers]);
   

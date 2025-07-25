@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { authAtom } from "@/atoms/authAtom";
 import {
@@ -22,6 +22,7 @@ interface UseExamDataParams {
   level: string;
   round: string;
   selectedSubjects: string[];
+  retryCount?: number; 
 }
 
 export function useExamData({
@@ -42,6 +43,7 @@ export function useExamData({
   const { token, isLoggedIn } = useAtomValue(authAtom);
 
   const [odapsetId, setOdapsetId] = useState<number | null>(null);
+  const isFetching = useRef(false);
 
   const totalDuration = useMemo(
     () => selectedSubjects.length * DURATION_PER_SUBJECT_SECONDS,
@@ -58,11 +60,21 @@ export function useExamData({
     }
 
     const loadData = async () => {
+      if (isFetching.current) return;
+      isFetching.current = true;
       setIsLoading(true);
       setError(null);
       setShowResult(false);
 
       try {
+        const params = new URLSearchParams({
+          year,
+          license,
+          level,
+          round,
+        });
+        const userType = isLoggedIn && token ? "로그인" : "비로그인";
+        console.log(`[문제 fetch][exam][${userType}]`, params.toString());
         const responseData = await fetchExamQuestions({
           year,
           license,
@@ -70,22 +82,17 @@ export function useExamData({
           round,
           token: isLoggedIn ? token ?? undefined : undefined,
         });
-
-        console.log("실전모드 문제 불러오기", responseData);
-        
+        console.log(`[문제 fetch][exam][응답]`, responseData);
         setOdapsetId(responseData.odapset_id ?? null);
-
         const allSubjectGroups = transformData(responseData.qnas);
         const filteredGroups = allSubjectGroups.filter((group) =>
           selectedSubjects.includes(group.subjectName)
         );
-
         if (filteredGroups.length === 0) {
           throw new Error(
             "선택하신 과목에 해당하는 문제가 없습니다. 과목을 다시 선택해주세요."
           );
         }
-
         // 상태 초기화
         setGroupedQuestions(filteredGroups);
         setAnswers({});
@@ -97,6 +104,7 @@ export function useExamData({
         setGroupedQuestions([]);
       } finally {
         setIsLoading(false);
+        isFetching.current = false;
       }
     };
 

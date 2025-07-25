@@ -12,24 +12,7 @@ import AIResponseRenderer from "./AIResponseRenderer";
 import { useAtomValue } from "jotai";
 import { authAtom } from "@/atoms/authAtom";
 
-// 더미 오답노트 데이터 (WrongNoteView 참고)
-const wrongNotes = [
-  { subject: "기관1", count: 3 },
-  { subject: "기관2", count: 1 },
-  { subject: "직무일반", count: 2 },
-  { subject: "영어", count: 1 },
-];
-
-// 더미 시험 결과 데이터 (ExamResultView 참고)
-const examResults = [
-  { subject: "기관1", score: 85 },
-  { subject: "기관2", score: 90 },
-  { subject: "기관3", score: 78 },
-  { subject: "직무일반", score: 70 },
-  { subject: "영어", score: 65 },
-];
-
-export default function AILearningDiagnosis() {
+export default function AILearningDiagnosis({ wrongNotes, examResults }: { wrongNotes: any, examResults: any }) {
   const auth = useAtomValue(authAtom);
   const indivname = auth?.user?.indivname || "수험생";
   const [showResult, setShowResult] = useState(false);
@@ -71,7 +54,7 @@ export default function AILearningDiagnosis() {
         onClick={handleToggle}
       >
         <h2 className="text-lg sm:text-xl font-bold flex items-center gap-2 m-0">
-          <BrainCircuit className="w-5 h-5 sm:w-[22px] sm:h-[22px] text-blue-400" />
+          <BrainCircuit className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
           AI 학습진단
         </h2>
         <div className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1 transition-colors">

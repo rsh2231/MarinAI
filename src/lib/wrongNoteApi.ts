@@ -1,3 +1,5 @@
+import { WrongNoteSet } from "@/types/wrongNote";
+
 export interface OneOdap {
   choice: "가" | "나" | "사" | "아";
   gichulqna_id: number;
@@ -129,7 +131,7 @@ export async function saveManyUserAnswers(
  */
 export async function getWrongNotesFromServer(
   authToken: string
-): Promise<any[]> {
+): Promise<WrongNoteSet[]> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
@@ -152,7 +154,7 @@ export async function getWrongNotesFromServer(
       );
     }
 
-    return await response.json();
+    return await response.json(); // 응답이 배열이면 그대로 반환
   } catch (error) {
     if (error instanceof Error && error.name === "AbortError") {
       throw new Error("요청 시간이 초과되었습니다.");

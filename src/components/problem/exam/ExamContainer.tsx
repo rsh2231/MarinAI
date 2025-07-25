@@ -1,12 +1,12 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useAtomValue } from "jotai";
 import {
   examLoadingAtom,
   examErrorAtom,
   showResultAtom,
-} from "@/atoms/examAtoms";
+} from "@/atoms/examAtoms"; // answers, allQuestionsAtom 제거
 import { useExamData } from "@/hooks/useExamData";
 import { useExamTimer } from "@/hooks/useExamTimer";
 import { useExamActions } from "@/hooks/useExamActions";
@@ -37,19 +37,27 @@ export default function ExamContainer({
   const error = useAtomValue(examErrorAtom);
   const showResult = useAtomValue(showResultAtom);
   const mainScrollRef = useRef<HTMLDivElement>(null);
+  const [retryCount, setRetryCount] = useState(0);
 
   const examInfo = { year, license, level, round, selectedSubjects };
 
-  // 1. 데이터 로딩 훅
-  const { odapsetId, totalDuration } = useExamData(examInfo);
+  // 데이터 로딩 훅
+  const { odapsetId, totalDuration } = useExamData({ ...examInfo, retryCount });
 
-  // 2. 시험 액션 훅
-  const { handleSubmit, handleRetry } = useExamActions(
+  // 시험 액션 훅
+  const { handleSubmit, handleRetry: baseHandleRetry } = useExamActions(
     examInfo,
     odapsetId,
     totalDuration,
     mainScrollRef
   );
+
+  // handleRetry 래핑: retryCount 증가 + 기존 로직 호출
+  const handleRetry = () => {
+    setRetryCount((c) => c + 1);
+    baseHandleRetry();
+  };
+
 
   // 3. 타이머 훅
   useExamTimer(() => handleSubmit({ isAutoSubmitted: true }));

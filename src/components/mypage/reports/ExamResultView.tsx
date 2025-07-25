@@ -86,7 +86,7 @@ const dummyResults = [
   },
 ];
 
-export default function ExamResultView() {
+export default function ExamResultView({ setExamResults }: { setExamResults?: (results: any) => void }) {
   const [results, setResults] = useState(dummyResults);
   const [showAll, setShowAll] = useState(false);
   const [openIds, setOpenIds] = useState<number[]>([]);
@@ -109,12 +109,14 @@ export default function ExamResultView() {
         if (res.ok) {
           const data = await res.json();
           setResults(data);
+          if (setExamResults) setExamResults(data);
         }
       } catch (e) {
         // ignore, fallback to dummyResults
       }
     };
     fetchResults();
+    if (setExamResults) setExamResults(results);
   }, []);
 
   return (

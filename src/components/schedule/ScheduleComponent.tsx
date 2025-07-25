@@ -73,7 +73,7 @@ export default function ScheduleComponent({
 
   return (
     <main
-      className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20"
+      className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
       style={{ minHeight: "calc(100vh - 200px)" }}
     >
       <motion.div

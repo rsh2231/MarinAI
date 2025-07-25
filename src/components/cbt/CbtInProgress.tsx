@@ -199,13 +199,14 @@ export function CbtInProgress({
         console.error("서버 저장 실패:", error);
         saveToLocalStorage(resultData);
       }
-      // 오답노트 저장은 항상 시도
+      // 2. 오답노트 저장은 항상 시도
       if (odapsetId && wrongNotes.length > 0) {
         try {
+          console.log("[오답노트 저장][cbt][시도]", { odapsetId, wrongNotes });
           await saveManyUserAnswers(wrongNotes, odapsetId, auth.token);
-          console.log("오답노트가 서버에 저장되었습니다.");
-        } catch (error) {
-          console.error("오답노트 저장 실패:", error);
+          console.log("[오답노트 저장][cbt][성공]");
+        } catch (e) {
+          console.error("[오답노트 저장][cbt][실패]", e);
         }
       }
       console.log("CBT 결과 저장 시도 완료");

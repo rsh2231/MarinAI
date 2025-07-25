@@ -28,7 +28,7 @@ export default function MiniBarChart({
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
-            margin={{ left: 0, right: 0, top: 10, bottom: 10 }}
+            margin={{ left: 0, right: 35, top: 10, bottom: 10 }}
             barCategoryGap={barCategoryGap}
             barSize={barSize}
           >

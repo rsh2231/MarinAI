@@ -3,7 +3,6 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useAtomValue } from "jotai";
 import QuestionCard from "../UI/QuestionCard";
-import { saveWrongNote, loadWrongNotes } from "@/utils/localWrongNote";
 import { saveUserAnswer } from "@/lib/wrongNoteApi";
 import { QnaItem, Question, SubjectGroup } from "@/types/ProblemViewer";
 import { transformData } from "@/lib/problem-utils";
@@ -43,9 +42,12 @@ export default function ProblemViewer({
 
   // 디바운싱을 위한 타이머 ref
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isFetching = useRef(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (isFetching.current) return;
+      isFetching.current = true;
       setIsLoading(true);
       setError(null);
       try {
@@ -61,13 +63,11 @@ export default function ProblemViewer({
           "Content-Type": "application/json",
         };
 
-        // 로그인한 사용자만 인증 헤더 추가
+        const userType = (auth.token && auth.isLoggedIn) ? "로그인" : "비로그인";
         if (auth.token && auth.isLoggedIn) {
           headers.Authorization = `Bearer ${auth.token}`;
-          console.log("로그인한 사용자로 연습 시작");
-        } else {
-          console.log("비로그인 사용자로 연습 시작");
         }
+        console.log(`[문제 fetch][practice][${userType}]`, params.toString());
 
         const res = await fetch(`/api/solve?${params.toString()}`, {
           method: "GET",
@@ -83,13 +83,11 @@ export default function ProblemViewer({
         const responseData: { qnas: QnaItem[]; odapset_id?: number } =
           await res.json();
 
-        console.log("responseData", responseData);
+        console.log(`[문제 fetch][practice][응답]`, responseData);
 
         // odapset_id 응답에서 받아서 저장
         if (responseData.odapset_id) {
           setOdapsetId(responseData.odapset_id);
-
-          console.log("odapset_id", responseData.odapset_id);
         } else {
           setOdapsetId(null); // fallback
         }
@@ -109,6 +107,7 @@ export default function ProblemViewer({
         setOdapsetId(null);
       } finally {
         setIsLoading(false);
+        isFetching.current = false;
       }
     };
     fetchData();
@@ -203,11 +202,6 @@ export default function ProblemViewer({
         saveTimeoutRef.current = setTimeout(() => {
           debouncedSaveAnswer(questionId, choice);
         }, 1000);
-
-        // 즉시 저장(중복 방지용)
-        if (auth.token && auth.isLoggedIn && odapsetId !== null) {
-          saveUserAnswer(questionId, choice, odapsetId, auth.token);
-        }
       }
     },
     [debouncedSaveAnswer, auth.token, auth.isLoggedIn, odapsetId, subjectGroups]
@@ -219,20 +213,6 @@ export default function ProblemViewer({
     if (isNowShowing) {
       const selectedChoice = answers[question.id];
       if (selectedChoice && selectedChoice !== question.answer) {
-        const savedNotes = loadWrongNotes();
-        if (
-          !savedNotes.find(
-            (note) => note.id.toString() === question.id.toString()
-          )
-        ) {
-          saveWrongNote({
-            id: question.id.toString(),
-            question: question.questionStr,
-            explanation:
-              question.explanation ?? "AI 해설을 생성하여 저장하세요.",
-            createdAt: new Date().toISOString(),
-          });
-        }
       }
     }
   };
