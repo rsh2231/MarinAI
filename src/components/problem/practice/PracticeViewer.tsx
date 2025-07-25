@@ -1,16 +1,15 @@
 "use client";
 
-import { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import { useMemo, useCallback, useState } from "react";
 import { useAtomValue } from "jotai";
-import QuestionCard from "../UI/QuestionCard";
-import { saveUserAnswer } from "@/lib/wrongNoteApi";
-import { QnaItem, Question, SubjectGroup } from "@/types/ProblemViewer";
-import { transformData } from "@/lib/problem-utils";
-import ViewerCore from "../UI/ViewerCore";
-import Button from "@/components/ui/Button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import SubjectTabs from "../UI/SubjectTabs";
 import { authAtom } from "@/atoms/authAtom";
+import ViewerCore from "../UI/ViewerCore";
+import SubjectTabsSection from "./SubjectTabsSection";
+import QuestionList from "./QuestionList";
+import NavigationButtons from "./NavigationButtons";
+import { usePracticeQuestions } from "../../../hooks/usePracticeQuestions";
+import { useAnswerState } from "../../../hooks/useAnswerState";
+import { SubjectGroup } from "@/types/ProblemViewer";
 
 type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
@@ -22,109 +21,54 @@ interface Props {
   selectedSubjects: string[];
 }
 
-export default function ProblemViewer({
+export default function PracticeViewer({
   year,
   license,
   level,
   round,
   selectedSubjects,
 }: Props) {
-  const [subjectGroups, setSubjectGroups] = useState<SubjectGroup[]>([]);
-  const [answers, setAnswers] = useState<Record<number, string>>({});
-  const [showAnswer, setShowAnswer] = useState<Record<number, boolean>>({});
-  const [error, setError] = useState<string | null>(null);
-  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [odapsetId, setOdapsetId] = useState<number | null>(null); // odapsetId 상태로 관리
-
   // 인증 상태와 토큰 가져오기
   const auth = useAtomValue(authAtom);
 
-  // 디바운싱을 위한 타이머 ref
-  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const isFetching = useRef(false);
+  // 문제 데이터 패칭 및 상태 관리
+  const {
+    subjectGroups,
+    isLoading,
+    error,
+    odapsetId,
+  } = usePracticeQuestions({
+    year,
+    license,
+    level,
+    round,
+    auth: {
+      token: auth.token ?? undefined,
+      isLoggedIn: auth.isLoggedIn,
+    },
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (isFetching.current) return;
-      isFetching.current = true;
-      setIsLoading(true);
-      setError(null);
-      try {
-        const params = new URLSearchParams({
-          examtype: "practice", // 연습 모드
-          year,
-          license,
-          level,
-          round,
-        });
-        // 인증 헤더 추가 (선택적)
-        const headers: HeadersInit = {
-          "Content-Type": "application/json",
-        };
+  // 답안/정답 상태 및 저장 로직
+  const {
+    answers,
+    showAnswer,
+    handleSelectAnswer,
+    toggleAnswer,
+    setAnswers,
+    setShowAnswer,
+  } = useAnswerState({
+    subjectGroups,
+    odapsetId,
+    auth: {
+      token: auth.token ?? undefined,
+      isLoggedIn: auth.isLoggedIn,
+    },
+  });
 
-        const userType = (auth.token && auth.isLoggedIn) ? "로그인" : "비로그인";
-        if (auth.token && auth.isLoggedIn) {
-          headers.Authorization = `Bearer ${auth.token}`;
-        }
-        console.log(`[문제 fetch][practice][${userType}]`, params.toString());
-
-        const res = await fetch(`/api/solve?${params.toString()}`, {
-          method: "GET",
-          headers,
-        });
-        if (!res.ok) {
-          const errorData = await res.json();
-          throw new Error(
-            errorData.message ||
-              `HTTP ${res.status}: 데이터를 불러오는데 실패했습니다.`
-          );
-        }
-        const responseData: { qnas: QnaItem[]; odapset_id?: number } =
-          await res.json();
-
-        console.log(`[문제 fetch][practice][응답]`, responseData);
-
-        // odapset_id 응답에서 받아서 저장
-        if (responseData.odapset_id) {
-          setOdapsetId(responseData.odapset_id);
-        } else {
-          setOdapsetId(null); // fallback
-        }
-
-        const transformed = transformData(responseData.qnas);
-
-        if (transformed.length === 0) {
-          setError("선택하신 조건에 해당하는 문제 데이터가 없습니다.");
-        }
-
-        setSubjectGroups(transformed);
-        setAnswers({});
-        setShowAnswer({});
-      } catch (err: any) {
-        setError(err.message);
-        setSubjectGroups([]);
-        setOdapsetId(null);
-      } finally {
-        setIsLoading(false);
-        isFetching.current = false;
-      }
-    };
-    fetchData();
-  }, [year, license, level, round]);
-
-  // 컴포넌트 언마운트 시 타이머 정리
-  useEffect(() => {
-    return () => {
-      if (saveTimeoutRef.current) {
-        clearTimeout(saveTimeoutRef.current);
-      }
-    };
-  }, []);
-
+  // 과목 필터링
   const filteredSubjects = useMemo(() => {
     if (selectedSubjects.length === 0) return [];
-    return subjectGroups.filter((group) =>
+    return subjectGroups.filter((group: SubjectGroup) =>
       selectedSubjects.includes(group.subjectName)
     );
   }, [subjectGroups, selectedSubjects]);
@@ -133,89 +77,28 @@ export default function ProblemViewer({
     () => filteredSubjects.map((g) => g.subjectName),
     [filteredSubjects]
   );
+  // 선택된 과목 상태
+  const [selectedSubject, setSelectedSubject] = useState<string | null>(
+    subjectNames[0] || null
+  );
   const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
 
-  useEffect(() => {
-    if (subjectNames.length > 0) {
-      if (!selectedSubject || !subjectNames.includes(selectedSubject)) {
-        setSelectedSubject(subjectNames[0]);
-      }
-    } else {
-      setSelectedSubject(null);
-    }
-  }, [subjectNames, selectedSubject]);
+  // subjectNames가 바뀌면 selectedSubject도 동기화
+  if (
+    subjectNames.length > 0 &&
+    (!selectedSubject || !subjectNames.includes(selectedSubject))
+  ) {
+    setSelectedSubject(subjectNames[0]);
+  }
+  if (subjectNames.length === 0 && selectedSubject) {
+    setSelectedSubject(null);
+  }
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "instant",
-    });
-  };
-
+  // 과목 선택 핸들러
   const handleSelectSubject = useCallback((subj: string) => {
     setSelectedSubject(subj);
-    scrollToTop();
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
-
-  // 디바운싱된 답안 저장 함수
-  const debouncedSaveAnswer = useCallback(
-    async (questionId: number, choice: string) => {
-      // 로그인한 사용자만 서버에 저장
-      if (auth.token && auth.isLoggedIn && odapsetId !== null) {
-        try {
-          await saveUserAnswer(questionId, choice, odapsetId, auth.token);
-          console.log("답안이 서버에 저장되었습니다.");
-        } catch (error) {
-          console.error("서버 저장 실패:", error);
-          // 서버 저장 실패 시에도 로컬 저장은 계속 진행
-        }
-      } else {
-        console.log(
-          "비로그인 사용자 또는 odapsetId 없음: 답안이 로컬에만 저장됩니다."
-        );
-      }
-    },
-    [auth.token, auth.isLoggedIn, odapsetId]
-  );
-
-  const handleSelectAnswer = useCallback(
-    (questionId: number, choice: string) => {
-      setAnswers((prev) => ({ ...prev, [questionId]: choice }));
-
-      // question 객체 찾기
-      let foundQuestion: Question | undefined;
-      for (const group of subjectGroups) {
-        const q = group.questions.find((q) => q.id === questionId);
-        if (q) {
-          foundQuestion = q;
-          break;
-        }
-      }
-
-      // 오답일 때만 서버 저장 로직 실행
-      if (foundQuestion && choice !== foundQuestion.answer) {
-        // 이전 타이머가 있다면 취소
-        if (saveTimeoutRef.current) {
-          clearTimeout(saveTimeoutRef.current);
-        }
-        // 1초 후에 서버에 저장 (디바운싱)
-        saveTimeoutRef.current = setTimeout(() => {
-          debouncedSaveAnswer(questionId, choice);
-        }, 1000);
-      }
-    },
-    [debouncedSaveAnswer, auth.token, auth.isLoggedIn, odapsetId, subjectGroups]
-  );
-
-  const toggleAnswer = (question: Question) => {
-    const isNowShowing = !showAnswer[question.id];
-    setShowAnswer((prev) => ({ ...prev, [question.id]: isNowShowing }));
-    if (isNowShowing) {
-      const selectedChoice = answers[question.id];
-      if (selectedChoice && selectedChoice !== question.answer) {
-      }
-    }
-  };
 
   const selectedBlock = filteredSubjects.find(
     (g) => g.subjectName === selectedSubject
@@ -228,45 +111,27 @@ export default function ProblemViewer({
       filteredSubjects={filteredSubjects}
       selectedSubject={selectedSubject}
       footerContent={
-        <>
-          <Button
-            variant="neutral"
-            onClick={() => handleSelectSubject(subjectNames[selectedIndex - 1])}
-            disabled={selectedIndex <= 0}
-            className="w-full sm:w-auto"
-          >
-            <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
-          </Button>
-          <Button
-            onClick={() => handleSelectSubject(subjectNames[selectedIndex + 1])}
-            disabled={selectedIndex >= subjectNames.length - 1}
-            className="w-full sm:w-auto"
-          >
-            다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
-          </Button>
-        </>
+        <NavigationButtons
+          subjectNames={subjectNames}
+          selectedIndex={selectedIndex}
+          onSelect={handleSelectSubject}
+        />
       }
     >
-      {subjectNames.length > 0 && selectedSubject && (
-        <div className="mb-6">
-          <SubjectTabs
-            subjects={subjectNames}
-            selected={selectedSubject}
-            setSelected={handleSelectSubject}
-          />
-        </div>
-      )}
-
-      {selectedBlock?.questions.map((q) => (
-        <QuestionCard
-          key={q.id}
-          question={q}
-          selected={answers[q.id]}
-          showAnswer={!!showAnswer[q.id]}
-          onSelect={(choice) => handleSelectAnswer(q.id, choice)}
-          onToggle={() => toggleAnswer(q)}
+      <SubjectTabsSection
+        subjects={subjectNames}
+        selected={selectedSubject}
+        onSelect={handleSelectSubject}
+      />
+      {selectedBlock && (
+        <QuestionList
+          questions={selectedBlock.questions}
+          answers={answers}
+          showAnswer={showAnswer}
+          onSelect={handleSelectAnswer}
+          onToggle={toggleAnswer}
         />
-      ))}
+      )}
     </ViewerCore>
   );
 }

@@ -163,3 +163,12 @@ export async function getWrongNotesFromServer(
     throw error;
   }
 }
+
+export async function deleteWrongNoteFromServer(token: string, noteId: number) {
+  const res = await fetch(`/api/odap/delete/${noteId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error("오답노트 삭제 실패");
+  return await res.json();
+}

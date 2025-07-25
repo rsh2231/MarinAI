@@ -16,6 +16,8 @@ import { getWrongNotesFromServer } from "@/lib/wrongNoteApi";
 import { useAtomValue } from "jotai";
 import { authAtom } from "@/atoms/authAtom";
 import { useEffect, useCallback } from "react";
+import { deleteWrongNoteFromServer } from "@/lib/wrongNoteApi";
+import RetryWrongNoteModal from "./RetryWrongNoteModal";
 
 export default function WrongNoteView({ setWrongNotes }: { setWrongNotes?: (notes: any) => void }) {
   const auth = useAtomValue(authAtom);
@@ -25,6 +27,7 @@ export default function WrongNoteView({ setWrongNotes }: { setWrongNotes?: (note
   const [showAll, setShowAll] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState<string>("all");
   const [openNoteIds, setOpenNoteIds] = useState<number[]>([]);
+  const [retryModalOpen, setRetryModalOpen] = useState(false);
 
   const fetchWrongNotes = useCallback(async () => {
     if (!auth.token || !auth.isLoggedIn) {
@@ -35,7 +38,6 @@ export default function WrongNoteView({ setWrongNotes }: { setWrongNotes?: (note
     try {
       setLoading(true);
       setError(null);
-      // 실제 API에서 WrongNoteSet[]을 받아온다고 가정
       const serverNoteSets: WrongNoteSet[] = await getWrongNotesFromServer(auth.token);
       setNoteSets(serverNoteSets);
     } catch (err) {
@@ -97,6 +99,12 @@ export default function WrongNoteView({ setWrongNotes }: { setWrongNotes?: (note
 
   return (
     <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
+      {/* 오답 다시 풀기 모달 */}
+      <RetryWrongNoteModal
+        isOpen={retryModalOpen}
+        onClose={() => setRetryModalOpen(false)}
+        wrongNotes={filteredNotes}
+      />
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 w-full">
         <h3 className="text-xl font-bold flex items-center gap-2">
           <BookX size={22} />
@@ -106,9 +114,7 @@ export default function WrongNoteView({ setWrongNotes }: { setWrongNotes?: (note
           <Button
             variant="primary"
             className="px-4 py-2 text-sm font-semibold whitespace-nowrap"
-            onClick={() => {
-              alert(`오답 퀴즈 모드 시작! (총 ${displayNotes.length}문제)`);
-            }}
+            onClick={() => setRetryModalOpen(true)}
           >
             오답 다시 풀기
           </Button>
@@ -154,12 +160,39 @@ export default function WrongNoteView({ setWrongNotes }: { setWrongNotes?: (note
                     <p className="text-xs text-neutral-400">
                     </p>
                   </div>
-                  <ChevronRight
-                    size={20}
-                    className={`text-neutral-500 transition-transform ${
-                      openNoteIds.includes(note.id) ? "rotate-90" : ""
-                    }`}
-                  />
+                  <div className="flex items-center gap-2">
+                    <button
+                      className="text-xs text-red-400 hover:text-red-300 font-bold px-2 py-1 rounded transition-all border border-red-400"
+                      onClick={async (e) => {
+                        e.stopPropagation();
+                        if (!window.confirm('정말로 이 오답노트를 삭제하시겠습니까?')) return;
+                        if (!auth.token) {
+                          alert('로그인이 필요합니다.');
+                          return;
+                        }
+                        try {
+                          setLoading(true);
+                          await deleteWrongNoteFromServer(auth.token, note.id);
+                          setNoteSets((prevSets) => prevSets.map(set => ({
+                            ...set,
+                            odaps: set.odaps.filter(n => n.id !== note.id)
+                          })));
+                        } catch (err) {
+                          alert('오답노트 삭제에 실패했습니다.');
+                        } finally {
+                          setLoading(false);
+                        }
+                      }}
+                    >
+                      삭제
+                    </button>
+                    <ChevronRight
+                      size={20}
+                      className={`text-neutral-500 transition-transform ${
+                        openNoteIds.includes(note.id) ? "rotate-90" : ""
+                      }`}
+                    />
+                  </div>
                 </button>
                 <AnimatePresence initial={false}>
                   {openNoteIds.includes(note.id) && (
