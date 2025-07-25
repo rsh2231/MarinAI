@@ -214,15 +214,15 @@ export default function WrongNoteView() {
 
   return (
     <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
-      <div className="flex items-center justify-between mb-4 w-full">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 w-full">
         <h3 className="text-xl font-bold flex items-center gap-2">
           <BookX size={22} />
           최근 오답노트
         </h3>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-center sm:justify-start gap-3 w-full sm:w-auto">
           <Button
             variant="primary"
-            className="px-4 py-2 text-sm font-semibold"
+            className="px-4 py-2 text-sm font-semibold whitespace-nowrap" // 글자 줄바꿈 방지
             onClick={handleStartWrongNoteQuiz}
           >
             오답 다시 풀기

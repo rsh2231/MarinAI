@@ -1,9 +1,16 @@
 // AI 학습진단
 import React, { useState } from "react";
-import { AlertTriangle, BrainCircuit, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  AlertTriangle,
+  BrainCircuit,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import AIResponseRenderer from "./AIResponseRenderer";
+import { useAtomValue } from "jotai";
+import { authAtom } from "@/atoms/authAtom";
 
 // 더미 오답노트 데이터 (WrongNoteView 참고)
 const wrongNotes = [
@@ -23,6 +30,8 @@ const examResults = [
 ];
 
 export default function AILearningDiagnosis() {
+  const auth = useAtomValue(authAtom);
+  const indivname = auth?.user?.indivname || "수험생";
   const [showResult, setShowResult] = useState(false);
   const [aiMessage, setAiMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -36,7 +45,7 @@ export default function AILearningDiagnosis() {
       const res = await fetch("/api/diagnosis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ wrongNotes, examResults }),
+        body: JSON.stringify({ indivname, wrongNotes, examResults }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "AI 진단 실패");
@@ -65,7 +74,7 @@ export default function AILearningDiagnosis() {
           <BrainCircuit className="w-5 h-5 sm:w-[22px] sm:h-[22px] text-blue-400" />
           AI 학습진단
         </h2>
-        <div className="text-xs sm:text-sm text-neutral-400 hover:text-neutral-100 font-medium flex items-center gap-1 transition-colors">
+        <div className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1 transition-colors">
           {showResult ? "닫기" : "결과 보기"}
           {showResult ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
         </div>
