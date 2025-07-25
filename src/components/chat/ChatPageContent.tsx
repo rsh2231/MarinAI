@@ -25,7 +25,7 @@ export default function ChatPageContent() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-64px)] relative">
+    <div className="flex h-[calc(100vh-56px)] relative">
       <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
 
       {/* 모바일 오버레이 */}

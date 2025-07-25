@@ -50,6 +50,7 @@ export function ExamSession({ onSubmit, scrollRef }: ExamSessionProps) {
 
   // 헤더에서 과목을 변경하는 핸들러
   const handleSubjectChange = useCallback((subjectName: string) => {
+    setSelectedSubject(subjectName);
     const firstQuestionIndex = allQuestions.findIndex(
       (q) => q.subjectName === subjectName
     );
@@ -63,7 +64,7 @@ export function ExamSession({ onSubmit, scrollRef }: ExamSessionProps) {
         });
       }, 50); 
     }
-  }, [allQuestions, setCurrentIdx]);
+  }, [allQuestions, setCurrentIdx, setSelectedSubject ]);
 
   const handleSelectAnswer = (question: Question, choice: string) => {
     setAnswers((prev) => ({
