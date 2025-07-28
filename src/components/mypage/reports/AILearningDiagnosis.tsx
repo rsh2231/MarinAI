@@ -1,4 +1,3 @@
-// AI 학습진단
 import React, { useState } from "react";
 import {
   AlertTriangle,
@@ -12,9 +11,8 @@ import AIResponseRenderer from "./AIResponseRenderer";
 import { useAtomValue } from "jotai";
 import { authAtom } from "@/atoms/authAtom";
 
-export default function AILearningDiagnosis({ wrongNotes, examResults }: { wrongNotes: any, examResults: any }) {
+export default function AILearningDiagnosis({ wrongNotes, examResults }: { wrongNotes: any; examResults: any }) {
   const auth = useAtomValue(authAtom);
-  const indivname = auth?.user?.indivname || "수험생";
   const [showResult, setShowResult] = useState(false);
   const [aiMessage, setAiMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -23,25 +21,59 @@ export default function AILearningDiagnosis({ wrongNotes, examResults }: { wrong
   const handleDiagnosis = async () => {
     setLoading(true);
     setError(null);
-    setAiMessage(null);
+    setAiMessage(""); // 스트리밍을 위해 빈 문자열로 초기화
+
+    if (!auth?.token) {
+      setError("로그인이 필요합니다. 다시 로그인해주세요.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/diagnosis", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ indivname, wrongNotes, examResults }),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${auth.token}`,
+        },
+        body: JSON.stringify({ wrongNotes, examResults }), 
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "AI 진단 실패");
-      setAiMessage(data.message);
+
+      if (!res.ok) {
+        try {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "AI 진단에 실패했습니다.");
+        } catch (jsonError) {
+            // JSON 파싱 실패 시 텍스트로 에러 처리
+            const errorText = await res.text();
+            throw new Error(errorText || "알 수 없는 서버 오류가 발생했습니다.");
+        }
+      }
+
+      if (!res.body) {
+        throw new Error("스트리밍 응답을 받지 못했습니다.");
+      }
+
+      // 스트림 읽기 시작
+      setLoading(false); 
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value);
+        setAiMessage((prev) => (prev || "") + chunk);
+      }
     } catch (e: any) {
-      setError(e.message || "AI 진단 중 오류 발생");
-    } finally {
-      setLoading(false);
+      setError(e.message || "AI 진단 중 오류가 발생했습니다.");
+      setLoading(false); // 에러 발생 시 로딩 상태 해제
     }
   };
 
   const handleToggle = () => {
-    if (!showResult && !aiMessage) {
+    // 처음 열 때만 진단 실행
+    if (!showResult && aiMessage === null) {
       handleDiagnosis();
     }
     setShowResult((v) => !v);
@@ -83,7 +115,8 @@ export default function AILearningDiagnosis({ wrongNotes, examResults }: { wrong
                 {error}
               </div>
             )}
-            {aiMessage && !loading && !error && (
+
+            {aiMessage !== null && !loading && !error && (
               <div className="bg-neutral-900/50 p-4 rounded-lg border border-neutral-700">
                 <AIResponseRenderer message={aiMessage} />
               </div>

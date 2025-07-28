@@ -67,7 +67,7 @@ export default function Header() {
               onClick={handleScrollTop}
               className="flex gap-2 hover:text-primary text-white"
             >
-              <span className="text-xl font-bold text-white hover:animate-pulse">
+              <span className="text-xl font-bold text-white">
                 Marin<span className="text-blue-500">AI</span>
               </span>
             </Link>
