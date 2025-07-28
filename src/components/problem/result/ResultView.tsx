@@ -38,7 +38,7 @@ export interface SubjectResult {
 const CHUNK_SIZE = 30; // 점진적 렌더링 시 한 번에 추가할 문제 개수
 
 export const ResultView = ({
-  onRetry, // 부모로부터 받은 onRetry 함수를 그대로 사용합니다.
+  onRetry,
   license,
   totalDuration,
   scrollRef,
@@ -82,6 +82,23 @@ export const ResultView = ({
   }, [allQuestions, answers, showOnlyWrong, selectedSubject, groupedQuestions]);
 
   const isMobile = useIsMobile();
+
+  // 결과 화면 진입 시 스크롤 최상단 이동
+  useEffect(() => {
+    const HEADER_HEIGHT = 56;
+    const scrollToHeader = () => {
+      if (scrollRef?.current) {
+        scrollRef.current.scrollTo({ top: 0, behavior: 'instant' });
+      }
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: HEADER_HEIGHT, behavior: 'instant' });
+      }
+    };
+
+    scrollToHeader();
+    const timeoutId = setTimeout(scrollToHeader, 100);
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   // 점진적 렌더링: 모바일은 전체, 데스크탑은 CHUNK_SIZE씩
   const [renderCount, setRenderCount] = useState(
@@ -192,8 +209,6 @@ export const ResultView = ({
     );
   };
 
-  // 자체 handleRetry 함수는 제거되었습니다.
-
   return (
     <div className="h-full bg-neutral-900 text-white">
       <div
@@ -202,7 +217,7 @@ export const ResultView = ({
           forceScreenHeight ? "h-screen" : "h-full"
         } overflow-y-auto`}
       >
-        <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 pt-20 sm:pt-24">
           {/* 상단: 결과 요약/통계 */}
           <header className="mb-8">
             <div className="flex items-center gap-2 text-lg font-semibold mb-2">

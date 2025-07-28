@@ -65,32 +65,36 @@ const QuestionResultCardInner = ({
       transition={{ duration: 0.3, delay: index * 0.05 }}
       className={`relative bg-neutral-800/50 border border-neutral-700 rounded-xl shadow-lg mb-6 p-5 transition-colors`}
     >
-      <div className="flex justify-between items-start gap-4">
-        <div className="flex-1 flex flex-col gap-2 font-medium text-sm sm:text-base break-keep">
-          <span className="text-gray-400">
-            {question.subjectName ? `${question.subjectName} - ` : ""}문제{" "}
-            {question.num}
-          </span>
-          {question.questionStr && (
-            <p className="whitespace-pre-wrap leading-relaxed text-gray-100">
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-between items-start gap-4">
+          <div className="flex-1 flex flex-col gap-2 font-medium text-sm sm:text-base break-keep">
+            <span className="text-gray-400">
+              {question.subjectName ? `${question.subjectName} - ` : ""}문제{" "}
+              {question.num}
+            </span>
+          </div>
+          <div
+            className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap ${badgeStyles[status]}`}
+          >
+            {status === "correct" && <Check size={16} />}
+            {status === "incorrect" && <X size={16} />}
+            {status === "unanswered" && <HelpCircle size={16} />}
+            <span>
+              {status === "correct"
+                ? "정답"
+                : status === "incorrect"
+                ? "오답"
+                : "미답"}
+            </span>
+          </div>
+        </div>
+        {question.questionStr && (
+          <div className="w-full">
+            <p className="whitespace-pre-wrap leading-relaxed text-gray-100 text-sm sm:text-base">
               {question.questionStr}
             </p>
-          )}
-        </div>
-        <div
-          className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap ${badgeStyles[status]}`}
-        >
-          {status === "correct" && <Check size={16} />}
-          {status === "incorrect" && <X size={16} />}
-          {status === "unanswered" && <HelpCircle size={16} />}
-          <span>
-            {status === "correct"
-              ? "정답"
-              : status === "incorrect"
-              ? "오답"
-              : "미답"}
-          </span>
-        </div>
+          </div>
+        )}
       </div>
 
       {question.imageUrl && (
@@ -148,14 +152,14 @@ const QuestionResultCardInner = ({
                 <span className="text-gray-100">{choice.text}</span>
               )}
               {/* 상태 뱃지 */}
-              <div className="flex-shrink-0 text-xs font-semibold ml-auto flex gap-1">
+              <div className="flex-shrink-0 text-xs font-semibold ml-auto flex gap-1 flex-wrap">
                 {isSelected && !isActualAnswer && (
-                  <span className="px-2 py-1 rounded-md bg-red-500/20 text-red-300">
+                  <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs bg-red-500/20 text-red-300 whitespace-nowrap">
                     내 답안
                   </span>
                 )}
                 {status !== "unanswered" && isActualAnswer && (
-                  <span className="px-2 py-1 rounded-md bg-green-500/20 text-green-300">
+                  <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs bg-green-500/20 text-green-300 whitespace-nowrap">
                     정답
                   </span>
                 )}

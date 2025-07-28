@@ -87,6 +87,7 @@ export function useCbtExam(status: ExamStatus, setStatus: (status: ExamStatus) =
       } else {
         setGroupedQuestions(transformed);
         setAnswers({});
+        setCurrentIdx(0);
         setSelectedSubject(transformed[0].subjectName); // 첫 과목으로 세팅
         const duration = transformed.length * DURATION_PER_SUBJECT_SECONDS;
         setTimeLeft(duration);

@@ -7,7 +7,11 @@ import { usePathname } from "next/navigation";
 import { Inter } from "next/font/google";
 import AuthInit from "@/components/auth/AuthInit";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  preload: false, // preload 경고 방지
+  display: 'swap',
+});
 
 export default function RootLayout({
   children,
