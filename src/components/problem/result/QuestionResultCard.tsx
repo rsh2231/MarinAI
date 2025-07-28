@@ -139,6 +139,7 @@ const QuestionResultCardInner = ({
                     height={150}
                     sizes="(max-width: 640px) 70vw, 240px"
                     className="rounded object-contain max-w-[70vw] sm:max-w-[240px] max-h-[30vw] sm:max-h-[120px] h-auto"
+                    style={{ width: "auto", height: "auto" }}
                   />
                 </div>
               ) : (

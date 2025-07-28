@@ -74,10 +74,11 @@ export default function QuestionCardComponent({
           <Image
             src={imageUrl}
             alt={`문제 ${num} 이미지`}
-            width={400}
-            height={250}
-            sizes="(max-width: 640px) 90vw, 400px"
-            className="rounded object-contain w-full h-auto max-w-full max-h-[40vw] sm:max-w-[400px] sm:max-h-[250px]"
+            width={600}
+            height={375}
+            sizes="(max-width: 640px) 95vw, 600px"
+            className="rounded object-contain max-w-full max-h-[50vw] sm:max-w-[600px] sm:max-h-[375px]"
+            style={{ width: 'auto', height: 'auto' }}
             priority
           />
         </div>
@@ -115,10 +116,11 @@ export default function QuestionCardComponent({
                   <Image
                     src={opt.imageUrl}
                     alt={`보기 ${opt.label}`}
-                    width={240}
-                    height={150}
-                    sizes="(max-width: 640px) 70vw, 240px"
-                    className="rounded object-contain max-w-[70vw] sm:max-w-[240px] max-h-[30vw] sm:max-h-[120px] h-auto"
+                    width={400}
+                    height={250}
+                    sizes="(max-width: 640px) 85vw, 400px"
+                    className="rounded object-contain max-w-[85vw] sm:max-w-[400px] max-h-[50vw] sm:max-h-[250px]"
+                    style={{ width: 'auto', height: 'auto' }}
                   />
                 </div>
               ) : (
