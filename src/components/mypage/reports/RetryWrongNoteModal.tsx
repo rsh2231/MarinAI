@@ -5,14 +5,25 @@ import { motion, AnimatePresence } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import correctAnimation from "@/assets/animations/correct.json";
 import incorrectAnimation from "@/assets/animations/incorrect.json";
-import Image from "next/image";
 import QuestionCard from "@/components/problem/UI/QuestionCard";
 import { Question } from "@/types/ProblemViewer";
+import Button from "@/components/ui/Button";
 
 function CloseIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={2}
+      stroke="currentColor"
+      className="w-5 h-5"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6 18L18 6M6 6l12 12"
+      />
     </svg>
   );
 }
@@ -29,7 +40,9 @@ export default function RetryWrongNoteModal({
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | undefined>(undefined);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(null);
+  const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(
+    null
+  );
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   const handleClose = () => {
@@ -83,8 +96,8 @@ export default function RetryWrongNoteModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          onClick={handleClose}
-          className="fixed inset-0 z-50 bg-gray-900/60 flex items-center justify-center px-4 backdrop-blur-sm"
+          onClick={handleClose} // 배경 클릭 시 닫기
+          className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center px-4 backdrop-blur-md"
         >
           <motion.div
             key="modal"
@@ -92,15 +105,18 @@ export default function RetryWrongNoteModal({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            onClick={(e) => e.stopPropagation()}
-            className="relative bg-neutral-800/50 border border-neutral-700 rounded-xl shadow-lg p-5 w-full max-w-md text-foreground-dark"
+            className="relative bg-neutral-800/50 border border-neutral-700 rounded-xl shadow-lg p-5 w-full max-w-md max-h-[90vh] text-foreground-dark overflow-hidden flex flex-col"
           >
             <button
-              onClick={handleClose}
-              className="absolute top-4 right-4 text-secondary hover:text-foreground-dark transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClose();
+              }}
+              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-neutral-700/80 hover:bg-neutral-600/90 text-neutral-300 hover:text-white transition-all duration-200 flex items-center justify-center backdrop-blur-sm border border-neutral-600/50 hover:border-neutral-500/70 z-10 group"
               aria-label="Close modal"
             >
               <CloseIcon />
+              <div className="absolute inset-0 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
             </button>
 
             {/* Lottie 애니메이션 */}
@@ -114,7 +130,11 @@ export default function RetryWrongNoteModal({
                 >
                   <Lottie
                     lottieRef={lottieRef}
-                    animationData={feedback === "correct" ? correctAnimation : incorrectAnimation}
+                    animationData={
+                      feedback === "correct"
+                        ? correctAnimation
+                        : incorrectAnimation
+                    }
                     loop={false}
                     onDOMLoaded={() => lottieRef.current?.setSpeed(2.5)}
                     onComplete={() => setFeedback(null)}
@@ -124,33 +144,39 @@ export default function RetryWrongNoteModal({
               )}
             </AnimatePresence>
 
-            <QuestionCard
-              question={question}
-              selected={selected}
-              showAnswer={showAnswer}
-              onSelect={setSelected}
-              onToggle={() => setShowAnswer((v) => !v)}
-            />
+            <div onClick={(e) => e.stopPropagation()} className="flex-1 overflow-y-auto">
+              <QuestionCard
+                question={question}
+                selected={selected}
+                showAnswer={showAnswer}
+                onSelect={setSelected}
+                onToggle={() => setShowAnswer((v) => !v)}
+              />
+            </div>
 
-            <div className="flex justify-between mt-6">
-              <button
+            <div 
+              className="flex justify-between mt-6 flex-shrink-0"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Button
+                variant="neutral"
                 className="px-4 py-2 rounded bg-secondary text-white disabled:opacity-50"
                 onClick={() => handleMove(current - 1)}
                 disabled={current === 0}
               >
                 이전 문제
-              </button>
-              <button
+              </Button>
+              <Button
                 className="px-4 py-2 rounded bg-primary text-white disabled:opacity-50"
                 onClick={() => handleMove(current + 1)}
                 disabled={current === wrongNotes.length - 1}
               >
                 다음 문제
-              </button>
+              </Button>
             </div>
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
-} 
+}

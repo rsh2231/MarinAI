@@ -35,7 +35,7 @@ export default function OAuthButton() {
   return (
     <button
       onClick={redirectToOAuth}
-      className="w-full flex items-center justify-center gap-3 bg-gray-900 hover:bg-accent text-whtie font-semibold py-3 px-4 rounded border border-secondary/20 shadow-sm transition-colors cursor-pointer"
+      className="w-full flex items-center justify-center gap-3 bg-gray-800 hover:bg-accent text-whtie font-semibold py-3 px-4 rounded border border-secondary/20 shadow-sm transition-colors cursor-pointer"
     >
       <GoogleIcon />
       Google 계정으로 계속하기

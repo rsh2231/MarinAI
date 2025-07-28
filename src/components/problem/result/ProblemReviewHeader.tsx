@@ -24,13 +24,13 @@ export const ProblemReviewHeader = ({
   return (
     <div>
       {/* 상단: 제목과 다시보기 옵션 버튼 */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-        <h2 className="text-2xl font-bold">
+      <div className="flex flex-wrap items-center justify-center md:justify-between gap-4 mb-4">
+        <h2 className="text-2xl font-bold order-1 md:order-none">
           {selectedSubject === "all"
             ? "전체 문제 다시보기"
             : `${selectedSubject} 문제 다시보기`}
         </h2>
-        <div className="flex gap-2">
+        <div className="flex gap-2 order-2 md:order-none">
           <Button
             variant="neutral"
             size="sm"

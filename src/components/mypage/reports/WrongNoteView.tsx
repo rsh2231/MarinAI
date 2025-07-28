@@ -143,8 +143,8 @@ export default function WrongNoteView({ setWrongNotes }: { setWrongNotes?: (note
                 key={note.id}
                 className="flex flex-col bg-neutral-700/70 rounded-md p-0"
               >
-                <button
-                  className="w-full flex justify-between items-center p-3 text-left focus:outline-none"
+                <div
+                  className="w-full flex justify-between items-center p-3 text-left focus:outline-none cursor-pointer"
                   onClick={() =>
                     setOpenNoteIds((prev) =>
                       prev.includes(note.id)
@@ -193,7 +193,7 @@ export default function WrongNoteView({ setWrongNotes }: { setWrongNotes?: (note
                       }`}
                     />
                   </div>
-                </button>
+                </div>
                 <AnimatePresence initial={false}>
                   {openNoteIds.includes(note.id) && (
                     <motion.div

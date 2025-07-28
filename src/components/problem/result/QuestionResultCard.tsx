@@ -68,7 +68,8 @@ const QuestionResultCardInner = ({
       <div className="flex justify-between items-start gap-4">
         <div className="flex-1 flex flex-col gap-2 font-medium text-sm sm:text-base break-keep">
           <span className="text-gray-400">
-            {question.subjectName ? `${question.subjectName} - ` : ''}문제 {question.num}
+            {question.subjectName ? `${question.subjectName} - ` : ""}문제{" "}
+            {question.num}
           </span>
           {question.questionStr && (
             <p className="whitespace-pre-wrap leading-relaxed text-gray-100">
@@ -100,8 +101,7 @@ const QuestionResultCardInner = ({
             width={400}
             height={250}
             sizes="(max-width: 640px) 90vw, 400px"
-            className="rounded object-contain max-w-[90vw] max-h-[40vw] sm:max-w-[400px] sm:max-h-[250px]"
-            priority
+            className="rounded object-contain max-w-[90vw] max-h-[40vw] sm:max-w-[400px] sm:max-h-[250px] w-auto h-auto"
           />
         </div>
       )}
@@ -111,35 +111,38 @@ const QuestionResultCardInner = ({
           const isSelected = userAnswer === choice.label;
           const isActualAnswer = question.answer === choice.label;
 
-          // QuestionCard 스타일과 최대한 맞춤
           const base =
-            "flex items-center gap-3 px-4 py-3 rounded-md border transition-all text-sm sm:text-base";
+            "flex items-start gap-3 px-4 py-3 rounded-md border transition-all text-sm sm:text-base"; // 👈 items-center -> items-start 로 변경
           const selectedCls = isSelected
             ? "border-blue-500 bg-blue-900/30"
             : "border-neutral-700 hover:bg-neutral-700/50";
           const correctCls = isActualAnswer
             ? "!border-green-500 !bg-green-900/30 !text-green-300"
             : "";
-          const wrongCls = isSelected && !isActualAnswer
-            ? "!border-red-500 !bg-red-900/30 !text-red-300"
-            : "";
+          const wrongCls =
+            isSelected && !isActualAnswer
+              ? "!border-red-500 !bg-red-900/30 !text-red-300"
+              : "";
 
           return (
             <li
               key={choice.label}
               className={`${base} ${selectedCls} ${correctCls} ${wrongCls}`}
             >
-              <span className="font-semibold min-w-[24px]">{choice.label}.</span>
+              <span className="font-semibold min-w-[24px] pt-1">
+                {choice.label}.
+              </span>{" "}
+
               {choice.isImage && choice.imageUrl ? (
-                <div className="flex justify-center overflow-hidden">
+                <div className="flex-1 flex justify-start overflow-hidden">
+                  {" "}
                   <Image
                     src={choice.imageUrl}
                     alt={`보기 ${choice.label}`}
-                    width={240}
-                    height={150}
-                    sizes="(max-width: 640px) 70vw, 240px"
-                    className="rounded object-contain max-w-[70vw] sm:max-w-[240px] max-h-[30vw] sm:max-h-[120px] h-auto"
-                    style={{ width: "auto", height: "auto" }}
+                    width={500}
+                    height={125} 
+                    sizes="(max-width: 640px) 80vw, 500px" 
+                    className="rounded object-contain max-w-full sm:max-w-md w-auto h-auto"
                   />
                 </div>
               ) : (

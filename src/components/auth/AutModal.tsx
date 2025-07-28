@@ -34,7 +34,7 @@ export default function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClos
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           onClick={handleClose} // 배경 클릭 시 닫기
-          className="fixed inset-0 z-50 bg-gray-900/60 flex items-center justify-center px-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 bg-gray-black/75 flex items-center justify-center px-4 backdrop-blur-sm"
         >
           {/* 2. 모달 패널 자체의 애니메이션 */}
           <motion.div

@@ -103,7 +103,10 @@ export const OmrSheet: React.FC = () => {
         <div className="p-4 border-b border-gray-700 flex items-center justify-between shrink-0">
           <h3 className="font-semibold text-sm">문제 목록</h3>
           <button
-            onClick={onClose}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
             className="p-1 rounded-md hover:bg-gray-700 lg:hidden"
           >
             <X className="w-5 h-5" />

@@ -78,8 +78,7 @@ export default function QuestionCardComponent({
             height={375}
             sizes="(max-width: 640px) 95vw, 600px"
             className="rounded object-contain max-w-full max-h-[50vw] sm:max-w-[600px] sm:max-h-[375px]"
-            style={{ width: 'auto', height: 'auto' }}
-            priority
+            style={{ width: "auto", height: "auto" }}
           />
         </div>
       )}
