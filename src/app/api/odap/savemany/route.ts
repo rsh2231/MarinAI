@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const targetUrl = `${baseUrl}/odap/savemany`;
+    const targetUrl = `${baseUrl}/results/savemany`;
 
     const apiResponse = await fetch(targetUrl, {
       method: "POST",

@@ -144,7 +144,17 @@ export default function RetryWrongNoteModal({
               )}
             </AnimatePresence>
 
-            <div onClick={(e) => e.stopPropagation()} className="flex-1 overflow-y-auto">
+            {/* 문항 수 표시 */}
+            <div className="flex justify-center items-center mb-4">
+              <div className="bg-neutral-700/50 border border-neutral-600 rounded-full px-4 py-2 text-sm font-medium text-neutral-300">
+                {current + 1} / {wrongNotes.length}
+              </div>
+            </div>
+
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="flex-1 overflow-y-auto"
+            >
               <QuestionCard
                 question={question}
                 selected={selected}
@@ -154,8 +164,8 @@ export default function RetryWrongNoteModal({
               />
             </div>
 
-            <div 
-              className="flex justify-between mt-6 flex-shrink-0"
+            <div
+              className="flex justify-center items-center gap-4 mt-6 flex-shrink-0"
               onClick={(e) => e.stopPropagation()}
             >
               <Button

@@ -12,88 +12,36 @@ import AIResponseRenderer from "./AIResponseRenderer";
 import { useAtomValue } from "jotai";
 import { authAtom } from "@/atoms/authAtom";
 
-export default function AILearningDiagnosis({
-  wrongNotes,
-  examResults,
-}: {
-  wrongNotes: any;
-  examResults: any;
-}) {
+export default function AILearningDiagnosis({ wrongNotes, examResults }: { wrongNotes: any, examResults: any }) {
   const auth = useAtomValue(authAtom);
+  const indivname = auth?.user?.indivname || "수험생";
   const [showResult, setShowResult] = useState(false);
   const [aiMessage, setAiMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleDiagnosis = async () => {
-    if (aiMessage) return;
-
-    if (!auth?.token) {
-      setError("AI 진단을 위해서는 로그인이 필요합니다.");
-      return;
-    }
-
     setLoading(true);
     setError(null);
-    setAiMessage("");
-
+    setAiMessage(null);
     try {
-      // 1. Next.js API Route로 POST 요청
       const res = await fetch("/api/diagnosis", {
         method: "POST",
-        headers: {
-          // 2. 인증 토큰과 Content-Type을 헤더에 추가
-          Authorization: `Bearer ${auth.token}`,
-          "Content-Type": "application/json",
-        },
-        // 3. Body는 간단한 JSON 객체로 전송
-        body: JSON.stringify({ wrongNotes, examResults }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ indivname, wrongNotes, examResults }),
       });
-
-      // 스트리밍 응답이 아닌, 일반 JSON 오류 응답 처리
-      if (
-        !res.ok &&
-        res.headers.get("Content-Type")?.includes("application/json")
-      ) {
-        const errorData = await res.json();
-        throw new Error(
-          errorData.message || `AI 진단 서버 오류: ${res.status}`
-        );
-      }
-
-      if (!res.ok) {
-        throw new Error(`AI 진단 서버 오류: ${res.status} ${res.statusText}`);
-      }
-
-      // 4. StreamingResponse(SSE) 처리
-      const reader = res.body?.getReader();
-      if (!reader) {
-        throw new Error("응답 스트림을 읽을 수 없습니다.");
-      }
-      const decoder = new TextDecoder();
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value);
-        const lines = chunk.split("\n\n");
-        for (const line of lines) {
-          if (line.startsWith("data: ")) {
-            const data = line.substring(6);
-            setAiMessage((prev) => prev + data);
-          }
-        }
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "AI 진단 실패");
+      setAiMessage(data.message);
     } catch (e: any) {
-      setError(e.message || "AI 진단 중 알 수 없는 오류 발생");
+      setError(e.message || "AI 진단 중 오류 발생");
     } finally {
       setLoading(false);
     }
   };
 
   const handleToggle = () => {
-    if (!showResult && !loading && !aiMessage) {
+    if (!showResult && !aiMessage) {
       handleDiagnosis();
     }
     setShowResult((v) => !v);
@@ -123,7 +71,7 @@ export default function AILearningDiagnosis({
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="break-keep overflow-hidden"
           >
-            {loading && !aiMessage && (
+            {loading && (
               <LoadingSpinner
                 text="AI가 맞춤 진단을 생성하고 있어요..."
                 minHeight="100px"
@@ -135,7 +83,7 @@ export default function AILearningDiagnosis({
                 {error}
               </div>
             )}
-            {aiMessage && !error && (
+            {aiMessage && !loading && !error && (
               <div className="bg-neutral-900/50 p-4 rounded-lg border border-neutral-700">
                 <AIResponseRenderer message={aiMessage} />
               </div>

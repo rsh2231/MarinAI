@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const targetUrl = `${baseUrl}/odap/save`;
+    const targetUrl = `${baseUrl}/results/save`;
 
     console.log("Saving wrong note to:", targetUrl);
 
