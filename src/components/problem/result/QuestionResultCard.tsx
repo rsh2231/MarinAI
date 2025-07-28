@@ -98,14 +98,13 @@ const QuestionResultCardInner = ({
           <Image
             src={question.imageUrl}
             alt={`문제 ${question.num} 이미지`}
-            width={400}
-            height={250}
-            sizes="(max-width: 640px) 90vw, 400px"
-            className="rounded object-contain max-w-[90vw] max-h-[40vw] sm:max-w-[400px] sm:max-h-[250px] w-auto h-auto"
+            width={800}
+            height={500}
+            sizes="(max-width: 640px) 90vw, 672px"
+            className="rounded object-contain max-w-[90vw] sm:max-w-2xl w-auto h-auto"
           />
         </div>
       )}
-
       <ul className="space-y-3 mt-4 break-keep">
         {question.choices.map((choice: Choice) => {
           const isSelected = userAnswer === choice.label;

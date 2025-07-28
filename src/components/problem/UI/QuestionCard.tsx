@@ -1,14 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
 import { Question } from "@/types/ProblemViewer";
 import correctAnimation from "@/assets/animations/correct.json";
 import incorrectAnimation from "@/assets/animations/incorrect.json";
-import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface Props {
   question: Question;
@@ -18,7 +17,7 @@ interface Props {
   onToggle?: () => void;
 }
 
-export default function QuestionCardComponent({
+export default function QuestionCard({
   question,
   selected,
   showAnswer,
@@ -74,10 +73,11 @@ export default function QuestionCardComponent({
           <Image
             src={imageUrl}
             alt={`문제 ${num} 이미지`}
-            width={600}
-            height={375}
-            sizes="(max-width: 640px) 95vw, 600px"
-            className="rounded object-contain max-w-full max-h-[50vw] sm:max-w-[600px] sm:max-h-[375px]"
+            width={800}
+            height={500}
+            sizes="(max-width: 640px) 90vw, 672px"
+            className="rounded object-contain max-w-[90vw] sm:max-w-2xl w-auto h-auto"
+            // 👇 [수정] 경고 해결을 위해 style 속성 추가
             style={{ width: "auto", height: "auto" }}
           />
         </div>
@@ -92,7 +92,7 @@ export default function QuestionCardComponent({
             isPracticeMode && isSelected && !isCorrect && showAnswer;
 
           const base =
-            "flex items-center gap-3 px-4 py-3 rounded-md border cursor-pointer transition-all text-sm sm:text-base";
+            "flex items-start gap-3 px-4 py-3 rounded-md border cursor-pointer transition-all text-sm sm:text-base";
           const selectedCls = isSelected
             ? "border-blue-500 bg-blue-900/30"
             : "border-neutral-700 hover:bg-neutral-700/50";
@@ -109,17 +109,20 @@ export default function QuestionCardComponent({
               className={`${base} ${selectedCls} ${correctCls} ${wrongCls}`}
               onClick={() => handleClickOption(opt.label)}
             >
-              <span className="font-semibold min-w-[24px]">{opt.label}.</span>
+              <span className="font-semibold min-w-[24px] pt-1">
+                {opt.label}.
+              </span>
               {opt.isImage && opt.imageUrl ? (
-                <div className="flex justify-center overflow-hidden">
+                <div className="flex-1 flex justify-start overflow-hidden">
                   <Image
                     src={opt.imageUrl}
                     alt={`보기 ${opt.label}`}
-                    width={400}
-                    height={250}
-                    sizes="(max-width: 640px) 85vw, 400px"
-                    className="rounded object-contain max-w-[85vw] sm:max-w-[400px] max-h-[50vw] sm:max-h-[250px]"
-                    style={{ width: 'auto', height: 'auto' }}
+                    width={500}
+                    height={125}
+                    sizes="(max-width: 640px) 80vw, 500px"
+                    className="rounded object-contain max-w-full sm:max-w-md w-auto h-auto"
+                    // 👇 [수정] 경고 해결을 위해 style 속성 추가
+                    style={{ width: "auto", height: "auto" }}
                   />
                 </div>
               ) : (
