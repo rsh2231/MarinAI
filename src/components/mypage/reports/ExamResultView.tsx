@@ -80,7 +80,7 @@ const dummyResults = [
   },
 ];
 
-export default function ExamResultView({ setExamResults }: { setExamResults?: (results: any) => void }) {
+export default function ExamResultView({ setExamResults }: { setExamResults?: (results: unknown) => void }) {
   const [results, setResults] = useState(dummyResults);
   const [showAll, setShowAll] = useState(false);
   const [openIds, setOpenIds] = useState<number[]>([]);
@@ -105,7 +105,7 @@ export default function ExamResultView({ setExamResults }: { setExamResults?: (r
           setResults(data);
           if (setExamResults) setExamResults(data);
         }
-      } catch (e) {
+      } catch {
         // ignore, fallback to dummyResults
       }
     };

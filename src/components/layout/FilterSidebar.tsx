@@ -11,8 +11,6 @@ const LEVELS = ["1급", "2급", "3급", "4급", "5급", "6급"];
 const ROUNDS = ["1회", "2회", "3회", "4회"];
 
 type FilterSidebarProps = FilterState & {
-  sidebarOpen: boolean;
-  onClose: () => void;
   className?: string;
   selectedSubjects: string[];
   setSelectedSubjects: React.Dispatch<React.SetStateAction<string[]>>;
@@ -58,8 +56,6 @@ export default function FilterSidebar({
   selectedSubjects,
   setSelectedSubjects,
   className = "",
-  sidebarOpen = false,
-  onClose,
 }: FilterSidebarProps) {
   const isSmallShip = license === "소형선박조종사";
 

@@ -72,8 +72,8 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
         )
       );
       setIsLoading(false);
-    } catch (error: any) {
-      if (error.name === "AbortError") {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === "AbortError") {
         console.log("답변 생성이 중단되었습니다.");
         setMessages((prev) =>
           prev.filter((msg) => msg.id !== assistantMessageId)

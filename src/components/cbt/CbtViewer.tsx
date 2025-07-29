@@ -24,7 +24,7 @@ export default function CbtViewer({
     currentLevel,
     totalDuration,
     currentOdapsetId,
-    groupedQuestions,
+
     handleStartExam,
     handleRetrySameExam,
   } = useCbtExam(status, setStatus, scrollRef);

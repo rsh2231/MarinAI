@@ -94,7 +94,7 @@ export default function QuestionCard({
           const base =
             "flex items-start gap-3 px-4 py-3 rounded-md border cursor-pointer transition-all text-sm sm:text-base";
           const selectedCls = isSelected
-            ? "border-blue-500 bg-blue-900/30"
+            ? "bg-blue-600/90"
             : "border-neutral-700 hover:bg-neutral-700/50";
           const correctCls = showCorrectStyle
             ? "!border-green-500 !bg-green-900/30 !text-green-300"

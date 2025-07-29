@@ -54,8 +54,6 @@ export default function PracticeViewer({
     showAnswer,
     handleSelectAnswer,
     toggleAnswer,
-    setAnswers,
-    setShowAnswer,
   } = useAnswerState({
     subjectGroups,
     odapsetId,

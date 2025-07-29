@@ -35,7 +35,7 @@ export default function RetryWrongNoteModal({
 }: {
   isOpen: boolean;
   onClose: () => void;
-  wrongNotes: any[];
+  wrongNotes: unknown[];
 }) {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | undefined>(undefined);
@@ -58,10 +58,12 @@ export default function RetryWrongNoteModal({
   }
 
   // gichul_qna → Question 변환
-  const note = wrongNotes[current];
-  const q = note.gichul_qna;
-  
-  if (!q) {
+  const note = wrongNotes[current] as unknown;
+  const q = (typeof note === 'object' && note !== null && 'gichul_qna' in note)
+    ? (note as { gichul_qna: unknown })['gichul_qna']
+    : undefined;
+
+  if (!q || typeof q !== 'object' || q === null) {
     return (
       <AnimatePresence>
         {isOpen && (
@@ -101,25 +103,40 @@ export default function RetryWrongNoteModal({
       </AnimatePresence>
     );
   }
-  
+  const qObj = q as {
+    ex1str?: string;
+    ex2str?: string;
+    ex3str?: string;
+    ex4str?: string;
+    ex5str?: string;
+    ex6str?: string;
+    id?: string | number;
+    qnum?: string | number;
+    questionstr?: string;
+    answer?: string;
+    explanation?: string;
+    subject?: string;
+    imgPaths?: string[];
+    gichulset?: { type?: string; grade?: string };
+  };
   const choices = [
-    { label: "가", text: q.ex1str, isImage: false },
-    { label: "나", text: q.ex2str, isImage: false },
-    { label: "사", text: q.ex3str, isImage: false },
-    { label: "아", text: q.ex4str, isImage: false },
-    ...(q.ex5str ? [{ label: "마", text: q.ex5str, isImage: false }] : []),
-    ...(q.ex6str ? [{ label: "바", text: q.ex6str, isImage: false }] : []),
+    { label: "가", text: qObj.ex1str ?? "", isImage: false },
+    { label: "나", text: qObj.ex2str ?? "", isImage: false },
+    { label: "사", text: qObj.ex3str ?? "", isImage: false },
+    { label: "아", text: qObj.ex4str ?? "", isImage: false },
+    ...(qObj.ex5str ? [{ label: "마", text: qObj.ex5str ?? "", isImage: false }] : []),
+    ...(qObj.ex6str ? [{ label: "바", text: qObj.ex6str ?? "", isImage: false }] : []),
   ];
   const question: Question = {
-    id: q.id,
-    num: q.qnum,
-    questionStr: q.questionstr,
+    id: qObj.id !== undefined ? Number(qObj.id) : 0,
+    num: qObj.qnum !== undefined ? Number(qObj.qnum) : 0,
+    questionStr: qObj.questionstr ?? "",
     choices,
-    answer: q.answer,
-    explanation: q.explanation,
-    subjectName: q.subject,
+    answer: qObj.answer ?? "",
+    explanation: qObj.explanation ?? "",
+    subjectName: qObj.subject ?? "",
     isImageQuestion: false,
-    imageUrl: q.imgPaths?.[0],
+    imageUrl: qObj.imgPaths?.[0],
   };
 
   // 문제 이동 시 상태 초기화
@@ -194,32 +211,32 @@ export default function RetryWrongNoteModal({
 
             {/* 자격증, 급수, 과목 정보 표시 */}
             <div className="flex justify-center items-center gap-2 mb-4">
-              {q.gichulset?.type && (
+              {qObj.gichulset?.type && (
                 <span className={`inline-block text-white px-2 py-1 rounded text-xs font-medium ${
-                  q.gichulset.type === "기관사" ? "bg-blue-600" :
-                  q.gichulset.type === "항해사" ? "bg-indigo-600" :
-                  q.gichulset.type === "소형선박조종사" ? "bg-purple-600" :
+                  qObj.gichulset.type === "기관사" ? "bg-blue-600" :
+                  qObj.gichulset.type === "항해사" ? "bg-indigo-600" :
+                  qObj.gichulset.type === "소형선박조종사" ? "bg-purple-600" :
                   "bg-gray-600"
                 }`}>
-                  {q.gichulset.type}
+                  {qObj.gichulset.type}
                 </span>
               )}
-              {q.gichulset?.grade && q.gichulset.type !== "소형선박조종사" && (
+              {qObj.gichulset?.grade && qObj.gichulset.type !== "소형선박조종사" && (
                 <span className={`inline-block text-white px-2 py-1 rounded text-xs font-medium ${
-                  q.gichulset.grade === "1" ? "bg-green-600" :
-                  q.gichulset.grade === "2" ? "bg-blue-500" :
-                  q.gichulset.grade === "3" ? "bg-yellow-600" :
-                  q.gichulset.grade === "4" ? "bg-orange-600" :
-                  q.gichulset.grade === "5" ? "bg-red-500" :
-                  q.gichulset.grade === "6" ? "bg-purple-600" :
+                  qObj.gichulset.grade === "1" ? "bg-green-600" :
+                  qObj.gichulset.grade === "2" ? "bg-blue-500" :
+                  qObj.gichulset.grade === "3" ? "bg-yellow-600" :
+                  qObj.gichulset.grade === "4" ? "bg-orange-600" :
+                  qObj.gichulset.grade === "5" ? "bg-red-500" :
+                  qObj.gichulset.grade === "6" ? "bg-purple-600" :
                   "bg-gray-600"
                 }`}>
-                  {q.gichulset.grade}급
+                  {qObj.gichulset.grade}급
                 </span>
               )}
-              {q.subject && (
+              {qObj.subject && (
                 <span className="inline-block bg-neutral-600 text-white px-2 py-1 rounded text-xs font-medium">
-                  {q.subject}
+                  {qObj.subject}
                 </span>
               )}
             </div>

@@ -94,8 +94,8 @@ export function useCbtExam(status: ExamStatus, setStatus: (status: ExamStatus) =
         setTotalDuration(duration);
         setStatus("in-progress");
       }
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError((err as Error).message);
     } finally {
       setIsLoading(false);
     }

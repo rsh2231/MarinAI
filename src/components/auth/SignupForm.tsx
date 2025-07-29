@@ -28,7 +28,7 @@ export default function SignupForm({ onSignupSuccess }: SignupFormProps) {
       setTimeout(() => {
         onSignupSuccess(); // 1.5초 후 부모에게 성공을 알려 로그인 폼으로 전환
       }, 1500);
-    } catch (err: any) {
+    } catch {
       setError("root", {
         message: "회원가입에 실패했습니다. 다시 시도해주세요.",
       });

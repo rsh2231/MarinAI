@@ -237,7 +237,6 @@ export const ResultView = ({
             isPass={isPass}
             summaryStats={summaryStats}
             subjectResults={subjectResults}
-            isMobile={isMobile}
           />
 
           {/* 문제 리스트 영역 분리 */}

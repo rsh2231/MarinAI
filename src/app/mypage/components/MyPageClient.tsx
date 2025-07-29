@@ -7,8 +7,7 @@ import MyPageCharts from "./MyPageCharts";
 import MyPageReports from "./MyPageReports";
 import AILearningDiagnosis from "@/components/mypage/reports/AILearningDiagnosis";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
-import WrongNoteView from "@/components/mypage/reports/WrongNote/WrongNoteView";
-import ExamResultView from "@/components/mypage/reports/ExamResultView";
+
 
 import { useState } from "react";
 
@@ -29,8 +28,17 @@ export default function MyPageClient() {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   // 오답노트와 시험결과 상태를 최상위에서 관리
-  const [wrongNotes, setWrongNotes] = useState([]); // 실제 WrongNote[] 타입
-  const [examResults, setExamResults] = useState([]); // 실제 ExamResult[] 타입
+  const [wrongNotes, setWrongNotes] = useState<unknown[]>([]); // 실제 WrongNote[] 타입
+  const [examResults, setExamResults] = useState<unknown[]>([]); // 실제 ExamResult[] 타입
+
+  // ExamResultView가 기대하는 타입에 맞춰 래퍼 함수 생성
+  const handleSetExamResults = (results: unknown) => {
+    if (Array.isArray(results)) {
+      setExamResults(results);
+    } else {
+      setExamResults([results]);
+    }
+  };
 
   return (
     <div
@@ -70,7 +78,7 @@ export default function MyPageClient() {
 
           <MyPageReports
             setWrongNotes={setWrongNotes}
-            setExamResults={setExamResults}
+            setExamResults={handleSetExamResults}
           />
         </div>
       </main>

@@ -21,7 +21,7 @@ export function ExamHeader({ subjectNames, onSubjectChange }: Props) {
   const selectedSubject = useAtomValue(selectedSubjectAtom);
   const timeLeft = useAtomValue(timeLeftAtom);
   const setIsOmrVisible = useSetAtom(isOmrVisibleAtom);
-  const selectedIndex = subjectNames.findIndex((s) => s === selectedSubject);
+
 
   if (!selectedSubject) return null;
 

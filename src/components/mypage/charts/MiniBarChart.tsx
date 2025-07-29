@@ -7,7 +7,6 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
-  Tooltip,
 } from "recharts";
 
 export default function MiniBarChart({

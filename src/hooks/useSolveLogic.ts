@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { useSetAtom } from "jotai";
 import { useSearchParams } from "next/navigation";
 import {
-  currentQuestionIndexAtom,
-  selectedSubjectAtom,
   showResultAtom,
 } from "@/atoms/examAtoms";
 import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
@@ -19,8 +17,6 @@ export function useSolveLogic() {
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
   const setShowResult = useSetAtom(showResultAtom);
-  const setCurrentIdx = useSetAtom(currentQuestionIndexAtom);
-  const setSelectedSubject = useSetAtom(selectedSubjectAtom);
 
   const searchParams = useSearchParams();
 

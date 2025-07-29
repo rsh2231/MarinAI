@@ -99,8 +99,8 @@ export function useExamData({
         setCurrentIdx(0);
         setSelectedSubject(filteredGroups[0].subjectName);
         setTimeLeft(totalDuration);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError((err as Error).message);
         setGroupedQuestions([]);
       } finally {
         setIsLoading(false);

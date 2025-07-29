@@ -71,8 +71,8 @@ export function usePracticeQuestions({
           setError("선택하신 조건에 해당하는 문제 데이터가 없습니다.");
         }
         setSubjectGroups(transformed);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError((err as Error).message);
         setSubjectGroups([]);
         setOdapsetId(null);
       } finally {

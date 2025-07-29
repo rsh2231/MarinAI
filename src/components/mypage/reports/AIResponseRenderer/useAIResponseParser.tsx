@@ -46,7 +46,7 @@ export const useAIResponseParser = ({ message, isStreaming }: UseAIResponseParse
   }, [message]);
 
   const parsedData = useMemo(() => {
-    let cleanMessage = processedMessage.replace(/^data:\s*/gm, "").trim();
+    const cleanMessage = processedMessage.replace(/^data:\s*/gm, "").trim();
     if (!cleanMessage) {
       return { introduction: "", sections: [], isProcessing: isStreaming || isTyping };
     }

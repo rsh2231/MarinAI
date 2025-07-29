@@ -7,8 +7,7 @@ import { Schedule } from "@/types/Schedule";
 import { ScheduleSection } from "./ScheduleSection";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
-import Lottie from "lottie-react";
-import calenderAnimation from "@/assets/animations/calender.json";
+
 
 interface ScheduleComponentProps {
   scrollableRef: RefObject<HTMLDivElement | null>;

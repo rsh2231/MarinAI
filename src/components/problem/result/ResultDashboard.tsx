@@ -12,12 +12,11 @@ interface ExamSummaryStats {
   weakestSubject: SubjectResult | null;
 }
 
-export default function ResultDashboard({ overallScore, isPass, summaryStats, subjectResults, isMobile }: {
+export default function ResultDashboard({ overallScore, isPass, summaryStats, subjectResults }: {
   overallScore: number;
   isPass: boolean;
   summaryStats: ExamSummaryStats;
   subjectResults: SubjectResult[];
-  isMobile: boolean;
 }) {
   return (
     <div className="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">

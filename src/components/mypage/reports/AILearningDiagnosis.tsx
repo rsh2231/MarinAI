@@ -15,8 +15,8 @@ export default function AILearningDiagnosis({
   wrongNotes,
   examResults,
 }: {
-  wrongNotes: any;
-  examResults: any;
+  wrongNotes: unknown[];
+  examResults: unknown[];
 }) {
   const auth = useAtomValue(authAtom);
   const [showResult, setShowResult] = useState(false);
@@ -49,7 +49,7 @@ export default function AILearningDiagnosis({
         try {
           const errorData = await res.json();
           throw new Error(errorData.message || "AI 진단에 실패했습니다.");
-        } catch (jsonError) {
+        } catch {
           // JSON 파싱 실패 시 텍스트로 에러 처리
           const errorText = await res.text();
           throw new Error(errorText || "알 수 없는 서버 오류가 발생했습니다.");
@@ -71,8 +71,8 @@ export default function AILearningDiagnosis({
         const chunk = decoder.decode(value);
         setAiMessage((prev) => (prev || "") + chunk);
       }
-    } catch (e: any) {
-      setError(e.message || "AI 진단 중 오류가 발생했습니다.");
+    } catch (e: unknown) {
+      setError((e as Error).message || "AI 진단 중 오류가 발생했습니다.");
       setLoading(false); // 에러 발생 시 로딩 상태 해제
     }
   };

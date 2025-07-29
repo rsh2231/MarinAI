@@ -3,7 +3,7 @@
 import React from "react";
 import { useState } from "react";
 import { Question, Choice } from "@/types/ProblemViewer";
-import { Check, X, ChevronsUpDown, HelpCircle } from "lucide-react";
+import { Check, X, HelpCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -12,23 +12,6 @@ interface QuestionResultCardProps {
   userAnswer?: string;
   index: number;
 }
-
-const getChoiceStyle = (
-  choiceLabel: string,
-  userAnswer: string | undefined,
-  correctAnswer: string
-) => {
-  const isCorrect = choiceLabel === correctAnswer;
-  const isSelected = choiceLabel === userAnswer;
-
-  if (isCorrect) {
-    return "bg-green-900/50 border-green-500 text-white";
-  }
-  if (isSelected) {
-    return "bg-red-900/50 border-red-500 text-white";
-  }
-  return "bg-neutral-700/50 border-neutral-600 text-neutral-300";
-};
 
 type StatusType = "correct" | "incorrect" | "unanswered";
 
@@ -50,7 +33,7 @@ const QuestionResultCardInner = ({
 }: QuestionResultCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const { status, isCorrect } = getStatus(userAnswer, question.answer);
+  const { status } = getStatus(userAnswer, question.answer);
 
   const badgeStyles: Record<StatusType, string> = {
     correct: "bg-green-500/20 text-green-300",
@@ -117,7 +100,7 @@ const QuestionResultCardInner = ({
           const base =
             "flex items-start gap-3 px-4 py-3 rounded-md border transition-all text-sm sm:text-base"; // 👈 items-center -> items-start 로 변경
           const selectedCls = isSelected
-            ? "border-blue-500 bg-blue-900/30"
+            ? "bg-blue-600/90"
             : "border-neutral-700 hover:bg-neutral-700/50";
           const correctCls = isActualAnswer
             ? "!border-green-500 !bg-green-900/30 !text-green-300"

@@ -40,8 +40,6 @@ export default function Sidebar({ filterState, className = "" }: SidebarProps) {
         className={`hidden md:block ${sidebarBaseStyles} p-15 h-auto ${className}`}>
         <FilterSidebar
           {...filterState}
-          sidebarOpen={false}
-          onClose={() => {}}
         />
       </aside>
 
@@ -72,8 +70,6 @@ export default function Sidebar({ filterState, className = "" }: SidebarProps) {
             >
               <FilterSidebar
                 {...filterState}
-                sidebarOpen={sidebarOpen}
-                onClose={handleClose}
               />
             </motion.aside>
           </>

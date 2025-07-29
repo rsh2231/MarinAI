@@ -6,8 +6,17 @@ import { fetchCurrentUser } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { Suspense } from "react";
 
-export default function GoogleAuthCallback() {
+export default function GoogleAuthCallbackPage() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <GoogleAuthCallback />
+    </Suspense>
+  );
+}
+
+function GoogleAuthCallback() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");

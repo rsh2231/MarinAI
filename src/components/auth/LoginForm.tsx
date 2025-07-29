@@ -41,7 +41,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
       });
 
       onLoginSuccess(); // 부모에게 성공을 알림 (모달 닫기)
-    } catch (err: any) {
+    } catch {
       setError("root", {
         type: "manual",
         message: "로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.",

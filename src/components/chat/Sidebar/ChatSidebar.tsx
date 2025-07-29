@@ -16,7 +16,7 @@ interface GroupedHistory {
 
 interface SidebarProps {
   isOpen: boolean;
-  onClose: () => void;
+  // onClose: () => void; // 제거
 }
 
 // 컴포넌트 바깥에 선언
@@ -27,7 +27,7 @@ const chatHistory = [
   { id: 4, title: "주간 보고서 초안", date: "2025-07-11" },
 ];
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+export default function Sidebar({ isOpen }: SidebarProps) {
   const [groupedHistory, setGroupedHistory] = useState<GroupedHistory>({});
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useState, useRef } from "react";
 import CbtViewer from "@/components/cbt/CbtViewer";
 import { OmrSheet } from "@/components/problem/UI/OmrSheet";
@@ -13,6 +14,14 @@ import { useEffect } from "react";
 type ExamStatus = "not-started" | "in-progress" | "finished";
 
 export default function CbtPage() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <CbtPageContent />
+    </Suspense>
+  );
+}
+
+function CbtPageContent() {
   const [status, setStatus] = useState<ExamStatus>("not-started");
   const mainScrollRef = useRef<HTMLDivElement>(null);
   const isOmrVisible = useAtomValue(isOmrVisibleAtom);

@@ -1,31 +1,15 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
 import TextareaAutosize from 'react-textarea-autosize';
-import { toast } from "react-toastify";
-import {
-  X,
-  Plus,
-  ArrowUp,
-  Paperclip,
-  Mic,
-  FileText,
-  Image as ImageIcon,
-  Square,
-} from "lucide-react";
+import { Plus, ArrowUp, Square } from "lucide-react";
 
 // 1. 새 훅/컴포넌트 import
 import useImageDropPaste from '../../../hooks/useImageDropPaste';
 import ChatImagePreview from "./ChatImagePreview";
 import ChatInputMenu from './ChatInputMenu';
 
-// 팝업 메뉴 아이콘 데이터
-const menuIcons = [
-  { icon: Paperclip, label: "파일", action: () => toast.info("파일 기능은 준비 중입니다.") },
-  { icon: Mic, label: "음성", action: () => toast.info("음성 기능은 준비 중입니다.") },
-  { icon: FileText, label: "템플릿", action: () => toast.info("템플릿 기능은 준비 중입니다.") },
-];
+
 
 // 컴포넌트 Props 타입 정의
 interface ChatInputProps {
@@ -39,7 +23,7 @@ interface ChatInputProps {
   onStop?: () => void;
 }
 
-export default function index({
+export default function ChatInput({
   value,
   onChange,
   onSubmit,
@@ -53,7 +37,6 @@ export default function index({
   const {
     previewUrl,
     isDragging,
-    setIsDragging,
     fileInputRef,
     handleImageChange,
     handleRemoveImage,
@@ -77,7 +60,7 @@ export default function index({
     if (e.key === "Enter" && !e.shiftKey && !disabled) {
       if (value.trim() || uploadedImage) {
         e.preventDefault();
-        onSubmit(e as any);
+        onSubmit(e as React.FormEvent);
       }
     }
   };

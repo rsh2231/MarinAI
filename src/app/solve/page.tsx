@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAtomValue } from "jotai";
@@ -16,6 +17,14 @@ import { OmrSheet } from "@/components/problem/UI/OmrSheet";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 
 export default function SolvePage() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <SolvePageContent />
+    </Suspense>
+  );
+}
+
+function SolvePageContent() {
   const mainContentRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile(768);
 

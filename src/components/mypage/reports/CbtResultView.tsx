@@ -110,7 +110,7 @@ export default function CbtResultView() {
           const data = await res.json();
           setResults(data);
         }
-      } catch (e) {
+      } catch {
         // ignore, fallback to dummyResults
       }
     };

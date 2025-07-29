@@ -25,7 +25,7 @@ export interface ManyResults {
 export async function saveWrongNoteToServer(
   wrongNoteData: UserSolvedQna,
   authToken: string
-): Promise<any> {
+): Promise<unknown> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
@@ -83,7 +83,7 @@ export async function saveUserAnswer(
 export async function saveManyWrongNotesToServer(
   manyResults: ManyResults,
   authToken: string
-): Promise<any> {
+): Promise<unknown> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);

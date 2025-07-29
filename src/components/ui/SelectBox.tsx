@@ -3,11 +3,17 @@ interface Props {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: string[];
+  label?: string;
 }
 
-export default function SelectBox({id, value, onChange, options }: Props) {
+export default function SelectBox({id, value, onChange, options, label }: Props) {
   return (
     <div>
+      {label && (
+        <label htmlFor={id} className="block text-sm font-medium text-gray-300 mb-2">
+          {label}
+        </label>
+      )}
       <select
         id={id}
         value={value}

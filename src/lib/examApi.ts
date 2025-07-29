@@ -62,7 +62,7 @@ export const saveWrongNotes = async (notes: OneResult[], odapsetId: number, toke
 
 
 // CBT 결과 서버 저장 유틸
-export const saveExamResultToServer = async (resultData: any, token: string) => {
+export const saveExamResultToServer = async (resultData: unknown, token: string) => {
   const response = await fetch("/api/exam/result", {
     method: "POST",
     headers: {
@@ -81,7 +81,7 @@ export const saveExamResultToServer = async (resultData: any, token: string) => 
 
 
 // CBT 결과 서버 저장 유틸
-export async function saveCbtResultToServer(resultData: any, token: string) {
+export async function saveCbtResultToServer(resultData: unknown, token: string) {
   const response = await fetch("/api/cbt/result", {
     method: "POST",
     headers: {
