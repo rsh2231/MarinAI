@@ -1,5 +1,5 @@
 import { QnaItem } from "@/types/ProblemViewer";
-import { OneOdap, saveManyUserAnswers as saveWrongNotesApi } from "@/lib/wrongNoteApi";
+import { OneResult, saveManyUserAnswers as saveWrongNotesApi } from "@/lib/wrongNoteApi";
 
 // --- 타입 정의 ---
 interface ExamParams {
@@ -51,7 +51,7 @@ export const fetchExamQuestions = async ({
 
 
 // 오답 노트 저장하기
-export const saveWrongNotes = async (notes: OneOdap[], odapsetId: number, token: string) => {
+export const saveWrongNotes = async (notes: OneResult[], odapsetId: number, token: string) => {
     try {
         await saveWrongNotesApi(notes, odapsetId, token);
         console.log("오답노트가 서버에 저장되었습니다.");

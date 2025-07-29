@@ -6,41 +6,41 @@ export async function GET(request: NextRequest) {
     const mockResults = [
       {
         id: 1,
-        title: "2023년 수능 모의고사",
-        date: "2023-11-15",
-        score: "85점",
+        title: "2024년 기관사 1급 2회 기출",
+        date: "2025-07-16",
+        score: "88점",
         subjectScores: [
-          { subject: "국어", score: 85 },
-          { subject: "수학", score: 90 },
-          { subject: "영어", score: 80 },
-          { subject: "과학", score: 88 },
-          { subject: "사회", score: 82 }
+          { subject: "기관1", score: 85 },
+          { subject: "기관2", score: 90 },
+          { subject: "기관3", score: 78 },
+          { subject: "직무일반", score: 70 },
+          { subject: "영어", score: 65 }
         ]
       },
       {
         id: 2,
-        title: "2022년 수능 기출문제",
-        date: "2023-10-20",
-        score: "78점",
+        title: "2024년 기관사 1급 1회 기출",
+        date: "2025-07-11",
+        score: "82점",
         subjectScores: [
-          { subject: "국어", score: 78 },
-          { subject: "수학", score: 75 },
-          { subject: "영어", score: 82 },
-          { subject: "과학", score: 76 },
-          { subject: "사회", score: 79 }
+          { subject: "기관1", score: 80 },
+          { subject: "기관2", score: 85 },
+          { subject: "기관3", score: 72 },
+          { subject: "직무일반", score: 68 },
+          { subject: "영어", score: 60 }
         ]
       },
       {
         id: 3,
-        title: "2021년 수능 모의고사",
-        date: "2023-09-10",
-        score: "92점",
+        title: "2023년 기관사 1급 2회 기출",
+        date: "2024-07-16",
+        score: "90점",
         subjectScores: [
-          { subject: "국어", score: 92 },
-          { subject: "수학", score: 88 },
-          { subject: "영어", score: 95 },
-          { subject: "과학", score: 90 },
-          { subject: "사회", score: 93 }
+          { subject: "기관1", score: 88 },
+          { subject: "기관2", score: 92 },
+          { subject: "기관3", score: 80 },
+          { subject: "직무일반", score: 75 },
+          { subject: "영어", score: 70 }
         ]
       }
     ];

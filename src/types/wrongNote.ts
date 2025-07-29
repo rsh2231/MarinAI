@@ -9,17 +9,22 @@ export type GichulQna = {
   ex4str: string;
   answer: string;
   explanation: string | null;
+  gichulset?: {
+    type: string;
+    grade: string;
+  };
 };
 
 export type WrongNote = {
   id: number;
   choice: string;
-  gichul_qna: GichulQna;
+  gichul_qna?: GichulQna;
+  hidden?: boolean;
 };
 
 export type WrongNoteSet = {
   id: number;
   examtype: string;
   created_date: string;
-  odaps: WrongNote[];
+  results: WrongNote[];
 };

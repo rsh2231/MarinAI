@@ -15,18 +15,20 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const encodedWrongNotes = encodeURIComponent(JSON.stringify(wrongNotes));
-    const encodedExamResults = encodeURIComponent(JSON.stringify(examResults));
-
-    const requestUrl = `${baseUrl}/modelcall/diag?wrong=${encodedWrongNotes}&examresults=${encodedExamResults}`;
+    const requestUrl = `${baseUrl}/modelcall/diag`;
     
     console.log("Requesting to FastAPI URL:", requestUrl);
 
     const res = await fetch(requestUrl, {
       method: "POST", 
       headers: {
+        "Content-Type": "application/json",
         Authorization: authToken,
       },
+      body: JSON.stringify({
+        wrong: JSON.stringify(wrongNotes),
+        examresults: JSON.stringify(examResults)
+      }),
     });
 
   

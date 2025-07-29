@@ -1,19 +1,22 @@
 import { WrongNoteSet } from "@/types/wrongNote";
 
-export interface OneOdap {
+export interface OneResult {
   choice: "가" | "나" | "사" | "아";
   gichulqna_id: number;
+  answer: string;
 }
 
 export interface UserSolvedQna {
   choice: "가" | "나" | "사" | "아";
   gichulqna_id: number;
   odapset_id: number;
+  answer: string;
 }
 
-export interface ManyOdaps {
+export interface ManyResults {
   odapset_id: number;
-  odaps: OneOdap[];
+  duration_sec: number;
+  results: OneResult[];
 }
 
 /**
@@ -27,7 +30,7 @@ export async function saveWrongNoteToServer(
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-    const response = await fetch("/api/odap/save", {
+    const response = await fetch("/api/results/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,12 +64,14 @@ export async function saveUserAnswer(
   questionId: number,
   selectedChoice: string,
   odapsetId: number,
-  authToken: string
+  authToken: string,
+  correctAnswer?: string
 ): Promise<void> {
   const wrongNoteData: UserSolvedQna = {
     choice: selectedChoice as "가" | "나" | "사" | "아",
     gichulqna_id: questionId,
     odapset_id: odapsetId,
+    answer: correctAnswer || selectedChoice, // 정답이 없으면 선택한 답을 정답으로 사용
   };
   await saveWrongNoteToServer(wrongNoteData, authToken);
 }
@@ -76,20 +81,20 @@ export async function saveUserAnswer(
  * 여러 오답노트를 서버에 한 번에 저장하는 함수 (Exam/CBT용)
  */
 export async function saveManyWrongNotesToServer(
-  manyOdaps: ManyOdaps,
+  manyResults: ManyResults,
   authToken: string
 ): Promise<any> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-    const response = await fetch("/api/odap/savemany", {
+    const response = await fetch("/api/results/savemany", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${authToken}`,
       },
-      body: JSON.stringify(manyOdaps),
+      body: JSON.stringify(manyResults),
       signal: controller.signal,
     });
 
@@ -113,16 +118,36 @@ export async function saveManyWrongNotesToServer(
  * 여러 오답을 한 번에 저장 (Exam/CBT용) - 호출용 헬퍼 함수
  */
 export async function saveManyUserAnswers(
-  wrongNotes: OneOdap[], 
+  wrongNotes: OneResult[], 
   odapsetId: number,
-  authToken: string
+  authToken: string,
+  durationSec: number = 0
 ): Promise<void> {
 
-  const manyOdaps: ManyOdaps = {
+  const manyResults: ManyResults = {
     odapset_id: odapsetId,
-    odaps: wrongNotes, 
+    duration_sec: durationSec,
+    results: wrongNotes, 
   };
-  await saveManyWrongNotesToServer(manyOdaps, authToken);
+  await saveManyWrongNotesToServer(manyResults, authToken);
+}
+
+/**
+ * 여러 오답을 한 번에 저장 (Exam/CBT용) - 간편 호출용 헬퍼 함수
+ */
+export async function saveManyUserAnswersSimple(
+  wrongNotes: Array<{choice: string, gichulqna_id: number, answer?: string}>, 
+  odapsetId: number,
+  authToken: string,
+  durationSec: number = 0
+): Promise<void> {
+  const processedWrongNotes: OneResult[] = wrongNotes.map(note => ({
+    choice: note.choice as "가" | "나" | "사" | "아",
+    gichulqna_id: note.gichulqna_id,
+    answer: note.answer || note.choice, // 정답이 없으면 선택한 답을 정답으로 사용
+  }));
+
+  await saveManyUserAnswers(processedWrongNotes, odapsetId, authToken, durationSec);
 }
 // =================================================================
 
@@ -136,7 +161,7 @@ export async function getWrongNotesFromServer(
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-    const response = await fetch("/api/odap/list", {
+    const response = await fetch("/api/mypage/odaps", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -165,10 +190,36 @@ export async function getWrongNotesFromServer(
 }
 
 export async function deleteWrongNoteFromServer(token: string, noteId: number) {
-  const res = await fetch(`/api/odap/delete/${noteId}`, {
+  const res = await fetch(`/api/results/delete/${noteId}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (!res.ok) throw new Error("오답노트 삭제 실패");
-  return await res.json();
+  
+  if (!res.ok) {
+    let errorMessage = "오답노트 삭제 실패";
+    try {
+      const errorData = await res.json();
+      errorMessage = errorData.message || errorMessage;
+    } catch {
+      // JSON 파싱 실패 시 상태 코드에 따른 기본 메시지
+      if (res.status === 404) {
+        errorMessage = "삭제할 오답노트를 찾을 수 없습니다.";
+      } else if (res.status === 422) {
+        errorMessage = "유효성 검사 오류가 발생했습니다.";
+      } else if (res.status === 401) {
+        errorMessage = "인증이 필요합니다.";
+      }
+    }
+    throw new Error(errorMessage);
+  }
+  
+  if (res.status === 204) {
+    return {};
+  }
+  
+  try {
+    return await res.json();
+  } catch {
+    return {};
+  }
 }

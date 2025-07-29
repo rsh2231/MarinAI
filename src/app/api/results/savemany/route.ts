@@ -21,9 +21,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!body.odapset_id || !body.odaps) {
+    if (!body.odapset_id || !body.results) {
       return NextResponse.json(
-        { message: "필수 필드(odapset_id, odaps)가 누락되었습니다." },
+        { message: "필수 필드(odapset_id, results)가 누락되었습니다." },
         { status: 400 }
       );
     }

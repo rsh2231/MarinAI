@@ -10,7 +10,7 @@ import {
   groupedQuestionsAtom,
 } from '@/atoms/examAtoms';
 import { authAtom } from '@/atoms/authAtom';
-import { OneOdap, saveManyUserAnswers } from "@/lib/wrongNoteApi";
+import { OneResult, saveManyUserAnswers } from "@/lib/wrongNoteApi";
 
 interface ExamInfo {
   year: string;
@@ -50,19 +50,20 @@ export function useExamActions(
     }
     
     // 서버에 저장할 오답 노트 목록을 생성
-    const wrongNotes: OneOdap[] = allQuestions
+    const wrongNotes: OneResult[] = allQuestions
       .map((q) => {
         const userChoice = answers[`${q.subjectName}-${q.num}`];
         // 사용자가 선택했고, 그 선택이 정답이 아닌 경우에만 오답으로 간주
         if (userChoice && userChoice !== q.answer) {
           return { 
             choice: userChoice as "가" | "나" | "사" | "아", 
-            gichulqna_id: q.id 
+            gichulqna_id: q.id,
+            answer: q.answer
           };
         }
         return null;
       })
-      .filter((note): note is OneOdap => note !== null); // null 값을 걸러냄
+              .filter((note): note is OneResult => note !== null); // null 값을 걸러냄
 
     // 로그인 상태이고, 유효한 토큰과 odapsetId가 있으며, 저장할 오답이 1개 이상일 경우에만 서버에 요청
     if (isLoggedIn && token && odapsetId && wrongNotes.length > 0) {

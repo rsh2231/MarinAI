@@ -10,7 +10,7 @@ import {
   timeLeftAtom,
 } from "@/atoms/examAtoms";
 import { Question, SubjectGroup } from "@/types/ProblemViewer";
-import { OneOdap, saveManyUserAnswers } from "@/lib/wrongNoteApi";
+import { OneResult, saveManyUserAnswers } from "@/lib/wrongNoteApi";
 import { saveCbtResultToServer } from "@/lib/examApi";
 
 export interface UseCbtInProgressReturn {
@@ -123,7 +123,7 @@ export function useCbtInProgress(
         subjects: subjectNames,
       },
     };
-    const wrongNotes: OneOdap[] = allQuestionsData
+    const wrongNotes: OneResult[] = allQuestionsData
       .map((q) => {
         const key = `${q.subjectName}-${q.num}`;
         const userChoice = answers[key];
@@ -131,11 +131,12 @@ export function useCbtInProgress(
           return {
             choice: userChoice as "가" | "나" | "사" | "아",
             gichulqna_id: q.id,
+            answer: q.answer,
           };
         }
         return null;
       })
-      .filter((note): note is OneOdap => note !== null);
+              .filter((note): note is OneResult => note !== null);
     if (auth.token && auth.isLoggedIn) {
       try {
         await saveCbtResultToServer(resultData, auth.token);

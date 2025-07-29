@@ -60,6 +60,48 @@ export default function RetryWrongNoteModal({
   // gichul_qna → Question 변환
   const note = wrongNotes[current];
   const q = note.gichul_qna;
+  
+  if (!q) {
+    return (
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key="overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center px-4 backdrop-blur-md"
+          >
+            <motion.div
+              key="modal"
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 30, scale: 0.95 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="relative bg-neutral-800/50 border border-neutral-700 rounded-xl shadow-lg p-5 w-full max-w-md max-h-[90vh] text-foreground-dark overflow-hidden flex flex-col"
+            >
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleClose();
+                }}
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-neutral-700/80 hover:bg-neutral-600/90 text-neutral-300 hover:text-white transition-all duration-200 flex items-center justify-center backdrop-blur-sm border border-neutral-600/50 hover:border-neutral-500/70 z-10 group"
+                aria-label="Close modal"
+              >
+                <CloseIcon />
+                <div className="absolute inset-0 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+              </button>
+              <div className="p-4 text-center text-neutral-400">
+                문제 정보를 불러올 수 없습니다.
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    );
+  }
+  
   const choices = [
     { label: "가", text: q.ex1str, isImage: false },
     { label: "나", text: q.ex2str, isImage: false },
@@ -148,6 +190,38 @@ export default function RetryWrongNoteModal({
               <div className="bg-neutral-700/50 border border-neutral-600 rounded-full px-4 py-2 text-sm font-medium text-neutral-300">
                 {current + 1} / {wrongNotes.length}
               </div>
+            </div>
+
+            {/* 자격증, 급수, 과목 정보 표시 */}
+            <div className="flex justify-center items-center gap-2 mb-4">
+              {q.gichulset?.type && (
+                <span className={`inline-block text-white px-2 py-1 rounded text-xs font-medium ${
+                  q.gichulset.type === "기관사" ? "bg-blue-600" :
+                  q.gichulset.type === "항해사" ? "bg-indigo-600" :
+                  q.gichulset.type === "소형선박조종사" ? "bg-purple-600" :
+                  "bg-gray-600"
+                }`}>
+                  {q.gichulset.type}
+                </span>
+              )}
+              {q.gichulset?.grade && q.gichulset.type !== "소형선박조종사" && (
+                <span className={`inline-block text-white px-2 py-1 rounded text-xs font-medium ${
+                  q.gichulset.grade === "1" ? "bg-green-600" :
+                  q.gichulset.grade === "2" ? "bg-blue-500" :
+                  q.gichulset.grade === "3" ? "bg-yellow-600" :
+                  q.gichulset.grade === "4" ? "bg-orange-600" :
+                  q.gichulset.grade === "5" ? "bg-red-500" :
+                  q.gichulset.grade === "6" ? "bg-purple-600" :
+                  "bg-gray-600"
+                }`}>
+                  {q.gichulset.grade}급
+                </span>
+              )}
+              {q.subject && (
+                <span className="inline-block bg-neutral-600 text-white px-2 py-1 rounded text-xs font-medium">
+                  {q.subject}
+                </span>
+              )}
             </div>
 
             <div

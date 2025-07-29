@@ -6,41 +6,41 @@ export async function GET(request: NextRequest) {
     const mockResults = [
       {
         id: 1,
-        title: "CBT 모의고사 1회차",
-        date: "2023-12-01",
-        score: "88점",
+        title: "기관사 1급 CBT 모의고사 1회차",
+        date: "2025-07-18",
+        score: "91점",
         subjectScores: [
-          { subject: "국어", score: 88 },
-          { subject: "수학", score: 85 },
-          { subject: "영어", score: 92 },
-          { subject: "과학", score: 87 },
-          { subject: "사회", score: 90 }
+          { subject: "기관1", score: 85 },
+          { subject: "기관2", score: 90 },
+          { subject: "기관3", score: 78 },
+          { subject: "직무일반", score: 70 },
+          { subject: "영어", score: 65 }
         ]
       },
       {
         id: 2,
-        title: "CBT 모의고사 2회차",
-        date: "2023-11-25",
-        score: "82점",
+        title: "기관사 1급 CBT 모의고사 2회차",
+        date: "2025-07-12",
+        score: "85점",
         subjectScores: [
-          { subject: "국어", score: 82 },
-          { subject: "수학", score: 78 },
-          { subject: "영어", score: 85 },
-          { subject: "과학", score: 80 },
-          { subject: "사회", score: 83 }
+          { subject: "기관1", score: 80 },
+          { subject: "기관2", score: 85 },
+          { subject: "기관3", score: 72 },
+          { subject: "직무일반", score: 68 },
+          { subject: "영어", score: 60 }
         ]
       },
       {
         id: 3,
-        title: "CBT 모의고사 3회차",
-        date: "2023-11-18",
-        score: "95점",
+        title: "기관사 1급 CBT 모의고사 3회차",
+        date: "2024-07-18",
+        score: "89점",
         subjectScores: [
-          { subject: "국어", score: 95 },
-          { subject: "수학", score: 92 },
-          { subject: "영어", score: 98 },
-          { subject: "과학", score: 94 },
-          { subject: "사회", score: 96 }
+          { subject: "기관1", score: 88 },
+          { subject: "기관2", score: 92 },
+          { subject: "기관3", score: 80 },
+          { subject: "직무일반", score: 75 },
+          { subject: "영어", score: 70 }
         ]
       }
     ];

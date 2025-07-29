@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest) {
   const baseUrl = process.env.EXTERNAL_API_BASE_URL;
 
   if (!baseUrl) {
@@ -11,23 +11,24 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     );
   }
 
-  const { id } = params;
-
-  // Authorization 헤더 가져오기
-  const authHeader = request.headers.get("authorization");
-  if (!authHeader) {
-    return NextResponse.json(
-      { message: "인증 토큰이 필요합니다." },
-      { status: 401 }
-    );
-  }
-
-  const targetUrl = `${baseUrl}/odap/delete/${id}`;
-
   try {
+    // Authorization 헤더 가져오기
+    const authHeader = request.headers.get("authorization");
+    if (!authHeader) {
+      return NextResponse.json(
+        { message: "인증 토큰이 필요합니다." },
+        { status: 401 }
+      );
+    }
+
+    const targetUrl = `${baseUrl}/mypage/odaps`;
+
+    console.log("Fetching wrong notes from:", targetUrl);
+
     const apiResponse = await fetch(targetUrl, {
-      method: "DELETE",
+      method: "GET",
       headers: {
+        "Content-Type": "application/json",
         "Authorization": authHeader,
       },
     });
@@ -39,7 +40,10 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return NextResponse.json(data, { status: apiResponse.status });
     }
 
+
+
     return NextResponse.json(data);
+
   } catch (error) {
     console.error("Proxy API Error:", error);
     return NextResponse.json(

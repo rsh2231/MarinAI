@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const baseUrl = process.env.EXTERNAL_API_BASE_URL;
 
   if (!baseUrl) {
@@ -12,6 +12,25 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    const body = await request.json();
+    const { choice, gichulqna_id, odapset_id, answer } = body;
+
+    // 필수 필드 검증
+    if (!choice || !gichulqna_id || !odapset_id || !answer) {
+      return NextResponse.json(
+        { message: "필수 필드가 누락되었습니다." },
+        { status: 400 }
+      );
+    }
+
+    // choice 값 검증 (가, 나, 사, 아 중 하나)
+    if (!["가", "나", "사", "아"].includes(choice)) {
+      return NextResponse.json(
+        { message: "유효하지 않은 선택지입니다." },
+        { status: 400 }
+      );
+    }
+
     // Authorization 헤더 가져오기
     const authHeader = request.headers.get("authorization");
     if (!authHeader) {
@@ -21,16 +40,22 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const targetUrl = `${baseUrl}/mypage/odaps`;
+    const targetUrl = `${baseUrl}/results/save`;
 
-    console.log("Fetching wrong notes from:", targetUrl);
+    console.log("Saving wrong note to:", targetUrl);
 
     const apiResponse = await fetch(targetUrl, {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": authHeader,
       },
+      body: JSON.stringify({
+        choice,
+        gichulqna_id,
+        odapset_id,
+        answer,
+      }),
     });
 
     const data = await apiResponse.json();

@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 const dummyResults = [
-  { id: 1, title: '2024년 2회차 5급 해기사 CBT', score: '88점', date: '2025-07-16' },
-  { id: 2, title: '2024년 1회차 5급 해기사 CBT', score: '82점', date: '2025-07-11' },
+  { id: 1, title: '2024년 2회차 1급 항해사 CBT', score: '88점', date: '2025-07-16' },
+  { id: 2, title: '2024년 1회차 1급 항해사 CBT', score: '82점', date: '2025-07-11' },
 ];
 
 export default function CbtResultsPage() {
