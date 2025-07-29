@@ -7,7 +7,7 @@ import MyPageCharts from "./MyPageCharts";
 import MyPageReports from "./MyPageReports";
 import AILearningDiagnosis from "@/components/mypage/reports/AILearningDiagnosis";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
-import WrongNoteView from "@/components/mypage/reports/WrongNoteView";
+import WrongNoteView from "@/components/mypage/reports/WrongNote/WrongNoteView";
 import ExamResultView from "@/components/mypage/reports/ExamResultView";
 
 import { useState } from "react";

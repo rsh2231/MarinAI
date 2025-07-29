@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "src/components/mypage/reports/AIResponseRenderer/constant.tss", "src/components/mypage/reports/AIResponseRenderer/useAIResponseParser.tss"  ],
   "exclude": [
     "node_modules"
   ]

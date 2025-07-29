@@ -1,6 +1,6 @@
 "use client";
 
-import WrongNoteView from "@/components/mypage/reports/WrongNoteView";
+import WrongNoteView from "@/components/mypage/reports/WrongNote/WrongNoteView";
 import ExamResultView from "@/components/mypage/reports/ExamResultView";
 import CbtResultView from "@/components/mypage/reports/CbtResultView";
 import { motion } from "framer-motion";

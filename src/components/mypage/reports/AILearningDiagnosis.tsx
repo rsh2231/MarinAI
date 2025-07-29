@@ -11,7 +11,13 @@ import AIResponseRenderer from "./AIResponseRenderer";
 import { useAtomValue } from "jotai";
 import { authAtom } from "@/atoms/authAtom";
 
-export default function AILearningDiagnosis({ wrongNotes, examResults }: { wrongNotes: any; examResults: any }) {
+export default function AILearningDiagnosis({
+  wrongNotes,
+  examResults,
+}: {
+  wrongNotes: any;
+  examResults: any;
+}) {
   const auth = useAtomValue(authAtom);
   const [showResult, setShowResult] = useState(false);
   const [aiMessage, setAiMessage] = useState<string | null>(null);
@@ -34,19 +40,19 @@ export default function AILearningDiagnosis({ wrongNotes, examResults }: { wrong
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${auth.token}`,
+          Authorization: `Bearer ${auth.token}`,
         },
-        body: JSON.stringify({ wrongNotes, examResults }), 
+        body: JSON.stringify({ wrongNotes, examResults }),
       });
 
       if (!res.ok) {
         try {
-            const errorData = await res.json();
-            throw new Error(errorData.message || "AI 진단에 실패했습니다.");
+          const errorData = await res.json();
+          throw new Error(errorData.message || "AI 진단에 실패했습니다.");
         } catch (jsonError) {
-            // JSON 파싱 실패 시 텍스트로 에러 처리
-            const errorText = await res.text();
-            throw new Error(errorText || "알 수 없는 서버 오류가 발생했습니다.");
+          // JSON 파싱 실패 시 텍스트로 에러 처리
+          const errorText = await res.text();
+          throw new Error(errorText || "알 수 없는 서버 오류가 발생했습니다.");
         }
       }
 
@@ -55,7 +61,7 @@ export default function AILearningDiagnosis({ wrongNotes, examResults }: { wrong
       }
 
       // 스트림 읽기 시작
-      setLoading(false); 
+      setLoading(false);
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
 
