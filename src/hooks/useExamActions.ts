@@ -49,6 +49,9 @@ export function useExamActions(
       }
     }
     
+    // 실제 시험 시간 계산 (총 시간 - 남은 시간)
+    const actualTimeTaken = totalDuration - timeLeft;
+    
     // 서버에 저장할 오답 노트 목록을 생성
     const wrongNotes: OneResult[] = allQuestions
       .map((q) => {
@@ -63,13 +66,13 @@ export function useExamActions(
         }
         return null;
       })
-              .filter((note): note is OneResult => note !== null); // null 값을 걸러냄
+              .filter((note): note is OneResult => note !== null);
 
     // 로그인 상태이고, 유효한 토큰과 odapsetId가 있으며, 저장할 오답이 1개 이상일 경우에만 서버에 요청
     if (isLoggedIn && token && odapsetId && wrongNotes.length > 0) {
       try {
-        console.log(`[Exam Action] 오답노트 ${wrongNotes.length}개를 서버에 저장합니다... (odapsetId: ${odapsetId})`);
-        await saveManyUserAnswers(wrongNotes, odapsetId, token);
+        console.log(`[Exam Action] 오답노트 ${wrongNotes.length}개를 서버에 저장합니다... (odapsetId: ${odapsetId}, 소요시간: ${actualTimeTaken}초)`);
+        await saveManyUserAnswers(wrongNotes, odapsetId, token, actualTimeTaken);
         console.log("[Exam Action] 오답노트 저장 성공!");
       } catch (e) {
         console.error("[Exam Action] 오답노트 저장 중 서버 에러 발생:", e);

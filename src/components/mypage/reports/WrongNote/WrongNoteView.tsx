@@ -65,7 +65,7 @@ interface WrongNoteViewProps {
 }
 
 export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
-  const { allNotes, loading, error, deletingNoteIds, fetchWrongNotes, deleteNote } = useWrongNotes();
+  const { allNotes, loading, error, deletingNoteIds, deleteFeedback, fetchWrongNotes, deleteNote, clearDeleteFeedback } = useWrongNotes();
 
   const [filters, setFilters] = useState({ subject: "all", license: "all", grade: "all" });
   const [openNoteIds, setOpenNoteIds] = useState<number[]>([]);
@@ -138,6 +138,30 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
         onClose={() => setRetryModalOpen(false)}
         wrongNotes={filteredNotes}
       />
+      
+      {/* 삭제 피드백 메시지 */}
+      {deleteFeedback && (
+        <div className={`mb-4 p-3 rounded-md flex items-center justify-between ${
+          deleteFeedback.type === 'success' 
+            ? 'bg-green-600/20 border border-green-500/50 text-green-300' 
+            : 'bg-red-600/20 border border-red-500/50 text-red-300'
+        }`}>
+          <span className="flex items-center gap-2">
+            {deleteFeedback.type === 'success' ? (
+              <span className="text-green-400">✓</span>
+            ) : (
+              <span className="text-red-400">✗</span>
+            )}
+            {deleteFeedback.message}
+          </span>
+          <button
+            onClick={clearDeleteFeedback}
+            className="text-neutral-400 hover:text-white transition-colors"
+          >
+            ×
+          </button>
+        </div>
+      )}
       
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 w-full">
         <h3 className="text-xl font-bold flex items-center gap-2">

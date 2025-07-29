@@ -32,6 +32,7 @@ export interface UseCbtInProgressReturn {
   currentQuestions: Question[];
   selectedIndex: number;
   handleConfirmSubmit: () => Promise<void>;
+  totalDuration: number;
 }
 
 export function useCbtInProgress(
@@ -50,6 +51,12 @@ export function useCbtInProgress(
   const currentIdx = useAtomValue(currentQuestionIndexAtom);
   const auth = useAtomValue(authAtom);
   const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // 총 시험 시간 계산 (과목당 25분)
+  const totalDuration = useMemo(() => {
+    const DURATION_PER_SUBJECT_SECONDS = 25 * 60;
+    return groupedData.length * DURATION_PER_SUBJECT_SECONDS;
+  }, [groupedData.length]);
 
   useEffect(() => {
     if (timeLeft <= 0) return;
@@ -111,10 +118,14 @@ export function useCbtInProgress(
 
   const handleConfirmSubmit = useCallback(async () => {
     setIsModalOpen(false);
+    
+    // 실제 시험 시간 계산 (총 시간 - 남은 시간)
+    const actualTimeTaken = timeLeft > 0 ? (totalDuration - timeLeft) : totalDuration;
+    
     const resultData = {
       answers,
       totalQuestions: allQuestionsData.length,
-      timeTaken: 0,
+      timeTaken: actualTimeTaken,
       submittedAt: new Date().toISOString(),
       isAutoSubmitted: false,
       cbtInfo: {
@@ -145,7 +156,8 @@ export function useCbtInProgress(
       }
       if (odapsetId && wrongNotes.length > 0) {
         try {
-          await saveManyUserAnswers(wrongNotes, odapsetId, auth.token);
+          console.log(`[CBT] 오답노트 ${wrongNotes.length}개를 서버에 저장합니다... (odapsetId: ${odapsetId}, 소요시간: ${actualTimeTaken}초)`);
+          await saveManyUserAnswers(wrongNotes, odapsetId, auth.token, actualTimeTaken);
         } catch (e) {
           console.error("[오답노트 저장][cbt][실패]", e);
         }
@@ -172,6 +184,8 @@ export function useCbtInProgress(
     odapsetId,
     saveCbtResultToServer,
     onSubmit,
+    timeLeft,
+    totalDuration,
   ]);
 
   return {
@@ -193,5 +207,6 @@ export function useCbtInProgress(
     currentQuestions,
     selectedIndex,
     handleConfirmSubmit,
+    totalDuration,
   };
 } 

@@ -40,6 +40,7 @@ export function CbtInProgress({
     currentQuestions,
     selectedIndex,
     handleConfirmSubmit,
+    totalDuration,
   } = useCbtInProgress(license, level, odapsetId, onSubmit);
 
   const HEADER_HEIGHT_PX = 120;
