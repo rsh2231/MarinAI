@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, ChangeEvent, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
+import { SUBJECTS_BY_LICENSE_AND_LEVEL } from "@/types/Subjects";
 import SelectBox from "@/components/ui/SelectBox";
 
 import { CbtSettingsHeader } from "./CbtSettingsHeader";
@@ -41,12 +41,37 @@ export function CbtSettings({
   const subjectStepRef = useRef<HTMLDivElement>(null);
 
   const isSmallShip = license === "소형선박조종사";
-  const availableSubjects = license ? SUBJECTS_BY_LICENSE[license] ?? [] : [];
+  
+  // 급수에 따라 과목을 다르게 설정
+  const getAvailableSubjects = useCallback(() => {
+    if (!license) return [];
+    
+    if (isSmallShip) {
+      return SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.["0"] ?? [];
+    }
+    
+    if (level) {
+      return SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.[level] ?? [];
+    }
+    
+    // 급수가 선택되지 않은 경우 기본 과목 반환 (1급으로 설정)
+    return SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.["1급"] ?? [];
+  }, [license, level, isSmallShip]);
+  
+  const availableSubjects = getAvailableSubjects();
 
   useEffect(() => {
     setLevel("");
-    setSelectedSubjects(SUBJECTS_BY_LICENSE[license] ?? []);
+    setSelectedSubjects([]);
   }, [license]);
+
+  // 급수가 변경될 때마다 과목 재설정
+  useEffect(() => {
+    if (license && (level || isSmallShip)) {
+      const subjects = getAvailableSubjects();
+      setSelectedSubjects(subjects);
+    }
+  }, [license, level, isSmallShip, getAvailableSubjects]);
 
   const isLicenseStepComplete = license !== "";
   const isLevelStepRequired = isLicenseStepComplete && !isSmallShip;

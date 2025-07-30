@@ -66,8 +66,6 @@ export function useCbtExam(status: ExamStatus, setStatus: (status: ExamStatus) =
       });
       settings.subjects.forEach((subject) => params.append("subjects", subject));
       const headers: HeadersInit = { "Content-Type": "application/json" };
-      const userType = auth.token && auth.isLoggedIn ? "로그인" : "비로그인";
-      console.log(`[문제 fetch][cbt][${userType}]`, params.toString());
       if (auth.token && auth.isLoggedIn) {
         headers.Authorization = `Bearer ${auth.token}`;
       }
@@ -77,7 +75,6 @@ export function useCbtExam(status: ExamStatus, setStatus: (status: ExamStatus) =
         throw new Error(errorData.message || "데이터를 불러오는데 실패했습니다.");
       }
       const responseData = (await res.json()) as CbtData;
-      console.log(`[문제 fetch][cbt][응답]`, responseData);
       setCurrentOdapsetId(responseData.odapset_id ?? null);
       const allQnas: QnaItem[] = responseData.subjects ? Object.values(responseData.subjects).flat() : [];
       const transformed = transformData(allQnas);

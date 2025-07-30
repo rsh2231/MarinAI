@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import {
   showResultAtom,
 } from "@/atoms/examAtoms";
-import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
+import { SUBJECTS_BY_LICENSE_AND_LEVEL } from "@/types/Subjects";
 
 export type LicenseType = "항해사" | "기관사" | "소형선박조종사" | null;
 
@@ -43,15 +43,25 @@ export function useSolveLogic() {
     setShowResult(false);
   }, [year, license, level, round, setShowResult]);
   
-  // 자격증 변경 시 기본 과목 설정
+  // 자격증과 급수 변경 시 기본 과목 설정
   useEffect(() => {
     if (license) {
-      const defaultSubjects = SUBJECTS_BY_LICENSE[license] || [];
+      let defaultSubjects: string[] = [];
+      
+      if (license === "소형선박조종사") {
+        defaultSubjects = SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.["0"] || [];
+      } else if (level) {
+        defaultSubjects = SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.[level] || [];
+      } else {
+        // 급수가 선택되지 않은 경우 기본 과목 반환 (1급으로 설정)
+        defaultSubjects = SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.["1급"] || [];
+      }
+      
       setSelectedSubjects(defaultSubjects);
     } else {
       setSelectedSubjects([]);
     }
-  }, [license]);
+  }, [license, level]);
 
   const handleModeSelect = (selectedMode: "practice" | "exam") => {
     setMode(selectedMode);

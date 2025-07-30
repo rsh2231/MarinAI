@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import SelectBox from "../ui/SelectBox";
 import { FilterState } from "@/types/FilterState";
-import { SUBJECTS_BY_LICENSE } from "@/types/Subjects";
+import { SUBJECTS_BY_LICENSE_AND_LEVEL } from "@/types/Subjects";
 
 const YEARS = ["2023", "2022", "2021"];
 const LICENSES = ["항해사", "기관사", "소형선박조종사"];
@@ -90,7 +90,21 @@ export default function FilterSidebar({
     [setSelectedSubjects]
   );
 
-  const subjects = license ? SUBJECTS_BY_LICENSE[license] || [] : [];
+  // 급수에 따라 과목을 다르게 설정
+  const subjects = useMemo(() => {
+    if (!license) return [];
+    
+    if (license === "소형선박조종사") {
+      return SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.["0"] || [];
+    }
+    
+    if (level) {
+      return SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.[level] || [];
+    }
+    
+    // 급수가 선택되지 않은 경우 기본 과목 반환 (1급으로 설정)
+    return SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.["1급"] || [];
+  }, [license, level]);
 
   return (
     <div

@@ -67,13 +67,6 @@ export function useExamData({
       setShowResult(false);
 
       try {
-        const params = new URLSearchParams({
-          year,
-          license,
-          level,
-          round,
-        });
-        const userType = isLoggedIn && token ? "로그인" : "비로그인";
         const responseData = await fetchExamQuestions({
           year,
           license,
