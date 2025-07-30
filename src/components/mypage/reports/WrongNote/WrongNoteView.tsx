@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookX, ChevronUp, ChevronDown } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -29,7 +29,7 @@ const WrongNoteFilters = ({ filters, selectedValues, onFilterChange }: WrongNote
     <select
       value={selectedValues.subject}
       onChange={(e) => onFilterChange('subject', e.target.value)}
-      className="text-xs bg-neutral-700 border border-neutral-600 rounded px-2 py-1 text-neutral-300 focus:outline-none focus:border-blue-500"
+      className="h-9 px-3 py-1.5 text-xs bg-neutral-700 border border-neutral-600 rounded text-neutral-300 focus:outline-none focus:border-blue-500 min-w-[80px]"
     >
       <option value="">전체 과목</option>
       {filters.subjects.map((subject) => (
@@ -41,7 +41,7 @@ const WrongNoteFilters = ({ filters, selectedValues, onFilterChange }: WrongNote
     <select
       value={selectedValues.license}
       onChange={(e) => onFilterChange('license', e.target.value)}
-      className="text-xs bg-neutral-700 border border-neutral-600 rounded px-2 py-1 text-neutral-300 focus:outline-none focus:border-blue-500"
+      className="h-9 px-3 py-1.5 text-xs bg-neutral-700 border border-neutral-600 rounded text-neutral-300 focus:outline-none focus:border-blue-500 min-w-[80px]"
     >
       <option value="">전체 자격증</option>
       {filters.licenses.map((license) => (
@@ -53,7 +53,7 @@ const WrongNoteFilters = ({ filters, selectedValues, onFilterChange }: WrongNote
     <select
       value={selectedValues.grade}
       onChange={(e) => onFilterChange('grade', e.target.value)}
-      className="text-xs bg-neutral-700 border border-neutral-600 rounded px-2 py-1 text-neutral-300 focus:outline-none focus:border-blue-500"
+      className="h-9 px-3 py-1.5 text-xs bg-neutral-700 border border-neutral-600 rounded text-neutral-300 focus:outline-none focus:border-blue-500 min-w-[80px]"
     >
       <option value="">전체 급수</option>
       {filters.grades.map((grade) => (
@@ -79,6 +79,18 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
     license: "",
     grade: "",
   });
+
+  // 컴포넌트 마운트 시 오답노트 데이터 가져오기
+  useEffect(() => {
+    fetchWrongNotes();
+  }, [fetchWrongNotes]);
+
+  // 부모 컴포넌트에 오답노트 데이터 전달
+  useEffect(() => {
+    if (setWrongNotes) {
+      setWrongNotes(allNotes);
+    }
+  }, [allNotes, setWrongNotes]);
 
   // 필터링된 노트들
   const filteredNotes = useMemo(() => {
@@ -142,6 +154,36 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
     );
   };
 
+  // 로딩 상태 처리
+  if (loading) {
+    return (
+      <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
+        <h3 className="text-xl font-bold flex items-center gap-2 mb-4">
+          <BookX size={22} />
+          최근 오답노트
+        </h3>
+        <div className="flex items-center justify-center py-8">
+          <div className="text-neutral-400">오답노트를 불러오는 중...</div>
+        </div>
+      </div>
+    );
+  }
+
+  // 에러 상태 처리
+  if (error) {
+    return (
+      <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
+        <h3 className="text-xl font-bold flex items-center gap-2 mb-4">
+          <BookX size={22} />
+          최근 오답노트
+        </h3>
+        <div className="flex items-center justify-center py-8">
+          <div className="text-red-400">{error}</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
       <RetryWrongNoteModal
@@ -166,15 +208,15 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
         </div>
       )}
       
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 w-full">
-        <h3 className="text-xl font-bold flex items-center gap-2">
-          <BookX size={22} />
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 w-full">
+        <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2">
+          <BookX size={20} className="sm:w-6 sm:h-6" />
           최근 오답노트
         </h3>
-        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto sm:justify-end">
           <Button
             variant="primary"
-            className="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold whitespace-nowrap flex-shrink-0"
+            className="h-9 px-3 py-1.5 text-xs font-semibold whitespace-nowrap flex-shrink-0"
             onClick={() => setRetryModalOpen(true)}
           >
             오답 다시 풀기
@@ -209,7 +251,7 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
               
               {/* 해당 시도 회수의 노트들 */}
               <AnimatePresence mode="popLayout">
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-start">
                   {group.notes.map((note, index) => (
                     <WrongNoteItem
                       key={note.id}
@@ -231,11 +273,11 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
       {groupedAndSortedNotes.length > 2 && (
         <div className="flex justify-end mt-4">
           <button
-            className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 px-3 py-2 rounded transition-all"
+            className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 px-2 sm:px-3 py-2 rounded transition-all"
             onClick={() => setShowAll((v) => !v)}
           >
             {showAll ? "닫기" : "전체 오답노트 보기"}
-            {showAll ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+            {showAll ? <ChevronUp size={14} className="sm:w-4 sm:h-4" /> : <ChevronDown size={14} className="sm:w-4 sm:h-4" />}
           </button>
         </div>
       )}
