@@ -3,6 +3,21 @@ import { motion } from "framer-motion";
 import { itemVariants } from "./constants";
 import type { ParsedSection } from "./useAIResponseParser";
 
+// 에러 fallback 컴포넌트
+export const ErrorFallback = ({ error }: { error: string }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 8 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg"
+  >
+    <div className="flex items-center gap-2 text-red-400 mb-2">
+      <div className="w-4 h-4 bg-red-400 rounded-full" />
+      <span className="text-sm font-medium">오류 발생</span>
+    </div>
+    <p className="text-sm text-red-300">{error}</p>
+  </motion.div>
+);
+
 // 타이핑 인디케이터
 export const TypingIndicator = () => (
   <motion.div
@@ -14,7 +29,11 @@ export const TypingIndicator = () => (
   >
     <div className="flex gap-1">
       {[0, 200, 400].map(delay => (
-        <div key={delay} className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: `${delay}ms` }} />
+        <div 
+          key={delay} 
+          className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" 
+          style={{ animationDelay: `${delay}ms` }} 
+        />
       ))}
     </div>
     <span className="text-sm">타이핑 중...</span>
@@ -33,8 +52,8 @@ export const Introduction = ({ text }: { text: string }) => (
   </motion.div>
 );
 
-// 개별 리스트 아이템
-const ResponseItem = ({ item, index }: { item: string; index: number }) => {
+// 개별 리스트 아이템 - 메모이제이션으로 성능 최적화
+const ResponseItem = React.memo(({ item, index }: { item: string; index: number }) => {
   const cleanItem = item.startsWith('- ') ? item.substring(2) : item;
   const isSubtitle = /^\*\*.*\*\*:$/.test(cleanItem);
 
@@ -53,12 +72,22 @@ const ResponseItem = ({ item, index }: { item: string; index: number }) => {
       </p>
     </motion.div>
   );
-};
+});
 
+ResponseItem.displayName = 'ResponseItem';
 
-// 하나의 섹션 전체
-export const ResponseSection = ({ section }: { section: ParsedSection }) => (
-  <motion.div variants={itemVariants} className="space-y-2">
+// 하나의 섹션 전체 - 메모이제이션으로 성능 최적화
+export const ResponseSection = React.memo(({ 
+  section, 
+  sectionIndex 
+}: { 
+  section: ParsedSection; 
+  sectionIndex: number;
+}) => (
+  <motion.div 
+    variants={itemVariants} 
+    className="space-y-2"
+  >
     <h3 className="text-lg sm:text-xl font-bold flex items-center gap-3 text-neutral-100 mb-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
@@ -72,7 +101,11 @@ export const ResponseSection = ({ section }: { section: ParsedSection }) => (
     
     <div className="space-y-3">
       {section.items.map((item, index) => (
-        <ResponseItem key={`${index}-${item.substring(0, 10)}`} item={item} index={index} />
+        <ResponseItem 
+          key={`item-${sectionIndex}-${index}-${item.substring(0, 20).replace(/\s+/g, '-')}`} 
+          item={item} 
+          index={index} 
+        />
       ))}
     </div>
 
@@ -89,4 +122,6 @@ export const ResponseSection = ({ section }: { section: ParsedSection }) => (
       </motion.div>
     )}
   </motion.div>
-);
+));
+
+ResponseSection.displayName = 'ResponseSection';

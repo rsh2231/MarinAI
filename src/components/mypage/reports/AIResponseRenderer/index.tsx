@@ -8,6 +8,7 @@ import {
   TypingIndicator,
   Introduction,
   ResponseSection,
+  ErrorFallback,
 } from "./subcomponents";
 
 interface AIResponseRendererProps {
@@ -19,12 +20,17 @@ export default function AIResponseRenderer({
   message,
   isStreaming = false,
 }: AIResponseRendererProps) {
-  const { introduction, sections, isProcessing } = useAIResponseParser({
+  const { introduction, sections, isProcessing, error } = useAIResponseParser({
     message,
     isStreaming,
   });
 
   const hasContent = introduction || sections.length > 0;
+
+  // 에러가 있거나 컨텐츠가 없고 스트리밍도 아닌 경우
+  if (error) {
+    return <ErrorFallback error={error} />;
+  }
 
   if (!hasContent && !isStreaming) {
     return null;
@@ -37,21 +43,26 @@ export default function AIResponseRenderer({
       initial="hidden"
       animate="visible"
     >
-      <AnimatePresence>{isStreaming}</AnimatePresence>
+      <AnimatePresence mode="wait">
+        {isStreaming && <TypingIndicator key="typing" />}
+      </AnimatePresence>
 
       {introduction && <Introduction text={introduction} />}
 
       <div className="space-y-8">
         {sections.map((section, index) => (
           <ResponseSection
-            key={`${index}-${section.title}`}
+            key={`section-${index}-${section.title.replace(/\s+/g, '-')}`}
             section={section}
+            sectionIndex={index}
           />
         ))}
       </div>
 
-      <AnimatePresence>
-        {isProcessing && !isStreaming && <TypingIndicator />}
+      <AnimatePresence mode="wait">
+        {isProcessing && !isStreaming && (
+          <TypingIndicator key="processing" />
+        )}
       </AnimatePresence>
     </motion.div>
   );
