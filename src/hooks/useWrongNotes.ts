@@ -25,15 +25,16 @@ export function useWrongNotes() {
       setLoading(true);
       setError(null);
       const serverNoteSets: WrongNoteSet[] = await getWrongNotesFromServer(auth.token);
+
+      console.log("[오답노트] 서버에서 받은 데이터:", serverNoteSets);
       
-      // hidden = False인 항목들만 필터링 (백엔드에서 hidden 필드 제공)
+      // 유효한 데이터만 필터링
       const validatedNoteSets = Array.isArray(serverNoteSets)
         ? serverNoteSets
             .filter(set => set && typeof set === 'object' && Array.isArray(set.results))
             .map(set => {
               const filteredResults = set.results.filter(note => 
-                note && 
-                (note.hidden === false || note.hidden === undefined) // hidden이 false이거나 undefined인 경우 표시
+                note && note.gichul_qna // gichul_qna가 있는 항목만 유지
               );
               return {
                 ...set,

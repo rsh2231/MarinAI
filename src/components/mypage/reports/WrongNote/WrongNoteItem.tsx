@@ -14,8 +14,8 @@ interface WrongNoteItemProps {
 }
 
 export function WrongNoteItem({ note, isOpen, isDeleting, onToggle, onDelete, index }: WrongNoteItemProps) {
-  // hidden = true인 경우만 렌더링하지 않음 (백엔드에서 hidden 필드 제공)
-  if (!note.gichul_qna || note.hidden === true) return null;
+  // gichul_qna가 없는 경우만 렌더링하지 않음
+  if (!note.gichul_qna) return null;
 
   const q = note.gichul_qna;
 
@@ -36,18 +36,32 @@ export function WrongNoteItem({ note, isOpen, isDeleting, onToggle, onDelete, in
       >
         <div>
           <p className="font-semibold">{q.subject} - {q.qnum}번 문제</p>
-          <p className="text-xs text-neutral-400 mt-1">
+          <div className="text-xs text-neutral-400 mt-1 flex flex-wrap gap-1">
+            {/* 연도 */}
+            {q.gichulset?.year && (
+              <span className={`inline-block text-white px-2 py-1 rounded bg-purple-600`}>
+                {q.gichulset.year}년
+              </span>
+            )}
+            {/* 자격증 */}
             {q.gichulset?.type && (
-              <span className={`inline-block text-white px-2 py-1 rounded mr-2 bg-blue-600`}>
+              <span className={`inline-block text-white px-2 py-1 rounded bg-blue-600`}>
                 {q.gichulset.type}
               </span>
             )}
+            {/* 급수 */}
             {q.gichulset?.grade && q.gichulset.type !== "소형선박조종사" && (
               <span className={`inline-block text-white px-2 py-1 rounded bg-green-600`}>
                 {q.gichulset.grade}급
               </span>
             )}
-          </p>
+            {/* 회차 */}
+            {note.attempt_count && note.attempt_count > 1 && (
+              <span className={`inline-block text-white px-2 py-1 rounded bg-red-600`}>
+                {note.attempt_count}회 시도
+              </span>
+            )}
+          </div>
         </div>
         
         <div className="flex items-center gap-2">

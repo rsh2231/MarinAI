@@ -10,8 +10,10 @@ export type GichulQna = {
   answer: string;
   explanation: string | null;
   gichulset?: {
+    year?: number;
     type: string;
     grade: string;
+    inning?: string;
   };
 };
 
@@ -19,7 +21,7 @@ export type WrongNote = {
   id: number;
   choice: string;
   gichul_qna?: GichulQna;
-  hidden?: boolean;
+  attempt_count?: number;
 };
 
 export type WrongNoteSet = {
