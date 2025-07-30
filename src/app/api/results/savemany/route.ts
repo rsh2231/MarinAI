@@ -14,6 +14,13 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const authHeader = request.headers.get("authorization");
 
+    console.log("[API /results/savemany] 받은 데이터:", {
+      odapset_id: body.odapset_id,
+      duration_sec: body.duration_sec,
+      results_count: body.results?.length || 0,
+      results: body.results
+    });
+
     if (!authHeader) {
       return NextResponse.json(
         { message: "인증 토큰이 필요합니다." },
@@ -29,6 +36,8 @@ export async function POST(request: NextRequest) {
     }
 
     const targetUrl = `${baseUrl}/results/savemany`;
+
+    console.log("[API /results/savemany] 외부 API로 전송할 데이터:", body);
 
     const apiResponse = await fetch(targetUrl, {
       method: "POST",

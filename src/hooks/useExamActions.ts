@@ -10,7 +10,7 @@ import {
   groupedQuestionsAtom,
 } from '@/atoms/examAtoms';
 import { authAtom } from '@/atoms/authAtom';
-import { OneResult, saveManyUserAnswers } from "@/lib/wrongNoteApi";
+import { OneResultWithNull, saveManyUserAnswersWithNull } from "@/lib/wrongNoteApi";
 
 interface ExamInfo {
   year: string;
@@ -38,6 +38,8 @@ export function useExamActions(
   const setTimeLeft = useSetAtom(timeLeftAtom);
 
   const handleSubmit = useCallback(async ({ isAutoSubmitted = false } = {}) => {
+    console.log("[Exam] handleSubmit 호출됨", { isAutoSubmitted, totalDuration, timeLeft });
+    
     // 시간이 만료되어 자동 제출될 경우 브라우저 알림을 보냄
     if (isAutoSubmitted && typeof window !== "undefined" && "Notification" in window) {
       if (Notification.permission === "default") await Notification.requestPermission();
@@ -52,29 +54,37 @@ export function useExamActions(
     // 실제 시험 시간 계산 (총 시간 - 남은 시간)
     const actualTimeTaken = totalDuration - timeLeft;
     
-    // 서버에 저장할 오답 노트 목록을 생성
-    const wrongNotes: OneResult[] = allQuestions
+    // 서버에 저장할 답안 목록을 생성 (모든 문제에 대해 답안 저장, 미선택은 null)
+    const allNotes: OneResultWithNull[] = allQuestions
       .map((q) => {
         const userChoice = answers[`${q.subjectName}-${q.num}`];
-        // 사용자가 선택했고, 그 선택이 정답이 아닌 경우에만 오답으로 간주
-        if (userChoice && userChoice !== q.answer) {
-          return { 
-            choice: userChoice as "가" | "나" | "사" | "아", 
-            gichulqna_id: q.id,
-            answer: q.answer
-          };
-        }
-        return null;
-      })
-              .filter((note): note is OneResult => note !== null);
+        return { 
+          choice: userChoice as "가" | "나" | "사" | "아" | null, 
+          gichulqna_id: q.id,
+          answer: q.answer
+        };
+      });
 
-    // 로그인 상태이고, 유효한 토큰과 odapsetId가 있으며, 저장할 오답이 1개 이상일 경우에만 서버에 요청
-    if (isLoggedIn && token && odapsetId && wrongNotes.length > 0) {
+    console.log("[Exam] 저장할 답안 목록:", allNotes);
+    console.log("[Exam] 저장 조건 확인:", {
+      isLoggedIn,
+      hasToken: !!token,
+      odapsetId,
+      notesCount: allNotes.length,
+      actualTimeTaken
+    });
+
+    // 로그인 상태이고, 유효한 토큰과 odapsetId가 있으며, 저장할 답안이 1개 이상일 경우에만 서버에 요청
+    if (isLoggedIn && token && odapsetId && allNotes.length > 0) {
+      console.log("[Exam] 저장 조건 만족 - 서버에 저장 시작");
       try {
-        await saveManyUserAnswers(wrongNotes, odapsetId, token, actualTimeTaken);
+        await saveManyUserAnswersWithNull(allNotes, odapsetId, token, actualTimeTaken);
+        console.log("[Exam] 답안 저장 성공:", { count: allNotes.length });
       } catch (e) {
-        console.error("[Exam Action] 오답노트 저장 중 서버 에러 발생:", e);
+        console.error("[Exam Action] 답안 저장 중 서버 에러 발생:", e);
       }
+    } else {
+      console.log("[Exam] 저장 조건 불만족 - 저장하지 않음");
     }
 
     setShowResult(true);

@@ -10,7 +10,7 @@ import {
   timeLeftAtom,
 } from "@/atoms/examAtoms";
 import { Question, SubjectGroup } from "@/types/ProblemViewer";
-import { OneResult, saveManyUserAnswers } from "@/lib/wrongNoteApi";
+import { OneResultWithNull, saveManyUserAnswersWithNull } from "@/lib/wrongNoteApi";
 export interface UseCbtInProgressReturn {
   isModalOpen: boolean;
   setIsModalOpen: (open: boolean) => void;
@@ -132,26 +132,26 @@ export function useCbtInProgress(
         subjects: subjectNames,
       },
     };
-    const wrongNotes: OneResult[] = allQuestionsData
+    const allNotes: OneResultWithNull[] = allQuestionsData
       .map((q) => {
         const key = `${q.subjectName}-${q.num}`;
         const userChoice = answers[key];
-        if (userChoice && userChoice !== q.answer) {
-          return {
-            choice: userChoice as "가" | "나" | "사" | "아",
-            gichulqna_id: q.id,
-            answer: q.answer,
-          };
-        }
-        return null;
-      })
-      .filter((note): note is OneResult => note !== null);
+        return {
+          choice: userChoice as "가" | "나" | "사" | "아" | null,
+          gichulqna_id: q.id,
+          answer: q.answer,
+        };
+      });
+
+    console.log("[CBT] 저장할 답안 목록:", allNotes);
+
     if (auth.token && auth.isLoggedIn) {
-      if (odapsetId && wrongNotes.length > 0) {
+      if (odapsetId && allNotes.length > 0) {
         try {
-          await saveManyUserAnswers(wrongNotes, odapsetId, auth.token, actualTimeTaken);
+          await saveManyUserAnswersWithNull(allNotes, odapsetId, auth.token, actualTimeTaken);
+          console.log("[CBT] 답안 저장 성공:", { count: allNotes.length });
         } catch (e) {
-          console.error("[오답노트 저장][cbt][실패]", e);
+          console.error("[답안 저장][cbt][실패]", e);
         }
       }
     } else {

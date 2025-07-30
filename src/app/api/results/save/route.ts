@@ -15,6 +15,13 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { choice, gichulqna_id, odapset_id, answer } = body;
 
+    console.log("[API /results/save] 받은 데이터:", {
+      choice,
+      gichulqna_id,
+      odapset_id,
+      answer
+    });
+
     // 필수 필드 검증
     if (!choice || !gichulqna_id || !odapset_id || !answer) {
       return NextResponse.json(
@@ -44,18 +51,22 @@ export async function POST(request: NextRequest) {
 
     console.log("Saving wrong note to:", targetUrl);
 
+    const requestBody = {
+      choice,
+      gichulqna_id,
+      odapset_id,
+      answer,
+    };
+
+    console.log("[API /results/save] 외부 API로 전송할 데이터:", requestBody);
+
     const apiResponse = await fetch(targetUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": authHeader,
       },
-      body: JSON.stringify({
-        choice,
-        gichulqna_id,
-        odapset_id,
-        answer,
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     const data = await apiResponse.json();

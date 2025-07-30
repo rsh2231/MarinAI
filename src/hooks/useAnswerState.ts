@@ -28,10 +28,20 @@ export function useAnswerState({
 
   // 디바운싱된 답안 저장 함수
   const debouncedSaveAnswer = useCallback(
-    async (questionId: number, choice: string) => {
+    async (questionId: number, choice: string, correctAnswer: string) => {
+      const isCorrect = choice === correctAnswer;
+      console.log("[연습모드 답안 저장]", {
+        questionId,
+        userChoice: choice,
+        correctAnswer,
+        isCorrect,
+        odapsetId
+      });
+      
       if (auth.token && auth.isLoggedIn && odapsetId !== null) {
         try {
-          await saveUserAnswer(questionId, choice, odapsetId, auth.token);
+          await saveUserAnswer(questionId, choice, odapsetId, auth.token, correctAnswer);
+          console.log("[연습모드 답안 저장 성공]", { questionId, choice, correctAnswer, isCorrect });
         } catch (error) {
           console.error("서버 저장 실패:", error);
         }
@@ -51,17 +61,19 @@ export function useAnswerState({
           break;
         }
       }
-      if (foundQuestion && choice !== foundQuestion.answer) {
+      if (foundQuestion) {
         if (saveTimeoutRef.current) {
           clearTimeout(saveTimeoutRef.current);
         }
         saveTimeoutRef.current = setTimeout(() => {
-          debouncedSaveAnswer(questionId, choice);
+          debouncedSaveAnswer(questionId, choice, foundQuestion.answer);
         }, 1000);
       }
     },
     [debouncedSaveAnswer, subjectGroups]
   );
+
+
 
   const toggleAnswer = useCallback((question: Question) => {
     const isNowShowing = !showAnswer[question.id];

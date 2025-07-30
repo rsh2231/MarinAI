@@ -6,6 +6,12 @@ export interface OneResult {
   answer: string;
 }
 
+export interface OneResultWithNull {
+  choice: "가" | "나" | "사" | "아" | null;
+  gichulqna_id: number;
+  answer: string;
+}
+
 export interface UserSolvedQna {
   choice: "가" | "나" | "사" | "아";
   gichulqna_id: number;
@@ -13,10 +19,18 @@ export interface UserSolvedQna {
   answer: string;
 }
 
+
+
 export interface ManyResults {
   odapset_id: number;
   duration_sec: number;
   results: OneResult[];
+}
+
+export interface ManyResultsWithNull {
+  odapset_id: number;
+  duration_sec: number;
+  results: OneResultWithNull[];
 }
 
 /**
@@ -57,6 +71,8 @@ export async function saveWrongNoteToServer(
   }
 }
 
+
+
 /**
  * 사용자가 선택한 답안을 서버에 저장
  */
@@ -67,14 +83,28 @@ export async function saveUserAnswer(
   authToken: string,
   correctAnswer?: string
 ): Promise<void> {
+  const isCorrect = selectedChoice === correctAnswer;
+  console.log("[saveUserAnswer] 파라미터:", {
+    questionId,
+    selectedChoice,
+    odapsetId,
+    correctAnswer,
+    isCorrect
+  });
+  
   const wrongNoteData: UserSolvedQna = {
     choice: selectedChoice as "가" | "나" | "사" | "아",
     gichulqna_id: questionId,
     odapset_id: odapsetId,
     answer: correctAnswer || selectedChoice, // 정답이 없으면 선택한 답을 정답으로 사용
   };
+  
+  console.log("[saveUserAnswer] 서버에 전송할 데이터:", wrongNoteData);
+  
   await saveWrongNoteToServer(wrongNoteData, authToken);
 }
+
+
 
 
 /**
@@ -84,6 +114,44 @@ export async function saveManyWrongNotesToServer(
   manyResults: ManyResults,
   authToken: string
 ): Promise<unknown> {
+  console.log("[saveManyWrongNotesToServer] 서버에 전송할 데이터:", manyResults);
+  
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+    const response = await fetch("/api/results/savemany", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(manyResults),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      const errorMessage =
+        errorData.detail?.[0]?.msg || "오답노트 일괄 저장에 실패했습니다.";
+      throw new Error(errorMessage);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("오답노트 일괄 저장 오류:", error);
+    throw error;
+  }
+}
+
+export async function saveManyWrongNotesToServerWithNull(
+  manyResults: ManyResultsWithNull,
+  authToken: string
+): Promise<unknown> {
+  console.log("[saveManyWrongNotesToServerWithNull] 서버에 전송할 데이터:", manyResults);
+  
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
@@ -123,13 +191,44 @@ export async function saveManyUserAnswers(
   authToken: string,
   durationSec: number = 0
 ): Promise<void> {
+  console.log("[saveManyUserAnswers] 파라미터:", {
+    count: wrongNotes.length,
+    odapsetId,
+    durationSec
+  });
 
   const manyResults: ManyResults = {
     odapset_id: odapsetId,
     duration_sec: durationSec,
     results: wrongNotes, 
   };
+
+  console.log("[saveManyUserAnswers] 서버에 전송할 데이터:", manyResults);
+  
   await saveManyWrongNotesToServer(manyResults, authToken);
+}
+
+export async function saveManyUserAnswersWithNull(
+  wrongNotes: OneResultWithNull[], 
+  odapsetId: number,
+  authToken: string,
+  durationSec: number = 0
+): Promise<void> {
+  console.log("[saveManyUserAnswersWithNull] 파라미터:", {
+    count: wrongNotes.length,
+    odapsetId,
+    durationSec
+  });
+
+  const manyResults: ManyResultsWithNull = {
+    odapset_id: odapsetId,
+    duration_sec: durationSec,
+    results: wrongNotes, 
+  };
+
+  console.log("[saveManyUserAnswersWithNull] 서버에 전송할 데이터:", manyResults);
+  
+  await saveManyWrongNotesToServerWithNull(manyResults, authToken);
 }
 
 /**
