@@ -117,7 +117,7 @@ export default function RetryWrongNoteModal({
     explanation?: string;
     subject?: string;
     imgPaths?: string[];
-    gichulset?: { type?: string; grade?: string };
+    gichulset?: { type?: string; grade?: string; inning?: number; year?: number };
   };
   const choices = [
     { label: "가", text: qObj.ex1str ?? "", isImage: false },
@@ -209,36 +209,38 @@ export default function RetryWrongNoteModal({
               </div>
             </div>
 
-            {/* 자격증, 급수, 과목 정보 표시 */}
-            <div className="flex justify-center items-center gap-2 mb-4">
-              {qObj.gichulset?.type && (
-                <span className={`inline-block text-white px-2 py-1 rounded text-xs font-medium ${
-                  qObj.gichulset.type === "기관사" ? "bg-blue-600" :
-                  qObj.gichulset.type === "항해사" ? "bg-indigo-600" :
-                  qObj.gichulset.type === "소형선박조종사" ? "bg-purple-600" :
-                  "bg-gray-600"
-                }`}>
-                  {qObj.gichulset.type}
-                </span>
-              )}
-              {qObj.gichulset?.grade && qObj.gichulset.type !== "소형선박조종사" && (
-                <span className={`inline-block text-white px-2 py-1 rounded text-xs font-medium ${
-                  qObj.gichulset.grade === "1" ? "bg-green-600" :
-                  qObj.gichulset.grade === "2" ? "bg-blue-500" :
-                  qObj.gichulset.grade === "3" ? "bg-yellow-600" :
-                  qObj.gichulset.grade === "4" ? "bg-orange-600" :
-                  qObj.gichulset.grade === "5" ? "bg-red-500" :
-                  qObj.gichulset.grade === "6" ? "bg-purple-600" :
-                  "bg-gray-600"
-                }`}>
-                  {qObj.gichulset.grade}급
-                </span>
-              )}
-              {qObj.subject && (
-                <span className="inline-block bg-neutral-600 text-white px-2 py-1 rounded text-xs font-medium">
-                  {qObj.subject}
-                </span>
-              )}
+            {/* 문제 정보 표시 */}
+            <div className="text-center mb-4">
+              <h3 className="text-lg font-semibold text-white mb-2">
+                {qObj.subject} - 문제{qObj.qnum}
+              </h3>
+              {/* 배지 정보 */}
+              <div className="flex justify-center items-center gap-1.5 flex-wrap">
+                {/* 연도 */}
+                {qObj.gichulset?.year && (
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-purple-500/20 to-purple-600/20 text-purple-300 border border-purple-500/30 backdrop-blur-sm shadow-sm transition-all duration-200 hover:from-purple-500/30 hover:to-purple-600/30`}>
+                    {qObj.gichulset.year}년
+                  </span>
+                )}
+                {/* 자격증 */}
+                {qObj.gichulset?.type && (
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-500/20 to-blue-600/20 text-blue-300 border border-blue-500/30 backdrop-blur-sm shadow-sm transition-all duration-200 hover:from-blue-500/30 hover:to-blue-600/30`}>
+                    {qObj.gichulset.type}
+                  </span>
+                )}
+                {/* 급수 */}
+                {qObj.gichulset?.grade && qObj.gichulset.type !== "소형선박조종사" && (
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-green-500/20 to-green-600/20 text-green-300 border border-green-500/30 backdrop-blur-sm shadow-sm transition-all duration-200 hover:from-green-500/30 hover:to-green-600/30`}>
+                    {qObj.gichulset.grade}급
+                  </span>
+                )}
+                {/* 회차 */}
+                {qObj.gichulset?.inning && (
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-orange-500/20 to-orange-600/20 text-orange-300 border border-orange-500/30 backdrop-blur-sm shadow-sm transition-all duration-200 hover:from-orange-500/30 hover:to-orange-600/30`}>
+                    {qObj.gichulset.inning}회차
+                  </span>
+                )}
+              </div>
             </div>
 
             <div
@@ -251,6 +253,7 @@ export default function RetryWrongNoteModal({
                 showAnswer={showAnswer}
                 onSelect={setSelected}
                 onToggle={() => setShowAnswer((v) => !v)}
+                hideNumber={true}
               />
             </div>
 

@@ -25,8 +25,6 @@ export function useWrongNotes() {
       setLoading(true);
       setError(null);
       const serverNoteSets: WrongNoteSet[] = await getWrongNotesFromServer(auth.token);
-
-      console.log("[오답노트] 서버에서 받은 데이터:", serverNoteSets);
       
       // 유효한 데이터만 필터링
       const validatedNoteSets = Array.isArray(serverNoteSets)
@@ -45,6 +43,7 @@ export function useWrongNotes() {
         : [];
       
       setNoteSets(validatedNoteSets);
+
     } catch (err) {
       console.error("오답노트 로딩 실패:", err);
       setError(err instanceof Error ? err.message : "오답노트를 불러오는데 실패했습니다.");

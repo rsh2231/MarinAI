@@ -15,6 +15,7 @@ interface Props {
   showAnswer?: boolean;
   onSelect: (choice: string) => void;
   onToggle?: () => void;
+  hideNumber?: boolean;
 }
 
 export default function QuestionCard({
@@ -23,6 +24,7 @@ export default function QuestionCard({
   showAnswer,
   onSelect,
   onToggle,
+  hideNumber = false,
 }: Props) {
   const { num, questionStr, choices, answer, explanation, imageUrl } = question;
   const isPracticeMode = !!onToggle;
@@ -60,7 +62,7 @@ export default function QuestionCard({
       )}
 
       <div className="flex flex-col gap-2 font-medium text-sm sm:text-base break-keep">
-        <span className="text-gray-400">문제 {num}</span>
+        {!hideNumber && <span className="text-gray-400">문제 {num}</span>}
         {questionStr && (
           <p className="whitespace-pre-wrap leading-relaxed text-gray-100">
             {questionStr}

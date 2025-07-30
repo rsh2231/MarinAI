@@ -79,6 +79,8 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
   useEffect(() => {
     if (setWrongNotes) {
       setWrongNotes(allNotes);
+
+      console.log("[오답노트] 서버에서 받은 데이터:", allNotes);
     }
   }, [allNotes, setWrongNotes]);
   
