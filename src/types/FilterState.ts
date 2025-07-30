@@ -1,12 +1,11 @@
 import type { Dispatch, SetStateAction } from "react";
-
-export type LicenseType = "항해사" | "기관사" | "소형선박조종사" | null;
+import { LicenseTypeNullable } from "@/types/common";
 
 export type FilterState = {
   year: string;
   setYear: Dispatch<SetStateAction<string>>;
-  license: LicenseType;
-  setLicense: Dispatch<SetStateAction<LicenseType>>;
+  license: LicenseTypeNullable;
+  setLicense: Dispatch<SetStateAction<LicenseTypeNullable>>;
   level: string;
   setLevel: Dispatch<SetStateAction<string>>;
   round: string;

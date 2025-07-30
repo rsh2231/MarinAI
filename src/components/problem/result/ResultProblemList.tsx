@@ -4,11 +4,10 @@ import { QuestionResultCard } from "./QuestionResultCard";
 import { EmptyMessage } from "@/components/ui/EmptyMessage";
 import { BookOpen } from "lucide-react";
 import { Question } from "@/types/ProblemViewer";
-import { SubjectResult } from "./ResultView";
+import { SubjectResult } from "@/types/common";
 
 interface Props {
   filteredQuestions: Question[];
-  renderCount: number;
   selectedSubject: string;
   subjectResults: SubjectResult[];
   showOnlyWrong: boolean;
@@ -20,7 +19,6 @@ interface Props {
 
 export default function ResultProblemList({
   filteredQuestions,
-  renderCount,
   selectedSubject,
   subjectResults,
   showOnlyWrong,
@@ -42,7 +40,7 @@ export default function ResultProblemList({
       />
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredQuestions.length > 0 ? (
-          filteredQuestions.slice(0, renderCount).map((question, index) => {
+          filteredQuestions.map((question, index) => {
             const showDivider =
               selectedSubject === "all" &&
               (lastSubject === null || lastSubject !== question.subjectName);

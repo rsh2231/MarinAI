@@ -1,7 +1,7 @@
 "use client";
 
 import { Clock, Check, X, HelpCircle, AlertTriangle } from "lucide-react";
-import { SubjectResult } from "./ResultView";
+import { SubjectResult } from "@/types/common";
 
 interface ExamSummaryCardProps {
   timeTaken: number;

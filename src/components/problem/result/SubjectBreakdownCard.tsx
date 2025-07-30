@@ -1,7 +1,7 @@
 "use client";
 
 import { CheckCircle, XCircle } from "lucide-react";
-import { SubjectResult } from "./ResultView";
+import { SubjectResult } from "@/types/common";
 
 interface SubjectBreakdownCardProps {
   subjectResults: SubjectResult[];

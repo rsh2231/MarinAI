@@ -1,21 +1,17 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState, useRef } from "react";
 import { useAtomValue } from "jotai";
-import {
-  examLoadingAtom,
-  examErrorAtom,
-  showResultAtom,
-} from "@/atoms/examAtoms"; // answers, allQuestionsAtom 제거
+import { examLoadingAtom, examErrorAtom, showResultAtom } from "@/atoms/examAtoms";
 import { useExamData } from "@/hooks/useExamData";
-import { useExamTimer } from "@/hooks/useExamTimer";
 import { useExamActions } from "@/hooks/useExamActions";
+import { useExamTimer } from "@/hooks/useExamTimer";
+import { LicenseType } from "@/types/common";
+
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { EmptyMessage } from "@/components/ui/EmptyMessage";
 import { ResultView } from "../result/ResultView";
 import { ExamSession } from "./ExamSession";
-import { EmptyMessage } from "../../ui/EmptyMessage";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-
-type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
 interface Props {
   year: string;
@@ -57,7 +53,6 @@ export default function ExamContainer({
     setRetryCount((c) => c + 1);
     baseHandleRetry();
   };
-
 
   // 3. 타이머 훅
   useExamTimer(() => handleSubmit({ isAutoSubmitted: true }));

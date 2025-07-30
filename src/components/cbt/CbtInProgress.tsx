@@ -2,7 +2,7 @@
 
 import { RefObject } from "react";
 import { useCbtInProgress } from "@/hooks/useCbtInProgress";
-import { LicenseType } from "@/hooks/useCbtExam";
+import { LicenseType } from "@/types/common";
 
 import Button from "@/components/ui/Button";
 import QuestionCard from "@/components/problem/UI/QuestionCard";
@@ -40,7 +40,6 @@ export function CbtInProgress({
     currentQuestions,
     selectedIndex,
     handleConfirmSubmit,
-    totalDuration,
   } = useCbtInProgress(license, level, odapsetId, onSubmit);
 
   const HEADER_HEIGHT_PX = 120;
@@ -98,37 +97,50 @@ export function CbtInProgress({
           {groupedData.length > 0 && (
             <div className="mt-8 flex flex-row justify-center items-center gap-4 sm:flex-row sm:justify-center">
               <Button
-                variant="neutral"
-                onClick={() => onSelectSubject(subjectNames[selectedIndex - 1])}
-                disabled={selectedIndex <= 0}
-                className="w-auto sm:w-auto"
-              >
-                <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
-              </Button>
-              {selectedIndex === subjectNames.length - 1 ? (
-                <Button
-                  onClick={() => setIsModalOpen(true)}
-                  variant="primary"
-                  className="w-auto sm:w-auto"
-                >
-                  제출하기 <Send className="ml-1 h-4 w-4" />
-                </Button>
-              ) : (
-                <Button
-                  onClick={() =>
-                    onSelectSubject(subjectNames[selectedIndex + 1])
+                onClick={() => {
+                  if (selectedIndex > 0) {
+                    onSelectSubject(subjectNames[selectedIndex - 1]);
                   }
-                  className="w-auto sm:w-auto"
-                >
-                  다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
-                </Button>
-              )}
+                }}
+                disabled={selectedIndex === 0}
+                className="flex items-center gap-2"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                이전 과목
+              </Button>
+
+              <span className="text-gray-400 text-sm">
+                {selectedIndex + 1} / {subjectNames.length}
+              </span>
+
+              <Button
+                onClick={() => {
+                  if (selectedIndex < subjectNames.length - 1) {
+                    onSelectSubject(subjectNames[selectedIndex + 1]);
+                  }
+                }}
+                disabled={selectedIndex === subjectNames.length - 1}
+                className="flex items-center gap-2"
+              >
+                다음 과목
+                <ChevronRight className="w-4 h-4" />
+              </Button>
             </div>
           )}
         </main>
       </div>
 
-      <ScrollToTopButton scrollableRef={scrollRef} />
+      <div className="sticky bottom-4 right-4 flex justify-end p-4">
+        <Button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg"
+        >
+          <Send className="w-4 h-4" />
+          제출하기
+        </Button>
+      </div>
+
+      <ScrollToTopButton />
     </div>
   );
 }

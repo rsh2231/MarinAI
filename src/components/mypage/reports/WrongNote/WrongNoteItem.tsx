@@ -76,10 +76,25 @@ export function WrongNoteItem({ note, isOpen, isDeleting, onToggle, onDelete, in
   };
   
   return (
-    <li className="flex flex-col bg-neutral-700/70 rounded-md p-0">
+    <motion.li 
+      className="flex flex-col bg-neutral-700/70 rounded-md p-0"
+      layout
+      initial={{ opacity: 1, scale: 1 }}
+      animate={{ 
+        opacity: isDeleting ? 0.5 : 1, 
+        scale: isDeleting ? 0.98 : 1 
+      }}
+      exit={{ opacity: 0, scale: 0.95, height: 0 }}
+      transition={{ 
+        duration: 0.2,
+        ease: "easeInOut"
+      }}
+    >
       <div
-        className="w-full flex justify-between items-center p-3 text-left focus:outline-none cursor-pointer"
-        onClick={onToggle}
+        className={`w-full flex justify-between items-center p-3 text-left focus:outline-none ${
+          isDeleting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+        }`}
+        onClick={isDeleting ? undefined : onToggle}
       >
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-sm sm:text-base truncate">{q.subject} - {q.qnum}번 문제</p>
@@ -135,11 +150,16 @@ export function WrongNoteItem({ note, isOpen, isDeleting, onToggle, onDelete, in
               </>
             )}
           </button>
-          <ChevronRight size={16} className={`text-neutral-500 transition-transform sm:w-5 sm:h-5 ${isOpen ? "rotate-90" : ""}`} />
+          <ChevronRight 
+            size={16} 
+            className={`text-neutral-500 transition-transform sm:w-5 sm:h-5 ${
+              isOpen ? "rotate-90" : ""
+            }`} 
+          />
         </div>
       </div>
       <AnimatePresence initial={false}>
-        {isOpen && (
+        {isOpen && !isDeleting && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -165,6 +185,6 @@ export function WrongNoteItem({ note, isOpen, isDeleting, onToggle, onDelete, in
           </motion.div>
         )}
       </AnimatePresence>
-    </li>
+    </motion.li>
   );
 }

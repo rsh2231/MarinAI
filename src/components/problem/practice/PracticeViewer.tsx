@@ -10,8 +10,7 @@ import NavigationButtons from "./NavigationButtons";
 import { usePracticeQuestions } from "../../../hooks/usePracticeQuestions";
 import { useAnswerState } from "../../../hooks/useAnswerState";
 import { SubjectGroup } from "@/types/ProblemViewer";
-
-type LicenseType = "기관사" | "항해사" | "소형선박조종사";
+import { LicenseType } from "@/types/common";
 
 interface Props {
   year: string;

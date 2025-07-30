@@ -8,13 +8,11 @@ import {
   allQuestionsAtom,
   timeLeftAtom,
 } from "@/atoms/examAtoms";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { LicenseType, SubjectResult, ExamSummaryStats } from "@/types/common";
 
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
 import ResultDashboard from "./ResultDashboard";
 import ResultProblemList from "./ResultProblemList";
-
-type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 
 interface ResultViewProps {
   onRetry: () => void;
@@ -26,16 +24,6 @@ interface ResultViewProps {
   round?: string;
   level?: string;
 }
-
-export interface SubjectResult {
-  subjectName: string;
-  score: number;
-  isPass: boolean;
-  correctCount: number;
-  totalCount: number;
-}
-
-const CHUNK_SIZE = 30; // 점진적 렌더링 시 한 번에 추가할 문제 개수
 
 export const ResultView = ({
   onRetry,
@@ -49,8 +37,8 @@ export const ResultView = ({
 }: ResultViewProps) => {
   // jotai atom에서 문제/답안/시간 등 상태 가져오기
   const groupedQuestions = useAtomValue(groupedQuestionsAtom);
-  const allQuestions = useAtomValue(allQuestionsAtom);
   const answers = useAtomValue(answersAtom);
+  const allQuestions = useAtomValue(allQuestionsAtom);
   const timeLeft = useAtomValue(timeLeftAtom);
 
   // 틀린 문제만 보기, 과목 탭 상태
@@ -81,8 +69,6 @@ export const ResultView = ({
     }
   }, [allQuestions, answers, showOnlyWrong, selectedSubject, groupedQuestions]);
 
-  const isMobile = useIsMobile();
-
   // 결과 화면 진입 시 스크롤 최상단 이동
   useEffect(() => {
     const HEADER_HEIGHT = 56;
@@ -98,40 +84,7 @@ export const ResultView = ({
     scrollToHeader();
     const timeoutId = setTimeout(scrollToHeader, 100);
     return () => clearTimeout(timeoutId);
-  }, []);
-
-  // 점진적 렌더링: 모바일은 전체, 데스크탑은 CHUNK_SIZE씩
-  const [renderCount, setRenderCount] = useState(
-    isMobile ? filteredQuestions.length : CHUNK_SIZE
-  );
-
-  useEffect(() => {
-    if (isMobile) {
-      setRenderCount(filteredQuestions.length);
-      return;
-    }
-    if (renderCount < filteredQuestions.length) {
-      const id = setTimeout(
-        () =>
-          setRenderCount((c) =>
-            Math.min(c + CHUNK_SIZE, filteredQuestions.length)
-          ),
-        16
-      );
-      return () => clearTimeout(id);
-    }
-  }, [
-    renderCount,
-    filteredQuestions.length,
-    selectedSubject,
-    showOnlyWrong,
-    isMobile,
-  ]);
-
-  // 탭/옵션 변경 시 renderCount 초기화
-  useEffect(() => {
-    setRenderCount(isMobile ? filteredQuestions.length : CHUNK_SIZE);
-  }, [selectedSubject, showOnlyWrong, filteredQuestions.length, isMobile]);
+  }, [scrollRef]);
 
   // 시험 요약/통계 계산 (점수, 통과 여부, 과목별 결과 등)
   const { isPass, overallScore, subjectResults } = useMemo(() => {
@@ -169,7 +122,7 @@ export const ResultView = ({
   }, [groupedQuestions, answers, license]);
 
   // 시험 통계(정답/오답/미답/소요시간 등)
-  const summaryStats = useMemo(() => {
+  const summaryStats: ExamSummaryStats = useMemo(() => {
     const timeTaken = totalDuration - timeLeft;
     const correctCount = allQuestions.filter(
       (q) => answers[`${q.subjectName}-${q.num}`] === q.answer
@@ -242,7 +195,6 @@ export const ResultView = ({
           {/* 문제 리스트 영역 분리 */}
           <ResultProblemList
             filteredQuestions={filteredQuestions}
-            renderCount={renderCount}
             selectedSubject={selectedSubject}
             subjectResults={subjectResults}
             showOnlyWrong={showOnlyWrong}

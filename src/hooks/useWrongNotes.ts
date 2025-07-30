@@ -24,21 +24,21 @@ export function useWrongNotes() {
     try {
       setLoading(true);
       setError(null);
-      const serverNoteSets: WrongNoteSet[] = await getWrongNotesFromServer(auth.token);
+      const data = await getWrongNotesFromServer(auth.token);
       
-      // 유효한 데이터만 필터링
-      const validatedNoteSets = Array.isArray(serverNoteSets)
-        ? serverNoteSets
-            .filter(set => set && typeof set === 'object' && Array.isArray(set.results))
-            .map(set => {
-              const filteredResults = set.results.filter(note => 
-                note && note.gichul_qna // gichul_qna가 있는 항목만 유지
-              );
-              return {
-                ...set,
-                results: filteredResults
-              };
-            })
+      // 데이터 검증 및 필터링
+      const validatedNoteSets = data && Array.isArray(data)
+        ? data
+            .filter(set => set && set.results && Array.isArray(set.results))
+            .map(set => ({
+              ...set,
+              results: set.results.filter(result => 
+                result && 
+                result.id && 
+                result.gichul_qna && 
+                typeof result.gichul_qna === 'object'
+              )
+            }))
             .filter(set => set.results.length > 0) // 결과가 있는 세트만 유지
         : [];
       
@@ -74,21 +74,10 @@ export function useWrongNotes() {
     );
 
     try {
-      const result = await deleteWrongNoteFromServer(auth.token, noteId);
+      await deleteWrongNoteFromServer(auth.token, noteId);
       
-      // 성공 피드백 표시
-      setDeleteFeedback({
-        type: 'success',
-        message: result.message || '오답노트가 성공적으로 삭제되었습니다.'
-      });
-
-      // 서버에서 최신 데이터를 다시 가져와서 일관성 보장
-      await fetchWrongNotes();
-
-      // 3초 후 피드백 메시지 제거
-      setTimeout(() => {
-        setDeleteFeedback(null);
-      }, 3000);
+      // 성공 시 추가 fetch 없이 낙관적 업데이트 유지
+      // 서버와의 일관성은 다음 페이지 방문 시 자동으로 맞춰짐
 
     } catch (serverErr) {
       console.error('서버에서 오답노트 삭제 실패:', serverErr);
@@ -96,7 +85,7 @@ export function useWrongNotes() {
       // 실패 시 원래 상태로 복원
       setNoteSets(originalNoteSets);
       
-      // 에러 피드백 표시
+      // 에러 피드백만 표시
       const errorMessage = serverErr instanceof Error 
         ? serverErr.message 
         : '오답노트 삭제에 실패했습니다.';
@@ -113,7 +102,7 @@ export function useWrongNotes() {
     } finally {
       setDeletingNoteIds(prev => prev.filter(id => id !== noteId));
     }
-  }, [auth.token, auth.isLoggedIn, noteSets, fetchWrongNotes]);
+  }, [auth.token, auth.isLoggedIn, noteSets]);
   
   const allNotes: WrongNote[] = useMemo(() => 
     noteSets

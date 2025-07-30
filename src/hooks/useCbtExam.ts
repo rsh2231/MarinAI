@@ -10,8 +10,8 @@ import {
   timeLeftAtom,
 } from "@/atoms/examAtoms";
 import { transformData } from "@/lib/problem-utils";
+import { LicenseType } from "@/types/common";
 
-export type LicenseType = "기관사" | "항해사" | "소형선박조종사";
 export type ExamStatus = "not-started" | "in-progress" | "finished";
 const DURATION_PER_SUBJECT_SECONDS = 25 * 60;
 

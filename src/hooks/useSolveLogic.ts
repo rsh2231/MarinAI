@@ -5,12 +5,11 @@ import {
   showResultAtom,
 } from "@/atoms/examAtoms";
 import { SUBJECTS_BY_LICENSE_AND_LEVEL } from "@/types/Subjects";
-
-export type LicenseType = "항해사" | "기관사" | "소형선박조종사" | null;
+import { LicenseTypeNullable } from "@/types/common";
 
 export function useSolveLogic() {
   const [year, setYear] = useState("");
-  const [license, setLicense] = useState<LicenseType>(null);
+  const [license, setLicense] = useState<LicenseTypeNullable>(null);
   const [level, setLevel] = useState("");
   const [round, setRound] = useState("");
   const [mode, setMode] = useState<"practice" | "exam" | null>(null);
@@ -30,7 +29,7 @@ export function useSolveLogic() {
     if (yearParam && roundParam && licenseParam && (licenseParam === "소형선박조종사" || levelParam)) {
       setYear(yearParam);
       setRound(roundParam);
-      setLicense(licenseParam as LicenseType);
+      setLicense(licenseParam as LicenseTypeNullable);
       setLevel(levelParam || "");
       setMode("exam");
       setShowResult(false);

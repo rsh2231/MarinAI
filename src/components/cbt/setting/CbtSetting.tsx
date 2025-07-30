@@ -1,23 +1,18 @@
 "use client";
 
-import { useState, useEffect, useCallback, ChangeEvent, useRef } from "react";
+import { ChangeEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { SUBJECTS_BY_LICENSE_AND_LEVEL } from "@/types/Subjects";
 import SelectBox from "@/components/ui/SelectBox";
+import { useCbtSettings } from "@/hooks/useCbtSettings";
+import { useScrollToElement } from "@/hooks/useScrollToElement";
+import { LICENSE_LEVELS, LICENSE_OPTIONS } from "@/constants/cbt";
+import { LicenseType } from "@/types/common";
 
 import { CbtSettingsHeader } from "./CbtSettingsHeader";
 import { SettingsStep } from "./SettingsStep";
 import { SubjectSelector } from "./SubjectSelector";
 import { CbtStartAction } from "./CbtStartAction";
-
-type LicenseType = "기관사" | "항해사" | "소형선박조종사";
-
-const LICENSE_LEVELS: Record<LicenseType, string[]> = {
-  항해사: ["1급", "2급", "3급", "4급", "5급", "6급"],
-  기관사: ["1급", "2급", "3급", "4급", "5급", "6급"],
-  소형선박조종사: [],
-};
 
 interface CbtSettingsProps {
   onStartCbt: (settings: {
@@ -34,80 +29,30 @@ export function CbtSettings({
   isLoading,
   error,
 }: CbtSettingsProps) {
-  const [license, setLicense] = useState<LicenseType | "">("");
-  const [level, setLevel] = useState<string>("");
-  const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
-
-  const subjectStepRef = useRef<HTMLDivElement>(null);
-
-  const isSmallShip = license === "소형선박조종사";
-  
-  // 급수에 따라 과목을 다르게 설정
-  const getAvailableSubjects = useCallback(() => {
-    if (!license) return [];
+  const {
+    // 상태
+    license,
+    level,
+    selectedSubjects,
     
-    if (isSmallShip) {
-      return SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.["0"] ?? [];
-    }
+    // 액션
+    setLicense,
+    setLevel,
+    toggleSubject,
+    selectAllSubjects,
+    deselectAllSubjects,
     
-    if (level) {
-      return SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.[level] ?? [];
-    }
-    
-    // 급수가 선택되지 않은 경우 기본 과목 반환 (1급으로 설정)
-    return SUBJECTS_BY_LICENSE_AND_LEVEL[license]?.["1급"] ?? [];
-  }, [license, level, isSmallShip]);
-  
-  const availableSubjects = getAvailableSubjects();
+    // 계산된 값들
+    isSmallShip,
+    availableSubjects,
+    isLicenseStepComplete,
+    isLevelStepRequired,
+    isSubjectStepActive,
+    isReadyToStart,
+    currentStepNumber,
+  } = useCbtSettings();
 
-  useEffect(() => {
-    setLevel("");
-    setSelectedSubjects([]);
-  }, [license]);
-
-  // 급수가 변경될 때마다 과목 재설정
-  useEffect(() => {
-    if (license && (level || isSmallShip)) {
-      const subjects = getAvailableSubjects();
-      setSelectedSubjects(subjects);
-    }
-  }, [license, level, isSmallShip, getAvailableSubjects]);
-
-  const isLicenseStepComplete = license !== "";
-  const isLevelStepRequired = isLicenseStepComplete && !isSmallShip;
-  const isLevelStepComplete = level !== "" || isSmallShip;
-
-  const isSubjectStepActive = isLicenseStepComplete && isLevelStepComplete;
-
-  const isReadyToStart =
-    isLicenseStepComplete && isLevelStepComplete && selectedSubjects.length > 0;
-
-  useEffect(() => {
-    if (isSubjectStepActive && subjectStepRef.current) {
-      setTimeout(() => {
-        subjectStepRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center'
-        });
-      }, 300);
-    }
-  }, [isSubjectStepActive]);
-
-  const toggleSubject = useCallback((subject: string) => {
-    setSelectedSubjects((prev) =>
-      prev.includes(subject)
-        ? prev.filter((s) => s !== subject)
-        : [...prev, subject]
-    );
-  }, []);
-
-  const handleSelectAllSubjects = useCallback(() => {
-    setSelectedSubjects(availableSubjects);
-  }, [availableSubjects]);
-
-  const handleDeselectAllSubjects = useCallback(() => {
-    setSelectedSubjects([]);
-  }, []);
+  const subjectStepRef = useScrollToElement<HTMLDivElement>(isSubjectStepActive);
 
   const handleStartClick = () => {
     if (!license || (!isSmallShip && !level) || selectedSubjects.length === 0) {
@@ -145,7 +90,7 @@ export function CbtSettings({
                 onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                   setLicense(e.target.value as LicenseType)
                 }
-                options={["항해사", "기관사", "소형선박조종사"]}
+                options={LICENSE_OPTIONS}
               />
             </SettingsStep>
 
@@ -177,7 +122,7 @@ export function CbtSettings({
               {isSubjectStepActive && (
                 <div ref={subjectStepRef}>
                   <SettingsStep
-                    stepNumber={isLevelStepRequired ? 3 : 2}
+                    stepNumber={currentStepNumber}
                     title="과목 선택"
                     isComplete={selectedSubjects.length > 0}
                     isActive={isSubjectStepActive}
@@ -186,8 +131,8 @@ export function CbtSettings({
                       subjects={availableSubjects}
                       selectedSubjects={selectedSubjects}
                       onToggleSubject={toggleSubject}
-                      onSelectAll={handleSelectAllSubjects}
-                      onDeselectAll={handleDeselectAllSubjects}
+                      onSelectAll={selectAllSubjects}
+                      onDeselectAll={deselectAllSubjects}
                     />
                   </SettingsStep>
                 </div>
