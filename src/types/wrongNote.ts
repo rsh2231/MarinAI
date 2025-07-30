@@ -9,6 +9,7 @@ export type GichulQna = {
   ex4str: string;
   answer: string;
   explanation: string | null;
+  imgPaths?: string[]; // 이미지 경로 추가
   gichulset?: {
     year?: number;
     type: string;

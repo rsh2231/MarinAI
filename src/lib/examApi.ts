@@ -54,7 +54,6 @@ export const fetchExamQuestions = async ({
 export const saveWrongNotes = async (notes: OneResult[], odapsetId: number, token: string) => {
     try {
         await saveWrongNotesApi(notes, odapsetId, token);
-        console.log("오답노트가 서버에 저장되었습니다.");
     } catch (error) {
         console.error("오답노트 저장 실패:", error);
     }

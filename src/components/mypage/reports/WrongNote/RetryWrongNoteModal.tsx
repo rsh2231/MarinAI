@@ -9,6 +9,23 @@ import QuestionCard from "@/components/problem/UI/QuestionCard";
 import { Question } from "@/types/ProblemViewer";
 import Button from "@/components/ui/Button";
 
+// 이미지 코드와 앞뒤 공백/개행을 함께 찾는 정규식
+const imageCodeWithWhitespaceRegex = /\s*(@pic[\w_-]+)\s*/i;
+
+const findImagePath = (code: string, paths: string[]): string | undefined => {
+  const key = code.replace("@", "").trim().toLowerCase();
+  const partialMatch = paths.find((p) => {
+    const fileName = p.toLowerCase();
+    return fileName.includes(key);
+  });
+  
+  if (partialMatch) {
+    return partialMatch;
+  }
+  
+  return undefined;
+};
+
 function CloseIcon() {
   return (
     <svg
@@ -119,6 +136,22 @@ export default function RetryWrongNoteModal({
     imgPaths?: string[];
     gichulset?: { type?: string; grade?: string; inning?: number; year?: number };
   };
+  // 문제 본문에서 이미지 처리
+  let questionStr = qObj.questionstr ?? "";
+  let questionImagePath: string | undefined;
+
+  const questionImageMatch = questionStr.match(imageCodeWithWhitespaceRegex);
+  if (questionImageMatch && qObj.imgPaths) {
+    const matchedString = questionImageMatch[0];
+    const code = questionImageMatch[1];
+
+    const foundPath = findImagePath(code, qObj.imgPaths);
+    if (foundPath) {
+      questionImagePath = foundPath;
+      questionStr = questionStr.replace(matchedString, "").trim();
+    }
+  }
+
   const choices = [
     { label: "가", text: qObj.ex1str ?? "", isImage: false },
     { label: "나", text: qObj.ex2str ?? "", isImage: false },
@@ -126,17 +159,44 @@ export default function RetryWrongNoteModal({
     { label: "아", text: qObj.ex4str ?? "", isImage: false },
     ...(qObj.ex5str ? [{ label: "마", text: qObj.ex5str ?? "", isImage: false }] : []),
     ...(qObj.ex6str ? [{ label: "바", text: qObj.ex6str ?? "", isImage: false }] : []),
-  ];
+  ].map((choice) => {
+    let choiceText = choice.text;
+    let choiceImagePath: string | undefined;
+
+    const choiceImageMatch = choice.text.match(imageCodeWithWhitespaceRegex);
+    if (choiceImageMatch && qObj.imgPaths) {
+      const matchedString = choiceImageMatch[0];
+      const code = choiceImageMatch[1];
+      
+      const foundPath = findImagePath(code, qObj.imgPaths);
+      if (foundPath) {
+        choiceImagePath = foundPath;
+        choiceText = choiceText.replace(matchedString, "").trim();
+      }
+    }
+    
+    return {
+      ...choice,
+      isImage: !!choiceImagePath,
+      text: choiceText,
+      imageUrl: choiceImagePath
+        ? `/api/solve/img/${choiceImagePath}`
+        : undefined,
+    };
+  });
+
   const question: Question = {
     id: qObj.id !== undefined ? Number(qObj.id) : 0,
     num: qObj.qnum !== undefined ? Number(qObj.qnum) : 0,
-    questionStr: qObj.questionstr ?? "",
+    questionStr,
     choices,
     answer: qObj.answer ?? "",
     explanation: qObj.explanation ?? "",
     subjectName: qObj.subject ?? "",
-    isImageQuestion: false,
-    imageUrl: qObj.imgPaths?.[0],
+    isImageQuestion: !!questionImagePath,
+    imageUrl: questionImagePath
+      ? `/api/solve/img/${questionImagePath}`
+      : undefined,
   };
 
   // 문제 이동 시 상태 초기화

@@ -44,8 +44,6 @@ export function usePracticeQuestions({
         if (auth.token && auth.isLoggedIn) {
           headers.Authorization = `Bearer ${auth.token}`;
         }
-        // eslint-disable-next-line no-console
-        console.log(`[문제 fetch][practice][${userType}]`, params.toString());
         const res = await fetch(`/api/solve?${params.toString()}`, {
           method: "GET",
           headers,
@@ -59,8 +57,6 @@ export function usePracticeQuestions({
         }
         const responseData: { qnas: QnaItem[]; odapset_id?: number } =
           await res.json();
-        // eslint-disable-next-line no-console
-        console.log(`[문제 fetch][practice][응답]`, responseData);
         if (responseData.odapset_id) {
           setOdapsetId(responseData.odapset_id);
         } else {

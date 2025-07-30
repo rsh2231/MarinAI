@@ -13,11 +13,58 @@ interface WrongNoteItemProps {
   index: number;
 }
 
+// 이미지 코드와 앞뒤 공백/개행을 함께 찾는 정규식
+const imageCodeWithWhitespaceRegex = /\s*(@pic[\w_-]+)\s*/i;
+
+const findImagePath = (code: string, paths: string[]): string | undefined => {
+  const key = code.replace("@", "").trim().toLowerCase();
+  return paths.find((p) => p.toLowerCase().includes(key));
+};
+
 export function WrongNoteItem({ note, isOpen, isDeleting, onToggle, onDelete, index }: WrongNoteItemProps) {
   // gichul_qna가 없는 경우만 렌더링하지 않음
   if (!note.gichul_qna) return null;
 
   const q = note.gichul_qna;
+
+  // 이미지 처리 로직
+  const processImageContent = (text: string, imgPaths?: string[]) => {
+    if (!imgPaths) return { text, imageUrl: undefined, isImage: false };
+
+    const imageMatch = text.match(imageCodeWithWhitespaceRegex);
+    if (imageMatch) {
+      const matchedString = imageMatch[0];
+      const code = imageMatch[1];
+      const foundPath = findImagePath(code, imgPaths);
+      
+      if (foundPath) {
+        return {
+          text: text.replace(matchedString, "").trim(),
+          imageUrl: `/api/solve/img/${foundPath}`,
+          isImage: true
+        };
+      }
+    }
+    
+    return { text, imageUrl: undefined, isImage: false };
+  };
+
+  // 문제 본문 이미지 처리
+  const questionContent = processImageContent(q.questionstr, q.imgPaths);
+
+  // 선택지 이미지 처리
+  const choices = [
+    { label: "가", text: q.ex1str },
+    { label: "나", text: q.ex2str },
+    { label: "사", text: q.ex3str },
+    { label: "아", text: q.ex4str },
+  ].map((choice) => {
+    const processed = processImageContent(choice.text, q.imgPaths);
+    return {
+      ...choice,
+      ...processed
+    };
+  });
 
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -61,12 +108,7 @@ export function WrongNoteItem({ note, isOpen, isDeleting, onToggle, onDelete, in
                 {q.gichulset.inning}회차
               </span>
             )}
-            {/* 시도 횟수 */}
-            {note.attempt_count && note.attempt_count > 1 && (
-              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-red-500/20 to-red-600/20 text-red-300 border border-red-500/30 backdrop-blur-sm shadow-sm transition-all duration-200 hover:from-red-500/30 hover:to-red-600/30`}>
-                {note.attempt_count}회 시도
-              </span>
-            )}
+
           </div>
         </div>
         
@@ -109,18 +151,13 @@ export function WrongNoteItem({ note, isOpen, isDeleting, onToggle, onDelete, in
               question={{
                 id: q.id,
                 num: q.qnum,
-                questionStr: q.questionstr,
-                choices: [
-                  { label: "가", text: q.ex1str, isImage: false },
-                  { label: "나", text: q.ex2str, isImage: false },
-                  { label: "사", text: q.ex3str, isImage: false },
-                  { label: "아", text: q.ex4str, isImage: false },
-                ],
+                questionStr: questionContent.text,
+                choices: choices,
                 answer: q.answer,
                 explanation: q.explanation || "",
                 subjectName: q.subject,
-                isImageQuestion: false,
-                imageUrl: undefined,
+                isImageQuestion: questionContent.isImage,
+                imageUrl: questionContent.imageUrl,
               }}
               userAnswer={note.choice}
               index={index}

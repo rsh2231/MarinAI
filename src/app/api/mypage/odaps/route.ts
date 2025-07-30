@@ -111,6 +111,7 @@ function transformSingleWrongNote(data: any): any {
         ex4str: data.ex4str || "",
         answer: data.answer || "",
         explanation: data.explanation || null,
+        imgPaths: data.imgPaths || [], // 이미지 경로 추가
         gichulset: {
           year: gichulset.year || null,
           type: gichulset.type || "",

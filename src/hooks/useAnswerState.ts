@@ -32,17 +32,9 @@ export function useAnswerState({
       if (auth.token && auth.isLoggedIn && odapsetId !== null) {
         try {
           await saveUserAnswer(questionId, choice, odapsetId, auth.token);
-          // eslint-disable-next-line no-console
-          console.log("답안이 서버에 저장되었습니다.");
         } catch (error) {
-          // eslint-disable-next-line no-console
           console.error("서버 저장 실패:", error);
         }
-      } else {
-        // eslint-disable-next-line no-console
-        console.log(
-          "비로그인 사용자"
-        );
       }
     },
     [auth.token, auth.isLoggedIn, odapsetId]

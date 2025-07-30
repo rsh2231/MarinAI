@@ -79,9 +79,9 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
   useEffect(() => {
     if (setWrongNotes) {
       setWrongNotes(allNotes);
-
-      console.log("[오답노트] 서버에서 받은 데이터:", allNotes);
     }
+
+    console.log("[오답노트] 서버에서 받은 데이터:", allNotes);
   }, [allNotes, setWrongNotes]);
   
   const filterOptions = useMemo(() => {
@@ -105,7 +105,29 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
     });
   }, [allNotes, filters]);
 
-  const displayNotes = showAll ? filteredNotes : filteredNotes.slice(0, 4);
+  // 시도 회수별로 그룹화하고 정렬
+  const groupedAndSortedNotes = useMemo(() => {
+    const grouped = filteredNotes.reduce((acc, note) => {
+      const attemptCount = note.attempt_count || 1;
+      if (!acc[attemptCount]) {
+        acc[attemptCount] = [];
+      }
+      acc[attemptCount].push(note);
+      return acc;
+    }, {} as Record<number, typeof filteredNotes>);
+
+    // 시도 회수별로 내림차순 정렬 (높은 시도 회수가 먼저)
+    const sortedGroups = Object.entries(grouped)
+      .sort(([a], [b]) => parseInt(b) - parseInt(a))
+      .map(([attemptCount, notes]) => ({
+        attemptCount: parseInt(attemptCount),
+        notes: notes.sort((a, b) => (b.id || 0) - (a.id || 0)) // 최신순 정렬
+      }));
+
+    return sortedGroups;
+  }, [filteredNotes]);
+
+  const displayGroups = showAll ? groupedAndSortedNotes : groupedAndSortedNotes.slice(0, 2);
 
   const handleFilterChange = (filterName: 'subject' | 'license' | 'grade', value: string) => {
     setFilters(prev => ({ ...prev, [filterName]: value }));
@@ -189,22 +211,43 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
       {filteredNotes.length === 0 ? (
         <p className="text-neutral-400">해당 조건의 오답노트가 없습니다.</p>
       ) : (
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
-          {displayNotes.map((note, index) => (
-            <WrongNoteItem
-              key={note.id}
-              note={note}
-              isOpen={openNoteIds.includes(note.id)}
-              isDeleting={deletingNoteIds.includes(note.id)}
-              onToggle={() => toggleNoteOpen(note.id)}
-              onDelete={() => deleteNote(note.id)}
-              index={index}
-            />
+        <div className="space-y-6">
+          {displayGroups.map((group) => (
+            <div key={group.attemptCount} className="space-y-3">
+              {/* 시도 회수별 헤더 */}
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <div className={`w-3 h-3 rounded-full ${
+                    group.attemptCount >= 3 ? 'bg-red-500' : 
+                    group.attemptCount === 2 ? 'bg-orange-500' : 'bg-yellow-500'
+                  }`}></div>
+                  <h4 className="text-sm font-bold text-neutral-300">
+                    {group.attemptCount}회 시도 문제 ({group.notes.length}개)
+                  </h4>
+                </div>
+                <div className="flex-1 h-px bg-neutral-600"></div>
+              </div>
+              
+              {/* 해당 시도 회수의 노트들 */}
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
+                {group.notes.map((note, index) => (
+                  <WrongNoteItem
+                    key={note.id}
+                    note={note}
+                    isOpen={openNoteIds.includes(note.id)}
+                    isDeleting={deletingNoteIds.includes(note.id)}
+                    onToggle={() => toggleNoteOpen(note.id)}
+                    onDelete={() => deleteNote(note.id)}
+                    index={index}
+                  />
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
 
-      {filteredNotes.length > 4 && (
+      {groupedAndSortedNotes.length > 2 && (
         <div className="flex justify-end mt-4">
           <button
             className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 px-3 py-2 rounded transition-all"

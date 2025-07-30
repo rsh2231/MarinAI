@@ -74,7 +74,6 @@ export function useExamData({
           round,
         });
         const userType = isLoggedIn && token ? "로그인" : "비로그인";
-        console.log(`[문제 fetch][exam][${userType}]`, params.toString());
         const responseData = await fetchExamQuestions({
           year,
           license,
@@ -82,7 +81,6 @@ export function useExamData({
           round,
           token: isLoggedIn ? token ?? undefined : undefined,
         });
-        console.log(`[문제 fetch][exam][응답]`, responseData);
         setOdapsetId(responseData.odapset_id ?? null);
         const allSubjectGroups = transformData(responseData.qnas);
         const filteredGroups = allSubjectGroups.filter((group) =>
