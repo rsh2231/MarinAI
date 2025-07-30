@@ -113,34 +113,35 @@ export function CbtInProgress({
                 {selectedIndex + 1} / {subjectNames.length}
               </span>
 
-              <Button
-                onClick={() => {
-                  if (selectedIndex < subjectNames.length - 1) {
-                    onSelectSubject(subjectNames[selectedIndex + 1]);
-                  }
-                }}
-                disabled={selectedIndex === subjectNames.length - 1}
-                className="flex items-center gap-2"
-              >
-                다음 과목
-                <ChevronRight className="w-4 h-4" />
-              </Button>
+              {selectedIndex === subjectNames.length - 1 ? (
+                <Button
+                  onClick={() => setIsModalOpen(true)}
+                  className="flex items-center gap-2"
+                >
+                  제출하기
+                  <Send className="w-4 h-4" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    if (selectedIndex < subjectNames.length - 1) {
+                      onSelectSubject(subjectNames[selectedIndex + 1]);
+                    }
+                  }}
+                  className="flex items-center gap-2"
+                >
+                  다음 과목
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              )}
             </div>
           )}
         </main>
       </div>
 
-      <div className="sticky bottom-4 right-4 flex justify-end p-4">
-        <Button
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg"
-        >
-          <Send className="w-4 h-4" />
-          제출하기
-        </Button>
-      </div>
 
-      <ScrollToTopButton />
+
+      <ScrollToTopButton scrollableRef={scrollRef} />
     </div>
   );
 }
