@@ -11,8 +11,6 @@ import {
 } from "@/atoms/examAtoms";
 import { Question, SubjectGroup } from "@/types/ProblemViewer";
 import { OneResult, saveManyUserAnswers } from "@/lib/wrongNoteApi";
-import { saveCbtResultToServer } from "@/lib/examApi";
-
 export interface UseCbtInProgressReturn {
   isModalOpen: boolean;
   setIsModalOpen: (open: boolean) => void;
@@ -147,20 +145,29 @@ export function useCbtInProgress(
         }
         return null;
       })
-              .filter((note): note is OneResult => note !== null);
+      .filter((note): note is OneResult => note !== null);
     if (auth.token && auth.isLoggedIn) {
-      try {
-        await saveCbtResultToServer(resultData, auth.token);
-      } catch (error) {
-        console.error("서버 저장 실패:", error);
-      }
       if (odapsetId && wrongNotes.length > 0) {
         try {
           console.log(`[CBT] 오답노트 ${wrongNotes.length}개를 서버에 저장합니다... (odapsetId: ${odapsetId}, 소요시간: ${actualTimeTaken}초)`);
+          console.log("[CBT] saveManyUserAnswers에 전송되는 데이터:", {
+            wrongNotes,
+            odapsetId,
+            token: auth.token ? "토큰 존재" : "토큰 없음",
+            actualTimeTaken
+          });
           await saveManyUserAnswers(wrongNotes, odapsetId, auth.token, actualTimeTaken);
+          console.log("[CBT] 오답노트 저장 성공!");
         } catch (e) {
           console.error("[오답노트 저장][cbt][실패]", e);
         }
+      } else {
+        console.log("[CBT] 오답노트 저장 조건 미충족:", {
+          hasToken: !!auth.token,
+          isLoggedIn: auth.isLoggedIn,
+          hasOdapsetId: !!odapsetId,
+          wrongNotesCount: wrongNotes.length
+        });
       }
     } else {
       if (typeof window !== "undefined" && "Notification" in window) {
@@ -182,7 +189,6 @@ export function useCbtInProgress(
     auth.token,
     auth.isLoggedIn,
     odapsetId,
-    saveCbtResultToServer,
     onSubmit,
     timeLeft,
     totalDuration,

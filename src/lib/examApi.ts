@@ -59,39 +59,3 @@ export const saveWrongNotes = async (notes: OneResult[], odapsetId: number, toke
         console.error("오답노트 저장 실패:", error);
     }
 };
-
-
-// CBT 결과 서버 저장 유틸
-export const saveExamResultToServer = async (resultData: unknown, token: string) => {
-  const response = await fetch("/api/exam/result", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(resultData),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "서버에 시험 결과를 저장하는데 실패했습니다.");
-  }
-  return response.json();
-};
-
-
-// CBT 결과 서버 저장 유틸
-export async function saveCbtResultToServer(resultData: unknown, token: string) {
-  const response = await fetch("/api/cbt/result", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(resultData),
-  });
-  if (!response.ok) {
-    throw new Error("서버 저장 실패");
-  }
-  return await response.json();
-}

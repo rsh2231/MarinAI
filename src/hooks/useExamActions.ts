@@ -72,11 +72,24 @@ export function useExamActions(
     if (isLoggedIn && token && odapsetId && wrongNotes.length > 0) {
       try {
         console.log(`[Exam Action] 오답노트 ${wrongNotes.length}개를 서버에 저장합니다... (odapsetId: ${odapsetId}, 소요시간: ${actualTimeTaken}초)`);
+        console.log("[Exam Action] saveManyUserAnswers에 전송되는 데이터:", {
+          wrongNotes,
+          odapsetId,
+          token: token ? "토큰 존재" : "토큰 없음",
+          actualTimeTaken
+        });
         await saveManyUserAnswers(wrongNotes, odapsetId, token, actualTimeTaken);
         console.log("[Exam Action] 오답노트 저장 성공!");
       } catch (e) {
         console.error("[Exam Action] 오답노트 저장 중 서버 에러 발생:", e);
       }
+    } else {
+      console.log("[Exam Action] 오답노트 저장 조건 미충족:", {
+        isLoggedIn,
+        hasToken: !!token,
+        hasOdapsetId: !!odapsetId,
+        wrongNotesCount: wrongNotes.length
+      });
     }
 
     setShowResult(true);
