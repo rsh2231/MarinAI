@@ -6,7 +6,7 @@ export async function GET() {
     const mockResults = [
       {
         id: 1,
-        title: "2024년 기관사 1급 2회 기출",
+        title: "2023년 기관사 1급 1회 기출",
         date: "2025-07-16",
         score: "88점",
         subjectScores: [
@@ -19,7 +19,7 @@ export async function GET() {
       },
       {
         id: 2,
-        title: "2024년 기관사 1급 1회 기출",
+        title: "2023년 기관사 1급 2회 기출",
         date: "2025-07-11",
         score: "82점",
         subjectScores: [
@@ -32,7 +32,7 @@ export async function GET() {
       },
       {
         id: 3,
-        title: "2023년 기관사 1급 2회 기출",
+        title: "2023년 기관사 1급 3회 기출",
         date: "2024-07-16",
         score: "90점",
         subjectScores: [
