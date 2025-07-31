@@ -24,12 +24,16 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
     imageFile: File | null,
     imageUrl?: string
   ) => {
+    // 텍스트와 이미지가 모두 없으면 전송하지 않음
     if (!messageContent.trim() && !imageFile && !imageUrl) return;
 
+    // 이미지만 있을 때는 빈 문자열 사용 (API에서 허용)
+    const questionText = messageContent.trim() || "";
+    
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: "user",
-      content: messageContent,
+      content: messageContent.trim() || "", // 빈 문자열 허용
       image: imageFile ? URL.createObjectURL(imageFile) : imageUrl,
     };
     setMessages((prev) => [...prev, userMessage]);
@@ -49,7 +53,8 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
     try {
       // 항상 FormData 사용
       const formData = new FormData();
-      formData.append("question", messageContent.trim());
+      formData.append("question", questionText);
+      // imageFile이 있을 때만 image 필드 추가 (initialImageUrl은 question에 포함됨)
       if (imageFile) formData.append("image", imageFile);
 
       const res = await fetch("/api/chat", {
@@ -103,7 +108,9 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
   // 초기 질문이 있을 경우 자동 전송
   useEffect(() => {
     if ((initialQuestion || initialImageUrl) && !initialMessageSent.current) {
-      sendMessage(initialQuestion || "", null, initialImageUrl);
+      // 이미지만 있을 때는 빈 문자열 전송
+      const questionText = initialQuestion || "";
+      sendMessage(questionText, null, initialImageUrl);
       initialMessageSent.current = true;
     }
   }, [initialQuestion, initialImageUrl]);

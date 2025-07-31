@@ -26,7 +26,8 @@ export async function POST(req: NextRequest) {
     const question = formData.get("question");
     const image = formData.get("image");
 
-    if (!question && !image) {
+    // question이 null이고 image도 없으면 에러 (빈 문자열은 허용)
+    if (question === null && !image) {
       return NextResponse.json(
         { error: "텍스트 또는 이미지가 필요합니다." },
         { status: 400 }

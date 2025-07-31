@@ -21,10 +21,14 @@ interface SidebarProps {
 
 // 컴포넌트 바깥에 선언
 const chatHistory = [
-  { id: 1, title: "오늘의 대화", date: "2025-07-15" },
-  { id: 2, title: "어제의 아이디어", date: "2025-07-14" },
-  { id: 3, title: "프로젝트 회의", date: "2025-07-14" },
-  { id: 4, title: "주간 보고서 초안", date: "2025-07-11" },
+  { id: 1, title: "해기사 기출문제 분석", date: "2025-07-15" },
+  { id: 2, title: "항해안전시설법 질문", date: "2025-07-14" },
+  { id: 3, title: "기관관리 문제 풀이", date: "2025-07-14" },
+  { id: 4, title: "해사법규 개념 정리", date: "2025-07-11" },
+  { id: 5, title: "항해술 실기 연습", date: "2025-07-10" },
+  { id: 6, title: "기관학 이론 복습", date: "2025-07-09" },
+  { id: 7, title: "해양기상학 문제", date: "2025-07-08" },
+  { id: 8, title: "선박운용학 질문", date: "2025-07-07" },
 ];
 
 export default function Sidebar({ isOpen }: SidebarProps) {
