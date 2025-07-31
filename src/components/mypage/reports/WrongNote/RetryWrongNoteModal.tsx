@@ -262,13 +262,6 @@ export default function RetryWrongNoteModal({
               )}
             </AnimatePresence>
 
-            {/* 문항 수 표시 */}
-            <div className="flex justify-center items-center mb-4">
-              <div className="bg-neutral-700/50 border border-neutral-600 rounded-full px-4 py-2 text-sm font-medium text-neutral-300">
-                {current + 1} / {wrongNotes.length}
-              </div>
-            </div>
-
             {/* 문제 정보 표시 */}
             <div className="text-center mb-4">
               <h3 className="text-lg font-semibold text-white mb-2">
@@ -318,23 +311,34 @@ export default function RetryWrongNoteModal({
             </div>
 
             <div
-              className="flex justify-center items-center gap-4 mt-6 flex-shrink-0"
+              className="flex justify-center items-center gap-4 mt-6 flex-shrink-0 sm:flex-row sm:justify-center"
               onClick={(e) => e.stopPropagation()}
             >
               <Button
-                variant="neutral"
-                className="px-4 py-2 rounded bg-secondary text-white disabled:opacity-50"
                 onClick={() => handleMove(current - 1)}
                 disabled={current === 0}
+                variant="neutral"
+                className="flex items-center gap-2"
               >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
                 이전 문제
               </Button>
+
+              <span className="text-gray-400 text-sm">
+                {current + 1} / {wrongNotes.length}
+              </span>
+
               <Button
-                className="px-4 py-2 rounded bg-primary text-white disabled:opacity-50"
                 onClick={() => handleMove(current + 1)}
                 disabled={current === wrongNotes.length - 1}
+                className="flex items-center gap-2"
               >
                 다음 문제
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Button>
             </div>
           </motion.div>

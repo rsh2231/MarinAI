@@ -132,30 +132,35 @@ export function ExamSession({ onSubmit, scrollRef }: ExamSessionProps) {
             );
           })}
 
-          <div className="mt-8 flex flex-row justify-center items-center gap-4">
+          <div className="mt-8 flex flex-row justify-center items-center gap-4 sm:flex-row sm:justify-center">
             <Button
-              variant="neutral"
               onClick={() => handleSubjectChange(subjectNames[selectedIndex - 1])}
               disabled={selectedIndex <= 0}
-              className="w-auto"
+              className="flex items-center gap-2"
             >
-              <ChevronLeft className="mr-1 h-4 w-4" /> 이전 과목
+              <ChevronLeft className="w-4 h-4" />
+              이전 과목
             </Button>
+
+            <span className="text-gray-400 text-sm">
+              {selectedIndex + 1} / {subjectNames.length}
+            </span>
 
             {selectedIndex === subjectNames.length - 1 ? (
               <Button
                 onClick={() => setIsSubmitModalOpen(true)}
-                variant="primary"
-                className="w-auto"
+                className="flex items-center gap-2"
               >
-                제출하기 <Send className="ml-1 h-4 w-4" />
+                제출하기
+                <Send className="w-4 h-4" />
               </Button>
             ) : (
               <Button
                 onClick={() => handleSubjectChange(subjectNames[selectedIndex + 1])}
-                className="w-auto"
+                className="flex items-center gap-2"
               >
-                다음 과목 <ChevronRight className="ml-1 h-4 w-4" />
+                다음 과목
+                <ChevronRight className="w-4 h-4" />
               </Button>
             )}
           </div>
