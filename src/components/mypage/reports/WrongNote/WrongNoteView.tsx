@@ -1,71 +1,15 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import { BookX, ChevronUp, ChevronDown } from "lucide-react";
 import Button from "@/components/ui/Button";
-import { WrongNote } from "@/types/wrongNote";
 import { useWrongNotes } from "@/hooks/useWrongNotes";
 import { WrongNoteItem } from "./WrongNoteItem";
 import RetryWrongNoteModal from "./RetryWrongNoteModal";
-
-interface WrongNoteFiltersProps {
-  filters: {
-    subjects: string[];
-    licenses: string[];
-    grades: string[];
-  };
-  selectedValues: {
-    subject: string;
-    license: string;
-    grade: string;
-  };
-  onFilterChange: (filterName: 'subject' | 'license' | 'grade', value: string) => void;
-}
-
-const WrongNoteFilters = ({ filters, selectedValues, onFilterChange }: WrongNoteFiltersProps) => (
-  <div className="flex flex-wrap gap-2">
-    {/* 과목 필터 */}
-    <select
-      value={selectedValues.subject}
-      onChange={(e) => onFilterChange('subject', e.target.value)}
-      className="h-9 px-3 py-1.5 text-xs bg-neutral-700 border border-neutral-600 rounded text-neutral-300 focus:outline-none focus:border-blue-500 min-w-[80px]"
-    >
-      <option value="">전체 과목</option>
-      {filters.subjects.map((subject) => (
-        <option key={subject} value={subject}>{subject}</option>
-      ))}
-    </select>
-
-    {/* 자격증 필터 */}
-    <select
-      value={selectedValues.license}
-      onChange={(e) => onFilterChange('license', e.target.value)}
-      className="h-9 px-3 py-1.5 text-xs bg-neutral-700 border border-neutral-600 rounded text-neutral-300 focus:outline-none focus:border-blue-500 min-w-[80px]"
-    >
-      <option value="">전체 자격증</option>
-      {filters.licenses.map((license) => (
-        <option key={license} value={license}>{license}</option>
-      ))}
-    </select>
-
-    {/* 급수 필터 */}
-    <select
-      value={selectedValues.grade}
-      onChange={(e) => onFilterChange('grade', e.target.value)}
-      className="h-9 px-3 py-1.5 text-xs bg-neutral-700 border border-neutral-600 rounded text-neutral-300 focus:outline-none focus:border-blue-500 min-w-[80px]"
-    >
-      <option value="">전체 급수</option>
-      {filters.grades.map((grade) => (
-        <option key={grade} value={grade}>{grade}</option>
-      ))}
-    </select>
-  </div>
-);
-
-interface WrongNoteViewProps {
-  setWrongNotes?: (notes: WrongNote[]) => void;
-}
+import { WrongNoteFilterControls } from "./components/WrongNoteFilters";
+import { WrongNoteViewProps, WrongNoteFilters as WrongNoteFiltersType } from "./types";
+import { useWrongNoteData } from "./hooks/useWrongNoteData";
 
 export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
   const { allNotes, loading, error, deletingNoteIds, deleteFeedback, fetchWrongNotes, deleteNote, clearDeleteFeedback } = useWrongNotes();
@@ -74,7 +18,7 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
   const [showAll, setShowAll] = useState(false);
 
   // 필터 상태
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<WrongNoteFiltersType>({
     subject: "",
     license: "",
     grade: "",
@@ -92,57 +36,12 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
     }
   }, [allNotes, setWrongNotes]);
 
-  // 필터링된 노트들
-  const filteredNotes = useMemo(() => {
-    return allNotes.filter(note => {
-      const q = note.gichul_qna;
-      if (!q) return false;
-
-      const subjectMatch = !filters.subject || q.subject === filters.subject;
-      const licenseMatch = !filters.license || q.gichulset?.type === filters.license;
-      const gradeMatch = !filters.grade || q.gichulset?.grade === filters.grade;
-
-      return subjectMatch && licenseMatch && gradeMatch;
-    });
-  }, [allNotes, filters]);
-
-  // 시도 회수별로 그룹화하고 정렬
-  const groupedAndSortedNotes = useMemo(() => {
-    const groups: { [key: number]: WrongNote[] } = {};
-    
-    filteredNotes.forEach(note => {
-      const attemptCount = note.attempt_count || 1;
-      if (!groups[attemptCount]) {
-        groups[attemptCount] = [];
-      }
-      groups[attemptCount].push(note);
-    });
-
-    return Object.entries(groups)
-      .map(([attemptCount, notes]) => ({
-        attemptCount: parseInt(attemptCount),
-        notes: notes.sort((a, b) => (b.id || 0) - (a.id || 0)) // 최신순 정렬
-      }))
-      .sort((a, b) => b.attemptCount - a.attemptCount); // 시도 회수 높은 순
-  }, [filteredNotes]);
+  const { filteredNotes, groupedAndSortedNotes, filterOptions } = useWrongNoteData(allNotes, filters);
 
   // 표시할 그룹 결정 (showAll이 false면 상위 2개만)
   const displayGroups = showAll ? groupedAndSortedNotes : groupedAndSortedNotes.slice(0, 2);
 
-  // 필터 옵션들
-  const filterOptions = useMemo(() => {
-    const subjects = [...new Set(allNotes.map(note => note.gichul_qna?.subject).filter(Boolean))] as string[];
-    const licenses = [...new Set(allNotes.map(note => note.gichul_qna?.gichulset?.type).filter(Boolean))] as string[];
-    const grades = [...new Set(allNotes.map(note => note.gichul_qna?.gichulset?.grade).filter(Boolean))] as string[];
-
-    return {
-      subjects: subjects.sort(),
-      licenses: licenses.sort(),
-      grades: grades.sort(),
-    };
-  }, [allNotes]);
-
-  const handleFilterChange = (filterName: 'subject' | 'license' | 'grade', value: string) => {
+  const handleFilterChange = (filterName: keyof WrongNoteFiltersType, value: string) => {
     setFilters(prev => ({ ...prev, [filterName]: value }));
   };
 
@@ -221,7 +120,7 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
           >
             오답 다시 풀기
           </Button>
-          <WrongNoteFilters
+          <WrongNoteFilterControls
             filters={filterOptions}
             selectedValues={filters}
             onFilterChange={handleFilterChange}

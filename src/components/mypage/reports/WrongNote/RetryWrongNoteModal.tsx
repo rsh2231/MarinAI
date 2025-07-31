@@ -8,23 +8,9 @@ import incorrectAnimation from "@/assets/animations/incorrect.json";
 import QuestionCard from "@/components/problem/UI/QuestionCard";
 import { Question } from "@/types/ProblemViewer";
 import Button from "@/components/ui/Button";
-
-// 이미지 코드와 앞뒤 공백/개행을 함께 찾는 정규식
-const imageCodeWithWhitespaceRegex = /\s*(@pic[\w_-]+)\s*/i;
-
-const findImagePath = (code: string, paths: string[]): string | undefined => {
-  const key = code.replace("@", "").trim().toLowerCase();
-  const partialMatch = paths.find((p) => {
-    const fileName = p.toLowerCase();
-    return fileName.includes(key);
-  });
-  
-  if (partialMatch) {
-    return partialMatch;
-  }
-  
-  return undefined;
-};
+import { RetryModalProps } from "./types";
+import { WrongNoteBadges } from "./components/WrongNoteBadges";
+import { useWrongNoteData } from "./hooks/useWrongNoteData";
 
 function CloseIcon() {
   return (
@@ -45,21 +31,11 @@ function CloseIcon() {
   );
 }
 
-export default function RetryWrongNoteModal({
-  isOpen,
-  onClose,
-  wrongNotes,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  wrongNotes: unknown[];
-}) {
+export default function RetryWrongNoteModal({ isOpen, onClose, wrongNotes }: RetryModalProps) {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | undefined>(undefined);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(
-    null
-  );
+  const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(null);
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   const handleClose = () => {
@@ -70,17 +46,16 @@ export default function RetryWrongNoteModal({
     onClose();
   };
 
+  const { processWrongNote } = useWrongNoteData(wrongNotes || [], { subject: "", license: "", grade: "" });
+
   if (!wrongNotes || wrongNotes.length === 0) {
     return null;
   }
 
-  // gichul_qna → Question 변환
-  const note = wrongNotes[current] as unknown;
-  const q = (typeof note === 'object' && note !== null && 'gichul_qna' in note)
-    ? (note as { gichul_qna: unknown })['gichul_qna']
-    : undefined;
+  const currentNote = wrongNotes[current];
+  const processedNote = processWrongNote(currentNote);
 
-  if (!q || typeof q !== 'object' || q === null) {
+  if (!processedNote) {
     return (
       <AnimatePresence>
         {isOpen && (
@@ -120,83 +95,17 @@ export default function RetryWrongNoteModal({
       </AnimatePresence>
     );
   }
-  const qObj = q as {
-    ex1str?: string;
-    ex2str?: string;
-    ex3str?: string;
-    ex4str?: string;
-    ex5str?: string;
-    ex6str?: string;
-    id?: string | number;
-    qnum?: string | number;
-    questionstr?: string;
-    answer?: string;
-    explanation?: string;
-    subject?: string;
-    imgPaths?: string[];
-    gichulset?: { type?: string; grade?: string; inning?: number; year?: number };
-  };
-  // 문제 본문에서 이미지 처리
-  let questionStr = qObj.questionstr ?? "";
-  let questionImagePath: string | undefined;
-
-  const questionImageMatch = questionStr.match(imageCodeWithWhitespaceRegex);
-  if (questionImageMatch && qObj.imgPaths) {
-    const matchedString = questionImageMatch[0];
-    const code = questionImageMatch[1];
-
-    const foundPath = findImagePath(code, qObj.imgPaths);
-    if (foundPath) {
-      questionImagePath = foundPath;
-      questionStr = questionStr.replace(matchedString, "").trim();
-    }
-  }
-
-  const choices = [
-    { label: "가", text: qObj.ex1str ?? "", isImage: false },
-    { label: "나", text: qObj.ex2str ?? "", isImage: false },
-    { label: "사", text: qObj.ex3str ?? "", isImage: false },
-    { label: "아", text: qObj.ex4str ?? "", isImage: false },
-    ...(qObj.ex5str ? [{ label: "마", text: qObj.ex5str ?? "", isImage: false }] : []),
-    ...(qObj.ex6str ? [{ label: "바", text: qObj.ex6str ?? "", isImage: false }] : []),
-  ].map((choice) => {
-    let choiceText = choice.text;
-    let choiceImagePath: string | undefined;
-
-    const choiceImageMatch = choice.text.match(imageCodeWithWhitespaceRegex);
-    if (choiceImageMatch && qObj.imgPaths) {
-      const matchedString = choiceImageMatch[0];
-      const code = choiceImageMatch[1];
-      
-      const foundPath = findImagePath(code, qObj.imgPaths);
-      if (foundPath) {
-        choiceImagePath = foundPath;
-        choiceText = choiceText.replace(matchedString, "").trim();
-      }
-    }
-    
-    return {
-      ...choice,
-      isImage: !!choiceImagePath,
-      text: choiceText,
-      imageUrl: choiceImagePath
-        ? `/api/solve/img/${choiceImagePath}`
-        : undefined,
-    };
-  });
 
   const question: Question = {
-    id: qObj.id !== undefined ? Number(qObj.id) : 0,
-    num: qObj.qnum !== undefined ? Number(qObj.qnum) : 0,
-    questionStr,
-    choices,
-    answer: qObj.answer ?? "",
-    explanation: qObj.explanation ?? "",
-    subjectName: qObj.subject ?? "",
-    isImageQuestion: !!questionImagePath,
-    imageUrl: questionImagePath
-      ? `/api/solve/img/${questionImagePath}`
-      : undefined,
+    id: processedNote.id,
+    num: processedNote.metadata.qnum || processedNote.id,
+    questionStr: processedNote.questionStr,
+    choices: processedNote.choices,
+    answer: processedNote.answer,
+    explanation: processedNote.explanation,
+    subjectName: processedNote.subjectName,
+    isImageQuestion: processedNote.isImageQuestion,
+    imageUrl: processedNote.imageUrl,
   };
 
   // 문제 이동 시 상태 초기화
@@ -265,34 +174,16 @@ export default function RetryWrongNoteModal({
             {/* 문제 정보 표시 */}
             <div className="text-center mb-4">
               <h3 className="text-lg font-semibold text-white mb-2">
-                {qObj.subject} - 문제{qObj.qnum}
+                {processedNote.subjectName} - 문제{processedNote.metadata.qnum}
               </h3>
               {/* 배지 정보 */}
               <div className="flex justify-center items-center gap-1.5 flex-wrap">
-                {/* 연도 */}
-                {qObj.gichulset?.year && (
-                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-purple-500/20 to-purple-600/20 text-purple-300 border border-purple-500/30 backdrop-blur-sm shadow-sm transition-all duration-200 hover:from-purple-500/30 hover:to-purple-600/30`}>
-                    {qObj.gichulset.year}년
-                  </span>
-                )}
-                {/* 자격증 */}
-                {qObj.gichulset?.type && (
-                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-500/20 to-blue-600/20 text-blue-300 border border-blue-500/30 backdrop-blur-sm shadow-sm transition-all duration-200 hover:from-blue-500/30 hover:to-blue-600/30`}>
-                    {qObj.gichulset.type}
-                  </span>
-                )}
-                {/* 급수 */}
-                {qObj.gichulset?.grade && qObj.gichulset.type !== "소형선박조종사" && (
-                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-green-500/20 to-green-600/20 text-green-300 border border-green-500/30 backdrop-blur-sm shadow-sm transition-all duration-200 hover:from-green-500/30 hover:to-green-600/30`}>
-                    {qObj.gichulset.grade}급
-                  </span>
-                )}
-                {/* 회차 */}
-                {qObj.gichulset?.inning && (
-                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-orange-500/20 to-orange-600/20 text-orange-300 border border-orange-500/30 backdrop-blur-sm shadow-sm transition-all duration-200 hover:from-orange-500/30 hover:to-orange-600/30`}>
-                    {qObj.gichulset.inning}회차
-                  </span>
-                )}
+                <WrongNoteBadges
+                  year={processedNote.metadata.year}
+                  type={processedNote.metadata.type}
+                  grade={processedNote.metadata.grade}
+                  inning={processedNote.metadata.inning}
+                />
               </div>
             </div>
 
