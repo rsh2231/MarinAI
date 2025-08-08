@@ -15,6 +15,7 @@ import ExamContainer from "@/components/problem/exam/ExamContainer";
 import ModeSelectionPrompt from "@/components/solve/ModeSelectionPrompt";
 import { OmrSheet } from "@/components/problem/UI/OmrSheet";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
+import FloatingChatButton from "@/components/chat/FloatingChatButton";
 
 export default function SolvePage() {
   return (
@@ -110,6 +111,7 @@ function SolvePageContent() {
         className="fixed bottom-6 right-6 lg:right-15 p-3 bg-blue-600 text-white rounded-full shadow-xl hover:bg-blue-700 hover:shadow-2xl transition-all duration-200 z-40 backdrop-blur-sm bg-opacity-90"
         scrollableRef={mainContentRef}
       />
+      {mode === 'practice' && <FloatingChatButton />}
     </div>
   );
 }

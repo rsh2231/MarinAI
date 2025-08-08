@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
@@ -17,29 +17,25 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
   const [retryModalOpen, setRetryModalOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
-  // 필터 상태
   const [filters, setFilters] = useState<WrongNoteFiltersType>({
     subject: "",
     license: "",
     grade: "",
   });
 
-  // 컴포넌트 마운트 시 오답노트 데이터 가져오기
   useEffect(() => {
     fetchWrongNotes();
   }, [fetchWrongNotes]);
 
-  // 부모 컴포넌트에 오답노트 데이터 전달
   useEffect(() => {
     if (setWrongNotes) {
       setWrongNotes(allNotes);
     }
   }, [allNotes, setWrongNotes]);
 
-  const { filteredNotes, groupedAndSortedNotes, filterOptions } = useWrongNoteData(allNotes, filters);
+  const { filteredNotes, filterOptions } = useWrongNoteData(allNotes, filters);
 
-  // 표시할 그룹 결정 (showAll이 false면 상위 2개만)
-  const displayGroups = showAll ? groupedAndSortedNotes : groupedAndSortedNotes.slice(0, 2);
+  const displayNotes = showAll ? filteredNotes : filteredNotes.slice(0, 4);
 
   const handleFilterChange = (filterName: keyof WrongNoteFiltersType, value: string) => {
     setFilters(prev => ({ ...prev, [filterName]: value }));
@@ -53,7 +49,6 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
     );
   };
 
-  // 로딩 상태 처리
   if (loading) {
     return (
       <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
@@ -68,7 +63,6 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
     );
   }
 
-  // 에러 상태 처리
   if (error) {
     return (
       <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
@@ -91,7 +85,6 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
         wrongNotes={filteredNotes}
       />
       
-      {/* 삭제 에러 피드백 메시지 */}
       {deleteFeedback && deleteFeedback.type === 'error' && (
         <div className="mb-4 p-3 rounded-md flex items-center justify-between bg-red-600/20 border border-red-500/50 text-red-300">
           <span className="flex items-center gap-2">
@@ -131,45 +124,24 @@ export default function WrongNoteView({ setWrongNotes }: WrongNoteViewProps) {
       {filteredNotes.length === 0 ? (
         <p className="text-neutral-400">해당 조건의 오답노트가 없습니다.</p>
       ) : (
-        <div className="space-y-6">
-          {displayGroups.map((group) => (
-            <div key={group.attemptCount} className="space-y-3">
-              {/* 시도 회수별 헤더 */}
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2">
-                  <div className={`w-3 h-3 rounded-full ${
-                    group.attemptCount >= 3 ? 'bg-red-500' : 
-                    group.attemptCount === 2 ? 'bg-orange-500' : 'bg-yellow-500'
-                  }`}></div>
-                  <h4 className="text-sm font-bold text-neutral-300">
-                    {group.attemptCount}회 시도 문제 ({group.notes.length}개)
-                  </h4>
-                </div>
-                <div className="flex-1 h-px bg-neutral-600"></div>
-              </div>
-              
-              {/* 해당 시도 회수의 노트들 */}
-              <AnimatePresence mode="popLayout">
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-start">
-                  {group.notes.map((note, index) => (
-                    <WrongNoteItem
-                      key={note.id}
-                      note={note}
-                      isOpen={openNoteIds.includes(note.id)}
-                      isDeleting={deletingNoteIds.includes(note.id)}
-                      onToggle={() => toggleNoteOpen(note.id)}
-                      onDelete={() => deleteNote(note.id)}
-                      index={index}
-                    />
-                  ))}
-                </ul>
-              </AnimatePresence>
-            </div>
-          ))}
-        </div>
+        <AnimatePresence mode="popLayout">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-start">
+            {displayNotes.map((note, index) => (
+              <WrongNoteItem
+                key={note.id}
+                note={note}
+                isOpen={openNoteIds.includes(note.id)}
+                isDeleting={deletingNoteIds.includes(note.id)}
+                onToggle={() => toggleNoteOpen(note.id)}
+                onDelete={() => deleteNote(note.id)}
+                index={index}
+              />
+            ))}
+          </ul>
+        </AnimatePresence>
       )}
 
-      {groupedAndSortedNotes.length > 2 && (
+      {filteredNotes.length > 4 && (
         <div className="flex justify-end mt-4">
           <button
             className="text-xs sm:text-sm text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 px-2 sm:px-3 py-2 rounded transition-all"
