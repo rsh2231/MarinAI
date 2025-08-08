@@ -1,53 +1,49 @@
-import { NextResponse } from 'next/server';
+'use server';
 
-export async function GET() {
-  try {
-    // Mock data for CBT results
-    const mockResults = [
-      {
-        id: 1,
-        title: "기관사 1급 CBT 모의고사 1회차",
-        date: "2025-07-18",
-        score: "91점",
-        subjectScores: [
-          { subject: "기관1", score: 85 },
-          { subject: "기관2", score: 90 },
-          { subject: "기관3", score: 78 },
-          { subject: "직무일반", score: 70 },
-          { subject: "영어", score: 65 }
-        ]
-      },
-      {
-        id: 2,
-        title: "기관사 1급 CBT 모의고사 2회차",
-        date: "2025-07-12",
-        score: "85점",
-        subjectScores: [
-          { subject: "기관1", score: 80 },
-          { subject: "기관2", score: 85 },
-          { subject: "기관3", score: 72 },
-          { subject: "직무일반", score: 68 },
-          { subject: "영어", score: 60 }
-        ]
-      },
-      {
-        id: 3,
-        title: "기관사 1급 CBT 모의고사 3회차",
-        date: "2024-07-18",
-        score: "89점",
-        subjectScores: [
-          { subject: "기관1", score: 88 },
-          { subject: "기관2", score: 92 },
-          { subject: "기관3", score: 80 },
-          { subject: "직무일반", score: 75 },
-          { subject: "영어", score: 70 }
-        ]
-      }
-    ];
+import { NextRequest, NextResponse } from "next/server";
 
-    return NextResponse.json(mockResults);
-  } catch (error) {
-    console.error('Error fetching CBT results:', error);
-    return NextResponse.json({ error: 'Failed to fetch CBT results' }, { status: 500 });
+export async function GET(request: NextRequest) {
+  const baseUrl = process.env.EXTERNAL_API_BASE_URL;
+  if (!baseUrl) {
+    return NextResponse.json(
+      { message: "서버 구성 오류: API 기본 주소가 설정되지 않았습니다." },
+      { status: 500 }
+    );
   }
-} 
+
+  try {
+    const authHeader = request.headers.get("authorization");
+    if (!authHeader) {
+      return NextResponse.json(
+        { message: "인증 토큰이 필요합니다." },
+        { status: 401 }
+      );
+    }
+
+    const targetUrl = `${baseUrl}/mypage/cbt_results`;
+
+    const apiResponse = await fetch(targetUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": authHeader,
+      },
+      cache: "no-store",
+    });
+
+    const data = await apiResponse.json();
+
+    if (!apiResponse.ok) {
+      console.error(`Error from external API (${apiResponse.status}):`, data);
+      return NextResponse.json(data, { status: apiResponse.status });
+    }
+
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("API Error:", error);
+    return NextResponse.json(
+      { message: "외부 API 서버와 통신 중 오류가 발생했습니다." },
+      { status: 502 } // Bad Gateway
+    );
+  }
+}
