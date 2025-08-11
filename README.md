@@ -1,159 +1,95 @@
-「해기사 시험 대비 지능형 QA 튜터 서비스 구축」
+# MarinAI - AI 기반 학습 및 CBT 플랫폼
 
-2025.07.08.
-● 메인 페이지
-- gemini 2.5 flash api 연동
-- 이미지, 텍스트를 입력하여 chat 페이지로 전달
+## 📖 프로젝트 소개
 
-● 기출문제풀이
-- 연습 모드 / 실전 모드 UI/UX 개선
+**MarinAI**는 AI 기술을 활용하여 사용자 맞춤형 학습 경험을 제공하는 차세대 CBT(Computer-Based Testing) 플랫폼입니다. 사용자들은 AI 챗봇과 대화하며 문제를 해결하고, 실제 시험과 유사한 환경에서 모의고사를 치르며, AI 기반의 오답 분석 및 학습 스케줄 관리를 통해 학습 효율을 극대화할 수 있습니다.
 
-● 마린소프트 김대만 차장 통화
-- 프로젝트 진행 상황 전달
-- LLM 모델 및 데이터 구조 질의
-- AI를 활용한 개인별 맞춤형 기능 확장 고려(ex. 진로 로드맵, 데일리 문제 생성, 강의 영상 생성 등)
-- 추후 시연 동영상을 통한 중간 점검 예정
+## ✨ 주요 기능
 
-2025.07.14.
-● ChatPage
-- 타이핑 효과, 스크롤 등 UI/UX 개선
+- **🤖 AI 문제 풀이 챗봇**: AI와 대화하며 문제를 질문하고 해결하는 대화형 학습 인터페이스를 제공합니다.
+- **📝 CBT 모의고사**: 실제 시험 환경과 유사한 UI/UX에서 모의고사를 응시하고 결과를 즉시 확인할 수 있습니다.
+- **📊 AI 오답 노트 및 분석**: AI가 틀린 문제를 분석하고, 관련 개념과 유사 문제를 추천하여 체계적인 학습을 돕습니다.
+- **📈 마이페이지 대시보드**: CBT 및 모의고사 결과, 정답률 추이 등을 시각적인 차트로 제공하여 학습 성과를 한눈에 파악할 수 있습니다.
+- **📅 학습 스케줄 관리**: 캘린더를 통해 학습 계획, 시험 일정 등을 손쉽게 관리할 수 있습니다.
+- **💻 다양한 문제 풀이 모드**: 일반 풀이 모드와 연습 모드를 선택하여 유연하게 학습을 진행할 수 있습니다.
+- **🔐 사용자 인증**: 이메일/패스워드 및 소셜 로그인(OAuth) 기능을 통해 안전하게 접속할 수 있습니다.
 
-● CBT
-- UI/UX 개선
-- 백엔드 코드 연동
-- 코드 분리 및 리팩토링
+## 🛠️ 기술 스택
 
-● 시험일정
-- iframe 활용
-- https://lems.seaman.or.kr/Lems/LAExamSchedule/selectLAExamScheduleView.do 연동 개선 필요
+- **프레임워크**: Next.js (v15)
+- **언어**: TypeScript
+- **스타일링**: Tailwind CSS
+- **상태 관리**: Jotai
+- **인증**: NextAuth.js
+- **AI**: Google Gemini, OpenAI
+- **차트**: Recharts, Chart.js
+- **UI/UX**: Framer Motion, Lottie for animations
 
+## 🚀 시작하기
 
-2025.07.15.
-● 기출문제풀이
-- ScrollToTop 버튼 에러 및 UX 개선
-- 해설 API 개선
-- Omr시트 연동 개선
-- 유리보수를 위한 코드 리팩토링
+### 1. 프로젝트 클론
 
-2025.07.16.
-● 기출문제풀이
-- scroll 이슈 해결
+```bash
+git clone https://github.com/your-repository/MarinAI.git
+cd MarinAI
+```
 
-● CBT
-- CBTSetting UI/UX 개선
-- 이미지 안나오는 문제 개선
+### 2. 의존성 설치
 
+이 프로젝트는 `npm`을 사용합니다.
 
-2025.07.17.
-● 메인 페이지
-- 회원가입 백엔드 연동(username, indivname password)
-- 회원 정보 가져오는 로직 필요
-- ExamViewer U/UX 개선(타이머, omr 등)
+```bash
+npm install
+```
 
-● 기출문제풀이
-- Exam, CBT UI/UX 개선
+### 3. 개발 서버 실행
 
-2025.07.18.
-● 마이페이지
-MyPage (최상위 페이지 컴포넌트)
-├─ WrongNoteView (해기사 시험 오답노트 리스트 & 요약)
-├─ PracticeResultView (기출문제 실전모드 결과 요약 및 상세)
-├─ CbtResultView (CBT 모의시험 결과 리스트 및 통계)
-├─ PerformanceRadarChart (과목별 성과를 시각화하는 레이더 차트)
-├─ UserProfile (사용자 기본정보, 닉네임, 이메일 등)
+```bash
+npm run dev
+```
 
+이제 브라우저에서 `http://localhost:3000`으로 접속하여 애플리케이션을 확인할 수 있습니다.
 
-● 기출문제풀이, CBT
-- 이미지 데이터에 \n@PIC1113와 형식이 있어서 렌더링 안되는 문제 해결
+## 📜 사용 가능한 스크립트
 
+- `npm run dev`: 개발 모드로 애플리케이션을 실행합니다. (Turbopack 사용)
+- `npm run build`: 프로덕션용으로 애플리케이션을 빌드합니다.
+- `npm run start`: 빌드된 프로덕션 서버를 시작합니다.
+- `npm run lint`: ESLint를 사용하여 코드 스타일을 검사합니다.
 
-2025.07.21.
-● 로그인
-- OAuth2 연동(백엔드 로직 개선중)
+## 📂 프로젝트 구조
 
-● 마이페이지
-- 백엔드 연동(오답노트, 기출문제 및 CBT 풀이 결과)
-- UI/UX 개선(레이아웃 변경, 슬라이딩 스클롤 방식으로 변경)
-- 오답노트 개선
+```
+c:/work/MarinAI/
+├── public/              # 정적 에셋 (이미지, 폰트 등)
+├── src/
+│   ├── app/             # Next.js App Router: 페이지 및 API 라우트
+│   │   ├── api/         # 백엔드 API 엔드포인트
+│   │   ├── (pages)/     # 사용자에게 보여지는 페이지
+│   │   └── layout.tsx   # 전역 레이아웃
+│   ├── assets/          # Lottie 애니메이션 등 에셋
+│   ├── atoms/           # Jotai 상태 관리 아톰
+│   ├── components/      # 재사용 가능한 UI 컴포넌트
+│   ├── constants/       # 전역 상수
+│   ├── hooks/           # 커스텀 React 훅
+│   ├── lib/             # 공통 유틸리티, API 클라이언트, 스키마
+│   ├── styles/          # 전역 스타일
+│   └── types/           # TypeScript 타입 정의
+├── .env.example         # 환경 변수 예시 파일
+├── next.config.ts       # Next.js 설정
+├── package.json         # 프로젝트 의존성 및 스크립트
+└── tsconfig.json        # TypeScript 설정
+```
 
-2025.07.22.
-● 로그인
-- OAuth2 연동(구글 로그인 백엔드 연동 개선)
+## 🌐 API 엔드포인트
 
-● Cbt
-- OmrSheet 연동 오류 개선
-- ResultView 스크롤 문제 해결
+주요 API 엔드포인트는 `src/app/api` 디렉토리 내에 정의되어 있습니다.
 
-● 기출문제풀이
-- modesection 등장 시 플리커링 개선
-
-● 오답노트
-- Practice / Exam / CBT 오답노트 저장 로직 백엔드 연동
-- 미답도 오답으로 간주로하는 로직 백엔드와 논의 필요
-
-2025.07.22.
-- LoadingSpinner 분리 및 재사용
-- CbtSetting 튀는 현상 개선
-
-● 로그인
-- next/image 사용으로 CORS 해결하여 외부 이미지 가져오기
-- next.config 도메인 추가
-
-● 시험일정
-- ScrollToTop 오류 개선
-
-● Chat
-- ChaInput 복사/붙여넣기 로직 추가
-- 유지보수를 위한 코드 분리 및 리펙터링
-
-● ResultView
-- 다시 풀기 로직 개선 필요
-
-2025.07.24.
-● 시험일정
-- 테이블 형에서 카드형으로 디자인 변경
-- 마감, 예정 등 일정에 따른 배지 생성
-- 안내 문구 추가
-
-● ResultView
-- 다시 풀기 로직 개선 완료
-- Exam, Cbt에서 rerty관련 함수를 ResultView로 props로 전달
-- 이중 스크롤 개선 필요
-
-● 마이페이지
-- AI 학습진단 UI 추가
-- 오답노트 UI QuestionResultCard와 통일
-- 해설 보기 클릭 시 튐 현상 개선
-- 코드 리펙터링을 통한 유지보수성 향상
-
-● ExamView
-- 코드 리펙터링을 통한 유지보수성 향상
-
-
-2025.07.25.
-● Exam모드
-- 리펙터링 과정에서 QuestionCard - SubjectTabs 연동 끊어짐 오류 개선
-
-● 마이페이지
-- 오답노트, 기출문제풀이결과, CBT풀이결과 백엔드 연동
-- AI 학습진단 및 gemini-2.5 flash 연동, 백엔드로 이관
-- UI 등장 애니메이션 개선
-
-● 오답노트
-- 자격, 급수에 대한 경로 표시 필요
-- 백엔드에서 이미지 경로 보내주어야 함
-
-● Cbt
-- 코드 분리 및 리펙터링 진행
-
-
-2025.07.28
-● 오답노트 
-- 오답노트 다시 풀기 UI 개선
-- 오버레이 닫기 삭제. X버튼 눌러야만 닫기 가능
-
-● 마이페이지
-- AI 학습진단 백엔드 연동
-
-● 문제풀이
-- 문제 본문, 문항 보기 이미지 렌더링 사이즈 개선
+- `/api/auth/*`: 회원가입, 로그인, 로그아웃 등 사용자 인증 관련 API
+- `/api/cbt`: CBT 시험 데이터 처리 API
+- `/api/chat`: AI 챗봇 응답 생성 API
+- `/api/diagnosis`: 문제 진단 및 분석 API
+- `/api/mypage/*`: 마이페이지 데이터 조회 API
+- `/api/schedule`: 학습 스케줄 관리 API
+- `/api/solve`: 문제 풀이 관련 로직 처리 API
+- `/api/upload`: 이미지 등 파일 업로드 API
