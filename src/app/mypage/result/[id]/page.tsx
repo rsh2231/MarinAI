@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
   ArrowLeft,
@@ -12,6 +12,7 @@ import {
   CheckCircle,
   BadgeCheck,
   XCircle,
+  BookOpen,
 } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { motion } from "framer-motion";
@@ -281,6 +282,26 @@ const SubjectBreakdownCard = ({
 // --- DATA FETCHING & TRANSFORMATION ---
 
 const transformApiResult = (apiResult: ApiResult): Result => {
+  // For CBTs, re-number questions sequentially per subject based on their original order.
+  if (apiResult.examtype === 'cbt') {
+    const subjectGroups = new Map<string, ApiResultItem[]>();
+    // 1. Group questions by subject, preserving original order
+    apiResult.results.forEach(item => {
+        const subject = item.gichul_qna.subject;
+        if (!subjectGroups.has(subject)) {
+            subjectGroups.set(subject, []);
+        }
+        subjectGroups.get(subject)!.push(item);
+    });
+
+    // 2. Re-assign qnum sequentially within each subject group
+    subjectGroups.forEach(items => {
+        items.forEach((item, index) => {
+            item.gichul_qna.qnum = index + 1;
+        });
+    });
+  }
+
   const userAnswers: { [key: string]: string | null } = {};
   apiResult.results.forEach((item) => {
     const key = `${item.gichul_qna.subject}-${item.gichul_qna.qnum}`;
@@ -407,10 +428,17 @@ export default function ExamResultDetailPage() {
     if (showOnlyWrong) {
       questions = questions.filter((q) => !q.isCorrect);
     }
-    if (selectedSubject !== "all") {
-      questions = questions.filter((q) => q.subjectName === selectedSubject);
+    
+    if (selectedSubject === "all") {
+      // Sort by subject name, then by question number for consistent grouping
+      return [...questions].sort((a, b) => {
+        if (a.subjectName < b.subjectName) return -1;
+        if (a.subjectName > b.subjectName) return 1;
+        return a.num - b.num;
+      });
+    } else {
+      return questions.filter((q) => q.subjectName === selectedSubject);
     }
-    return questions;
   }, [result, selectedSubject, showOnlyWrong]);
 
   const handleRetry = () => {
@@ -446,6 +474,7 @@ export default function ExamResultDetailPage() {
   )[0];
 
   const subjectNames = result.subjectScores.map((s) => s.subject);
+  let lastSubject: string | null = null;
 
   return (
     <div
@@ -499,18 +528,35 @@ export default function ExamResultDetailPage() {
             </div>
           ) : filteredQuestions.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {filteredQuestions.map((question, index) => (
-                <QuestionResultCard
-                  key={question.id}
-                  question={question}
-                  userAnswer={
-                    result.userAnswers[
-                      `${question.subjectName}-${question.num}`
-                    ] ?? undefined
-                  }
-                  index={index}
-                />
-              ))}
+              {filteredQuestions.map((question, index) => {
+                const showDivider =
+                  selectedSubject === "all" &&
+                  (lastSubject === null || lastSubject !== question.subjectName);
+                lastSubject = question.subjectName;
+                return (
+                  <React.Fragment key={question.id}>
+                    {showDivider && (
+                      <div
+                        className="col-span-full border-t border-neutral-700/70 my-8 flex items-center gap-3"
+                      >
+                        <span className="inline-flex items-center gap-2 text-base md:text-lg font-semibold tracking-tight px-4 py-1 rounded-full text-white shadow-none backdrop-blur-sm">
+                          <BookOpen size={18} />
+                          {question.subjectName}
+                        </span>
+                      </div>
+                    )}
+                    <QuestionResultCard
+                      question={question}
+                      userAnswer={
+                        result.userAnswers[
+                          `${question.subjectName}-${question.num}`
+                        ] ?? undefined
+                      }
+                      index={index}
+                    />
+                  </React.Fragment>
+                );
+              })}
             </div>
           ) : (
             <div className="text-center py-8 bg-neutral-800 rounded-lg">
