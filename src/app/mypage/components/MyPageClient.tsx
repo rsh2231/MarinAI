@@ -1,15 +1,14 @@
+// src/app/mypage/components/MyPageClient.tsx
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
 import { motion, Variants } from "framer-motion";
 import MyPageHeader from "./MyPageHeader";
 import MyPageCharts from "./MyPageCharts";
 import MyPageReports from "./MyPageReports";
+import { ChartResult } from "@/components/mypage/charts/PerformanceRadarChart";
 import AILearningDiagnosis from "@/components/mypage/reports/AILearningDiagnosis";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
-
-
-import { useState } from "react";
 
 export const sectionVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -25,20 +24,60 @@ export const sectionVariants: Variants = {
 };
 
 export default function MyPageClient() {
+  function isChartResult(obj: unknown): obj is ChartResult {
+  if (typeof obj !== 'object' || obj === null || !('subject_scores' in obj)) {
+    return false;
+  }
+  const chartResult = obj as ChartResult;
+  if (typeof chartResult.subject_scores !== 'object' || chartResult.subject_scores === null) {
+    return false;
+  }
+  for (const key in chartResult.subject_scores) {
+    if (Object.prototype.hasOwnProperty.call(chartResult.subject_scores, key)) {
+      const details = chartResult.subject_scores[key];
+      if (
+        typeof details !== 'object' ||
+        details === null ||
+        !('question_counts' in details) ||
+        typeof details.question_counts !== 'number' ||
+        !('correct_counts' in details) ||
+        typeof details.correct_counts !== 'number'
+      ) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   // 오답노트와 시험결과 상태를 최상위에서 관리
   const [wrongNotes, setWrongNotes] = useState<unknown[]>([]); // 실제 WrongNote[] 타입
-  const [examResults, setExamResults] = useState<unknown[]>([]); // 실제 ExamResult[] 타입
+  const [examResults, setExamResults] = useState<ChartResult[]>([]); // 실제 ExamResult[] 타입
+  const [cbtResults, setCbtResults] = useState<ChartResult[]>([]); // CBT 결과 상태 추가
 
   // ExamResultView가 기대하는 타입에 맞춰 래퍼 함수 생성
-  const handleSetExamResults = (results: unknown) => {
+  const handleSetExamResults = useCallback((results: unknown) => {
     if (Array.isArray(results)) {
-      setExamResults(results);
+      setExamResults(results.filter(isChartResult) as ChartResult[]);
+    } else if (isChartResult(results)) {
+      setExamResults([results as ChartResult]);
     } else {
-      setExamResults([results]);
+      setExamResults([]);
     }
-  };
+  }, []);
+
+  // CbtResultView가 기대하는 타입에 맞춰 래퍼 함수 생성
+  const handleSetCbtResults = useCallback((results: unknown) => {
+    if (Array.isArray(results)) {
+      setCbtResults(results.filter(isChartResult) as ChartResult[]);
+    } else if (isChartResult(results)) {
+      setCbtResults([results as ChartResult]);
+    } else {
+      setCbtResults([]);
+    }
+  }, []);
 
   return (
     <div
@@ -63,7 +102,7 @@ export default function MyPageClient() {
             viewport={{ once: true, amount: 0.2 }}
             custom={0.1}
           >
-            <MyPageCharts />
+            <MyPageCharts examResults={examResults} cbtResults={cbtResults} />
           </motion.div>
 
           <motion.div
@@ -79,6 +118,7 @@ export default function MyPageClient() {
           <MyPageReports
             setWrongNotes={setWrongNotes}
             setExamResults={handleSetExamResults}
+            setCbtResults={handleSetCbtResults}
           />
         </div>
       </main>

@@ -62,6 +62,35 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(data, { status: fastapiRes.status });
     }
 
+    // Save chat history to backend
+    try {
+      const saveChatUrl = `${baseUrl}/modelcall/save_chat_history`; // Assuming this endpoint exists on your FastAPI backend
+      const saveChatPayload = {
+        user_message: question ? String(question) : null,
+        ai_response: typeof data === 'string' ? data : JSON.stringify(data),
+      };
+
+      const saveChatRes = await fetch(saveChatUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(authHeader && { Authorization: authHeader }), // Forward auth header if present
+        },
+        body: JSON.stringify(saveChatPayload),
+      });
+
+      if (!saveChatRes.ok) {
+        console.error(
+          `❌ Error saving chat history (${saveChatRes.status}):`,
+          await saveChatRes.json()
+        );
+      } else {
+        console.log("✅ Chat history saved successfully.");
+      }
+    } catch (saveError) {
+      console.error("🚨 Error during chat history save operation:", saveError);
+    }
+
     return NextResponse.json(data);
   } catch (error) {
     console.error("🚨 RAG Proxy API Error:", error);

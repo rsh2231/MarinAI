@@ -11,8 +11,9 @@ import {
 import Link from "next/link";
 import MiniBarChart from "@/components/mypage/charts/MiniBarChart";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { ChartResult } from "@/components/mypage/charts/PerformanceRadarChart";
 
-// API 응답에 맞게 타입 재정의
+// 1. API 응답 구조에 맞춰 타입 완벽하게 재정의
 interface SubjectScoreDetail {
   question_counts: number;
   correct_counts: number;
@@ -21,12 +22,18 @@ interface SubjectScoreDetail {
 
 interface CbtResult {
   resultset_id: number;
+  exam_date: string;
+  duration_sec: number;
   exam_detail: string;
+  total_amount_of_questions: number;
+  total_correct_counts: number;
   total_score: number;
+  total_average: number;
+  if_passed_test: boolean;
   subject_scores: Record<string, SubjectScoreDetail>;
 }
 
-export default function CbtResultView() {
+export default function CbtResultView({ setCbtResults }: { setCbtResults?: (results: unknown) => void }) {
   const [results, setResults] = useState<CbtResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -45,6 +52,7 @@ export default function CbtResultView() {
       setError(null);
       const token = sessionStorage.getItem("access_token");
       if (!token) {
+        // 토큰이 없으면 결과를 보여주지 않음 (에러 메시지 대신)
         setLoading(false);
         return;
       }
@@ -53,10 +61,18 @@ export default function CbtResultView() {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {
-          const data = await res.json();
+          const data: CbtResult[] = await res.json();
           setResults(data);
+          
+          const chartResults: ChartResult[] = data.map(apiResult => ({
+            date: apiResult.exam_date,
+            subject_scores: apiResult.subject_scores,
+          }));
+
+          if (setCbtResults) setCbtResults(chartResults);
         } else {
-          setError("결과를 불러오는데 실패했습니다.");
+          const errorData = await res.json();
+          setError(errorData.error || "결과를 불러오는데 실패했습니다.");
         }
       } catch (e) {
         setError("데이터를 불러오는 중 에러가 발생했습니다.");
@@ -66,29 +82,25 @@ export default function CbtResultView() {
       }
     };
     fetchResults();
-  }, []);
+  }, [setCbtResults]);
 
   const renderResultItem = (result: CbtResult) => {
     const open = openIds.includes(result.resultset_id);
 
-    let chartData: { subject: string; score: number }[] = [];
-    if (
-      typeof result.subject_scores === "object" &&
-      result.subject_scores !== null
-    ) {
-      chartData = Object.entries(result.subject_scores).map(
-        ([subject, details]) => {
-          const score =
-            details.question_counts > 0
-              ? (details.correct_counts / details.question_counts) * 100
-              : 0;
-          return { subject, score };
-        }
-      );
-    }
+    const chartData = Object.entries(result.subject_scores).map(
+      ([subject, details]) => ({
+        subject,
+        score: details.question_counts > 0
+            ? Math.round((details.correct_counts / details.question_counts) * 100)
+            : 0,
+      })
+    );
 
-    const totalScoreSum = chartData.reduce((sum, item) => sum + item.score, 0);
-    const avgScore = chartData.length > 0 ? totalScoreSum / chartData.length : 0;
+    const examDate = new Date(result.exam_date).toLocaleString();
+
+    const displayExamDetail = result.exam_detail.includes("소형선박조종사")
+      ? result.exam_detail.replace("0급", "").trim()
+      : result.exam_detail;
 
     return (
       <li key={result.resultset_id} className="flex flex-col">
@@ -100,13 +112,15 @@ export default function CbtResultView() {
         >
           <div className="min-w-0">
             <p className="font-semibold truncate max-w-[180px] sm:max-w-xs md:max-w-sm">
-              {result.exam_detail}
+              {displayExamDetail}
+            </p>
+            <p className="text-neutral-400 text-xs text-center mt-1">
+              {examDate}
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-bold text-blue-400 text-xs sm:text-base">{`${avgScore.toFixed(
-              0
-            )}점`}</span>
+            <span className="font-bold text-blue-400 text-xs sm:text-base">
+              {`${result.total_average.toFixed(1)}점`}</span>
             <ChevronRight
               size={20}
               className={`transition-transform duration-300 ${
@@ -159,9 +173,9 @@ export default function CbtResultView() {
           <LoadingSpinner />
         </div>
       ) : error ? (
-        <p className="text-red-400">{error}</p>
+        <p className="text-red-400 text-center py-4">{error}</p>
       ) : results.length === 0 ? (
-        <p className="text-neutral-400">저장된 CBT 결과가 없습니다.</p>
+        <p className="text-neutral-400 text-center py-4">저장된 CBT 결과가 없습니다.</p>
       ) : (
         <div className="relative">
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -169,7 +183,7 @@ export default function CbtResultView() {
             <div
               className={`col-span-full transition-all duration-700 overflow-hidden ${
                 showAll
-                  ? "max-h-[1000px] opacity-100 scale-100"
+                  ? "max-h-[1000px] opacity-100 scale-100 pt-4"
                   : "max-h-0 opacity-0 scale-95"
               }`}
             >
@@ -194,4 +208,3 @@ export default function CbtResultView() {
     </div>
   );
 }
-

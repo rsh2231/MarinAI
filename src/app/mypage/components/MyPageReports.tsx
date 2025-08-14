@@ -6,7 +6,7 @@ import CbtResultView from "@/components/mypage/reports/CbtResultView";
 import { motion } from "framer-motion";
 import { sectionVariants } from "./MyPageClient";
 
-export default function MyPageReports({ setWrongNotes, setExamResults }: { setWrongNotes: (notes: unknown[]) => void, setExamResults: (results: unknown) => void }) {
+export default function MyPageReports({ setWrongNotes, setExamResults, setCbtResults }: { setWrongNotes: (notes: unknown[]) => void, setExamResults: (results: unknown) => void, setCbtResults: (results: unknown) => void }) {
   return (
     <div className="flex flex-col gap-6">
       <motion.div
@@ -34,7 +34,7 @@ export default function MyPageReports({ setWrongNotes, setExamResults }: { setWr
         viewport={{ once: true, amount: 0.2 }}
         custom={0.2}
       >
-        <CbtResultView />
+        <CbtResultView setCbtResults={setCbtResults} />
       </motion.div>
     </div>
   );

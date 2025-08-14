@@ -1,86 +1,114 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Clock, Check, X, HelpCircle, AlertTriangle, CheckCircle } from "lucide-react";
+import {
+  ArrowLeft,
+  Clock,
+  Check,
+  X,
+  HelpCircle,
+  AlertTriangle,
+  CheckCircle,
+  BadgeCheck,
+  XCircle,
+} from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { motion } from "framer-motion";
-import { BadgeCheck, XCircle } from "lucide-react";
-import { QuestionResultCard } from "@/components/problem/result/QuestionResultCard";
-import { transformData } from "@/lib/problem-utils";
 import ScrollToTopButton from "@/components/ui/ScrollToTopButton";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { QuestionResultCard } from "@/components/problem/result/QuestionResultCard";
+import { Question, Choice, QnaItem } from "@/types/ProblemViewer";
+import { ProblemReviewHeader } from "@/components/problem/result/ProblemReviewHeader";
+import { transformData } from "@/lib/problem-utils";
+import Button from "@/components/ui/Button";
 
-// API route와 동일한 더미데이터
-const dummyResults = [
-  {
-    id: 1,
-    title: "2023년 기관사 1급 1회 기출",
-    score: 88,
-    date: "2025-07-16",
-    timeTaken: 7200,
-    correctCount: 44,
-    incorrectCount: 6,
-    unansweredCount: 0,
-    subjectScores: [
-      { subject: "기관1", score: 85, correctCount: 17, totalCount: 20 },
-      { subject: "기관2", score: 90, correctCount: 18, totalCount: 20 },
-      { subject: "기관3", score: 78, correctCount: 7, totalCount: 9 },
-      { subject: "직무일반", score: 70, correctCount: 7, totalCount: 10 },
-      { subject: "영어", score: 65, correctCount: 2, totalCount: 3 },
-    ],
-    userAnswers: {},
-  },
-  {
-    id: 2,
-    title: "2023년 기관사 1급 2회 기출",
-    score: 82,
-    date: "2025-07-11",
-    timeTaken: 6900,
-    correctCount: 41,
-    incorrectCount: 9,
-    unansweredCount: 0,
-    subjectScores: [
-      { subject: "기관1", score: 80, correctCount: 16, totalCount: 20 },
-      { subject: "기관2", score: 85, correctCount: 17, totalCount: 20 },
-      { subject: "기관3", score: 72, correctCount: 6, totalCount: 9 },
-      { subject: "직무일반", score: 68, correctCount: 7, totalCount: 10 },
-      { subject: "영어", score: 60, correctCount: 2, totalCount: 3 },
-    ],
-    userAnswers: {},
-  },
-  {
-    id: 3,
-    title: "2023년 기관사 1급 3회 기출",
-    score: 90,
-    date: "2024-07-16",
-    timeTaken: 7500,
-    correctCount: 45,
-    incorrectCount: 5,
-    unansweredCount: 0,
-    subjectScores: [
-      { subject: "기관1", score: 88, correctCount: 17, totalCount: 20 },
-      { subject: "기관2", score: 92, correctCount: 18, totalCount: 20 },
-      { subject: "기관3", score: 80, correctCount: 7, totalCount: 9 },
-      { subject: "직무일반", score: 75, correctCount: 7, totalCount: 10 },
-      { subject: "영어", score: 70, correctCount: 2, totalCount: 3 },
-    ],
-    userAnswers: {},
-  },
-];
+// --- TYPE DEFINITIONS (based on new API response) ---
 
-const COLORS = {
-  score: "#2563eb",
-  remaining: "#4b5563",
-};
+interface SubjectScore {
+  subject: string;
+  score: number;
+  correctCount: number;
+  totalCount: number;
+}
+
+interface Result {
+  id: number;
+  title: string;
+  score: number;
+  date: string;
+  timeTaken: number;
+  correctCount: number;
+  incorrectCount: number;
+  unansweredCount: number;
+  subjectScores: SubjectScore[];
+  isPass: boolean;
+  type: "exam" | "cbt";
+  questions: Question[];
+  userAnswers: { [key: string]: string | null };
+}
+
+interface ApiGichulQna {
+  id: number;
+  subject: string;
+  qnum: number;
+  questionstr: string;
+  ex1str: string;
+  ex2str: string;
+  ex3str: string;
+  ex4str: string;
+  answer: string;
+  explanation: string;
+  imgPaths?: string[];
+  gichulset_id: number;
+}
+
+interface ApiResultItem {
+  correct: boolean;
+  id: number;
+  choice: string | null;
+  gichul_qna: ApiGichulQna;
+}
+
+interface ApiResult {
+  resultset_id: number;
+  exam_date: string;
+  duration_sec: number;
+  exam_detail: string;
+  examtype: "exam" | "cbt";
+  total_amount_of_questions: number;
+  total_correct_counts: number;
+  total_average: number;
+  if_passed_test: boolean;
+  subject_scores: Record<
+    string,
+    { question_counts: number; correct_counts: number }
+  >;
+  results: ApiResultItem[];
+}
+
+// --- UI COMPONENTS (re-used from previous version) ---
+
+const COLORS = { score: "#2563eb", remaining: "#4b5563" };
 
 const formatTime = (totalSeconds: number) => {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
-  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  return `${minutes.toString().padStart(2, "0")}:${seconds
+    .toString()
+    .padStart(2, "0")}`;
 };
 
-const StatItem = ({ icon, label, value, className = "" }: { icon: React.ReactNode, label: string, value: string | number, className?: string }) => (
-  <div className={`flex items-center justify-between text-sm ${className}`}>
+const StatItem = ({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string | number;
+}) => (
+  <div className={`flex items-center justify-between text-sm`}>
     <div className="flex items-center gap-2 text-neutral-300">
       {icon}
       <span>{label}</span>
@@ -89,15 +117,17 @@ const StatItem = ({ icon, label, value, className = "" }: { icon: React.ReactNod
   </div>
 );
 
-const OverallSummary = ({ score, isPass }: { score: number, isPass: boolean }) => {
-  if (score === null) return null;
-
-  const remaining = 100 - score;
+const OverallSummary = ({
+  score,
+  isPass,
+}: {
+  score: number;
+  isPass: boolean;
+}) => {
   const data = [
     { name: "점수", value: score },
-    { name: "부족한 점수", value: remaining },
+    { name: "부족한 점수", value: 100 - score },
   ];
-
   return (
     <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
       <h3 className="text-xl font-bold mb-4 text-center">종합 점수</h3>
@@ -140,17 +170,15 @@ const OverallSummary = ({ score, isPass }: { score: number, isPass: boolean }) =
           <span className="text-neutral-400 text-sm">점</span>
         </div>
       </div>
-
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className={`mt-6 p-3 rounded-lg flex items-center justify-center gap-2 text-lg font-bold text-center
-          ${
-            isPass
-              ? "bg-blue-500/20 text-blue-300"
-              : "bg-red-500/20 text-red-300"
-          }`}
+        className={`mt-6 p-3 rounded-lg flex items-center justify-center gap-2 text-lg font-bold text-center ${
+          isPass
+            ? "bg-blue-500/20 text-blue-300"
+            : "bg-red-500/20 text-red-300"
+        }`}
       >
         {isPass ? <BadgeCheck size={22} /> : <XCircle size={22} />}
         <span>{isPass ? "합격입니다." : "불합격입니다."}</span>
@@ -159,194 +187,289 @@ const OverallSummary = ({ score, isPass }: { score: number, isPass: boolean }) =
   );
 };
 
-const ExamSummaryCard = ({ timeTaken, correctCount, incorrectCount, unansweredCount, weakestSubject }: {
+const ExamSummaryCard = ({
+  timeTaken,
+  correctCount,
+  incorrectCount,
+  unansweredCount,
+  weakestSubject,
+}: {
   timeTaken: number;
   correctCount: number;
   incorrectCount: number;
   unansweredCount: number;
   weakestSubject: { subject: string; score: number } | null;
-}) => {
-  return (
-    <div className="bg-neutral-800 p-6 rounded-lg shadow-lg h-full flex flex-col">
-      <h3 className="text-xl font-bold mb-4">시험 요약</h3>
-      <div className="space-y-3 flex-1 flex flex-col justify-center">
-        <StatItem icon={<Clock size={16} />} label="총 풀이 시간" value={formatTime(timeTaken)} />
-        <StatItem icon={<Check size={16} className="text-green-500" />} label="정답" value={correctCount} />
-        <StatItem icon={<X size={16} className="text-red-500" />} label="오답" value={incorrectCount} />
-        <StatItem icon={<HelpCircle size={16} className="text-gray-500" />} label="미답" value={unansweredCount} />
-      </div>
-      {weakestSubject && (
-        <div className="mt-4 pt-4 border-t border-neutral-700">
-          <div className="flex items-center gap-2 text-sm text-yellow-400">
-            <AlertTriangle size={16} />
-            <h4 className="font-semibold">가장 취약한 과목</h4>
-          </div>
-          <p className="text-neutral-200 mt-1 pl-2">
-            {weakestSubject.subject} ({weakestSubject.score}점)
-          </p>
-        </div>
-      )}
+}) => (
+  <div className="bg-neutral-800 p-6 rounded-lg shadow-lg h-full flex flex-col">
+    <h3 className="text-xl font-bold mb-4">시험 요약</h3>
+    <div className="space-y-3 flex-1 flex flex-col justify-center">
+      <StatItem
+        icon={<Clock size={16} />}
+        label="총 풀이 시간"
+        value={formatTime(timeTaken)}
+      />
+      <StatItem
+        icon={<Check size={16} className="text-green-500" />}
+        label="정답"
+        value={correctCount}
+      />
+      <StatItem
+        icon={<X size={16} className="text-red-500" />}
+        label="오답"
+        value={incorrectCount}
+      />
+      <StatItem
+        icon={<HelpCircle size={16} className="text-gray-500" />}
+        label="미답"
+        value={unansweredCount}
+      />
     </div>
-  );
+    {weakestSubject && (
+      <div className="mt-4 pt-4 border-t border-neutral-700">
+        <div className="flex items-center gap-2 text-sm text-yellow-400">
+          <AlertTriangle size={16} />
+          <h4 className="font-semibold">가장 취약한 과목</h4>
+        </div>
+        <p className="text-neutral-200 mt-1 pl-2">
+          {weakestSubject.subject} ({weakestSubject.score}점)
+        </p>
+      </div>
+    )}
+  </div>
+);
+
+const SubjectBreakdownCard = ({
+  subjectResults,
+}: {
+  subjectResults: SubjectScore[];
+}) => (
+  <div className="bg-neutral-800 p-6 rounded-lg shadow-lg h-full">
+    <h3 className="text-xl font-bold mb-4">과목별 성취도</h3>
+    <div className="space-y-4">
+      {subjectResults.map((result) => {
+        const isPass = result.score >= 60;
+        return (
+          <div key={result.subject}>
+            <div className="flex justify-between items-center mb-1 text-sm">
+              <span className="font-semibold flex items-center gap-1.5">
+                {isPass ? (
+                  <CheckCircle size={14} className="text-green-500" />
+                ) : (
+                  <XCircle size={14} className="text-red-500" />
+                )}
+                {result.subject}
+              </span>
+              <span className="text-neutral-300">
+                {result.score}% ({result.correctCount}/{result.totalCount})
+              </span>
+            </div>
+            <div className="w-full bg-neutral-700 rounded-full h-2.5">
+              <div
+                className={`${
+                  isPass ? "bg-green-600" : "bg-red-600"
+                } h-2.5 rounded-full`}
+                style={{ width: `${result.score}%` }}
+              ></div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+);
+
+// --- DATA FETCHING & TRANSFORMATION ---
+
+const transformApiResult = (apiResult: ApiResult): Result => {
+  const userAnswers: { [key: string]: string | null } = {};
+  apiResult.results.forEach((item) => {
+    const key = `${item.gichul_qna.subject}-${item.gichul_qna.qnum}`;
+    userAnswers[key] = item.choice;
+  });
+
+  const qnaItems: QnaItem[] = apiResult.results.map((r) => ({
+    ...r.gichul_qna,
+    id: r.id,
+  }));
+
+  const subjectGroups = transformData(qnaItems);
+  let questions = subjectGroups.flatMap((group) => group.questions);
+
+  questions.forEach((q) => {
+    const originalResult = apiResult.results.find((r) => r.id === q.id);
+    q.isCorrect = originalResult?.correct;
+  });
+
+  const subjectScores: SubjectScore[] = Object.entries(
+    apiResult.subject_scores
+  ).map(([subject, details]) => ({
+    subject,
+    score:
+      details.question_counts > 0
+        ? Math.round((details.correct_counts / details.question_counts) * 100)
+        : 0,
+    correctCount: details.correct_counts,
+    totalCount: details.question_counts,
+  }));
+
+  const totalAnswered = apiResult.results.filter((r) => r.choice !== null).length;
+  const incorrectCount = totalAnswered - apiResult.total_correct_counts;
+
+  return {
+    id: apiResult.resultset_id,
+    title: apiResult.exam_detail.includes("소형선박조종사")
+      ? apiResult.exam_detail.replace(" 0급", "").trim()
+      : apiResult.exam_detail,
+    score: Math.round(apiResult.total_average),
+    date: new Date(apiResult.exam_date).toLocaleString(),
+    timeTaken: apiResult.duration_sec,
+    correctCount: apiResult.total_correct_counts,
+    incorrectCount: incorrectCount,
+    unansweredCount: apiResult.total_amount_of_questions - totalAnswered,
+    subjectScores,
+    isPass: apiResult.if_passed_test,
+    type: apiResult.examtype,
+    questions,
+    userAnswers,
+  };
 };
 
-const SubjectBreakdownCard = ({ subjectResults }: { subjectResults: Array<{ subject: string; score: number; correctCount: number; totalCount: number }> }) => {
-  return (
-    <div className="bg-neutral-800 p-6 rounded-lg shadow-lg h-full">
-      <h3 className="text-xl font-bold mb-4">과목별 성취도</h3>
-      <div className="space-y-4">
-        {subjectResults.map(result => {
-          const isPass = result.score >= 60;
-          return (
-            <div key={result.subject}>
-              <div className="flex justify-between items-center mb-1 text-sm">
-                <span className="font-semibold flex items-center gap-1.5">
-                  {isPass ? <CheckCircle size={14} className="text-green-500" /> : <XCircle size={14} className="text-red-500" />}
-                  {result.subject}
-                </span>
-                <span className="text-neutral-300">{result.score}% ({result.correctCount}/{result.totalCount})</span>
-              </div>
-              <div className="w-full bg-neutral-700 rounded-full h-2.5">
-                <div 
-                  className={`${isPass ? 'bg-green-600' : 'bg-red-600'} h-2.5 rounded-full`}
-                  style={{ width: `${result.score}%` }}
-                ></div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
+async function fetchResultById(id: number, token: string): Promise<Result | null> {
+  const fetchWithToken = (url: string) =>
+    fetch(url, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+    });
+
+  try {
+    const res = await fetchWithToken(`/api/results/${id}`);
+    if (res.ok) {
+      const data: ApiResult = await res.json();
+      return transformApiResult(data);
+    }
+  } catch (e) {
+    console.error(`Failed to fetch result for id ${id}:`, e);
+  }
+
+  return null;
+}
+
+// --- MAIN PAGE COMPONENT ---
 
 export default function ExamResultDetailPage() {
   const params = useParams();
   const router = useRouter();
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<Result | null>(null);
   const [loading, setLoading] = useState(true);
-  const [questions, setQuestions] = useState<any[]>([]);
-  const [questionsLoading, setQuestionsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedSubject, setSelectedSubject] = useState<string>("all");
+  const [showOnlyWrong, setShowOnlyWrong] = useState(false);
 
   useEffect(() => {
-    const id = params.id as string;
-    const foundResult = dummyResults.find(r => r.id === parseInt(id));
-    
-    if (foundResult) {
-      setResult(foundResult);
-    } else {
-      router.push('/mypage');
-    }
-    setLoading(false);
-  }, [params.id, router]);
+    const loadResult = async () => {
+      const id = parseInt(params.id as string, 10);
+      if (isNaN(id)) {
+        setError("유효하지 않은 결과 ID입니다.");
+        setLoading(false);
+        return;
+      }
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      if (!result) return;
-      
+      const token = sessionStorage.getItem("access_token");
+      if (!token) {
+        router.push("/auth/sign-in");
+        return;
+      }
+
       try {
-        setQuestionsLoading(true);
-        const token = sessionStorage.getItem("access_token");
-        
-        const params = new URLSearchParams({
-          examtype: "exam",
-          year: "2023",
-          license: "기관사",
-          level: "1",
-          round: "1",
-        });
-
-        const headers: HeadersInit = {
-          "Content-Type": "application/json",
-        };
-        
-        if (token) {
-          headers.Authorization = `Bearer ${token}`;
+        const foundResult = await fetchResultById(id, token);
+        if (foundResult) {
+          setResult(foundResult);
+        } else {
+          setError(
+            "결과를 찾을 수 없습니다. API 엔드포인트가 응답하지 않거나 해당 ID의 결과가 없습니다."
+          );
         }
-
-        const res = await fetch(`/api/solve?${params.toString()}`, {
-          method: "GET",
-          headers,
-        });
-
-        if (!res.ok) {
-          throw new Error("문제를 불러오는데 실패했습니다.");
-        }
-
-        const responseData = await res.json();
-        const transformedQuestions = transformData(responseData.qnas);
-        
-        const allQuestions = transformedQuestions.flatMap(group => 
-          group.questions.map(question => ({
-            ...question,
-            subjectName: group.subjectName
-          }))
-        );
-        
-        const updatedUserAnswers = { ...result.userAnswers };
-        allQuestions.forEach(question => {
-          const key = `${question.subjectName}-${question.num}`;
-          if (question.answer) {
-            updatedUserAnswers[key] = question.answer;
-          }
-        });
-        
-        setResult((prevResult: any) => ({
-          ...prevResult,
-          userAnswers: updatedUserAnswers
-        }));
-        
-        setQuestions(allQuestions);
-      } catch (error) {
-        console.error("문제 fetch 실패:", error);
-        setQuestions([]);
+      } catch (e) {
+        console.error("Failed to fetch result:", e);
+        setError("결과를 불러오는 중 오류가 발생했습니다.");
       } finally {
-        setQuestionsLoading(false);
+        setLoading(false);
       }
     };
 
-    fetchQuestions();
-  }, [result?.id]);
+    loadResult();
+  }, [params.id, router]);
+
+  const filteredQuestions = useMemo(() => {
+    if (!result) return [];
+    let questions = result.questions;
+    if (showOnlyWrong) {
+      questions = questions.filter((q) => !q.isCorrect);
+    }
+    if (selectedSubject !== "all") {
+      questions = questions.filter((q) => q.subjectName === selectedSubject);
+    }
+    return questions;
+  }, [result, selectedSubject, showOnlyWrong]);
+
+  const handleRetry = () => {
+    alert("다시 풀기 기능은 해당 결과 페이지에서 지원하지 않습니다.");
+  };
 
   if (loading) {
     return (
       <div className="bg-neutral-900 flex items-center justify-center min-h-screen">
-        <div className="text-white">로딩 중...</div>
+        <LoadingSpinner />
       </div>
     );
   }
 
-  if (!result) {
-    return null;
+  if (error) {
+    return (
+      <div className="bg-neutral-900 flex flex-col items-center justify-center min-h-screen text-red-400">
+        <p>{error}</p>
+        <button
+          onClick={() => router.back()}
+          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          뒤로 가기
+        </button>
+      </div>
+    );
   }
 
-  const isPass = result.score >= 60;
-  const weakestSubject = result.subjectScores.reduce((min: any, current: any) => 
-    current.score < min.score ? current : min
-  );
+  if (!result) return null;
+
+  const weakestSubject = [...result.subjectScores].sort(
+    (a, b) => a.score - b.score
+  )[0];
+
+  const subjectNames = result.subjectScores.map((s) => s.subject);
 
   return (
-    <div ref={scrollContainerRef} className="bg-neutral-900 h-screen overflow-auto">
+    <div
+      ref={scrollContainerRef}
+      className="bg-neutral-900 h-screen overflow-auto"
+    >
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-35">
-        <div className="mb-8">
-          <button
-            onClick={() => router.back()}
-            className="flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-4 transition-colors"
-          >
-            <ArrowLeft size={20} />
-            뒤로 가기
-          </button>
-          <h1 className="text-3xl font-bold mb-2">{result.title}</h1>
-          <p className="text-neutral-400">{result.date}</p>
+        <div className="mb-8 flex justify-between items-start">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">{result.title}</h1>
+            <p className="text-neutral-400">{result.date}</p>
+          </div>
+          <Button variant="primary" size="sm" onClick={() => router.back()}>
+            <ArrowLeft size={16} />
+            <span className="ml-2">뒤로 가기</span>
+          </Button>
         </div>
 
         <div className="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           <div className="md:col-span-1 lg:col-span-1">
-            <OverallSummary score={result.score} isPass={isPass} />
+            <OverallSummary score={result.score} isPass={result.isPass} />
           </div>
           <div className="md:col-span-1 lg:col-span-1">
-            <ExamSummaryCard 
+            <ExamSummaryCard
               timeTaken={result.timeTaken}
               correctCount={result.correctCount}
               incorrectCount={result.incorrectCount}
@@ -360,34 +483,46 @@ export default function ExamResultDetailPage() {
         </div>
 
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-6">문제 리뷰</h2>
-          {questionsLoading ? (
+          <div className="mb-6">
+            <ProblemReviewHeader
+              subjectNames={subjectNames}
+              selectedSubject={selectedSubject}
+              setSelectedSubject={setSelectedSubject}
+              showOnlyWrong={showOnlyWrong}
+              setShowOnlyWrong={setShowOnlyWrong}
+              onRetry={handleRetry}
+            />
+          </div>
+          {loading ? (
             <div className="text-center py-8">
-              <div className="text-neutral-400">문제를 불러오는 중...</div>
+              <LoadingSpinner />
             </div>
-          ) : questions.length > 0 ? (
+          ) : filteredQuestions.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {questions.map((question, index) => (
+              {filteredQuestions.map((question, index) => (
                 <QuestionResultCard
-                  key={`${question.subjectName}-${question.num}`}
+                  key={question.id}
                   question={question}
-                  userAnswer={result.userAnswers?.[`${question.subjectName}-${question.num}`]}
+                  userAnswer={
+                    result.userAnswers[
+                      `${question.subjectName}-${question.num}`
+                    ] ?? undefined
+                  }
                   index={index}
                 />
               ))}
             </div>
           ) : (
-            <div className="text-center py-8">
-              <div className="text-neutral-400">문제 데이터가 없습니다.</div>
+            <div className="text-center py-8 bg-neutral-800 rounded-lg">
+              <p className="text-neutral-400">선택한 조건에 해당하는 문제가 없습니다.</p>
             </div>
           )}
         </div>
       </div>
-
       <ScrollToTopButton
         className="fixed bottom-6 right-6 lg:right-15 p-3 bg-blue-600 text-white rounded-full shadow-xl hover:bg-blue-700 hover:shadow-2xl transition-all duration-200 z-40 backdrop-blur-sm bg-opacity-90"
         scrollableRef={scrollContainerRef}
       />
     </div>
   );
-} 
+}

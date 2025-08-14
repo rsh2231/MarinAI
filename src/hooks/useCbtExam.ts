@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { useSetAtom, useAtom, useAtomValue } from "jotai";
 import { QnaItem, CbtData, SubjectGroup } from "@/types/ProblemViewer";
 import { authAtom } from "@/atoms/authAtom";
@@ -48,6 +49,7 @@ export function useCbtExam(status: ExamStatus, setStatus: (status: ExamStatus) =
   const [currentOdapsetId, setCurrentOdapsetId] = useState<number | null>(null);
 
   const auth = useAtomValue(authAtom);
+  const searchParams = useSearchParams();
 
   // 시험 시작
   const handleStartExam = async (settings: {
@@ -98,6 +100,23 @@ export function useCbtExam(status: ExamStatus, setStatus: (status: ExamStatus) =
     }
   };
 
+  // URL 파라미터로 자동 시작 처리
+  useEffect(() => {
+    if (status === "in-progress" && groupedQuestions.length === 0 && !isLoading) {
+      const licenseParam = searchParams.get("license");
+      const levelParam = searchParams.get("level");
+      const subjectsParam = searchParams.getAll("subjects");
+
+      if (licenseParam && subjectsParam.length > 0) {
+        handleStartExam({
+          license: licenseParam as LicenseType,
+          level: levelParam || "", // level이 없을 경우 빈 문자열
+          subjects: subjectsParam,
+        });
+      }
+    }
+  }, [status, searchParams, handleStartExam, groupedQuestions.length, isLoading]);
+
   // 다시 풀기
   const handleRetrySameExam = () => {
     if (groupedQuestions.length === 0 || !currentLicense) {
@@ -127,4 +146,4 @@ export function useCbtExam(status: ExamStatus, setStatus: (status: ExamStatus) =
     setCurrentLicense,
     setCurrentLevel,
   };
-} 
+}

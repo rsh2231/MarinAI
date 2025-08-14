@@ -27,12 +27,15 @@ export function useSolveLogic() {
     const levelParam = searchParams.get("level");
 
     if (yearParam && roundParam && licenseParam && (licenseParam === "소형선박조종사" || levelParam)) {
+      console.log("URL Params detected:", { yearParam, roundParam, licenseParam, levelParam });
       setYear(yearParam);
       setRound(roundParam);
       setLicense(licenseParam as LicenseTypeNullable);
       setLevel(levelParam || "");
       setMode("exam");
       setShowResult(false);
+    } else {
+      console.log("URL Params NOT sufficient for auto-start:", { yearParam, roundParam, licenseParam, levelParam });
     }
   }, [searchParams, setShowResult]);
 

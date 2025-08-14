@@ -13,60 +13,8 @@ import {
 
 import { ChartLine } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ChartResult } from "./PerformanceRadarChart";
 
-// 기출문제와 CBT 결과 데이터를 기반으로 한 과목별 점수 변화
-const data = [
-  { 
-    date: "2024-07-16", 
-    기관1: 88, 
-    기관2: 92, 
-    기관3: 80, 
-    직무일반: 75, 
-    영어: 70 
-  },
-  { 
-    date: "2024-07-18", 
-    기관1: 88, 
-    기관2: 92, 
-    기관3: 80, 
-    직무일반: 75, 
-    영어: 70 
-  },
-  { 
-    date: "2025-07-11", 
-    기관1: 80, 
-    기관2: 85, 
-    기관3: 72, 
-    직무일반: 68, 
-    영어: 60 
-  },
-  { 
-    date: "2025-07-12", 
-    기관1: 80, 
-    기관2: 85, 
-    기관3: 72, 
-    직무일반: 68, 
-    영어: 60 
-  },
-  { 
-    date: "2025-07-16", 
-    기관1: 85, 
-    기관2: 90, 
-    기관3: 78, 
-    직무일반: 70, 
-    영어: 65 
-  },
-  { 
-    date: "2025-07-18", 
-    기관1: 85, 
-    기관2: 90, 
-    기관3: 78, 
-    직무일반: 70, 
-    영어: 65 
-  },
-];
-
-const SUBJECTS = ["기관1", "기관2", "기관3", "직무일반", "영어"];
 const COLORS = ["#3b82f6", "#f59e42", "#10b981", "#f43f5e", "#6366f1"];
 
 function useIsMobile() {
@@ -80,13 +28,61 @@ function useIsMobile() {
   return isMobile;
 }
 
-export default function ScoreTrendChart() {
+interface ScoreTrendChartProps {
+  examResults: ChartResult[];
+  cbtResults: ChartResult[];
+}
+
+interface ChartDataItem {
+  date: string;
+  [subject: string]: number | string; // subject scores or date string
+}
+
+export default function ScoreTrendChart({ examResults, cbtResults }: ScoreTrendChartProps) {
   const isMobile = useIsMobile();
   const [isClient, setIsClient] = useState(false);
+  const [chartData, setChartData] = useState<ChartDataItem[]>([]); // 차트 데이터 상태
+  const [subjects, setSubjects] = useState<string[]>([]); // 과목 목록 상태
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+
+    const processResults = (results: ChartResult[]) => {
+      const processedData: { [key: string]: ChartDataItem } = {};
+      const allSubjects = new Set<string>();
+
+      results.forEach(result => {
+        if (result.subject_scores) {
+          const dateObj = new Date(result.date);
+          if (isNaN(dateObj.getTime())) {
+            console.warn("Invalid date encountered:", result.date);
+            return;
+          }
+          const date = dateObj.toISOString();
+          if (!processedData[date]) {
+            processedData[date] = { date };
+          }
+          Object.entries(result.subject_scores).forEach(([subject, details]) => {
+            allSubjects.add(subject);
+            const score = details.question_counts > 0
+              ? (details.correct_counts / details.question_counts) * 100
+              : 0;
+            processedData[date][subject] = Math.round(score);
+          });
+        }
+      });
+
+      const sortedDates = Object.keys(processedData).sort();
+      const finalChartData = sortedDates.map(date => processedData[date]);
+
+      setChartData(finalChartData);
+      setSubjects(Array.from(allSubjects));
+    };
+
+    const combinedResults = [...examResults, ...cbtResults];
+    processResults(combinedResults);
+
+  }, [examResults, cbtResults]);
 
   if (!isClient) {
     // SSR에서는 그래프 자체를 렌더하지 않음 (로딩 스켈레톤 등 대체 가능)
@@ -99,7 +95,7 @@ export default function ScoreTrendChart() {
     justifyContent: "center",
     paddingTop: isMobile ? 2 : 8,
     fontSize: isMobile ? 11 : 14,
-    flexWrap: isMobile ? "wrap" : "nowrap",
+    flexWrap: subjects.length > 5 ? "wrap" : "nowrap",
   };
 
   return (
@@ -111,7 +107,7 @@ export default function ScoreTrendChart() {
       <div className="w-full h-64 sm:h-72 md:h-80">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={data}
+            data={chartData}
             margin={{
               top: 10,
               right: isMobile ? 20 : 50,
@@ -125,7 +121,7 @@ export default function ScoreTrendChart() {
               tick={{ fill: "#e0e0e0", fontSize: isMobile ? 10 : 12 }}
               interval={0}
               tickMargin={10}
-              tickFormatter={(tick) => (isMobile ? tick.substring(5) : tick)}
+              tickFormatter={(tick) => new Date(tick).toLocaleDateString('ko-KR', { year: '2-digit', month: 'numeric', day: 'numeric' })}
             />
             <YAxis domain={[0, 100]} tick={{ fill: "#aaa", fontSize: 10 }} width={32} />
             <Tooltip
@@ -133,13 +129,25 @@ export default function ScoreTrendChart() {
                 backgroundColor: "#222",
                 border: "1px solid #444",
               }}
+              labelFormatter={(label) => {
+                const date = new Date(label);
+                return date.toLocaleString('ko-KR', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                  hour12: true,
+                });
+              }}
             />
             <Legend
               verticalAlign="bottom"
               wrapperStyle={legendStyle}
               iconSize={isMobile ? 12 : 14}
             />
-            {SUBJECTS.map((subject, idx) => (
+            {subjects.map((subject, idx) => (
               <Line
                 key={subject}
                 type="monotone"

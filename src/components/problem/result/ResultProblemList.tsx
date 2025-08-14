@@ -46,7 +46,7 @@ export default function ResultProblemList({
               (lastSubject === null || lastSubject !== question.subjectName);
             const card = (
               <QuestionResultCard
-                key={`${question.subjectName}-${question.num}`}
+                key={`${question.id}-${index}`}
                 question={question}
                 userAnswer={answers[`${question.subjectName}-${question.num}`]}
                 index={index}
@@ -54,7 +54,7 @@ export default function ResultProblemList({
             );
             const divider = showDivider ? (
               <div
-                key={`divider-${question.subjectName}-${question.num}`}
+                key={`divider-${question.id}-${index}`}
                 className="col-span-full border-t border-neutral-700/70 my-12 flex items-center gap-3"
               >
                 <span className="inline-flex items-center gap-2 text-base md:text-lg font-semibold tracking-tight px-4 py-1 rounded-full text-white shadow-none backdrop-blur-sm">
@@ -65,7 +65,7 @@ export default function ResultProblemList({
             ) : null;
             lastSubject = question.subjectName;
             return (
-              <React.Fragment key={`${question.subjectName}-${question.num}`}>
+              <React.Fragment key={`${question.id}-${index}`}>
                 {divider}
                 {card}
               </React.Fragment>

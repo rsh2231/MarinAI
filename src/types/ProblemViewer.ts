@@ -31,6 +31,7 @@ export interface Question {
   subjectName: string;
   isImageQuestion: boolean;
   imageUrl?: string; // 문제 이미지의 완성된 전체 URL
+  isCorrect?: boolean;
 }
 
 export interface SubjectGroup {

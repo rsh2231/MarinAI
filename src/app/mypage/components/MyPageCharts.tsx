@@ -28,7 +28,14 @@ const itemVariants: Variants = {
   },
 };
 
-export default function MyPageCharts() {
+import { ChartResult } from "@/components/mypage/charts/PerformanceRadarChart";
+
+interface MyPageChartsProps {
+  examResults: ChartResult[]; // 실제 ExamResult[] 타입
+  cbtResults: ChartResult[]; // 실제 CbtResult[] 타입
+}
+
+export default function MyPageCharts({ examResults, cbtResults }: MyPageChartsProps) {
   return (
     // 기존 Grid 컨테이너 div를 motion.div로 변경하고 className은 그대로 유지
     <motion.div
@@ -40,11 +47,11 @@ export default function MyPageCharts() {
       {/* 각 Grid 아이템을 motion.div로 감싸고 variants를 적용 */}
       {/* 여기서 div를 motion.div로 바꿔도 레이아웃에 영향 없음 */}
       <motion.div variants={itemVariants} className="bg-neutral-800 rounded-xl p-4 md:p-6 h-full">
-        <AccumulatedComparisonChart />
+        <AccumulatedComparisonChart examResults={examResults} cbtResults={cbtResults} />
       </motion.div>
 
       <motion.div variants={itemVariants} className="bg-neutral-800 rounded-xl p-4 md:p-6 h-full">
-        <PerformanceRadarChart />
+        <PerformanceRadarChart examResults={examResults} cbtResults={cbtResults} />
       </motion.div>
     </motion.div>
   );
