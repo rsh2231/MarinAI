@@ -2,7 +2,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import {
-  ClipboardList,
+  Shuffle,
   ChevronRight,
   ChevronDown,
   ChevronUp,
@@ -165,7 +165,7 @@ export default function CbtResultView({ setCbtResults }: { setCbtResults?: (resu
   return (
     <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
       <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-        <ClipboardList size={22} />
+        <Shuffle size={22} />
         CBT 풀이 결과
       </h3>
       {loading ? (

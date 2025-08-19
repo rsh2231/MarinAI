@@ -1,7 +1,7 @@
 // 기출문제 풀이 결과
 "use client";
 import { useEffect, useState } from "react";
-import { ClipboardList, ChevronRight, ChevronDown, ChevronUp, ArrowUpRight } from "lucide-react";
+import { ChevronRight, ChevronDown, ChevronUp, ArrowUpRight, BookCheck } from "lucide-react";
 import Link from "next/link";
 import MiniBarChart from "@/components/mypage/charts/MiniBarChart";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
@@ -35,12 +35,12 @@ interface DisplayExamResult {
   id: number;
   title: string;
   score: string;
-  date: string; // Now includes time
+  date: string;
   subjectScores: DisplaySubjectScore[];
 }
 
 export default function ExamResultView({ setExamResults }: { setExamResults?: (results: unknown) => void }) {
-  const [results, setResults] = useState<DisplayExamResult[]>([]); // State now holds the transformed data
+  const [results, setResults] = useState<DisplayExamResult[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
@@ -128,7 +128,7 @@ export default function ExamResultView({ setExamResults }: { setExamResults?: (r
   return (
     <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
       <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-        <ClipboardList size={22} />
+        <BookCheck size={22} />
         기출문제 풀이 결과
       </h3>
       {results.length === 0 ? (

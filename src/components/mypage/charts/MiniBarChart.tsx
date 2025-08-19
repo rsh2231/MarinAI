@@ -23,7 +23,7 @@ export default function MiniBarChart({
 
   return (
     <div className="w-full flex justify-center items-center">
-      <div className="w-full max-w-sm sm:max-w-md md:max-w-lg h-28 sm:h-36 md:h-48">
+      <div className="w-full max-w-sm sm:max-w-md md:max-w-lg h-28 sm:h-36 md:h-48 bg-neutral-800 p-4 rounded-lg shadow-lg">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
@@ -46,7 +46,7 @@ export default function MiniBarChart({
               dataKey="score"
               fill="#3b82f6"
               radius={[4, 4, 0, 0]}
-              label={{ fill: "#fff", fontSize: labelFontSize, position: "top" }}
+              label={{ fill: "#fff", fontSize: labelFontSize, position: "center" }}
             />
           </BarChart>
         </ResponsiveContainer>

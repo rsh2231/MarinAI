@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { Message } from "@/types/Message";
+import { useAtom } from "jotai";
+import { authAtom } from "@/atoms/authAtom";
 
 export function useChat(initialQuestion?: string, initialImageUrl?: string) {
+  const [authState] = useAtom(authAtom);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -11,11 +14,10 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
   const initialMessageSent = useRef(false);
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  // 답변 생성을 중단하는 함수
   const stop = () => {
     if (abortControllerRef.current) {
-      abortControllerRef.current.abort(); // fetch 요청 중단
-      setIsLoading(false); // 즉시 중단 시 로딩 해제
+      abortControllerRef.current.abort();
+      setIsLoading(false);
     }
   };
 
@@ -23,16 +25,14 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
     messageContent: string,
     imageFile: File | null
   ) => {
-    // 텍스트와 이미지가 모두 없으면 전송하지 않음
     if (!messageContent.trim() && !imageFile) return;
 
-    // 이미지만 있을 때는 빈 문자열 사용 (API에서 허용)
     const questionText = messageContent.trim() || "";
     
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: "user",
-      content: messageContent.trim() || "", // 빈 문자열 허용
+      content: messageContent.trim() || "",
       image: imageFile ? URL.createObjectURL(imageFile) : undefined,
     };
     setMessages((prev) => [...prev, userMessage]);
@@ -50,18 +50,20 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
     const signal = abortControllerRef.current.signal;
 
     try {
-      // 항상 FormData 사용
       const formData = new FormData();
       formData.append("question", questionText);
-      // imageFile이 있을 때만 image 필드 추가
       if (imageFile) formData.append("image", imageFile);
-      // initialImageUrl이 있을 때는 이미 서버에 업로드된 URL이므로 image 필드에 포함하지 않음
-      // 대신 question에 이미지 URL 정보를 포함시킴
+
+      const headers = new Headers();
+      if (authState.token) {
+        headers.append("Authorization", `Bearer ${authState.token}`);
+      }
 
       const res = await fetch("/api/chat", {
         method: "POST",
         body: formData,
         signal,
+        headers,
       });
 
       if (!res.ok) {
@@ -106,11 +108,9 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
     }
   };
 
-  // 초기 질문이 있을 경우 자동 전송
   useEffect(() => {
     if ((initialQuestion || initialImageUrl) && !initialMessageSent.current) {
       const sendInitialMessage = async () => {
-        // 사용자 메시지 생성
         const userMessage: Message = {
           id: crypto.randomUUID(),
           role: "user",
@@ -119,7 +119,6 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
         };
         setMessages((prev) => [...prev, userMessage]);
 
-        // API 호출
         const assistantMessageId = crypto.randomUUID();
         setMessages((prev) => [
           ...prev,
@@ -133,7 +132,6 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
         const formData = new FormData();
         formData.append("question", initialQuestion || "");
 
-        // initialImageUrl을 파일로 변환하여 전송
         if (initialImageUrl) {
           try {
             const response = await fetch(initialImageUrl);
@@ -146,10 +144,16 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
         }
 
         try {
+          const headers = new Headers();
+          if (authState.token) {
+            headers.append("Authorization", `Bearer ${authState.token}`);
+          }
+
           const res = await fetch("/api/chat", {
             method: "POST",
             body: formData,
             signal,
+            headers,
           });
 
           if (!res.ok) {
@@ -192,7 +196,7 @@ export function useChat(initialQuestion?: string, initialImageUrl?: string) {
       sendInitialMessage();
       initialMessageSent.current = true;
     }
-  }, [initialQuestion, initialImageUrl]);
+  }, [initialQuestion, initialImageUrl, authState.token]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

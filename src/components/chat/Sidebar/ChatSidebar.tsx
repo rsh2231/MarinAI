@@ -3,56 +3,80 @@ import React, { useEffect, useState } from "react";
 import HistoryItem from "./HistoryItem";
 import { SquarePen } from "lucide-react";
 import Button from "@/components/ui/Button";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { useAtom } from "jotai";
+import { authAtom } from "@/atoms/authAtom";
 
 interface ChatHistoryItem {
   id: number;
   title: string;
   date: string;
 }
-
 interface GroupedHistory {
   [key: string]: ChatHistoryItem[];
 }
 
 interface SidebarProps {
   isOpen: boolean;
-  // onClose: () => void; // 제거
 }
 
-// 컴포넌트 바깥에 선언
-const chatHistory = [
-  { id: 1, title: "해기사 기출문제 분석", date: "2025-07-15" },
-  { id: 2, title: "항해안전시설법 질문", date: "2025-07-14" },
-  { id: 3, title: "기관관리 문제 풀이", date: "2025-07-14" },
-  { id: 4, title: "해사법규 개념 정리", date: "2025-07-11" },
-  { id: 5, title: "항해술 실기 연습", date: "2025-07-10" },
-  { id: 6, title: "기관학 이론 복습", date: "2025-07-09" },
-  { id: 7, title: "해양기상학 문제", date: "2025-07-08" },
-  { id: 8, title: "선박운용학 질문", date: "2025-07-07" },
-];
-
 export default function Sidebar({ isOpen }: SidebarProps) {
+  const [authState] = useAtom(authAtom);
   const [groupedHistory, setGroupedHistory] = useState<GroupedHistory>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const grouped = chatHistory.reduce<GroupedHistory>((acc, item) => {
-      const date = new Date(item.date).toLocaleDateString('ko-KR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-      if (!acc[date]) {
-        acc[date] = [];
+    const fetchChatHistory = async () => {
+      if (!authState.token) {
+        setIsLoading(false);
+        setGroupedHistory({});
+        return;
       }
-      acc[date].push(item);
-      return acc;
-    }, {});
-    setGroupedHistory(grouped);
-  }, []); // chatHistory가 변하지 않으므로 안전
+
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch("/api/chat", {
+          headers: {
+            Authorization: `Bearer ${authState.token}`,
+          },
+        });
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error("인증에 실패했습니다. 다시 로그인해주세요.");
+          }
+          throw new Error("채팅 기록을 불러오는데 실패했습니다.");
+        }
+        const chatHistory: ChatHistoryItem[] = await response.json();
+
+        const grouped = chatHistory.reduce<GroupedHistory>((acc, item) => {
+          const date = new Date(item.date).toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+          if (!acc[date]) {
+            acc[date] = [];
+          }
+          acc[date].push(item);
+          return acc;
+        }, {});
+        setGroupedHistory(grouped);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "알 수 없는 오류가 발생했습니다.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchChatHistory();
+  }, [authState.token]);
 
   return (
     <aside
-      // 기존 레이아웃을 그대로 유지합니다.
       className={`fixed top-0 bottom-0 left-0 z-30 w-64 bg-neutral-900 pt-16 p-4 transition-transform duration-200 ease-in-out
         flex flex-col overflow-y-auto h-full
         ${isOpen ? "translate-x-0" : "-translate-x-full"}
@@ -70,18 +94,28 @@ export default function Sidebar({ isOpen }: SidebarProps) {
       </Button>
 
       <div className="flex-1 space-y-4 overflow-y-auto">
-        {Object.entries(groupedHistory).map(([date, items]) => (
-          <div key={date}>
-            {/* 날짜 제목 */}
-            <h3 className="text-xs font-semibold text-neutral-500 px-3 py-1">{date}</h3>
-            {/* 해당 날짜의 채팅 목록 */}
-            <div className="space-y-1">
-              {items.map((item) => (
-                <HistoryItem key={item.id} title={item.title} />
-              ))}
-            </div>
+        {isLoading ? (
+          <div className="flex justify-center items-center h-full">
+            <LoadingSpinner />
           </div>
-        ))}
+        ) : error ? (
+          <div className="text-red-500 text-center">{error}</div>
+        ) : Object.keys(groupedHistory).length === 0 ? (
+            <div className="text-center text-neutral-500">채팅 기록이 없습니다.</div>
+        ) : (
+          Object.entries(groupedHistory).map(([date, items]) => (
+            <div key={date}>
+              {/* 날짜 제목 */}
+              <h3 className="text-xs font-semibold text-neutral-500 px-3 py-1">{date}</h3>
+              {/* 해당 날짜의 채팅 목록 */}
+              <div className="space-y-1">
+                {items.map((item) => (
+                  <HistoryItem key={item.id} title={item.title} />
+                ))}
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </aside>
   );
